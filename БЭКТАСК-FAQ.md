@@ -310,7 +310,7 @@ Password: necpgame
 Database: necpgame
 ```
 
-**Подключение к БД:**
+**Пример подключения в Go:**
 ```go
 // config/database.go
 import "github.com/jackc/pgx/v5"
