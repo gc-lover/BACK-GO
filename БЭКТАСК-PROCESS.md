@@ -206,10 +206,13 @@ migrate create -ext sql -dir migrations -seq create_personal_npc_table
 goose -dir migrations create create_personal_npc_table sql
 ```
 
-#### 2. Написать SQL миграцию:
+#### 2. Написать SQL миграцию с идемпотентностью:
+
+**ВАЖНО:** Миграции должны быть идемпотентными (можно применять несколько раз без ошибок)
 
 ```sql
 -- migrations/000001_create_personal_npc_table.up.sql
+-- Создание таблицы с проверкой существования
 CREATE TABLE IF NOT EXISTS personal_npc (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL,
@@ -219,11 +222,13 @@ CREATE TABLE IF NOT EXISTS personal_npc (
     FOREIGN KEY (owner_id) REFERENCES users(id)
 );
 
-CREATE INDEX idx_personal_npc_owner_id ON personal_npc(owner_id);
+-- Создание индекса с проверкой существования
+CREATE INDEX IF NOT EXISTS idx_personal_npc_owner_id ON personal_npc(owner_id);
 ```
 
 ```sql
 -- migrations/000001_create_personal_npc_table.down.sql
+-- Откат миграции
 DROP INDEX IF EXISTS idx_personal_npc_owner_id;
 DROP TABLE IF EXISTS personal_npc;
 ```
@@ -234,6 +239,89 @@ DROP TABLE IF EXISTS personal_npc;
 - Если миграция больше 400 строк - разбить на несколько миграций:
   - Разделить по таблицам
   - Разделить по функциональности
+
+#### 4. Создать тестовые данные (seed данные):
+
+**ВАЖНО:** Создавать seed данные только если их изначально не было в БД. Проверять существование данных перед заливкой!
+
+**Способ 1: Отдельная seed миграция**
+```sql
+-- migrations/000002_seed_personal_npc_data.up.sql
+-- Создание тестовых данных с проверкой существования
+DO $$
+BEGIN
+    -- Проверка наличия данных перед вставкой
+    IF NOT EXISTS (SELECT 1 FROM personal_npc LIMIT 1) THEN
+        INSERT INTO personal_npc (id, name, owner_id) VALUES
+        ('00000000-0000-0000-0000-000000000001', 'Test NPC 1', '00000000-0000-0000-0000-000000000001'),
+        ('00000000-0000-0000-0000-000000000002', 'Test NPC 2', '00000000-0000-0000-0000-000000000001');
+    END IF;
+END $$;
+```
+
+```sql
+-- migrations/000002_seed_personal_npc_data.down.sql
+-- Откат seed данных
+DELETE FROM personal_npc WHERE id IN (
+    '00000000-0000-0000-0000-000000000001',
+    '00000000-0000-0000-0000-000000000002'
+);
+```
+
+**Способ 2: Отдельный seed скрипт**
+```go
+// migrations/seed/seed_personal_npc.go
+package seed
+
+import (
+    "context"
+    "github.com/jackc/pgx/v5"
+)
+
+func SeedPersonalNPC(ctx context.Context, db *pgx.Conn) error {
+    // Проверка наличия данных
+    var count int
+    err := db.QueryRow(ctx, "SELECT COUNT(*) FROM personal_npc").Scan(&count)
+    if err != nil {
+        return err
+    }
+    
+    // Если данные уже есть, не заливать повторно
+    if count > 0 {
+        return nil
+    }
+    
+    // Создание тестовых данных
+    _, err = db.Exec(ctx, `
+        INSERT INTO personal_npc (id, name, owner_id) VALUES
+        ($1, $2, $3),
+        ($4, $5, $6)
+    `, 
+        "00000000-0000-0000-0000-000000000001", "Test NPC 1", "00000000-0000-0000-0000-000000000001",
+        "00000000-0000-0000-0000-000000000002", "Test NPC 2", "00000000-0000-0000-0000-000000000001",
+    )
+    
+    return err
+}
+```
+
+**Применение seed данных:**
+```bash
+# Через migrate
+migrate -path migrations -database "postgres://necpgame:necpgame@localhost:5432/necpgame?sslmode=disable" up
+
+# Через Go скрипт
+go run migrations/seed/seed_personal_npc.go
+```
+
+#### 5. Применить миграции:
+
+```bash
+# Применение миграций
+migrate -path migrations \
+  -database "postgres://necpgame:necpgame@localhost:5432/necpgame?sslmode=disable" \
+  up
+```
 
 ---
 

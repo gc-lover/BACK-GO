@@ -212,6 +212,101 @@ goose -dir migrations postgres "postgres://user:password@localhost/dbname?sslmod
 goose -dir migrations postgres "postgres://user:password@localhost/dbname?sslmode=disable" down
 ```
 
+**ВАЖНО: Идемпотентность миграций**
+- Используй `CREATE TABLE IF NOT EXISTS` вместо `CREATE TABLE`
+- Используй `CREATE INDEX IF NOT EXISTS` вместо `CREATE INDEX`
+- Используй `DROP TABLE IF EXISTS` вместо `DROP TABLE`
+- Миграции должны быть безопасными для повторного применения
+
+---
+
+### Q: Как создать тестовые данные (seed данные)?
+
+**A:** **ОБЯЗАТЕЛЬНО: Проверка существования данных перед заливкой**
+
+Создай seed данные с проверкой - если данные уже есть, не заливать повторно.
+
+**Способ 1: Seed миграция (рекомендуется)**
+```sql
+-- migrations/000002_seed_personal_npc_data.up.sql
+DO $$
+BEGIN
+    -- Проверка наличия данных перед вставкой
+    IF NOT EXISTS (SELECT 1 FROM personal_npc LIMIT 1) THEN
+        INSERT INTO personal_npc (id, name, owner_id) VALUES
+        ('00000000-0000-0000-0000-000000000001', 'Test NPC 1', '00000000-0000-0000-0000-000000000001'),
+        ('00000000-0000-0000-0000-000000000002', 'Test NPC 2', '00000000-0000-0000-0000-000000000001');
+    END IF;
+END $$;
+```
+
+```sql
+-- migrations/000002_seed_personal_npc_data.down.sql
+DELETE FROM personal_npc WHERE id IN (
+    '00000000-0000-0000-0000-000000000001',
+    '00000000-0000-0000-0000-000000000002'
+);
+```
+
+**Способ 2: Go seed скрипт**
+```go
+// migrations/seed/seed_personal_npc.go
+package seed
+
+import (
+    "context"
+    "fmt"
+    "github.com/jackc/pgx/v5"
+)
+
+func SeedPersonalNPC(ctx context.Context, db *pgx.Conn) error {
+    // Проверка наличия данных
+    var count int
+    err := db.QueryRow(ctx, "SELECT COUNT(*) FROM personal_npc").Scan(&count)
+    if err != nil {
+        return fmt.Errorf("failed to check existing data: %w", err)
+    }
+    
+    // Если данные уже есть, не заливать повторно
+    if count > 0 {
+        fmt.Println("Seed data already exists, skipping...")
+        return nil
+    }
+    
+    // Создание тестовых данных
+    _, err = db.Exec(ctx, `
+        INSERT INTO personal_npc (id, name, owner_id) VALUES
+        ($1, $2, $3),
+        ($4, $5, $6)
+    `, 
+        "00000000-0000-0000-0000-000000000001", "Test NPC 1", "00000000-0000-0000-0000-000000000001",
+        "00000000-0000-0000-0000-000000000002", "Test NPC 2", "00000000-0000-0000-0000-000000000001",
+    )
+    
+    if err != nil {
+        return fmt.Errorf("failed to seed data: %w", err)
+    }
+    
+    fmt.Println("Seed data created successfully")
+    return nil
+}
+```
+
+**Применение seed данных:**
+```bash
+# Через миграции (автоматически при применении миграций)
+migrate -path migrations -database "postgres://necpgame:necpgame@localhost:5432/necpgame?sslmode=disable" up
+
+# Через Go скрипт (вручную)
+go run migrations/seed/seed_personal_npc.go
+```
+
+**Принципы создания seed данных:**
+1. **Проверка существования:** Всегда проверять наличие данных перед вставкой
+2. **Идемпотентность:** Можно запускать несколько раз без дублирования
+3. **Минимальность:** Только необходимые данные для тестирования функционала
+4. **Откат:** Возможность отката seed данных (через down миграцию)
+
 ---
 
 ### Q: Как настроить middleware для аутентификации?
