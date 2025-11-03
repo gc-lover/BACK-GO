@@ -158,6 +158,58 @@ docker-compose down -v
 postgres://necpgame:necpgame@localhost:5432/necpgame?sslmode=disable
 ```
 
+### Структура проекта
+
+```
+BACK-GO/
+├── cmd/                    # Точки входа приложения
+│   └── server/            # Основной сервер
+├── internal/               # Внутренний код приложения
+│   ├── api/               # API спецификации и сгенерированный код
+│   │   └── generated/    # Сгенерированный код из API-SWAGGER
+│   ├── handlers/         # HTTP handlers
+│   ├── services/         # Бизнес-логика
+│   ├── repositories/     # Работа с БД
+│   ├── models/           # Модели данных
+│   ├── middleware/       # Middleware для обработки запросов
+│   └── config/           # Конфигурация
+├── migrations/            # Миграции БД
+├── scripts/              # Скрипты для разработки
+├── docker-compose.yml    # Docker конфигурация для PostgreSQL
+├── go.mod                # Зависимости Go
+├── .golangci.yml         # Конфигурация линтера
+└── Makefile              # Команды для разработки
+```
+
+### Установка и настройка
+
+1. **Установка зависимостей:**
+   ```bash
+   go mod download
+   ```
+
+2. **Установка golangci-lint:**
+   ```bash
+   go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+   ```
+
+3. **Установка migrate (для миграций):**
+   ```bash
+   go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+   ```
+
+4. **Запуск PostgreSQL:**
+   ```bash
+   docker-compose up -d
+   ```
+
+5. **Применение миграций:**
+   ```bash
+   make migrate-up
+   # или
+   migrate -path migrations -database "postgres://necpgame:necpgame@localhost:5432/necpgame?sslmode=disable" up
+   ```
+
 ### Процесс разработки
 
 1. Запуск PostgreSQL: `docker-compose up -d`
@@ -166,3 +218,19 @@ postgres://necpgame:necpgame@localhost:5432/necpgame?sslmode=disable
 4. Реализация бизнес-логики
 5. Написание тестов (покрытие не менее 50%)
 6. Документирование кода
+
+### Полезные команды
+
+Используйте `Makefile` для упрощения работы:
+
+```bash
+make help          # Показать все доступные команды
+make build         # Собрать проект
+make run           # Запустить сервер
+make test          # Запустить тесты
+make test-coverage # Запустить тесты с покрытием
+make lint          # Запустить линтер
+make format        # Форматировать код
+make docker-up     # Запустить PostgreSQL
+make docker-down   # Остановить PostgreSQL
+```
