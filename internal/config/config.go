@@ -24,7 +24,7 @@ func Load() *Config {
 		ServerPort: getEnv("SERVER_PORT", "8080"),
 		ServerHost: getEnv("SERVER_HOST", "localhost"),
 		DBHost:     getEnv("POSTGRES_HOST", "localhost"),
-		DBPort:     getEnv("POSTGRES_PORT", "5432"),
+		DBPort:     getEnv("POSTGRES_PORT", "5433"), // Используем порт 5433, так как 5432 занят
 		DBUser:     getEnv("POSTGRES_USER", "necpgame"),
 		DBPassword: getEnv("POSTGRES_PASSWORD", "necpgame"),
 		DBName:     getEnv("POSTGRES_DB", "necpgame"),
@@ -53,4 +53,3 @@ func (c *Config) DatabaseURL() string {
 		c.DBSSLMode,
 	)
 }
-

@@ -42,4 +42,3 @@ func RegisterRoutes(router *gin.RouterGroup, logger *zap.Logger) {
 
 	logger.Info("Routes registered successfully")
 }
-
