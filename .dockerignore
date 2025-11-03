@@ -1,0 +1,14 @@
+# Игнорируемые файлы при сборке Docker образа
+.git
+.gitignore
+*.md
+.env
+.env.local
+.env.*.local
+node_modules
+*.log
+.DS_Store
+Thumbs.db
+.vscode
+.idea
+

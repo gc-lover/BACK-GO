@@ -275,39 +275,39 @@ BACK-GO/internal/
 
 **A:** **ОБЯЗАТЕЛЬНО: PostgreSQL в Docker для локальной разработки**
 
-Создай Docker контейнер с PostgreSQL:
+**ВАЖНО:** В репозитории уже создан `docker-compose.yml` с настроенным PostgreSQL контейнером. Используй его!
 
+**Запуск PostgreSQL контейнера:**
 ```bash
-# Создание и запуск контейнера PostgreSQL
-docker run --name necpgame-postgres \
-  -e POSTGRES_USER=necpgame \
-  -e POSTGRES_PASSWORD=necpgame \
-  -e POSTGRES_DB=necpgame \
-  -p 5432:5432 \
-  -d postgres:15
+# Запуск контейнера (из корня репозитория BACK-GO)
+docker-compose up -d
 
-# Или используй docker-compose.yml
+# Проверка статуса
+docker-compose ps
+
+# Просмотр логов
+docker-compose logs postgres
+
+# Остановка контейнера
+docker-compose down
+
+# Остановка с удалением данных (ОСТОРОЖНО!)
+docker-compose down -v
 ```
 
-```yaml
-# docker-compose.yml
-version: '3.8'
+**Файл docker-compose.yml уже создан** в корне репозитория `BACK-GO/docker-compose.yml` и содержит:
+- PostgreSQL 15
+- Настроенные переменные окружения
+- Healthcheck для проверки готовности БД
+- Volume для сохранения данных
 
-services:
-  postgres:
-    image: postgres:15
-    container_name: necpgame-postgres
-    environment:
-      POSTGRES_USER: necpgame
-      POSTGRES_PASSWORD: necpgame
-      POSTGRES_DB: necpgame
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-volumes:
-  postgres_data:
+**Подключение к БД:**
+```
+Host: localhost
+Port: 5432
+User: necpgame
+Password: necpgame
+Database: necpgame
 ```
 
 **Подключение к БД:**

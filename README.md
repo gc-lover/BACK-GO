@@ -106,7 +106,42 @@
 
 ## Разработка
 
-1. Генерация кода из API-SWAGGER спецификаций
-2. Реализация бизнес-логики
-3. Написание тестов
-4. Документирование кода
+### Запуск PostgreSQL в Docker
+
+Для локальной разработки используется PostgreSQL в Docker контейнере.
+
+**Запуск контейнера:**
+```bash
+# Запуск PostgreSQL контейнера
+docker-compose up -d
+
+# Проверка статуса
+docker-compose ps
+
+# Остановка контейнера
+docker-compose down
+
+# Остановка с удалением данных
+docker-compose down -v
+```
+
+**Подключение к БД:**
+- Host: `localhost`
+- Port: `5432`
+- User: `necpgame`
+- Password: `necpgame`
+- Database: `necpgame`
+
+**Строка подключения:**
+```
+postgres://necpgame:necpgame@localhost:5432/necpgame?sslmode=disable
+```
+
+### Процесс разработки
+
+1. Запуск PostgreSQL: `docker-compose up -d`
+2. Генерация кода из API-SWAGGER спецификаций
+3. Применение миграций БД
+4. Реализация бизнес-логики
+5. Написание тестов (покрытие не менее 50%)
+6. Документирование кода
