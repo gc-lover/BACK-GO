@@ -376,6 +376,43 @@ if err != nil {
 
 ---
 
+## Использование скриптов для генерации API
+
+### Скрипт generate-api
+
+Для упрощения генерации кода из API Swagger спецификаций созданы стандартные скрипты:
+
+**Linux/Mac:**
+```bash
+# Генерация Go серверного кода
+./scripts/generate-api.sh ../API-SWAGGER/api/v1/gameplay/social/personal-npc-tool.yaml internal/api/generated/personal-npc-tool go-gin-server
+
+# Параметры:
+# 1. Путь к API Swagger файлу
+# 2. Выходная директория
+# 3. Фреймворк (go-gin-server, go-echo-server, go-fiber-server, go-server)
+```
+
+**Windows:**
+```powershell
+# Генерация Go серверного кода
+.\scripts\generate-api.ps1 ..\API-SWAGGER\api\v1\gameplay\social\personal-npc-tool.yaml internal\api\generated\personal-npc-tool go-gin-server
+```
+
+**Примеры использования:**
+```bash
+# С Gin фреймворком (рекомендуется)
+./scripts/generate-api.sh ../API-SWAGGER/api/v1/gameplay/social/personal-npc-tool.yaml internal/api/generated/personal-npc-tool go-gin-server
+
+# С Echo фреймворком
+./scripts/generate-api.sh ../API-SWAGGER/api/v1/gameplay/social/personal-npc-tool.yaml internal/api/generated/personal-npc-tool go-echo-server
+
+# С Fiber фреймворком
+./scripts/generate-api.sh ../API-SWAGGER/api/v1/gameplay/social/personal-npc-tool.yaml internal/api/generated/personal-npc-tool go-fiber-server
+```
+
+---
+
 ## Примеры команд
 
 ### Пример 1: Один API файл
