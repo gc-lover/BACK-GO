@@ -271,6 +271,70 @@ BACK-GO/internal/
 
 ---
 
+### Q: Как настроить PostgreSQL в Docker?
+
+**A:** **ОБЯЗАТЕЛЬНО: PostgreSQL в Docker для локальной разработки**
+
+Создай Docker контейнер с PostgreSQL:
+
+```bash
+# Создание и запуск контейнера PostgreSQL
+docker run --name necpgame-postgres \
+  -e POSTGRES_USER=necpgame \
+  -e POSTGRES_PASSWORD=necpgame \
+  -e POSTGRES_DB=necpgame \
+  -p 5432:5432 \
+  -d postgres:15
+
+# Или используй docker-compose.yml
+```
+
+```yaml
+# docker-compose.yml
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: necpgame-postgres
+    environment:
+      POSTGRES_USER: necpgame
+      POSTGRES_PASSWORD: necpgame
+      POSTGRES_DB: necpgame
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+```
+
+**Подключение к БД:**
+```go
+// config/database.go
+import "github.com/jackc/pgx/v5"
+
+func ConnectDB() (*pgx.Conn, error) {
+    connStr := "postgres://necpgame:necpgame@localhost:5432/necpgame?sslmode=disable"
+    conn, err := pgx.Connect(context.Background(), connStr)
+    if err != nil {
+        return nil, err
+    }
+    return conn, nil
+}
+```
+
+**Применение миграций:**
+```bash
+# Применение миграций
+migrate -path migrations \
+  -database "postgres://necpgame:necpgame@localhost:5432/necpgame?sslmode=disable" \
+  up
+```
+
+---
+
 ### Q: Как использовать структурированное логирование?
 
 **A:** Используй logrus или zap:
