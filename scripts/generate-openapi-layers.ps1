@@ -215,16 +215,26 @@ foreach ($ApiFile in $ApiFiles) {
         Write-Step "1/2 Генерация DTOs и API Interfaces"
         
         $DtosParams = $CommonParams + @(
-            "-o", ".",
+            "-o", "target/generated-openapi-temp",
             "--api-package", "com.necpgame.backjava.api",
             "--model-package", "com.necpgame.backjava.model",
             "--invoker-package", "com.necpgame.backjava.invoker",
-            "-p", "interfaceOnly=true,useSpringBoot3=true,useJakartaEe=true,openApiNullable=false,useBeanValidation=true,hideGenerationTimestamp=true"
+            "-p", "interfaceOnly=true,useSpringBoot3=true,useJakartaEe=true,openApiNullable=false,useBeanValidation=true,hideGenerationTimestamp=true,sourceFolder=."
         )
         
         $result = npx --yes @openapitools/openapi-generator-cli @DtosParams 2>&1
         if ($LASTEXITCODE -eq 0) {
-            Write-Success "DTOs и API Interfaces сгенерированы"
+            # Копируем только нужные директории в src/main/java/
+            $tempSrc = "target/generated-openapi-temp/com"
+            $targetSrc = "src/main/java/com"
+            if (Test-Path $tempSrc) {
+                Copy-Item -Path $tempSrc -Destination "src/main/java/" -Recurse -Force
+                Write-Success "DTOs и API Interfaces сгенерированы и скопированы в src/"
+            } else {
+                Write-Failed "Не найдена директория $tempSrc после генерации"
+                $FailedFiles++
+                continue
+            }
         } else {
             Write-Failed "Ошибка генерации DTOs из $FileName"
             Write-Host $result -ForegroundColor $ColorError
@@ -240,16 +250,25 @@ foreach ($ApiFile in $ApiFiles) {
         Write-Step "2/2 Генерация Service интерфейсов"
         
         $ServicesParams = $CommonParams + @(
-            "-o", ".",
+            "-o", "target/generated-services-temp",
             "--api-package", "com.necpgame.backjava.service",
             "--model-package", "com.necpgame.backjava.model",
             "--api-name-suffix", "Service",
-            "-p", "interfaceOnly=true,generateApis=true,generateModels=false,useSpringBoot3=true,useJakartaEe=true,hideGenerationTimestamp=true"
+            "-p", "interfaceOnly=true,generateApis=true,generateModels=false,useSpringBoot3=true,useJakartaEe=true,hideGenerationTimestamp=true,sourceFolder=."
         )
         
         $result = npx --yes @openapitools/openapi-generator-cli @ServicesParams 2>&1
         if ($LASTEXITCODE -eq 0) {
-            Write-Success "Service интерфейсы сгенерированы"
+            # Копируем только service директорию в src/main/java/
+            $tempSrc = "target/generated-services-temp/com"
+            if (Test-Path $tempSrc) {
+                Copy-Item -Path $tempSrc -Destination "src/main/java/" -Recurse -Force
+                Write-Success "Service интерфейсы сгенерированы и скопированы в src/"
+            } else {
+                Write-Failed "Не найдена директория $tempSrc после генерации"
+                $FailedFiles++
+                continue
+            }
         } else {
             Write-Failed "Ошибка генерации Services из $FileName"
             Write-Host $result -ForegroundColor $ColorError
