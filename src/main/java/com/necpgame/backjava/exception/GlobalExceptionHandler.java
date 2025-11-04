@@ -1,42 +1,61 @@
 package com.necpgame.backjava.exception;
 
+import com.necpgame.backjava.model.Error;
+import com.necpgame.backjava.model.ErrorError;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+/**
+ * Глобальный обработчик исключений
+ * Преобразует доменные исключения в HTTP ответы с Error DTO из OpenAPI
+ */
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
+    
+    /**
+     * Обработка всех доменных исключений (ApiException и наследники)
+     */
     @ExceptionHandler(ApiException.class)
-    public ResponseEntity<ErrorResponse> handleApiException(ApiException e) {
-        log.error("API error [{}]: {}", e.getErrorCode().name(), e.getMessage());
-        return buildErrorResponse(e.getErrorCode(), e.getMessage());
+    public ResponseEntity<Error> handleApiException(ApiException ex) {
+        ErrorCode errorCode = ex.getErrorCode();
+        
+        log.warn("API Exception: {} - {}", errorCode.getCode(), ex.getMessage());
+        
+        // Создаём Error DTO из OpenAPI спецификации
+        Error error = new Error();
+        
+        ErrorError errorDetails = new ErrorError();
+        errorDetails.setCode(errorCode.getCode());
+        errorDetails.setMessage(ex.getMessage());
+        
+        error.setError(errorDetails);
+        
+        return ResponseEntity
+                .status(errorCode.getHttpStatus())
+                .body(error);
     }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleValidation(MethodArgumentNotValidException e) {
-        log.error("Validation error: {}", e.getMessage());
-        String message = e.getBindingResult().getFieldErrors().stream()
-            .map(error -> error.getField() + ": " + error.getDefaultMessage())
-            .findFirst()
-            .orElse("Validation failed");
-        return buildErrorResponse(ErrorCode.BAD_REQUEST, message);
-    }
-
+    
+    /**
+     * Обработка непредвиденных исключений
+     */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleException(Exception e) {
-        log.error("Unexpected error", e);
-        return buildErrorResponse(ErrorCode.INTERNAL_ERROR, "Internal server error");
-    }
-
-    private ResponseEntity<ErrorResponse> buildErrorResponse(ErrorCode errorCode, String message) {
-        ErrorResponse response = new ErrorResponse(
-            errorCode.name(),
-            message != null ? message : errorCode.getMessage()
-        );
-        return ResponseEntity.status(errorCode.getHttpStatus()).body(response);
+    public ResponseEntity<Error> handleUnexpectedException(Exception ex) {
+        log.error("Unexpected exception", ex);
+        
+        Error error = new Error();
+        
+        ErrorError errorDetails = new ErrorError();
+        errorDetails.setCode("INTERNAL_ERROR");
+        errorDetails.setMessage("Internal server error");
+        
+        error.setError(errorDetails);
+        
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(error);
     }
 }

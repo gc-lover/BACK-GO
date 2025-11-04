@@ -1,9 +1,10 @@
 package com.necpgame.backjava.service.impl;
 
 import com.necpgame.backjava.entity.AccountEntity;
-import com.necpgame.backjava.exception.ConflictException;
-import com.necpgame.backjava.exception.UnauthorizedException;
-import com.necpgame.backjava.exception.BadRequestException;
+import com.necpgame.backjava.exception.AuthException;
+import com.necpgame.backjava.exception.BusinessException;
+import com.necpgame.backjava.exception.ValidationException;
+import com.necpgame.backjava.exception.ErrorCode;
 import com.necpgame.backjava.mapper.AccountMapper;
 import com.necpgame.backjava.model.LoginRequest;
 import com.necpgame.backjava.model.LoginResponse;
@@ -43,22 +44,22 @@ public class AuthServiceImpl implements AuthService {
         
         // Валидация: пароли должны совпадать
         if (!request.getPassword().equals(request.getPasswordConfirm())) {
-            throw new BadRequestException("Passwords do not match");
+            throw new ValidationException(ErrorCode.INVALID_INPUT, "Passwords do not match");
         }
         
         // Валидация: принятие условий
         if (!request.getTermsAccepted()) {
-            throw new BadRequestException("Terms and conditions must be accepted");
+            throw new ValidationException(ErrorCode.MISSING_REQUIRED_FIELD, "Terms and conditions must be accepted");
         }
         
         // Проверка: email уже существует
         if (accountRepository.existsByEmail(request.getEmail())) {
-            throw new ConflictException("Email already exists: " + request.getEmail());
+            throw new BusinessException(ErrorCode.RESOURCE_ALREADY_EXISTS, "Email already exists: " + request.getEmail());
         }
         
         // Проверка: username уже существует
         if (accountRepository.existsByUsername(request.getUsername())) {
-            throw new ConflictException("Username already exists: " + request.getUsername());
+            throw new BusinessException(ErrorCode.RESOURCE_ALREADY_EXISTS, "Username already exists: " + request.getUsername());
         }
         
         // Создание нового аккаунта
@@ -94,12 +95,12 @@ public class AuthServiceImpl implements AuthService {
         // Поиск аккаунта по email или username
         AccountEntity account = accountRepository
                 .findActiveByEmailOrUsername(request.getLogin())
-                .orElseThrow(() -> new UnauthorizedException("Invalid credentials"));
+                .orElseThrow(() -> new AuthException(ErrorCode.INVALID_CREDENTIALS));
         
         // Проверка пароля
         if (!passwordEncoder.matches(request.getPassword(), account.getPasswordHash())) {
             log.warn("Invalid password for account: {}", account.getId());
-            throw new UnauthorizedException("Invalid credentials");
+            throw new AuthException(ErrorCode.INVALID_CREDENTIALS);
         }
         
         // Обновление last_login

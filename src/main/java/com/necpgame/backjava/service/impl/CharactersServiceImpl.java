@@ -1,9 +1,10 @@
 package com.necpgame.backjava.service.impl;
 
 import com.necpgame.backjava.entity.*;
-import com.necpgame.backjava.exception.BadRequestException;
-import com.necpgame.backjava.exception.ConflictException;
-import com.necpgame.backjava.exception.ResourceNotFoundException;
+import com.necpgame.backjava.exception.AuthException;
+import com.necpgame.backjava.exception.BusinessException;
+import com.necpgame.backjava.exception.ValidationException;
+import com.necpgame.backjava.exception.ErrorCode;
 import com.necpgame.backjava.mapper.CharacterAppearanceMapper;
 import com.necpgame.backjava.mapper.CharacterClassMapper;
 import com.necpgame.backjava.mapper.CharacterMapper;
@@ -74,22 +75,26 @@ public class CharactersServiceImpl implements CharactersService {
         
         // Валидация: имя уже существует у этого аккаунта
         if (characterRepository.existsByNameAndAccountId(request.getName(), accountId)) {
-            throw new ConflictException("Character with name '" + request.getName() + "' already exists");
+            throw new BusinessException(ErrorCode.RESOURCE_ALREADY_EXISTS, 
+                "Character with name '" + request.getName() + "' already exists");
         }
         
         // Получение аккаунта
         AccountEntity account = accountRepository.findById(accountId)
-                .orElseThrow(() -> new ResourceNotFoundException("Account", "id", accountId));
+                .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND, 
+                    "Account not found: " + accountId));
         
         // Получение города
         CityEntity city = cityRepository.findById(request.getCityId())
-                .orElseThrow(() -> new ResourceNotFoundException("City", "id", request.getCityId()));
+                .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND, 
+                    "City not found: " + request.getCityId()));
         
         // Получение фракции (если указана)
         FactionEntity faction = null;
         if (request.getFactionId() != null) {
             faction = factionRepository.findById(request.getFactionId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Faction", "id", request.getFactionId()));
+                    .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND, 
+                        "Faction not found: " + request.getFactionId()));
         }
         
         // Создание внешности
@@ -132,11 +137,13 @@ public class CharactersServiceImpl implements CharactersService {
         log.info("Fetching character {} for account: {}", characterId, accountId);
         
         CharacterEntity character = characterRepository.findByIdWithDetails(characterId)
-                .orElseThrow(() -> new ResourceNotFoundException("Character", "id", characterId));
+                .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND, 
+                    "Character not found: " + characterId));
         
         // Проверка владения персонажем
         if (!character.getAccount().getId().equals(accountId)) {
-            throw new ResourceNotFoundException("Character", "id", characterId);
+            throw new AuthException(ErrorCode.ACCESS_DENIED, 
+                "You don't have access to this character");
         }
         
         return characterMapper.toDto(character);
@@ -152,7 +159,8 @@ public class CharactersServiceImpl implements CharactersService {
         log.info("Deleting character {} for account: {}", characterId, accountId);
         
         CharacterEntity character = characterRepository.findByIdAndAccountId(characterId, accountId)
-                .orElseThrow(() -> new ResourceNotFoundException("Character", "id", characterId));
+                .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND, 
+                    "Character not found: " + characterId));
         
         characterRepository.delete(character);
         
@@ -206,7 +214,7 @@ public class CharactersServiceImpl implements CharactersService {
     private UUID getCurrentAccountId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
-            throw new BadRequestException("User not authenticated");
+            throw new AuthException(ErrorCode.INVALID_CREDENTIALS, "User not authenticated");
         }
         return UUID.fromString(authentication.getName());
     }
