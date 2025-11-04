@@ -5,7 +5,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.necpgame.backjava.model.CharacterSummary;
+import com.necpgame.backjava.model.GameCharacterSummary;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,11 +25,11 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("listCharacters_200_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
+
 public class ListCharacters200Response {
 
   @Valid
-  private List<@Valid CharacterSummary> characters = new ArrayList<>();
+  private List<@Valid GameCharacterSummary> characters = new ArrayList<>();
 
   private Integer maxCharacters;
 
@@ -42,18 +42,18 @@ public class ListCharacters200Response {
   /**
    * Constructor with only required parameters
    */
-  public ListCharacters200Response(List<@Valid CharacterSummary> characters, Integer maxCharacters, Integer currentCount) {
+  public ListCharacters200Response(List<@Valid GameCharacterSummary> characters, Integer maxCharacters, Integer currentCount) {
     this.characters = characters;
     this.maxCharacters = maxCharacters;
     this.currentCount = currentCount;
   }
 
-  public ListCharacters200Response characters(List<@Valid CharacterSummary> characters) {
+  public ListCharacters200Response characters(List<@Valid GameCharacterSummary> characters) {
     this.characters = characters;
     return this;
   }
 
-  public ListCharacters200Response addCharactersItem(CharacterSummary charactersItem) {
+  public ListCharacters200Response addCharactersItem(GameCharacterSummary charactersItem) {
     if (this.characters == null) {
       this.characters = new ArrayList<>();
     }
@@ -68,11 +68,11 @@ public class ListCharacters200Response {
   @NotNull @Valid 
   @Schema(name = "characters", description = "Список персонажей", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("characters")
-  public List<@Valid CharacterSummary> getCharacters() {
+  public List<@Valid GameCharacterSummary> getCharacters() {
     return characters;
   }
 
-  public void setCharacters(List<@Valid CharacterSummary> characters) {
+  public void setCharacters(List<@Valid GameCharacterSummary> characters) {
     this.characters = characters;
   }
 

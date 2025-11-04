@@ -5,7 +5,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.necpgame.backjava.model.Character;
+import com.necpgame.backjava.model.GameCharacter;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -22,10 +22,10 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("createCharacter_201_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
+
 public class CreateCharacter201Response {
 
-  private Character character;
+  private GameCharacter character;
 
   public CreateCharacter201Response() {
     super();
@@ -34,11 +34,11 @@ public class CreateCharacter201Response {
   /**
    * Constructor with only required parameters
    */
-  public CreateCharacter201Response(Character character) {
+  public CreateCharacter201Response(GameCharacter character) {
     this.character = character;
   }
 
-  public CreateCharacter201Response character(Character character) {
+  public CreateCharacter201Response character(GameCharacter character) {
     this.character = character;
     return this;
   }
@@ -50,11 +50,11 @@ public class CreateCharacter201Response {
   @NotNull @Valid 
   @Schema(name = "character", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("character")
-  public Character getCharacter() {
+  public GameCharacter getCharacter() {
     return character;
   }
 
-  public void setCharacter(Character character) {
+  public void setCharacter(GameCharacter character) {
     this.character = character;
   }
 

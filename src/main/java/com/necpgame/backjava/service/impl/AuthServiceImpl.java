@@ -3,26 +3,22 @@ package com.necpgame.backjava.service.impl;
 import com.necpgame.backjava.entity.AccountEntity;
 import com.necpgame.backjava.exception.AuthException;
 import com.necpgame.backjava.exception.BusinessException;
-import com.necpgame.backjava.exception.ValidationException;
 import com.necpgame.backjava.exception.ErrorCode;
-import com.necpgame.backjava.mapper.AccountMapper;
 import com.necpgame.backjava.model.LoginRequest;
 import com.necpgame.backjava.model.LoginResponse;
 import com.necpgame.backjava.model.Register201Response;
 import com.necpgame.backjava.model.RegisterRequest;
 import com.necpgame.backjava.repository.AccountRepository;
-import com.necpgame.backjava.security.JwtTokenProvider;
 import com.necpgame.backjava.service.AuthService;
+import com.necpgame.backjava.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.OffsetDateTime;
-
 /**
- * Реализация AuthService - регистрация и авторизация пользователей
+ * Реализация сервиса аутентификации
  */
 @Slf4j
 @Service
@@ -31,8 +27,7 @@ public class AuthServiceImpl implements AuthService {
     
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
-    private final AccountMapper accountMapper;
+    private final JwtUtil jwtUtil;
     
     /**
      * Регистрация нового аккаунта
@@ -40,26 +35,18 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional
     public Register201Response register(RegisterRequest request) {
-        log.info("Registration attempt for email: {}", request.getEmail());
+        log.info("Registering new account: {}", request.getEmail());
         
-        // Валидация: пароли должны совпадать
-        if (!request.getPassword().equals(request.getPasswordConfirm())) {
-            throw new ValidationException(ErrorCode.INVALID_INPUT, "Passwords do not match");
-        }
-        
-        // Валидация: принятие условий
-        if (!request.getTermsAccepted()) {
-            throw new ValidationException(ErrorCode.MISSING_REQUIRED_FIELD, "Terms and conditions must be accepted");
-        }
-        
-        // Проверка: email уже существует
+        // Проверка уникальности email
         if (accountRepository.existsByEmail(request.getEmail())) {
-            throw new BusinessException(ErrorCode.RESOURCE_ALREADY_EXISTS, "Email already exists: " + request.getEmail());
+            throw new BusinessException(ErrorCode.RESOURCE_ALREADY_EXISTS, 
+                "Account with this email already exists");
         }
         
-        // Проверка: username уже существует
+        // Проверка уникальности username
         if (accountRepository.existsByUsername(request.getUsername())) {
-            throw new BusinessException(ErrorCode.RESOURCE_ALREADY_EXISTS, "Username already exists: " + request.getUsername());
+            throw new BusinessException(ErrorCode.RESOURCE_ALREADY_EXISTS, 
+                "Account with this username already exists");
         }
         
         // Создание нового аккаунта
@@ -67,19 +54,18 @@ public class AuthServiceImpl implements AuthService {
         account.setEmail(request.getEmail());
         account.setUsername(request.getUsername());
         account.setPasswordHash(passwordEncoder.encode(request.getPassword()));
-        account.setIsActive(true);
-        account.setCreatedAt(OffsetDateTime.now());
-        account.setUpdatedAt(OffsetDateTime.now());
         
-        // Сохранение в БД
         account = accountRepository.save(account);
-        
         log.info("Account created successfully: {}", account.getId());
+        
+        // Генерация JWT токена
+        String token = jwtUtil.generateToken(account.getId(), account.getEmail());
         
         // Формирование ответа
         Register201Response response = new Register201Response();
         response.setAccountId(account.getId());
         response.setMessage("Account created successfully");
+        response.setToken(token);
         
         return response;
     }
@@ -88,35 +74,30 @@ public class AuthServiceImpl implements AuthService {
      * Вход в систему
      */
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public LoginResponse login(LoginRequest request) {
         log.info("Login attempt for: {}", request.getLogin());
         
         // Поиск аккаунта по email или username
-        AccountEntity account = accountRepository
-                .findActiveByEmailOrUsername(request.getLogin())
-                .orElseThrow(() -> new AuthException(ErrorCode.INVALID_CREDENTIALS));
+        AccountEntity account = accountRepository.findByEmail(request.getLogin())
+            .or(() -> accountRepository.findByUsername(request.getLogin()))
+            .orElseThrow(() -> new AuthException(ErrorCode.INVALID_CREDENTIALS));
         
         // Проверка пароля
         if (!passwordEncoder.matches(request.getPassword(), account.getPasswordHash())) {
-            log.warn("Invalid password for account: {}", account.getId());
             throw new AuthException(ErrorCode.INVALID_CREDENTIALS);
         }
         
-        // Обновление last_login
-        account.setLastLogin(OffsetDateTime.now());
-        accountRepository.save(account);
-        
-        // Создание JWT токена
-        String token = jwtTokenProvider.createToken(account.getId());
-        
         log.info("Login successful for account: {}", account.getId());
+        
+        // Генерация JWT токена
+        String token = jwtUtil.generateToken(account.getId(), account.getEmail());
         
         // Формирование ответа
         LoginResponse response = new LoginResponse();
-        response.setToken(token);
         response.setAccountId(account.getId());
-        response.setExpiresAt(jwtTokenProvider.getTokenExpiration());
+        response.setToken(token);
+        response.setMessage("Login successful");
         
         return response;
     }

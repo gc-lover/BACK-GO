@@ -5,7 +5,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.necpgame.backjava.model.CharacterAppearance;
+import com.necpgame.backjava.model.GameCharacterAppearance;
 import java.util.Arrays;
 import java.util.UUID;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -25,7 +25,7 @@ import jakarta.annotation.Generated;
  * CreateCharacterRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
+
 public class CreateCharacterRequest {
 
   private String name;
@@ -173,7 +173,7 @@ public class CreateCharacterRequest {
 
   private UUID cityId;
 
-  private CharacterAppearance appearance;
+  private GameCharacterAppearance appearance;
 
   public CreateCharacterRequest() {
     super();
@@ -182,7 +182,7 @@ public class CreateCharacterRequest {
   /**
    * Constructor with only required parameters
    */
-  public CreateCharacterRequest(String name, PropertyClassEnum propertyClass, GenderEnum gender, OriginEnum origin, UUID cityId, CharacterAppearance appearance) {
+  public CreateCharacterRequest(String name, PropertyClassEnum propertyClass, GenderEnum gender, OriginEnum origin, UUID cityId, GameCharacterAppearance appearance) {
     this.name = name;
     this.propertyClass = propertyClass;
     this.gender = gender;
@@ -331,7 +331,7 @@ public class CreateCharacterRequest {
     this.cityId = cityId;
   }
 
-  public CreateCharacterRequest appearance(CharacterAppearance appearance) {
+  public CreateCharacterRequest appearance(GameCharacterAppearance appearance) {
     this.appearance = appearance;
     return this;
   }
@@ -343,11 +343,11 @@ public class CreateCharacterRequest {
   @NotNull @Valid 
   @Schema(name = "appearance", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("appearance")
-  public CharacterAppearance getAppearance() {
+  public GameCharacterAppearance getAppearance() {
     return appearance;
   }
 
-  public void setAppearance(CharacterAppearance appearance) {
+  public void setAppearance(GameCharacterAppearance appearance) {
     this.appearance = appearance;
   }
 

@@ -24,7 +24,7 @@ import jakarta.annotation.Generated;
  * Faction
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
+
 public class Faction {
 
   private UUID id;

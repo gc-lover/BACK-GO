@@ -5,7 +5,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.necpgame.backjava.model.CharacterAppearance;
+import com.necpgame.backjava.model.GameCharacterAppearance;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.UUID;
@@ -24,11 +24,11 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Character
+ * GameCharacter
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
-public class Character {
+
+public class GameCharacter {
 
   private UUID id;
 
@@ -183,7 +183,7 @@ public class Character {
 
   private String cityName;
 
-  private CharacterAppearance appearance;
+  private GameCharacterAppearance appearance;
 
   private Integer level = 1;
 
@@ -193,14 +193,14 @@ public class Character {
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private JsonNullable<OffsetDateTime> lastLogin = JsonNullable.<OffsetDateTime>undefined();
 
-  public Character() {
+  public GameCharacter() {
     super();
   }
 
   /**
    * Constructor with only required parameters
    */
-  public Character(UUID id, UUID accountId, String name, PropertyClassEnum propertyClass, GenderEnum gender, OriginEnum origin, UUID cityId, String cityName, CharacterAppearance appearance, Integer level, OffsetDateTime createdAt) {
+  public GameCharacter(UUID id, UUID accountId, String name, PropertyClassEnum propertyClass, GenderEnum gender, OriginEnum origin, UUID cityId, String cityName, GameCharacterAppearance appearance, Integer level, OffsetDateTime createdAt) {
     this.id = id;
     this.accountId = accountId;
     this.name = name;
@@ -214,7 +214,7 @@ public class Character {
     this.createdAt = createdAt;
   }
 
-  public Character id(UUID id) {
+  public GameCharacter id(UUID id) {
     this.id = id;
     return this;
   }
@@ -234,7 +234,7 @@ public class Character {
     this.id = id;
   }
 
-  public Character accountId(UUID accountId) {
+  public GameCharacter accountId(UUID accountId) {
     this.accountId = accountId;
     return this;
   }
@@ -254,7 +254,7 @@ public class Character {
     this.accountId = accountId;
   }
 
-  public Character name(String name) {
+  public GameCharacter name(String name) {
     this.name = name;
     return this;
   }
@@ -274,7 +274,7 @@ public class Character {
     this.name = name;
   }
 
-  public Character propertyClass(PropertyClassEnum propertyClass) {
+  public GameCharacter propertyClass(PropertyClassEnum propertyClass) {
     this.propertyClass = propertyClass;
     return this;
   }
@@ -294,7 +294,7 @@ public class Character {
     this.propertyClass = propertyClass;
   }
 
-  public Character subclass(String subclass) {
+  public GameCharacter subclass(String subclass) {
     this.subclass = JsonNullable.of(subclass);
     return this;
   }
@@ -314,7 +314,7 @@ public class Character {
     this.subclass = subclass;
   }
 
-  public Character gender(GenderEnum gender) {
+  public GameCharacter gender(GenderEnum gender) {
     this.gender = gender;
     return this;
   }
@@ -334,7 +334,7 @@ public class Character {
     this.gender = gender;
   }
 
-  public Character origin(OriginEnum origin) {
+  public GameCharacter origin(OriginEnum origin) {
     this.origin = origin;
     return this;
   }
@@ -354,7 +354,7 @@ public class Character {
     this.origin = origin;
   }
 
-  public Character factionId(UUID factionId) {
+  public GameCharacter factionId(UUID factionId) {
     this.factionId = JsonNullable.of(factionId);
     return this;
   }
@@ -374,7 +374,7 @@ public class Character {
     this.factionId = factionId;
   }
 
-  public Character factionName(String factionName) {
+  public GameCharacter factionName(String factionName) {
     this.factionName = JsonNullable.of(factionName);
     return this;
   }
@@ -394,7 +394,7 @@ public class Character {
     this.factionName = factionName;
   }
 
-  public Character cityId(UUID cityId) {
+  public GameCharacter cityId(UUID cityId) {
     this.cityId = cityId;
     return this;
   }
@@ -414,7 +414,7 @@ public class Character {
     this.cityId = cityId;
   }
 
-  public Character cityName(String cityName) {
+  public GameCharacter cityName(String cityName) {
     this.cityName = cityName;
     return this;
   }
@@ -434,7 +434,7 @@ public class Character {
     this.cityName = cityName;
   }
 
-  public Character appearance(CharacterAppearance appearance) {
+  public GameCharacter appearance(GameCharacterAppearance appearance) {
     this.appearance = appearance;
     return this;
   }
@@ -446,15 +446,15 @@ public class Character {
   @NotNull @Valid 
   @Schema(name = "appearance", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("appearance")
-  public CharacterAppearance getAppearance() {
+  public GameCharacterAppearance getAppearance() {
     return appearance;
   }
 
-  public void setAppearance(CharacterAppearance appearance) {
+  public void setAppearance(GameCharacterAppearance appearance) {
     this.appearance = appearance;
   }
 
-  public Character level(Integer level) {
+  public GameCharacter level(Integer level) {
     this.level = level;
     return this;
   }
@@ -475,7 +475,7 @@ public class Character {
     this.level = level;
   }
 
-  public Character createdAt(OffsetDateTime createdAt) {
+  public GameCharacter createdAt(OffsetDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -495,7 +495,7 @@ public class Character {
     this.createdAt = createdAt;
   }
 
-  public Character lastLogin(OffsetDateTime lastLogin) {
+  public GameCharacter lastLogin(OffsetDateTime lastLogin) {
     this.lastLogin = JsonNullable.of(lastLogin);
     return this;
   }
@@ -523,22 +523,22 @@ public class Character {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Character character = (Character) o;
-    return Objects.equals(this.id, character.id) &&
-        Objects.equals(this.accountId, character.accountId) &&
-        Objects.equals(this.name, character.name) &&
-        Objects.equals(this.propertyClass, character.propertyClass) &&
-        equalsNullable(this.subclass, character.subclass) &&
-        Objects.equals(this.gender, character.gender) &&
-        Objects.equals(this.origin, character.origin) &&
-        equalsNullable(this.factionId, character.factionId) &&
-        equalsNullable(this.factionName, character.factionName) &&
-        Objects.equals(this.cityId, character.cityId) &&
-        Objects.equals(this.cityName, character.cityName) &&
-        Objects.equals(this.appearance, character.appearance) &&
-        Objects.equals(this.level, character.level) &&
-        Objects.equals(this.createdAt, character.createdAt) &&
-        equalsNullable(this.lastLogin, character.lastLogin);
+    GameCharacter gameCharacter = (GameCharacter) o;
+    return Objects.equals(this.id, gameCharacter.id) &&
+        Objects.equals(this.accountId, gameCharacter.accountId) &&
+        Objects.equals(this.name, gameCharacter.name) &&
+        Objects.equals(this.propertyClass, gameCharacter.propertyClass) &&
+        equalsNullable(this.subclass, gameCharacter.subclass) &&
+        Objects.equals(this.gender, gameCharacter.gender) &&
+        Objects.equals(this.origin, gameCharacter.origin) &&
+        equalsNullable(this.factionId, gameCharacter.factionId) &&
+        equalsNullable(this.factionName, gameCharacter.factionName) &&
+        Objects.equals(this.cityId, gameCharacter.cityId) &&
+        Objects.equals(this.cityName, gameCharacter.cityName) &&
+        Objects.equals(this.appearance, gameCharacter.appearance) &&
+        Objects.equals(this.level, gameCharacter.level) &&
+        Objects.equals(this.createdAt, gameCharacter.createdAt) &&
+        equalsNullable(this.lastLogin, gameCharacter.lastLogin);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -560,7 +560,7 @@ public class Character {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Character {\n");
+    sb.append("class GameCharacter {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    accountId: ").append(toIndentedString(accountId)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");

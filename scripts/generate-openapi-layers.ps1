@@ -219,7 +219,7 @@ foreach ($ApiFile in $ApiFiles) {
             "--api-package", "com.necpgame.backjava.api",
             "--model-package", "com.necpgame.backjava.model",
             "--invoker-package", "com.necpgame.backjava.invoker",
-            "-p", "interfaceOnly=true,useSpringBoot3=true,useJakartaEe=true,openApiNullable=false,useBeanValidation=true,hideGenerationTimestamp=true,sourceFolder=."
+            "-p", "interfaceOnly=true,useSpringBoot3=true,useJakartaEe=true,useBeanValidation=true,hideGenerationTimestamp=true,sourceFolder=."
         )
         
         $result = npx --yes @openapitools/openapi-generator-cli @DtosParams 2>&1

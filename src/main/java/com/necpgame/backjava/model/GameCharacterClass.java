@@ -4,7 +4,7 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.necpgame.backjava.model.CharacterClassSubclassesInner;
+import com.necpgame.backjava.model.GameCharacterClassSubclassesInner;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,11 +20,11 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * CharacterClass
+ * GameCharacterClass
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
-public class CharacterClass {
+
+public class GameCharacterClass {
 
   private String id;
 
@@ -33,23 +33,23 @@ public class CharacterClass {
   private String description;
 
   @Valid
-  private List<@Valid CharacterClassSubclassesInner> subclasses = new ArrayList<>();
+  private List<@Valid GameCharacterClassSubclassesInner> subclasses = new ArrayList<>();
 
-  public CharacterClass() {
+  public GameCharacterClass() {
     super();
   }
 
   /**
    * Constructor with only required parameters
    */
-  public CharacterClass(String id, String name, String description, List<@Valid CharacterClassSubclassesInner> subclasses) {
+  public GameCharacterClass(String id, String name, String description, List<@Valid GameCharacterClassSubclassesInner> subclasses) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.subclasses = subclasses;
   }
 
-  public CharacterClass id(String id) {
+  public GameCharacterClass id(String id) {
     this.id = id;
     return this;
   }
@@ -69,7 +69,7 @@ public class CharacterClass {
     this.id = id;
   }
 
-  public CharacterClass name(String name) {
+  public GameCharacterClass name(String name) {
     this.name = name;
     return this;
   }
@@ -89,7 +89,7 @@ public class CharacterClass {
     this.name = name;
   }
 
-  public CharacterClass description(String description) {
+  public GameCharacterClass description(String description) {
     this.description = description;
     return this;
   }
@@ -109,12 +109,12 @@ public class CharacterClass {
     this.description = description;
   }
 
-  public CharacterClass subclasses(List<@Valid CharacterClassSubclassesInner> subclasses) {
+  public GameCharacterClass subclasses(List<@Valid GameCharacterClassSubclassesInner> subclasses) {
     this.subclasses = subclasses;
     return this;
   }
 
-  public CharacterClass addSubclassesItem(CharacterClassSubclassesInner subclassesItem) {
+  public GameCharacterClass addSubclassesItem(GameCharacterClassSubclassesInner subclassesItem) {
     if (this.subclasses == null) {
       this.subclasses = new ArrayList<>();
     }
@@ -129,11 +129,11 @@ public class CharacterClass {
   @NotNull @Valid 
   @Schema(name = "subclasses", description = "Список подклассов", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("subclasses")
-  public List<@Valid CharacterClassSubclassesInner> getSubclasses() {
+  public List<@Valid GameCharacterClassSubclassesInner> getSubclasses() {
     return subclasses;
   }
 
-  public void setSubclasses(List<@Valid CharacterClassSubclassesInner> subclasses) {
+  public void setSubclasses(List<@Valid GameCharacterClassSubclassesInner> subclasses) {
     this.subclasses = subclasses;
   }
 
@@ -145,11 +145,11 @@ public class CharacterClass {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CharacterClass characterClass = (CharacterClass) o;
-    return Objects.equals(this.id, characterClass.id) &&
-        Objects.equals(this.name, characterClass.name) &&
-        Objects.equals(this.description, characterClass.description) &&
-        Objects.equals(this.subclasses, characterClass.subclasses);
+    GameCharacterClass gameCharacterClass = (GameCharacterClass) o;
+    return Objects.equals(this.id, gameCharacterClass.id) &&
+        Objects.equals(this.name, gameCharacterClass.name) &&
+        Objects.equals(this.description, gameCharacterClass.description) &&
+        Objects.equals(this.subclasses, gameCharacterClass.subclasses);
   }
 
   @Override
@@ -160,7 +160,7 @@ public class CharacterClass {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CharacterClass {\n");
+    sb.append("class GameCharacterClass {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");

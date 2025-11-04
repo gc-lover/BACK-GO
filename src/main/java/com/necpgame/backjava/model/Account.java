@@ -25,7 +25,7 @@ import jakarta.annotation.Generated;
  * Account
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
+
 public class Account {
 
   private UUID id;

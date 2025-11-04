@@ -1,7 +1,6 @@
 package com.necpgame.backjava.service.impl;
 
-import com.necpgame.backjava.entity.FactionEntity;
-import com.necpgame.backjava.mapper.FactionMapper;
+import com.necpgame.backjava.model.Faction;
 import com.necpgame.backjava.model.GetFactions200Response;
 import com.necpgame.backjava.repository.FactionRepository;
 import com.necpgame.backjava.service.FactionsService;
@@ -10,11 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Реализация FactionsService - получение списка фракций
+ * Реализация сервиса фракций
  */
 @Slf4j
 @Service
@@ -22,28 +20,27 @@ import java.util.stream.Collectors;
 public class FactionsServiceImpl implements FactionsService {
     
     private final FactionRepository factionRepository;
-    private final FactionMapper factionMapper;
     
     /**
-     * Получить список фракций (с опциональной фильтрацией по происхождению)
+     * Получить список всех фракций
      */
     @Override
     @Transactional(readOnly = true)
-    public GetFactions200Response getFactions(String origin) {
-        log.info("Fetching factions{}", origin != null ? " for origin: " + origin : "");
+    public GetFactions200Response getFactions() {
+        log.info("Getting all factions");
         
-        List<FactionEntity> factions;
-        
-        if (origin != null) {
-            factions = factionRepository.findByAvailableForOrigin(origin);
-        } else {
-            factions = factionRepository.findAll();
-        }
+        var factions = factionRepository.findAll().stream()
+            .map(entity -> {
+                Faction dto = new Faction();
+                dto.setId(entity.getId());
+                dto.setName(entity.getName());
+                dto.setDescription(entity.getDescription());
+                return dto;
+            })
+            .collect(Collectors.toList());
         
         GetFactions200Response response = new GetFactions200Response();
-        response.setFactions(factions.stream()
-                .map(factionMapper::toDto)
-                .collect(Collectors.toList()));
+        response.setFactions(factions);
         
         return response;
     }

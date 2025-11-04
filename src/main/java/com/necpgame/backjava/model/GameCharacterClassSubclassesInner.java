@@ -17,12 +17,12 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * CharacterClassSubclassesInner
+ * GameCharacterClassSubclassesInner
  */
 
-@JsonTypeName("CharacterClass_subclasses_inner")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
-public class CharacterClassSubclassesInner {
+@JsonTypeName("GameCharacterClass_subclasses_inner")
+
+public class GameCharacterClassSubclassesInner {
 
   private String id;
 
@@ -30,20 +30,20 @@ public class CharacterClassSubclassesInner {
 
   private String description;
 
-  public CharacterClassSubclassesInner() {
+  public GameCharacterClassSubclassesInner() {
     super();
   }
 
   /**
    * Constructor with only required parameters
    */
-  public CharacterClassSubclassesInner(String id, String name, String description) {
+  public GameCharacterClassSubclassesInner(String id, String name, String description) {
     this.id = id;
     this.name = name;
     this.description = description;
   }
 
-  public CharacterClassSubclassesInner id(String id) {
+  public GameCharacterClassSubclassesInner id(String id) {
     this.id = id;
     return this;
   }
@@ -63,7 +63,7 @@ public class CharacterClassSubclassesInner {
     this.id = id;
   }
 
-  public CharacterClassSubclassesInner name(String name) {
+  public GameCharacterClassSubclassesInner name(String name) {
     this.name = name;
     return this;
   }
@@ -83,7 +83,7 @@ public class CharacterClassSubclassesInner {
     this.name = name;
   }
 
-  public CharacterClassSubclassesInner description(String description) {
+  public GameCharacterClassSubclassesInner description(String description) {
     this.description = description;
     return this;
   }
@@ -111,10 +111,10 @@ public class CharacterClassSubclassesInner {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CharacterClassSubclassesInner characterClassSubclassesInner = (CharacterClassSubclassesInner) o;
-    return Objects.equals(this.id, characterClassSubclassesInner.id) &&
-        Objects.equals(this.name, characterClassSubclassesInner.name) &&
-        Objects.equals(this.description, characterClassSubclassesInner.description);
+    GameCharacterClassSubclassesInner gameCharacterClassSubclassesInner = (GameCharacterClassSubclassesInner) o;
+    return Objects.equals(this.id, gameCharacterClassSubclassesInner.id) &&
+        Objects.equals(this.name, gameCharacterClassSubclassesInner.name) &&
+        Objects.equals(this.description, gameCharacterClassSubclassesInner.description);
   }
 
   @Override
@@ -125,7 +125,7 @@ public class CharacterClassSubclassesInner {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CharacterClassSubclassesInner {\n");
+    sb.append("class GameCharacterClassSubclassesInner {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");

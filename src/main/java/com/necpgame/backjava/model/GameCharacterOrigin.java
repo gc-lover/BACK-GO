@@ -5,7 +5,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.necpgame.backjava.model.CharacterOriginStartingResources;
+import com.necpgame.backjava.model.GameCharacterOriginStartingResources;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,11 +22,11 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * CharacterOrigin
+ * GameCharacterOrigin
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
-public class CharacterOrigin {
+
+public class GameCharacterOrigin {
 
   /**
    * Идентификатор происхождения
@@ -77,16 +77,16 @@ public class CharacterOrigin {
   @Valid
   private List<UUID> availableFactions = new ArrayList<>();
 
-  private CharacterOriginStartingResources startingResources;
+  private GameCharacterOriginStartingResources startingResources;
 
-  public CharacterOrigin() {
+  public GameCharacterOrigin() {
     super();
   }
 
   /**
    * Constructor with only required parameters
    */
-  public CharacterOrigin(IdEnum id, String name, String description, List<String> startingSkills, List<UUID> availableFactions, CharacterOriginStartingResources startingResources) {
+  public GameCharacterOrigin(IdEnum id, String name, String description, List<String> startingSkills, List<UUID> availableFactions, GameCharacterOriginStartingResources startingResources) {
     this.id = id;
     this.name = name;
     this.description = description;
@@ -95,7 +95,7 @@ public class CharacterOrigin {
     this.startingResources = startingResources;
   }
 
-  public CharacterOrigin id(IdEnum id) {
+  public GameCharacterOrigin id(IdEnum id) {
     this.id = id;
     return this;
   }
@@ -115,7 +115,7 @@ public class CharacterOrigin {
     this.id = id;
   }
 
-  public CharacterOrigin name(String name) {
+  public GameCharacterOrigin name(String name) {
     this.name = name;
     return this;
   }
@@ -135,7 +135,7 @@ public class CharacterOrigin {
     this.name = name;
   }
 
-  public CharacterOrigin description(String description) {
+  public GameCharacterOrigin description(String description) {
     this.description = description;
     return this;
   }
@@ -155,12 +155,12 @@ public class CharacterOrigin {
     this.description = description;
   }
 
-  public CharacterOrigin startingSkills(List<String> startingSkills) {
+  public GameCharacterOrigin startingSkills(List<String> startingSkills) {
     this.startingSkills = startingSkills;
     return this;
   }
 
-  public CharacterOrigin addStartingSkillsItem(String startingSkillsItem) {
+  public GameCharacterOrigin addStartingSkillsItem(String startingSkillsItem) {
     if (this.startingSkills == null) {
       this.startingSkills = new ArrayList<>();
     }
@@ -183,12 +183,12 @@ public class CharacterOrigin {
     this.startingSkills = startingSkills;
   }
 
-  public CharacterOrigin availableFactions(List<UUID> availableFactions) {
+  public GameCharacterOrigin availableFactions(List<UUID> availableFactions) {
     this.availableFactions = availableFactions;
     return this;
   }
 
-  public CharacterOrigin addAvailableFactionsItem(UUID availableFactionsItem) {
+  public GameCharacterOrigin addAvailableFactionsItem(UUID availableFactionsItem) {
     if (this.availableFactions == null) {
       this.availableFactions = new ArrayList<>();
     }
@@ -211,7 +211,7 @@ public class CharacterOrigin {
     this.availableFactions = availableFactions;
   }
 
-  public CharacterOrigin startingResources(CharacterOriginStartingResources startingResources) {
+  public GameCharacterOrigin startingResources(GameCharacterOriginStartingResources startingResources) {
     this.startingResources = startingResources;
     return this;
   }
@@ -223,11 +223,11 @@ public class CharacterOrigin {
   @NotNull @Valid 
   @Schema(name = "starting_resources", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("starting_resources")
-  public CharacterOriginStartingResources getStartingResources() {
+  public GameCharacterOriginStartingResources getStartingResources() {
     return startingResources;
   }
 
-  public void setStartingResources(CharacterOriginStartingResources startingResources) {
+  public void setStartingResources(GameCharacterOriginStartingResources startingResources) {
     this.startingResources = startingResources;
   }
 
@@ -239,13 +239,13 @@ public class CharacterOrigin {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CharacterOrigin characterOrigin = (CharacterOrigin) o;
-    return Objects.equals(this.id, characterOrigin.id) &&
-        Objects.equals(this.name, characterOrigin.name) &&
-        Objects.equals(this.description, characterOrigin.description) &&
-        Objects.equals(this.startingSkills, characterOrigin.startingSkills) &&
-        Objects.equals(this.availableFactions, characterOrigin.availableFactions) &&
-        Objects.equals(this.startingResources, characterOrigin.startingResources);
+    GameCharacterOrigin gameCharacterOrigin = (GameCharacterOrigin) o;
+    return Objects.equals(this.id, gameCharacterOrigin.id) &&
+        Objects.equals(this.name, gameCharacterOrigin.name) &&
+        Objects.equals(this.description, gameCharacterOrigin.description) &&
+        Objects.equals(this.startingSkills, gameCharacterOrigin.startingSkills) &&
+        Objects.equals(this.availableFactions, gameCharacterOrigin.availableFactions) &&
+        Objects.equals(this.startingResources, gameCharacterOrigin.startingResources);
   }
 
   @Override
@@ -256,7 +256,7 @@ public class CharacterOrigin {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CharacterOrigin {\n");
+    sb.append("class GameCharacterOrigin {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");

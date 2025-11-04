@@ -20,11 +20,11 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * CharacterAppearance
+ * GameCharacterAppearance
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
-public class CharacterAppearance {
+
+public class GameCharacterAppearance {
 
   private Integer height;
 
@@ -77,14 +77,14 @@ public class CharacterAppearance {
 
   private JsonNullable<@Size(max = 500) String> distinctiveFeatures = JsonNullable.<String>undefined();
 
-  public CharacterAppearance() {
+  public GameCharacterAppearance() {
     super();
   }
 
   /**
    * Constructor with only required parameters
    */
-  public CharacterAppearance(Integer height, BodyTypeEnum bodyType, String hairColor, String eyeColor, String skinColor) {
+  public GameCharacterAppearance(Integer height, BodyTypeEnum bodyType, String hairColor, String eyeColor, String skinColor) {
     this.height = height;
     this.bodyType = bodyType;
     this.hairColor = hairColor;
@@ -92,7 +92,7 @@ public class CharacterAppearance {
     this.skinColor = skinColor;
   }
 
-  public CharacterAppearance height(Integer height) {
+  public GameCharacterAppearance height(Integer height) {
     this.height = height;
     return this;
   }
@@ -114,7 +114,7 @@ public class CharacterAppearance {
     this.height = height;
   }
 
-  public CharacterAppearance bodyType(BodyTypeEnum bodyType) {
+  public GameCharacterAppearance bodyType(BodyTypeEnum bodyType) {
     this.bodyType = bodyType;
     return this;
   }
@@ -134,7 +134,7 @@ public class CharacterAppearance {
     this.bodyType = bodyType;
   }
 
-  public CharacterAppearance hairColor(String hairColor) {
+  public GameCharacterAppearance hairColor(String hairColor) {
     this.hairColor = hairColor;
     return this;
   }
@@ -154,7 +154,7 @@ public class CharacterAppearance {
     this.hairColor = hairColor;
   }
 
-  public CharacterAppearance eyeColor(String eyeColor) {
+  public GameCharacterAppearance eyeColor(String eyeColor) {
     this.eyeColor = eyeColor;
     return this;
   }
@@ -174,7 +174,7 @@ public class CharacterAppearance {
     this.eyeColor = eyeColor;
   }
 
-  public CharacterAppearance skinColor(String skinColor) {
+  public GameCharacterAppearance skinColor(String skinColor) {
     this.skinColor = skinColor;
     return this;
   }
@@ -194,7 +194,7 @@ public class CharacterAppearance {
     this.skinColor = skinColor;
   }
 
-  public CharacterAppearance distinctiveFeatures(String distinctiveFeatures) {
+  public GameCharacterAppearance distinctiveFeatures(String distinctiveFeatures) {
     this.distinctiveFeatures = JsonNullable.of(distinctiveFeatures);
     return this;
   }
@@ -222,13 +222,13 @@ public class CharacterAppearance {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CharacterAppearance characterAppearance = (CharacterAppearance) o;
-    return Objects.equals(this.height, characterAppearance.height) &&
-        Objects.equals(this.bodyType, characterAppearance.bodyType) &&
-        Objects.equals(this.hairColor, characterAppearance.hairColor) &&
-        Objects.equals(this.eyeColor, characterAppearance.eyeColor) &&
-        Objects.equals(this.skinColor, characterAppearance.skinColor) &&
-        equalsNullable(this.distinctiveFeatures, characterAppearance.distinctiveFeatures);
+    GameCharacterAppearance gameCharacterAppearance = (GameCharacterAppearance) o;
+    return Objects.equals(this.height, gameCharacterAppearance.height) &&
+        Objects.equals(this.bodyType, gameCharacterAppearance.bodyType) &&
+        Objects.equals(this.hairColor, gameCharacterAppearance.hairColor) &&
+        Objects.equals(this.eyeColor, gameCharacterAppearance.eyeColor) &&
+        Objects.equals(this.skinColor, gameCharacterAppearance.skinColor) &&
+        equalsNullable(this.distinctiveFeatures, gameCharacterAppearance.distinctiveFeatures);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -250,7 +250,7 @@ public class CharacterAppearance {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CharacterAppearance {\n");
+    sb.append("class GameCharacterAppearance {\n");
     sb.append("    height: ").append(toIndentedString(height)).append("\n");
     sb.append("    bodyType: ").append(toIndentedString(bodyType)).append("\n");
     sb.append("    hairColor: ").append(toIndentedString(hairColor)).append("\n");

@@ -20,31 +20,31 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * CharacterOriginStartingResources
+ * GameCharacterOriginStartingResources
  */
 
-@JsonTypeName("CharacterOrigin_starting_resources")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
-public class CharacterOriginStartingResources {
+@JsonTypeName("GameCharacterOrigin_starting_resources")
+
+public class GameCharacterOriginStartingResources {
 
   private Integer currency;
 
   @Valid
   private List<String> items = new ArrayList<>();
 
-  public CharacterOriginStartingResources() {
+  public GameCharacterOriginStartingResources() {
     super();
   }
 
   /**
    * Constructor with only required parameters
    */
-  public CharacterOriginStartingResources(Integer currency, List<String> items) {
+  public GameCharacterOriginStartingResources(Integer currency, List<String> items) {
     this.currency = currency;
     this.items = items;
   }
 
-  public CharacterOriginStartingResources currency(Integer currency) {
+  public GameCharacterOriginStartingResources currency(Integer currency) {
     this.currency = currency;
     return this;
   }
@@ -64,12 +64,12 @@ public class CharacterOriginStartingResources {
     this.currency = currency;
   }
 
-  public CharacterOriginStartingResources items(List<String> items) {
+  public GameCharacterOriginStartingResources items(List<String> items) {
     this.items = items;
     return this;
   }
 
-  public CharacterOriginStartingResources addItemsItem(String itemsItem) {
+  public GameCharacterOriginStartingResources addItemsItem(String itemsItem) {
     if (this.items == null) {
       this.items = new ArrayList<>();
     }
@@ -100,9 +100,9 @@ public class CharacterOriginStartingResources {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CharacterOriginStartingResources characterOriginStartingResources = (CharacterOriginStartingResources) o;
-    return Objects.equals(this.currency, characterOriginStartingResources.currency) &&
-        Objects.equals(this.items, characterOriginStartingResources.items);
+    GameCharacterOriginStartingResources gameCharacterOriginStartingResources = (GameCharacterOriginStartingResources) o;
+    return Objects.equals(this.currency, gameCharacterOriginStartingResources.currency) &&
+        Objects.equals(this.items, gameCharacterOriginStartingResources.items);
   }
 
   @Override
@@ -113,7 +113,7 @@ public class CharacterOriginStartingResources {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CharacterOriginStartingResources {\n");
+    sb.append("class GameCharacterOriginStartingResources {\n");
     sb.append("    currency: ").append(toIndentedString(currency)).append("\n");
     sb.append("    items: ").append(toIndentedString(items)).append("\n");
     sb.append("}");

@@ -5,8 +5,8 @@ spring:
   # Database configuration
   datasource:
     url: jdbc:postgresql://localhost:5433/necpgame
-    username: necpgame_user
-    password: necpgame_password
+    username: necpgame
+    password: necpgame
     driver-class-name: org.postgresql.Driver
 
   # JPA / Hibernate configuration

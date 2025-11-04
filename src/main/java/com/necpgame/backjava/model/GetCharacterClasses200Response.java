@@ -5,7 +5,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.necpgame.backjava.model.CharacterClass;
+import com.necpgame.backjava.model.GameCharacterClass;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,11 +25,11 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("getCharacterClasses_200_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
+
 public class GetCharacterClasses200Response {
 
   @Valid
-  private List<@Valid CharacterClass> classes = new ArrayList<>();
+  private List<@Valid GameCharacterClass> classes = new ArrayList<>();
 
   public GetCharacterClasses200Response() {
     super();
@@ -38,16 +38,16 @@ public class GetCharacterClasses200Response {
   /**
    * Constructor with only required parameters
    */
-  public GetCharacterClasses200Response(List<@Valid CharacterClass> classes) {
+  public GetCharacterClasses200Response(List<@Valid GameCharacterClass> classes) {
     this.classes = classes;
   }
 
-  public GetCharacterClasses200Response classes(List<@Valid CharacterClass> classes) {
+  public GetCharacterClasses200Response classes(List<@Valid GameCharacterClass> classes) {
     this.classes = classes;
     return this;
   }
 
-  public GetCharacterClasses200Response addClassesItem(CharacterClass classesItem) {
+  public GetCharacterClasses200Response addClassesItem(GameCharacterClass classesItem) {
     if (this.classes == null) {
       this.classes = new ArrayList<>();
     }
@@ -62,11 +62,11 @@ public class GetCharacterClasses200Response {
   @NotNull @Valid 
   @Schema(name = "classes", description = "Список доступных классов", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("classes")
-  public List<@Valid CharacterClass> getClasses() {
+  public List<@Valid GameCharacterClass> getClasses() {
     return classes;
   }
 
-  public void setClasses(List<@Valid CharacterClass> classes) {
+  public void setClasses(List<@Valid GameCharacterClass> classes) {
     this.classes = classes;
   }
 

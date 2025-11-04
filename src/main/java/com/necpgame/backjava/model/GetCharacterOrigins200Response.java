@@ -5,7 +5,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.necpgame.backjava.model.CharacterOrigin;
+import com.necpgame.backjava.model.GameCharacterOrigin;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,11 +25,11 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("getCharacterOrigins_200_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
+
 public class GetCharacterOrigins200Response {
 
   @Valid
-  private List<@Valid CharacterOrigin> origins = new ArrayList<>();
+  private List<@Valid GameCharacterOrigin> origins = new ArrayList<>();
 
   public GetCharacterOrigins200Response() {
     super();
@@ -38,16 +38,16 @@ public class GetCharacterOrigins200Response {
   /**
    * Constructor with only required parameters
    */
-  public GetCharacterOrigins200Response(List<@Valid CharacterOrigin> origins) {
+  public GetCharacterOrigins200Response(List<@Valid GameCharacterOrigin> origins) {
     this.origins = origins;
   }
 
-  public GetCharacterOrigins200Response origins(List<@Valid CharacterOrigin> origins) {
+  public GetCharacterOrigins200Response origins(List<@Valid GameCharacterOrigin> origins) {
     this.origins = origins;
     return this;
   }
 
-  public GetCharacterOrigins200Response addOriginsItem(CharacterOrigin originsItem) {
+  public GetCharacterOrigins200Response addOriginsItem(GameCharacterOrigin originsItem) {
     if (this.origins == null) {
       this.origins = new ArrayList<>();
     }
@@ -62,11 +62,11 @@ public class GetCharacterOrigins200Response {
   @NotNull @Valid 
   @Schema(name = "origins", description = "Список доступных происхождений", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("origins")
-  public List<@Valid CharacterOrigin> getOrigins() {
+  public List<@Valid GameCharacterOrigin> getOrigins() {
     return origins;
   }
 
-  public void setOrigins(List<@Valid CharacterOrigin> origins) {
+  public void setOrigins(List<@Valid GameCharacterOrigin> origins) {
     this.origins = origins;
   }
 

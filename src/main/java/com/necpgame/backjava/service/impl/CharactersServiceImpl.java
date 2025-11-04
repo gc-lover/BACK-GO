@@ -1,21 +1,17 @@
 package com.necpgame.backjava.service.impl;
 
-import com.necpgame.backjava.entity.*;
-import com.necpgame.backjava.exception.AuthException;
+import com.necpgame.backjava.entity.CharacterAppearanceEntity;
+import com.necpgame.backjava.entity.CharacterEntity;
 import com.necpgame.backjava.exception.BusinessException;
-import com.necpgame.backjava.exception.ValidationException;
 import com.necpgame.backjava.exception.ErrorCode;
-import com.necpgame.backjava.mapper.CharacterAppearanceMapper;
-import com.necpgame.backjava.mapper.CharacterClassMapper;
-import com.necpgame.backjava.mapper.CharacterMapper;
-import com.necpgame.backjava.mapper.CharacterOriginMapper;
+import com.necpgame.backjava.mapper.CharacterAppearanceMapperMS;
+import com.necpgame.backjava.mapper.CharacterMapperMS;
 import com.necpgame.backjava.model.*;
 import com.necpgame.backjava.repository.*;
 import com.necpgame.backjava.service.CharactersService;
+import com.necpgame.backjava.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +21,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
- * Реализация CharactersService - CRUD операции с персонажами
+ * Реализация сервиса персонажей
+ * Использует MapStruct для автоматического маппинга с поддержкой JsonNullable
  */
 @Slf4j
 @Service
@@ -34,32 +31,33 @@ public class CharactersServiceImpl implements CharactersService {
     
     private final CharacterRepository characterRepository;
     private final AccountRepository accountRepository;
-    private final CityRepository cityRepository;
-    private final FactionRepository factionRepository;
     private final CharacterClassRepository characterClassRepository;
+    private final CharacterSubclassRepository characterSubclassRepository;
     private final CharacterOriginRepository characterOriginRepository;
-    private final CharacterAppearanceRepository appearanceRepository;
-    
-    private final CharacterMapper characterMapper;
-    private final CharacterClassMapper characterClassMapper;
-    private final CharacterOriginMapper characterOriginMapper;
-    private final CharacterAppearanceMapper appearanceMapper;
+    private final FactionRepository factionRepository;
+    private final CityRepository cityRepository;
+    private final CharacterMapperMS characterMapper;
+    private final CharacterAppearanceMapperMS appearanceMapper;
     
     /**
-     * Получить список персонажей игрока
+     * Список персонажей текущего игрока
      */
     @Override
     @Transactional(readOnly = true)
     public ListCharacters200Response listCharacters() {
-        UUID accountId = getCurrentAccountId();
-        log.info("Fetching characters for account: {}", accountId);
+        UUID accountId = SecurityUtil.getCurrentAccountId();
+        log.info("Listing characters for account: {}", accountId);
         
         List<CharacterEntity> characters = characterRepository.findAllByAccountId(accountId);
         
+        List<GameCharacterSummary> summaries = characters.stream()
+            .map(characterMapper::toSummaryDto)
+            .collect(Collectors.toList());
+        
         ListCharacters200Response response = new ListCharacters200Response();
-        response.setCharacters(characters.stream()
-                .map(characterMapper::toSummaryDto)
-                .collect(Collectors.toList()));
+        response.setCharacters(summaries);
+        response.setMaxCharacters(5); // TODO: Вынести в конфигурацию
+        response.setCurrentCount(summaries.size());
         
         return response;
     }
@@ -70,59 +68,45 @@ public class CharactersServiceImpl implements CharactersService {
     @Override
     @Transactional
     public CreateCharacter201Response createCharacter(CreateCharacterRequest request) {
-        UUID accountId = getCurrentAccountId();
-        log.info("Creating character '{}' for account: {}", request.getName(), accountId);
-        
-        // Валидация: имя уже существует у этого аккаунта
-        if (characterRepository.existsByNameAndAccountId(request.getName(), accountId)) {
-            throw new BusinessException(ErrorCode.RESOURCE_ALREADY_EXISTS, 
-                "Character with name '" + request.getName() + "' already exists");
-        }
-        
-        // Получение аккаунта
-        AccountEntity account = accountRepository.findById(accountId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND, 
-                    "Account not found: " + accountId));
-        
-        // Получение города
-        CityEntity city = cityRepository.findById(request.getCityId())
-                .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND, 
-                    "City not found: " + request.getCityId()));
-        
-        // Получение фракции (если указана)
-        FactionEntity faction = null;
-        if (request.getFactionId() != null) {
-            faction = factionRepository.findById(request.getFactionId())
-                    .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND, 
-                        "Faction not found: " + request.getFactionId()));
-        }
-        
-        // Создание внешности
-        CharacterAppearanceEntity appearance = appearanceMapper.toEntity(request.getAppearance());
-        appearance = appearanceRepository.save(appearance);
+        UUID accountId = SecurityUtil.getCurrentAccountId();
+        log.info("Creating character for account {}: {}", accountId, request.getName());
         
         // Создание персонажа
         CharacterEntity character = new CharacterEntity();
-        character.setAccount(account);
+        character.setAccount(accountRepository.getReferenceById(accountId));
         character.setName(request.getName());
-        character.setClassCode(request.getClazz().getValue());
-        character.setSubclassCode(request.getSubclass());
+        character.setClassCode(request.getPropertyClass().getValue());
         character.setGender(CharacterEntity.Gender.valueOf(request.getGender().name()));
         character.setOriginCode(request.getOrigin().getValue());
-        character.setFaction(faction);
-        character.setCity(city);
-        character.setAppearance(appearance);
+        
+        // Опциональные поля с JsonNullable
+        if (request.getSubclass() != null && request.getSubclass().isPresent()) {
+            character.setSubclassCode(request.getSubclass().get());
+        }
+        if (request.getFactionId() != null && request.getFactionId().isPresent()) {
+            character.setFaction(factionRepository.getReferenceById(request.getFactionId().get()));
+        }
+        if (request.getCityId() != null) {
+            character.setCity(cityRepository.getReferenceById(request.getCityId()));
+        }
+        
+        // Внешность через MapStruct
+        if (request.getAppearance() != null) {
+            CharacterAppearanceEntity appearance = appearanceMapper.toEntity(request.getAppearance());
+            appearance.setCharacter(character);
+            character.setAppearance(appearance);
+        }
+        
         character.setLevel(1);
         character.setCreatedAt(OffsetDateTime.now());
-        
+        character.setLastLogin(OffsetDateTime.now());
         character = characterRepository.save(character);
         
-        log.info("Character created: {}", character.getId());
+        log.info("Character created successfully: {}", character.getId());
         
-        // Формирование ответа
+        GameCharacter characterDto = characterMapper.toDto(character);
         CreateCharacter201Response response = new CreateCharacter201Response();
-        response.setCharacterId(character.getId());
-        response.setMessage("Character created successfully");
+        response.setCharacter(characterDto);
         
         return response;
     }
@@ -132,17 +116,17 @@ public class CharactersServiceImpl implements CharactersService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Character getCharacter(UUID characterId) {
-        UUID accountId = getCurrentAccountId();
-        log.info("Fetching character {} for account: {}", characterId, accountId);
+    public GameCharacter getCharacter(UUID characterId) {
+        UUID accountId = SecurityUtil.getCurrentAccountId();
+        log.info("Getting character {} for account {}", characterId, accountId);
         
-        CharacterEntity character = characterRepository.findByIdWithDetails(characterId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND, 
-                    "Character not found: " + characterId));
+        CharacterEntity character = characterRepository.findById(characterId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND, 
+                "Character not found: " + characterId));
         
-        // Проверка владения персонажем
+        // Проверка владельца
         if (!character.getAccount().getId().equals(accountId)) {
-            throw new AuthException(ErrorCode.ACCESS_DENIED, 
+            throw new BusinessException(ErrorCode.ACCESS_DENIED, 
                 "You don't have access to this character");
         }
         
@@ -155,16 +139,21 @@ public class CharactersServiceImpl implements CharactersService {
     @Override
     @Transactional
     public DeleteCharacter200Response deleteCharacter(UUID characterId) {
-        UUID accountId = getCurrentAccountId();
-        log.info("Deleting character {} for account: {}", characterId, accountId);
+        UUID accountId = SecurityUtil.getCurrentAccountId();
+        log.info("Deleting character {} for account {}", characterId, accountId);
         
-        CharacterEntity character = characterRepository.findByIdAndAccountId(characterId, accountId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND, 
-                    "Character not found: " + characterId));
+        CharacterEntity character = characterRepository.findById(characterId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND, 
+                "Character not found: " + characterId));
+        
+        // Проверка владельца
+        if (!character.getAccount().getId().equals(accountId)) {
+            throw new BusinessException(ErrorCode.ACCESS_DENIED, 
+                "You don't have access to this character");
+        }
         
         characterRepository.delete(character);
-        
-        log.info("Character deleted: {}", characterId);
+        log.info("Character deleted successfully: {}", characterId);
         
         DeleteCharacter200Response response = new DeleteCharacter200Response();
         response.setMessage("Character deleted successfully");
@@ -173,50 +162,69 @@ public class CharactersServiceImpl implements CharactersService {
     }
     
     /**
-     * Получить список доступных классов
+     * Список доступных классов персонажей
      */
     @Override
     @Transactional(readOnly = true)
     public GetCharacterClasses200Response getCharacterClasses() {
-        log.info("Fetching character classes");
+        log.info("Getting character classes");
         
-        List<CharacterClassEntity> classes = characterClassRepository.findAllWithSubclasses();
+        var classes = characterClassRepository.findAll().stream()
+            .map(entity -> {
+                GameCharacterClass dto = new GameCharacterClass();
+                dto.setCode(entity.getClassCode());
+                dto.setName(entity.getName());
+                dto.setDescription(entity.getDescription());
+                return dto;
+            })
+            .collect(Collectors.toList());
         
         GetCharacterClasses200Response response = new GetCharacterClasses200Response();
-        response.setClasses(classes.stream()
-                .map(characterClassMapper::toDto)
-                .collect(Collectors.toList()));
+        response.setClasses(classes);
         
         return response;
     }
     
     /**
-     * Получить список доступных происхождений
+     * Список доступных происхождений персонажей
      */
     @Override
     @Transactional(readOnly = true)
     public GetCharacterOrigins200Response getCharacterOrigins() {
-        log.info("Fetching character origins");
+        log.info("Getting character origins");
         
-        List<CharacterOriginEntity> origins = characterOriginRepository.findAllWithFactions();
+        var origins = characterOriginRepository.findAll().stream()
+            .map(entity -> {
+                GameCharacterOrigin dto = new GameCharacterOrigin();
+                dto.setCode(entity.getOriginCode());
+                dto.setName(entity.getName());
+                dto.setDescription(entity.getDescription());
+                return dto;
+            })
+            .collect(Collectors.toList());
         
         GetCharacterOrigins200Response response = new GetCharacterOrigins200Response();
-        response.setOrigins(origins.stream()
-                .map(characterOriginMapper::toDto)
-                .collect(Collectors.toList()));
+        response.setOrigins(origins);
         
         return response;
     }
     
     /**
-     * Получить текущий Account ID из Security Context
+     * Валидация создания персонажа
      */
-    private UUID getCurrentAccountId() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
-            throw new AuthException(ErrorCode.INVALID_CREDENTIALS, "User not authenticated");
+    private void validateCharacterCreation(UUID accountId, CreateCharacterRequest request) {
+        // Проверка уникальности имени
+        if (characterRepository.existsByName(request.getName())) {
+            throw new BusinessException(ErrorCode.RESOURCE_ALREADY_EXISTS, 
+                "Character with this name already exists");
         }
-        return UUID.fromString(authentication.getName());
+        
+        // Проверка лимита персонажей (опционально)
+        long characterCount = characterRepository.countByAccountId(accountId);
+        if (characterCount >= 5) {
+            throw new BusinessException(ErrorCode.CHARACTER_LIMIT_REACHED, 
+                "Maximum character limit reached");
+        }
     }
 }
 

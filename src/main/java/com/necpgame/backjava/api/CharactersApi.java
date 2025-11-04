@@ -17,7 +17,7 @@ import org.springframework.validation.annotation.Validated;
  * This is a service interface that should be implemented by a service implementation class.
  */
 @Validated
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")public interface CharactersApi {
+public interface CharactersApi {
 
     /**
      * POST /characters : Создание нового персонажа

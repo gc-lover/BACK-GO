@@ -22,11 +22,11 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * CharacterSummary
+ * GameCharacterSummary
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
-public class CharacterSummary {
+
+public class GameCharacterSummary {
 
   private UUID id;
 
@@ -43,14 +43,14 @@ public class CharacterSummary {
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private JsonNullable<OffsetDateTime> lastLogin = JsonNullable.<OffsetDateTime>undefined();
 
-  public CharacterSummary() {
+  public GameCharacterSummary() {
     super();
   }
 
   /**
    * Constructor with only required parameters
    */
-  public CharacterSummary(UUID id, String name, String propertyClass, Integer level, String cityName) {
+  public GameCharacterSummary(UUID id, String name, String propertyClass, Integer level, String cityName) {
     this.id = id;
     this.name = name;
     this.propertyClass = propertyClass;
@@ -58,7 +58,7 @@ public class CharacterSummary {
     this.cityName = cityName;
   }
 
-  public CharacterSummary id(UUID id) {
+  public GameCharacterSummary id(UUID id) {
     this.id = id;
     return this;
   }
@@ -78,7 +78,7 @@ public class CharacterSummary {
     this.id = id;
   }
 
-  public CharacterSummary name(String name) {
+  public GameCharacterSummary name(String name) {
     this.name = name;
     return this;
   }
@@ -98,7 +98,7 @@ public class CharacterSummary {
     this.name = name;
   }
 
-  public CharacterSummary propertyClass(String propertyClass) {
+  public GameCharacterSummary propertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
     return this;
   }
@@ -118,7 +118,7 @@ public class CharacterSummary {
     this.propertyClass = propertyClass;
   }
 
-  public CharacterSummary level(Integer level) {
+  public GameCharacterSummary level(Integer level) {
     this.level = level;
     return this;
   }
@@ -138,7 +138,7 @@ public class CharacterSummary {
     this.level = level;
   }
 
-  public CharacterSummary factionName(String factionName) {
+  public GameCharacterSummary factionName(String factionName) {
     this.factionName = JsonNullable.of(factionName);
     return this;
   }
@@ -158,7 +158,7 @@ public class CharacterSummary {
     this.factionName = factionName;
   }
 
-  public CharacterSummary cityName(String cityName) {
+  public GameCharacterSummary cityName(String cityName) {
     this.cityName = cityName;
     return this;
   }
@@ -178,7 +178,7 @@ public class CharacterSummary {
     this.cityName = cityName;
   }
 
-  public CharacterSummary lastLogin(OffsetDateTime lastLogin) {
+  public GameCharacterSummary lastLogin(OffsetDateTime lastLogin) {
     this.lastLogin = JsonNullable.of(lastLogin);
     return this;
   }
@@ -206,14 +206,14 @@ public class CharacterSummary {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CharacterSummary characterSummary = (CharacterSummary) o;
-    return Objects.equals(this.id, characterSummary.id) &&
-        Objects.equals(this.name, characterSummary.name) &&
-        Objects.equals(this.propertyClass, characterSummary.propertyClass) &&
-        Objects.equals(this.level, characterSummary.level) &&
-        equalsNullable(this.factionName, characterSummary.factionName) &&
-        Objects.equals(this.cityName, characterSummary.cityName) &&
-        equalsNullable(this.lastLogin, characterSummary.lastLogin);
+    GameCharacterSummary gameCharacterSummary = (GameCharacterSummary) o;
+    return Objects.equals(this.id, gameCharacterSummary.id) &&
+        Objects.equals(this.name, gameCharacterSummary.name) &&
+        Objects.equals(this.propertyClass, gameCharacterSummary.propertyClass) &&
+        Objects.equals(this.level, gameCharacterSummary.level) &&
+        equalsNullable(this.factionName, gameCharacterSummary.factionName) &&
+        Objects.equals(this.cityName, gameCharacterSummary.cityName) &&
+        equalsNullable(this.lastLogin, gameCharacterSummary.lastLogin);
   }
 
   private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
@@ -235,7 +235,7 @@ public class CharacterSummary {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CharacterSummary {\n");
+    sb.append("class GameCharacterSummary {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    propertyClass: ").append(toIndentedString(propertyClass)).append("\n");
