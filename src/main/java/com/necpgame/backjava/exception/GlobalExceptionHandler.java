@@ -2,6 +2,7 @@ package com.necpgame.backjava.exception;
 
 import com.necpgame.backjava.model.Error;
 import com.necpgame.backjava.model.ErrorError;
+import com.necpgame.backjava.model.ErrorErrorDetailsInner;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,9 +39,11 @@ public class GlobalExceptionHandler {
         errorDetails.setMessage(ex.getMessage());
         
         // Добавляем детали для отладки
-        List<String> details = new ArrayList<>();
+        List<ErrorErrorDetailsInner> details = new ArrayList<>();
         if (ex.getCause() != null) {
-            details.add("Cause: " + ex.getCause().getMessage());
+            ErrorErrorDetailsInner detail = new ErrorErrorDetailsInner();
+            detail.setMessage("Cause: " + ex.getCause().getMessage());
+            details.add(detail);
         }
         errorDetails.setDetails(details);
         
@@ -64,14 +67,14 @@ public class GlobalExceptionHandler {
         errorDetails.setMessage("Validation failed");
         
         // Собираем все ошибки валидации
-        List<String> details = new ArrayList<>();
+        List<ErrorErrorDetailsInner> details = new ArrayList<>();
         ex.getBindingResult().getFieldErrors().forEach(fieldError -> {
-            String detail = String.format("Field '%s': %s (rejected value: '%s')", 
-                fieldError.getField(), 
-                fieldError.getDefaultMessage(),
-                fieldError.getRejectedValue());
+            ErrorErrorDetailsInner detail = new ErrorErrorDetailsInner();
+            detail.setField(fieldError.getField());
+            detail.setMessage(fieldError.getDefaultMessage());
+            detail.setCode("VALIDATION_ERROR");
             details.add(detail);
-            log.warn("Validation error: {}", detail);
+            log.warn("Validation error - field: {}, message: {}", fieldError.getField(), fieldError.getDefaultMessage());
         });
         
         errorDetails.setDetails(details);
@@ -94,9 +97,12 @@ public class GlobalExceptionHandler {
         errorDetails.setCode("VAL_001");
         errorDetails.setMessage("Invalid JSON format");
         
-        List<String> details = new ArrayList<>();
+        List<ErrorErrorDetailsInner> details = new ArrayList<>();
         String rootMessage = ex.getRootCause() != null ? ex.getRootCause().getMessage() : ex.getMessage();
-        details.add(rootMessage);
+        ErrorErrorDetailsInner detail = new ErrorErrorDetailsInner();
+        detail.setMessage(rootMessage);
+        detail.setCode("JSON_PARSE_ERROR");
+        details.add(detail);
         errorDetails.setDetails(details);
         
         error.setError(errorDetails);
@@ -120,18 +126,33 @@ public class GlobalExceptionHandler {
         errorDetails.setMessage("Internal server error");
         
         // Добавляем детали для отладки (в production можно отключить)
-        List<String> details = new ArrayList<>();
-        details.add("Exception: " + ex.getClass().getSimpleName());
-        details.add("Message: " + ex.getMessage());
+        List<ErrorErrorDetailsInner> details = new ArrayList<>();
+        
+        ErrorErrorDetailsInner exDetail = new ErrorErrorDetailsInner();
+        exDetail.setMessage("Exception: " + ex.getClass().getSimpleName());
+        details.add(exDetail);
+        
+        ErrorErrorDetailsInner msgDetail = new ErrorErrorDetailsInner();
+        msgDetail.setMessage("Message: " + ex.getMessage());
+        details.add(msgDetail);
+        
         if (ex.getCause() != null) {
-            details.add("Cause: " + ex.getCause().getMessage());
+            ErrorErrorDetailsInner causeDetail = new ErrorErrorDetailsInner();
+            causeDetail.setMessage("Cause: " + ex.getCause().getMessage());
+            details.add(causeDetail);
         }
+        
         // Добавляем первые несколько строк stack trace
         StackTraceElement[] stackTrace = ex.getStackTrace();
         if (stackTrace.length > 0) {
-            details.add("At: " + stackTrace[0].toString());
+            ErrorErrorDetailsInner stackDetail1 = new ErrorErrorDetailsInner();
+            stackDetail1.setMessage("At: " + stackTrace[0].toString());
+            details.add(stackDetail1);
+            
             if (stackTrace.length > 1) {
-                details.add("   " + stackTrace[1].toString());
+                ErrorErrorDetailsInner stackDetail2 = new ErrorErrorDetailsInner();
+                stackDetail2.setMessage("   " + stackTrace[1].toString());
+                details.add(stackDetail2);
             }
         }
         
