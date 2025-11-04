@@ -2,66 +2,39 @@ package {{package}};
 
 {{#imports}}import {{import}};
 {{/imports}}
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
-
-import jakarta.validation.constraints.*;
-import jakarta.validation.Valid;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import jakarta.annotation.Generated;
+import org.springframework.validation.annotation.Validated;
 
 /**
- * {{#lambda.titlecase}}{{classname}}{{/lambda.titlecase}} Controller
- * {{#description}}{{description}}{{/description}}
+ * Service interface for {{classname}}.
+ * Generated from OpenAPI specification.
+ * 
+ * This is a service interface that should be implemented by a service implementation class.
  */
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "{{generatedDate}}")
-@RestController
-@RequestMapping("${openapi.{{baseName}}.base-path:{{basePath}}}")
-public class {{classname}}Controller {
-
+@Validated
+{{>generatedAnnotation}}
+public interface {{classname}} {
 {{#operations}}
+
 {{#operation}}
     /**
-     * {{httpMethod}} {{path}} : {{summary}}
-     * {{#notes}}{{notes}}{{/notes}}
+     * {{httpMethod}} {{path}}{{#summary}} : {{.}}{{/summary}}
+     {{#notes}}
+     * {{.}}
+     {{/notes}}
      *
-{{#allParams}}
-     * @param {{paramName}} {{#description}}{{description}}{{/description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}
-{{/allParams}}
-{{#responses}}
-     * @return {{message}} (status code {{code}})
-{{/responses}}
+     {{#allParams}}
+     * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}
+     {{/allParams}}
+     * @return {{#returnType}}{{{.}}}{{/returnType}}{{^returnType}}void{{/returnType}}
      */
-    @{{#lambda.titlecase}}{{httpMethod}}{{/lambda.titlecase}}Mapping(
-        value = "{{path}}",
-        produces = { {{#produces}}"{{mediaType}}"{{#hasMore}}, {{/hasMore}}{{/produces}} },
-        consumes = { {{#consumes}}"{{mediaType}}"{{#hasMore}}, {{/hasMore}}{{/consumes}} }
-    )
-    public {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}ResponseEntity<Void>{{/returnType}} {{operationId}}({{#allParams}}{{#isBodyParam}}@Valid @RequestBody {{/isBodyParam}}{{#isQueryParam}}@RequestParam(value = "{{baseName}}"{{#required}}, required = true{{/required}}{{^required}}, required = false{{/required}}){{/isQueryParam}}{{#isPathParam}}@PathVariable("{{baseName}}"){{/isPathParam}}{{#isHeaderParam}}@RequestHeader(value = "{{baseName}}"{{#required}}, required = true{{/required}}{{^required}}, required = false{{/required}}){{/isHeaderParam}}{{#isCookieParam}}@CookieValue("{{baseName}}"){{/isCookieParam}} {{#isFormParam}}{{#isFile}}@RequestPart("{{baseName}}") MultipartFile{{/isFile}}{{^isFile}}@RequestParam("{{baseName}}"){{/isFile}}{{/isFormParam}}{{#required}}{{^isBodyParam}}{{^isPathParam}}@NotNull{{/isPathParam}}{{/isBodyParam}}{{/required}}{{^required}}{{^isBodyParam}}{{^isPathParam}}@Nullable{{/isPathParam}}{{/isBodyParam}}{{/required}} {{dataType}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
-        // TODO: Реализовать бизнес-логику через Service
-        {{#returnType}}
-        return ResponseEntity.ok(null);
-        {{/returnType}}
-        {{^returnType}}
-        return ResponseEntity.ok().build();
-        {{/returnType}}
-    }
+    {{#isDeprecated}}
+    @Deprecated
+    {{/isDeprecated}}
+    {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}} {{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}});
+{{^-last}}
 
+{{/-last}}
 {{/operation}}
 {{/operations}}
 }
+

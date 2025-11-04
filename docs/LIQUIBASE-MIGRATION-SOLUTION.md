@@ -105,77 +105,40 @@ mvn liquibase:generateChangeLog
 mvn liquibase:diffChangeLog
 ```
 
-**Вариант B: Через Java программу с Liquibase API**
+**Вариант B: Через Liquibase Maven Plugin с Hibernate поддержкой (РЕКОМЕНДУЕТСЯ)**
 
-Создать Java программу, которая:
-1. Использует Hibernate для создания схемы из JPA Entities
-2. Использует Liquibase API для генерации changelog
+Использовать стандартный Liquibase Maven Plugin с поддержкой Hibernate для автоматической генерации changelog из JPA Entities.
 
-```java
-package com.necpgame.backjava.generator;
-
-import liquibase.Liquibase;
-import liquibase.database.Database;
-import liquibase.database.DatabaseFactory;
-import liquibase.diff.DiffGeneratorFactory;
-import liquibase.diff.DiffResult;
-import liquibase.diff.output.DiffOutputControl;
-import liquibase.diff.output.changelog.DiffToChangeLog;
-import liquibase.resource.ClassLoaderResourceAccessor;
-import liquibase.resource.FileSystemResourceAccessor;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.tool.schema.TargetType;
-import org.hibernate.tool.schema.spi.SchemaExport;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-
-public class LiquibaseMigrationGenerator {
-    public static void main(String[] args) throws Exception {
-        // 1. Создать базу данных из JPA Entities через Hibernate
-        String jdbcUrl = "jdbc:postgresql://localhost:5433/necpgame";
-        String username = "necpgame";
-        String password = "necpgame";
-        
-        // Создать схему из Entities
-        createSchemaFromEntities(jdbcUrl, username, password);
-        
-        // 2. Использовать Liquibase для генерации changelog
-        Database database = DatabaseFactory.getInstance()
-                .findCorrectDatabaseImplementation(
-                        DriverManager.getConnection(jdbcUrl, username, password)
-                );
-        
-        // Сравнить схему с эталонной (пустой) и создать changelog
-        DiffResult diffResult = DiffGeneratorFactory.getInstance()
-                .compare(database, null, new ClassLoaderResourceAccessor());
-        
-        // Сгенерировать changelog
-        DiffToChangeLog diffToChangeLog = new DiffToChangeLog(
-                diffResult,
-                new DiffOutputControl(false, false, false, null)
-        );
-        
-        String changeLogFile = "src/main/resources/db/changelog/db.changelog-master.xml";
-        try (PrintWriter writer = new PrintWriter(new FileWriter(changeLogFile))) {
-            diffToChangeLog.print(writer);
-        }
-        
-        System.out.println("✅ Changelog сгенерирован: " + changeLogFile);
-    }
-    
-    private static void createSchemaFromEntities(String jdbcUrl, String username, String password) {
-        // Реализация создания схемы из JPA Entities через Hibernate SchemaExport
-        // ...
-    }
-}
+1. Настроить Liquibase Maven Plugin в `pom.xml` с `referenceUrl=hibernate:spring`:
+```xml
+<plugin>
+    <groupId>org.liquibase</groupId>
+    <artifactId>liquibase-maven-plugin</artifactId>
+    <configuration>
+        <referenceUrl>hibernate:spring:com.necpgame.backjava.entity?dialect=org.hibernate.dialect.PostgreSQLDialect</referenceUrl>
+        <referenceDriver>liquibase.ext.hibernate.database.connection.HibernateDriver</referenceDriver>
+        <changeLogFile>src/main/resources/db/changelog/db.changelog-master.xml</changeLogFile>
+    </configuration>
+    <dependencies>
+        <dependency>
+            <groupId>org.liquibase.ext</groupId>
+            <artifactId>liquibase-hibernate5</artifactId>
+            <version>3.6</version>
+        </dependency>
+    </dependencies>
+</plugin>
 ```
+
+2. Сгенерировать changelog из JPA Entities:
+```bash
+mvn liquibase:diffChangeLog
+```
+
+**Преимущества:**
+- ✅ Использует стандартные инструменты Liquibase
+- ✅ Автоматически находит все Entity классы через Hibernate
+- ✅ Не требует создания временной БД
+- ✅ Работает напрямую с JPA Entities
 
 ## 📝 Процесс генерации миграций
 
@@ -224,24 +187,26 @@ mvn liquibase:diffChangeLog
 
 ## ⚠️ Важные замечания
 
-1. **Liquibase требует реальную базу данных** для генерации changelog через `diffChangeLog`
-2. **Нужно сначала создать схему** из JPA Entities (через Hibernate), затем генерировать changelog
-3. **Для автоматизации** можно использовать Java программу, которая создает временную базу данных из Entities, затем генерирует changelog
+1. **Liquibase Maven Plugin с Hibernate поддержкой** автоматически находит все Entity классы через сканирование пакета
+2. **Для работы diffChangeLog** с Hibernate нужно указать `referenceUrl=hibernate:spring:package.name`
+3. **Требуется зависимость** `liquibase-hibernate5` для поддержки Hibernate
+4. **Entity классы должны быть скомпилированы** перед генерацией changelog
 
 ## 🎯 Рекомендуемый подход
 
-**Комбинация Hibernate SchemaExport + Liquibase:**
+**Использование стандартного Liquibase Maven Plugin с Hibernate поддержкой:**
 
-1. Использовать Hibernate SchemaExport для создания SQL из JPA Entities
-2. Применить SQL к временной базе данных
-3. Использовать Liquibase `generateChangeLog` для создания changelog из базы данных
+1. Настроить Liquibase Maven Plugin с `referenceUrl=hibernate:spring:com.necpgame.backjava.entity`
+2. Добавить зависимость `liquibase-hibernate5` в плагин
+3. Использовать команду `mvn liquibase:diffChangeLog` для генерации changelog из JPA Entities
 4. Использовать Liquibase для управления миграциями в продакшене
 
 **Преимущества:**
-- ✅ Используется только Liquibase для управления миграциями
-- ✅ Автоматическая генерация из JPA Entities
+- ✅ Используются стандартные инструменты Liquibase
+- ✅ Автоматическая генерация из JPA Entities без создания временной БД
 - ✅ Поддержка версионности
 - ✅ Интеграция с Spring Boot
+- ✅ Не требует дополнительных Java программ
 
 ---
 

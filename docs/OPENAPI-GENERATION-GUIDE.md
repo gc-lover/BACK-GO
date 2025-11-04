@@ -1,75 +1,97 @@
 # Руководство по генерации кода из OpenAPI
 
-## Общие принципы
+## ⚙️ Генерация через CLI OpenAPI Generator
+
+**Важно:** Генерация выполняется через CLI OpenAPI Generator, а не через Maven Plugin!
+
+### ✅ Преимущества CLI подхода:
+- Нет хардкода в `pom.xml`
+- Универсальное решение для любых OpenAPI файлов
+- Гибкая конфигурация через параметры командной строки
+- Поддержка пакетной генерации из нескольких файлов
 
 ### ✅ Шаблоны универсальные
 **Важно:** Созданные Mustache шаблоны в `templates/` являются **универсальными** и работают для **всех** OpenAPI файлов!
 
-- ✅ `Entity.mustache` - работает для всех схем
-- ✅ `Repository.mustache` - работает для всех схем
-- ✅ `Service.mustache` - работает для всех операций
-- ✅ `ServiceImpl.mustache` - работает для всех операций
-- ✅ `Migration.mustache` - работает для всех схем
+- ✅ `model.mustache` - генерирует JPA Entities для всех схем
+- ✅ `Repository.mustache` - генерирует Spring Data Repositories для всех схем
+- ✅ `Service.mustache` - генерирует Service интерфейсы для всех операций
+- ✅ `ServiceImpl.mustache` - генерирует Service реализации для всех операций
+- ✅ `apiController.mustache` - генерирует Controller реализации для всех операций
 
 **Не нужно создавать новые шаблоны для каждого OpenAPI файла!**
 
+## 🚀 Быстрый старт
+
+### 1. Генерация через Maven (рекомендуется)
+
+```bash
+# Генерация из конкретного OpenAPI файла
+mvn clean generate-sources -Dopenapi.spec=../API-SWAGGER/api/v1/auth/character-creation.yaml -Dskip.openapi.generation=false
+
+# Или из другого файла
+mvn clean generate-sources -Dopenapi.spec=../API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml -Dskip.openapi.generation=false
+```
+
+**Важно:** Необходимо указать оба параметра:
+- `-Dopenapi.spec=путь/к/файлу.yaml` - путь к OpenAPI файлу
+- `-Dskip.openapi.generation=false` - включить генерацию (по умолчанию отключена)
+
+### 2. Генерация через CLI (альтернатива)
+
+**Установка CLI:**
+```bash
+npm install -g @openapitools/openapi-generator-cli
+```
+
+**Пример генерации DTOs:**
+```bash
+npx --yes @openapitools/openapi-generator-cli generate \
+  -i ../API-SWAGGER/api/v1/auth/character-creation.yaml \
+  -g spring \
+  -o target/generated-sources/openapi \
+  --api-package com.necpgame.backjava.api \
+  --model-package com.necpgame.backjava.model \
+  -p "interfaceOnly=true,useSpringBoot3=true,useJakartaEe=true"
+```
+
+**⚠️ Важно:** Список свойств в `-p` должен быть в кавычках!
+
 ## Как использовать для разных OpenAPI файлов
 
-### Вариант 1: Через Maven свойства (рекомендуется)
+### Вариант 1: Через CLI параметры (рекомендуется)
 
-Используй свойство `openapi.spec` для указания пути к OpenAPI файлу:
+Используй параметр `-i` для указания пути к OpenAPI файлу:
 
 ```bash
 # Генерация из конкретного файла
-mvn clean generate-sources -Dopenapi.spec=../API-SWAGGER/api/v1/auth/character-creation.yaml
+openapi-generator-cli generate -i ../API-SWAGGER/api/v1/auth/character-creation.yaml ...
 
 # Или из другого файла
-mvn clean generate-sources -Dopenapi.spec=../API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
+openapi-generator-cli generate -i ../API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml ...
 ```
 
-### Вариант 2: Через Maven профили
+### Вариант 2: Через bash-скрипт для пакетной генерации
 
-Можно создать профили для разных OpenAPI файлов в `pom.xml`:
+Создай bash-скрипт `generate.sh` (см. [GENERATION-COMMANDS.md](./GENERATION-COMMANDS.md)):
 
-```xml
-<profiles>
-    <profile>
-        <id>character-creation</id>
-        <properties>
-            <openapi.spec>${project.basedir}/../API-SWAGGER/api/v1/auth/character-creation.yaml</openapi.spec>
-        </properties>
-    </profile>
-    <profile>
-        <id>cyberpsychosis</id>
-        <properties>
-            <openapi.spec>${project.basedir}/../API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml</openapi.spec>
-        </properties>
-    </profile>
-</profiles>
-```
-
-Использование:
 ```bash
-mvn clean generate-sources -Pcharacter-creation
-mvn clean generate-sources -Pcyberpsychosis
+#!/bin/bash
+OPENAPI_FILE=$1
+
+# Генерация всех слоёв одним скриптом
+./generate.sh ../API-SWAGGER/api/v1/auth/character-creation.yaml
+./generate.sh ../API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
 ```
 
-### Вариант 3: Добавить новый execution в pom.xml
+### Вариант 3: Генерация из всех файлов в директории
 
-Если нужно генерировать из нескольких OpenAPI файлов одновременно, можно добавить дополнительные execution:
-
-```xml
-<execution>
-    <id>generate-api-cyberpsychosis</id>
-    <phase>generate-sources</phase>
-    <goals>
-        <goal>generate</goal>
-    </goals>
-    <configuration>
-        <inputSpec>${project.basedir}/../API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml</inputSpec>
-        <!-- остальная конфигурация -->
-    </configuration>
-</execution>
+```bash
+# Генерация из всех OpenAPI файлов в директории
+for file in ../API-SWAGGER/api/v1/**/*.yaml; do
+  echo "Генерация из $file"
+  openapi-generator-cli generate -i "$file" ...
+done
 ```
 
 ## Структура шаблонов
@@ -102,30 +124,43 @@ OpenAPI Generator автоматически:
 
 ## Процесс генерации
 
-### 1. Базовый код (DTOs, Models, Controllers)
+### 1. Базовый код (DTOs, Models, API Interfaces)
 - Использует стандартные шаблоны OpenAPI Generator
 - Генерируется в `target/generated-sources/openapi`
+- Команда в [GENERATION-COMMANDS.md](./GENERATION-COMMANDS.md#1-генерация-dtos-и-api-interfaces)
 
 ### 2. JPA Entities
-- Использует кастомный шаблон `Entity.mustache`
+- Использует кастомный шаблон `model.mustache`
 - Генерируется в `target/generated-sources/entities`
 - Применяется для каждой схемы в `components/schemas`
+- Команда в [GENERATION-COMMANDS.md](./GENERATION-COMMANDS.md#2-генерация-jpa-entities)
 
 ### 3. Repositories
-- Использует скрипт `scripts/generate-repositories.ps1`
+- Использует кастомный шаблон `Repository.mustache`
 - Генерируется в `target/generated-sources/repositories`
-- Скрипт запускается автоматически через `exec-maven-plugin` после генерации entities
-- Генерирует репозитории для основных Entity классов (Account, Character, CharacterClass, CharacterOrigin, City, Faction)
+- Применяется для каждой схемы в `components/schemas`
+- Генерирует Spring Data JPA Repository интерфейсы
+- Команда в [GENERATION-COMMANDS.md](./GENERATION-COMMANDS.md#3-генерация-repositories)
 
 ### 4. Services
 - Использует кастомные шаблоны `Service.mustache` и `ServiceImpl.mustache`
 - Генерируется в `target/generated-sources/services`
-- Применяется для каждой операции в `paths`
+- Применяется для каждой API группы (tag) в `paths`
+- Генерирует Service интерфейсы и ServiceImpl классы с заглушками
+- Команды в [GENERATION-COMMANDS.md](./GENERATION-COMMANDS.md#4-генерация-service-интерфейсов)
 
-### 5. Migrations
-- Использует кастомный шаблон `Migration.mustache`
-- Генерируется в `target/generated-sources/migrations`
-- Применяется для каждой схемы в `components/schemas`
+### 5. Controllers
+- Использует кастомный шаблон `apiController.mustache`
+- Генерируется в `target/generated-sources/controllers`
+- Применяется для каждой API группы (tag) в `paths`
+- Генерирует Controller реализации с базовой логикой
+- Команда в [GENERATION-COMMANDS.md](./GENERATION-COMMANDS.md#6-генерация-controllers)
+
+### 6. Liquibase Migrations
+- Генерируется из JPA Entities через Liquibase Maven Plugin
+- Генерируется в `src/main/resources/db/changelog/`
+- Команда: `mvn liquibase:diffChangeLog`
+- Применяется после компиляции Entities: `mvn clean compile && mvn liquibase:diffChangeLog`
 
 ## Примеры использования
 

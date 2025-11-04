@@ -1,0 +1,22 @@
+package {{package}};
+
+import {{modelPackage}}.{{classname}};
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+import java.util.UUID;
+
+/**
+ * Spring Data JPA repository for the {{classname}} entity.
+ * Generated from OpenAPI specification.
+ */
+@Repository
+public interface {{classname}}Repository extends JpaRepository<{{classname}}, UUID> {
+    
+    // Spring Data JPA will automatically implement basic CRUD operations
+    // Add custom query methods here if needed based on your entity fields
+    
+    // Example: Optional<{{classname}}> findByName(String name);
+}
+

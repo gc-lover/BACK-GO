@@ -53,3 +53,9 @@ Thumbs.db
 
 # Generated code
 target/generated-sources/
+
+# Test output (не используется в проекте)
+test-output/
+
+# Backup templates (можно удалить, если не нужен)
+# temp-templates-original/
