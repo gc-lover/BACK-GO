@@ -65,9 +65,28 @@
 -p "generateApis=false,generateModels=true,modelTemplateFiles=repositoryModel.mustache=Repository.java"
 ```
 
-## 🔄 Процесс генерации (через Maven)
+## 🔄 Процесс генерации (через PowerShell скрипт)
 
-Генерация происходит через `exec-maven-plugin` с вызовом `npx @openapitools/openapi-generator-cli`:
+Генерация происходит через универсальный PowerShell скрипт `scripts/generate-openapi-layers.ps1`:
+
+### Режимы работы:
+
+#### 1. Генерация из одного файла
+```powershell
+.\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml
+```
+
+#### 2. Генерация из всей директории (обрабатывает ВСЕ .yaml файлы)
+```powershell
+.\scripts\generate-openapi-layers.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
+```
+
+#### 3. Генерация только определённых слоёв
+```powershell
+.\scripts\generate-openapi-layers.ps1 -ApiSpec path/to/api.yaml -Layers Controllers,Services
+```
+
+### Генерируемые слои:
 
 1. **DTOs + API Interfaces** → `target/generated-sources/openapi/`
    - Стандартная генерация без кастомных шаблонов
@@ -85,19 +104,35 @@
    - Шаблон: `api.mustache`
    - Пакет: `com.necpgame.backjava.service`
 
-5. **ServiceImpl заглушки** → `target/generated-sources/services/`
-   - Шаблон: `serviceImpl.mustache`
-   - Пакет: `com.necpgame.backjava.service.impl`
-
-6. **Controllers** → `target/generated-sources/controllers/`
+5. **Controllers** → `target/generated-sources/controllers/`
    - Шаблон: `apiController.mustache`
    - Пакет: `com.necpgame.backjava.controller`
+
+### Преимущества скрипта:
+- ✅ **Без хардкода** - требует явного указания файла или директории
+- ✅ **Прозрачность** - видим каждую команду генерации
+- ✅ **Гибкость** - можно генерировать отдельные слои
+- ✅ **Статистика** - показывает успешные/неудачные файлы
+- ✅ **Обработка ошибок** - продолжает работу после ошибок
 
 ## 📋 Как добавить новый шаблон
 
 1. Создай `.mustache` файл в `templates/`
-2. Добавь `<execution>` в `pom.xml` с нужными параметрами
+2. Добавь секцию генерации в скрипт `scripts/generate-openapi-layers.ps1`
 3. Укажи параметр `-p` с `apiTemplateFiles` или `modelTemplateFiles`
+
+## 🚀 Быстрый старт
+
+```powershell
+# Генерация из одного файла (все слои)
+.\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml
+
+# Генерация из всей директории (обработает все .yaml файлы)
+.\scripts\generate-openapi-layers.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
+
+# Генерация только контроллеров
+.\scripts\generate-openapi-layers.ps1 -ApiSpec path/to/api.yaml -Layers Controllers
+```
 
 ## 📚 Дополнительная информация
 
