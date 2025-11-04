@@ -30,22 +30,29 @@ public class LocationsServiceImpl implements LocationsService {
     public GetCities200Response getCities(UUID factionId, String region) {
         log.info("Getting cities - factionId: {}, region: {}", factionId, region);
         
-        // TODO: Implement filtering by factionId and region
-        var cities = cityRepository.findAll().stream()
-            .map(entity -> {
-                City dto = new City();
-                dto.setId(entity.getId());
-                dto.setName(entity.getName());
-                dto.setRegion(entity.getRegion());
-                dto.setDescription(entity.getDescription());
-                return dto;
-            })
-            .collect(Collectors.toList());
-        
-        GetCities200Response response = new GetCities200Response();
-        response.setCities(cities);
-        
-        return response;
+        try {
+            // TODO: Implement filtering by factionId and region
+            var cities = cityRepository.findAll().stream()
+                .map(entity -> {
+                    City dto = new City();
+                    dto.setId(entity.getId());
+                    dto.setName(entity.getName());
+                    dto.setRegion(entity.getRegion());
+                    dto.setDescription(entity.getDescription());
+                    // TODO: Add factionId when relationship is clarified
+                    return dto;
+                })
+                .collect(Collectors.toList());
+            
+            GetCities200Response response = new GetCities200Response();
+            response.setCities(cities);
+            
+            log.info("Successfully fetched {} cities", cities.size());
+            return response;
+        } catch (Exception e) {
+            log.error("Error fetching cities", e);
+            throw e;
+        }
     }
 }
 
