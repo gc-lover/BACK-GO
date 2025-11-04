@@ -31,8 +31,8 @@
     Например: ../API-SWAGGER/api/v1/
 
 .PARAMETER CleanBefore
-    Удалить ли target/generated-sources перед генерацией
-    По умолчанию: true
+    Удалить ли сгенерированные контракты перед генерацией
+    По умолчанию: false (файлы просто перезаписываются)
 
 .PARAMETER Layers
     Какие контракты генерировать: All, DTOs, Services
@@ -61,7 +61,7 @@
 param(
     [string]$ApiSpec = "",
     [string]$ApiDirectory = "",
-    [bool]$CleanBefore = $true,
+    [bool]$CleanBefore = $false,
     [string[]]$Layers = @("All")
 )
 
@@ -155,13 +155,27 @@ elseif (-not [string]::IsNullOrEmpty($ApiDirectory)) {
 
 Write-Host "🎯 Слои для генерации: $($Layers -join ', ')" -ForegroundColor $ColorInfo
 
-# Очистка предыдущих генераций
+# Очистка предыдущих генераций (обычно не требуется - файлы перезаписываются)
 if ($CleanBefore) {
     Write-Step "Очистка предыдущих генераций"
-    if (Test-Path "target/generated-sources") {
-        Remove-Item -Path "target/generated-sources" -Recurse -Force
-        Write-Success "Директория target/generated-sources удалена"
+    $pathsToClean = @(
+        "src/main/java/com/necpgame/backjava/api",
+        "src/main/java/com/necpgame/backjava/model",
+        "src/main/java/com/necpgame/backjava/service"
+    )
+    foreach ($path in $pathsToClean) {
+        if (Test-Path $path) {
+            # Удаляем только СГЕНЕРИРОВАННЫЕ файлы (с аннотацией @Generated или комментарием)
+            Get-ChildItem -Path $path -Filter "*.java" -Recurse | ForEach-Object {
+                $content = Get-Content $_.FullName -Raw
+                if ($content -match "@Generated|OpenAPI Generator" -and $content -notmatch "ServiceImpl|Controller") {
+                    Remove-Item $_.FullName -Force
+                    Write-Host "  Удалён: $($_.Name)" -ForegroundColor DarkGray
+                }
+            }
+        }
     }
+    Write-Success "Сгенерированные контракты очищены"
 }
 
 # Проверяем, какие контракты генерировать
@@ -201,11 +215,11 @@ foreach ($ApiFile in $ApiFiles) {
         Write-Step "1/2 Генерация DTOs и API Interfaces"
         
         $DtosParams = $CommonParams + @(
-            "-o", "target/generated-sources/openapi",
+            "-o", ".",
             "--api-package", "com.necpgame.backjava.api",
             "--model-package", "com.necpgame.backjava.model",
             "--invoker-package", "com.necpgame.backjava.invoker",
-            "-p", "interfaceOnly=true,useSpringBoot3=true,useJakartaEe=true,openApiNullable=false,useBeanValidation=true"
+            "-p", "interfaceOnly=true,useSpringBoot3=true,useJakartaEe=true,openApiNullable=false,useBeanValidation=true,hideGenerationTimestamp=true"
         )
         
         $result = npx --yes @openapitools/openapi-generator-cli @DtosParams 2>&1
@@ -226,11 +240,11 @@ foreach ($ApiFile in $ApiFiles) {
         Write-Step "2/2 Генерация Service интерфейсов"
         
         $ServicesParams = $CommonParams + @(
-            "-o", "target/generated-sources/services",
+            "-o", ".",
             "--api-package", "com.necpgame.backjava.service",
             "--model-package", "com.necpgame.backjava.model",
             "--api-name-suffix", "Service",
-            "-p", "interfaceOnly=true,generateApis=true,generateModels=false,useSpringBoot3=true,useJakartaEe=true"
+            "-p", "interfaceOnly=true,generateApis=true,generateModels=false,useSpringBoot3=true,useJakartaEe=true,hideGenerationTimestamp=true"
         )
         
         $result = npx --yes @openapitools/openapi-generator-cli @ServicesParams 2>&1
@@ -276,21 +290,22 @@ if ($FailedFiles -gt 0) {
 
 Write-Host "`n📁 Сгенерированные контракты находятся в:" -ForegroundColor $ColorInfo
 if ($GenerateDTOs) { 
-    Write-Host "   → target/generated-sources/openapi/api/      (API Interfaces)" -ForegroundColor $ColorInfo 
-    Write-Host "   → target/generated-sources/openapi/model/    (DTOs)" -ForegroundColor $ColorInfo 
+    Write-Host "   → src/main/java/com/necpgame/backjava/api/      (API Interfaces)" -ForegroundColor $ColorInfo 
+    Write-Host "   → src/main/java/com/necpgame/backjava/model/    (DTOs)" -ForegroundColor $ColorInfo 
 }
 if ($GenerateServices) { 
-    Write-Host "   → target/generated-sources/services/         (Service Interfaces)" -ForegroundColor $ColorInfo 
+    Write-Host "   → src/main/java/com/necpgame/backjava/service/  (Service Interfaces)" -ForegroundColor $ColorInfo 
 }
 
 Write-Host "`n💡 Следующие шаги:" -ForegroundColor $ColorInfo
-Write-Host "   1. Проверьте сгенерированные контракты" -ForegroundColor $ColorInfo
-Write-Host "   2. Создайте ВРУЧНУЮ в src/main/java/:" -ForegroundColor $ColorInfo
+Write-Host "   1. Проверьте сгенерированные контракты в src/main/java/" -ForegroundColor $ColorInfo
+Write-Host "   2. Создайте ВРУЧНУЮ реализацию в src/main/java/:" -ForegroundColor $ColorInfo
 Write-Host "      • entity/        - JPA Entities с relationships и indexes" -ForegroundColor $ColorInfo
 Write-Host "      • repository/    - Spring Data Repositories с custom queries" -ForegroundColor $ColorInfo
 Write-Host "      • controller/    - REST Controllers с бизнес-логикой" -ForegroundColor $ColorInfo
 Write-Host "      • service/impl/  - Service implementations с бизнес-логикой" -ForegroundColor $ColorInfo
-Write-Host "   3. Запустите Maven build: mvn compile" -ForegroundColor $ColorInfo
+Write-Host "   3. Запустите Maven build: mvn clean compile" -ForegroundColor $ColorInfo
+Write-Host "   4. Контракты НЕ будут удалены при 'mvn clean' - они в src/" -ForegroundColor $ColorSuccess
 Write-Host ""
 
 # Выход с соответствующим кодом
