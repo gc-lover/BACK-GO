@@ -93,10 +93,14 @@ public class CharactersServiceImpl implements CharactersService {
         }
         
         // Внешность через MapStruct
-        if (request.getAppearance() != null) {
-            CharacterAppearanceEntity appearance = appearanceMapper.toEntity(request.getAppearance());
-            character.setAppearance(appearance);
+        // Appearance обязательное поле в Entity, поэтому всегда создаем его
+        if (request.getAppearance() == null) {
+            throw new BusinessException(ErrorCode.VALIDATION_ERROR, 
+                "Appearance is required");
         }
+        
+        CharacterAppearanceEntity appearance = appearanceMapper.toEntity(request.getAppearance());
+        character.setAppearance(appearance);
         
         character.setLevel(1);
         character.setCreatedAt(OffsetDateTime.now());
