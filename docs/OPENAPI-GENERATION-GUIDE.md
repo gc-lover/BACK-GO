@@ -1,224 +1,279 @@
-# Руководство по генерации кода из OpenAPI
+# OpenAPI Generation Guide
 
-## ⚙️ Генерация через CLI OpenAPI Generator
+## 📖 Обзор
 
-**Важно:** Генерация выполняется через CLI OpenAPI Generator, а не через Maven Plugin!
+Этот документ описывает процесс генерации кода из OpenAPI спецификаций для проекта NECPGAME Backend.
 
-### ✅ Преимущества CLI подхода:
-- Нет хардкода в `pom.xml`
-- Универсальное решение для любых OpenAPI файлов
-- Гибкая конфигурация через параметры командной строки
-- Поддержка пакетной генерации из нескольких файлов
+**Главный принцип:** OpenAPI спецификация является **единственным источником правды** для генерации всех MVC слоёв.
 
-### ✅ Шаблоны универсальные
-**Важно:** Созданные Mustache шаблоны в `templates/` являются **универсальными** и работают для **всех** OpenAPI файлов!
+## 🎯 Что генерируется
 
-- ✅ `model.mustache` - генерирует JPA Entities для всех схем
-- ✅ `Repository.mustache` - генерирует Spring Data Repositories для всех схем
-- ✅ `Service.mustache` - генерирует Service интерфейсы для всех операций
-- ✅ `ServiceImpl.mustache` - генерирует Service реализации для всех операций
-- ✅ `apiController.mustache` - генерирует Controller реализации для всех операций
+Из одной OpenAPI спецификации генерируются все необходимые слои:
 
-**Не нужно создавать новые шаблоны для каждого OpenAPI файла!**
+1. **DTOs и API Interfaces** - модели данных и REST API интерфейсы
+2. **JPA Entities** - сущности для работы с БД через Hibernate
+3. **Spring Data Repositories** - репозитории для CRUD операций
+4. **Service Interfaces** - интерфейсы бизнес-логики
+5. **REST Controllers** - Spring MVC контроллеры
 
 ## 🚀 Быстрый старт
 
-### 1. Генерация через Maven (рекомендуется)
+### Генерация всех слоёв
 
-```bash
-# Генерация из конкретного OpenAPI файла
-mvn clean generate-sources -Dopenapi.spec=../API-SWAGGER/api/v1/auth/character-creation.yaml -Dskip.openapi.generation=false
-
-# Или из другого файла
-mvn clean generate-sources -Dopenapi.spec=../API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml -Dskip.openapi.generation=false
+```powershell
+# Из корня проекта BACK-GO
+.\scripts\generate-openapi-layers.ps1
 ```
 
-**Важно:** Необходимо указать оба параметра:
-- `-Dopenapi.spec=путь/к/файлу.yaml` - путь к OpenAPI файлу
-- `-Dskip.openapi.generation=false` - включить генерацию (по умолчанию отключена)
+Эта команда:
+- Очистит `target/generated-sources/`
+- Сгенерирует все 5 слоёв из `character-creation.yaml`
+- Покажет статистику генерации
 
-### 2. Генерация через CLI (альтернатива)
+### Генерация из другого API файла
 
-**Установка CLI:**
-```bash
-npm install -g @openapitools/openapi-generator-cli
+```powershell
+.\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/character/cyberpsychosis.yaml
 ```
 
-**Пример генерации DTOs:**
-```bash
-npx --yes @openapitools/openapi-generator-cli generate \
-  -i ../API-SWAGGER/api/v1/auth/character-creation.yaml \
-  -g spring \
-  -o target/generated-sources/openapi \
-  --api-package com.necpgame.backjava.api \
-  --model-package com.necpgame.backjava.model \
-  -p "interfaceOnly=true,useSpringBoot3=true,useJakartaEe=true"
+### Генерация только определённых слоёв
+
+```powershell
+# Только Controllers и Services
+.\scripts\generate-openapi-layers.ps1 -Layers Controllers,Services
+
+# Только Entities
+.\scripts\generate-openapi-layers.ps1 -Layers Entities
 ```
 
-**⚠️ Важно:** Список свойств в `-p` должен быть в кавычках!
+Доступные слои: `DTOs`, `Entities`, `Repositories`, `Services`, `Controllers`, `All`
 
-## Как использовать для разных OpenAPI файлов
+## 📁 Структура генерации
 
-### Вариант 1: Через CLI параметры (рекомендуется)
-
-Используй параметр `-i` для указания пути к OpenAPI файлу:
-
-```bash
-# Генерация из конкретного файла
-openapi-generator-cli generate -i ../API-SWAGGER/api/v1/auth/character-creation.yaml ...
-
-# Или из другого файла
-openapi-generator-cli generate -i ../API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml ...
+```
+target/generated-sources/
+├── openapi/          # DTOs + API Interfaces
+│   └── src/main/java/com/necpgame/backjava/
+│       ├── api/      # AuthApi, CharactersApi, etc.
+│       └── model/    # Account, Character, LoginRequest, etc.
+│
+├── entities/         # JPA Entities
+│   └── src/main/java/com/necpgame/backjava/
+│       └── entity/   # AccountEntity, CharacterEntity, etc.
+│
+├── repositories/     # Spring Data Repositories
+│   └── src/main/java/com/necpgame/backjava/
+│       └── repository/  # AccountRepository, CharacterRepository, etc.
+│
+├── services/         # Service Interfaces
+│   └── src/main/java/com/necpgame/backjava/
+│       └── service/  # AuthService, CharactersService, etc.
+│
+└── controllers/      # REST Controllers
+    └── src/main/java/com/necpgame/backjava/
+        └── controller/  # AuthApiController, CharactersApiController, etc.
 ```
 
-### Вариант 2: Через bash-скрипт для пакетной генерации
+## 🔧 Кастомные шаблоны
 
-Создай bash-скрипт `generate.sh` (см. [GENERATION-COMMANDS.md](./GENERATION-COMMANDS.md)):
+Проект использует кастомные Mustache шаблоны для генерации кода с нужной структурой:
 
-```bash
-#!/bin/bash
-OPENAPI_FILE=$1
+### Активные шаблоны (в `templates/`)
 
-# Генерация всех слоёв одним скриптом
-./generate.sh ../API-SWAGGER/api/v1/auth/character-creation.yaml
-./generate.sh ../API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
-```
+1. **`api.mustache`** - генерирует Service интерфейсы
+   ```java
+   public interface AuthService {
+       LoginResponse login(LoginRequest request);
+   }
+   ```
 
-### Вариант 3: Генерация из всех файлов в директории
+2. **`apiController.mustache`** - генерирует REST контроллеры
+   ```java
+   @Controller
+   public class AuthApiController implements AuthApi {
+       // Полная реализация с Spring MVC аннотациями
+   }
+   ```
 
-```bash
-# Генерация из всех OpenAPI файлов в директории
-for file in ../API-SWAGGER/api/v1/**/*.yaml; do
-  echo "Генерация из $file"
-  openapi-generator-cli generate -i "$file" ...
-done
-```
+3. **`model.mustache`** - генерирует JPA Entities
+   ```java
+   @Entity
+   @Table(name = "account")
+   public class Account {
+       @Id
+       @GeneratedValue(strategy = GenerationType.UUID)
+       private UUID id;
+       // + Lombok, timestamps, validation
+   }
+   ```
 
-## Структура шаблонов
+4. **`repositoryModel.mustache`** - генерирует Spring Data репозитории
+   ```java
+   @Repository
+   public interface AccountRepository extends JpaRepository<Account, UUID> {
+       // Spring Data автоматически реализует CRUD
+   }
+   ```
 
-### Где находятся шаблоны?
-```
-BACK-GO/templates/
-├── Entity.mustache        # Универсальный шаблон для JPA Entities
-├── Repository.mustache    # Универсальный шаблон для Repositories
-├── Service.mustache       # Универсальный шаблон для Service интерфейсов
-├── ServiceImpl.mustache   # Универсальный шаблон для Service реализаций
-└── Migration.mustache     # Универсальный шаблон для Flyway миграций
-```
+## 🔄 Интеграция с Maven
 
-### Как работают шаблоны?
+Хотя основная генерация происходит через PowerShell скрипт, в `pom.xml` настроен `build-helper-maven-plugin`, который автоматически добавляет сгенерированные источники в classpath:
 
-OpenAPI Generator автоматически:
-1. Парсит OpenAPI спецификацию
-2. Извлекает схемы из `components/schemas`
-3. Извлекает операции из `paths`
-4. Применяет шаблоны к каждой схеме/операции
-5. Подставляет переменные из OpenAPI спецификации
-
-**Переменные в шаблонах:**
-- `{{classname}}` - имя класса из OpenAPI схемы
-- `{{vars}}` - список полей из OpenAPI схемы
-- `{{datatype}}` - тип данных из OpenAPI
-- `{{required}}` - обязательность поля
-- И многие другие (см. документацию OpenAPI Generator)
-
-## Процесс генерации
-
-### 1. Базовый код (DTOs, Models, API Interfaces)
-- Использует стандартные шаблоны OpenAPI Generator
-- Генерируется в `target/generated-sources/openapi`
-- Команда в [GENERATION-COMMANDS.md](./GENERATION-COMMANDS.md#1-генерация-dtos-и-api-interfaces)
-
-### 2. JPA Entities
-- Использует кастомный шаблон `model.mustache`
-- Генерируется в `target/generated-sources/entities`
-- Применяется для каждой схемы в `components/schemas`
-- Команда в [GENERATION-COMMANDS.md](./GENERATION-COMMANDS.md#2-генерация-jpa-entities)
-
-### 3. Repositories
-- Использует кастомный шаблон `Repository.mustache`
-- Генерируется в `target/generated-sources/repositories`
-- Применяется для каждой схемы в `components/schemas`
-- Генерирует Spring Data JPA Repository интерфейсы
-- Команда в [GENERATION-COMMANDS.md](./GENERATION-COMMANDS.md#3-генерация-repositories)
-
-### 4. Services
-- Использует кастомные шаблоны `Service.mustache` и `ServiceImpl.mustache`
-- Генерируется в `target/generated-sources/services`
-- Применяется для каждой API группы (tag) в `paths`
-- Генерирует Service интерфейсы и ServiceImpl классы с заглушками
-- Команды в [GENERATION-COMMANDS.md](./GENERATION-COMMANDS.md#4-генерация-service-интерфейсов)
-
-### 5. Controllers
-- Использует кастомный шаблон `apiController.mustache`
-- Генерируется в `target/generated-sources/controllers`
-- Применяется для каждой API группы (tag) в `paths`
-- Генерирует Controller реализации с базовой логикой
-- Команда в [GENERATION-COMMANDS.md](./GENERATION-COMMANDS.md#6-генерация-controllers)
-
-### 6. Liquibase Migrations
-- Генерируется из JPA Entities через Liquibase Maven Plugin
-- Генерируется в `src/main/resources/db/changelog/`
-- Команда: `mvn liquibase:diffChangeLog`
-- Применяется после компиляции Entities: `mvn clean compile && mvn liquibase:diffChangeLog`
-
-## Примеры использования
-
-### Пример 1: Генерация из одного файла
-```bash
-# Генерация из character-creation.yaml
-mvn clean generate-sources -Dopenapi.spec=../API-SWAGGER/api/v1/auth/character-creation.yaml
-```
-
-### Пример 2: Генерация из нескольких файлов
-Добавь несколько execution в `pom.xml`:
 ```xml
-<execution>
-    <id>generate-character-creation</id>
-    <configuration>
-        <inputSpec>${project.basedir}/../API-SWAGGER/api/v1/auth/character-creation.yaml</inputSpec>
-        <!-- ... -->
-    </configuration>
-</execution>
-<execution>
-    <id>generate-cyberpsychosis</id>
-    <configuration>
-        <inputSpec>${project.basedir}/../API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml</inputSpec>
-        <!-- ... -->
-    </configuration>
-</execution>
+<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>build-helper-maven-plugin</artifactId>
+    <execution>
+        <phase>generate-sources</phase>
+        <goals>
+            <goal>add-source</goal>
+        </goals>
+    </execution>
+</plugin>
 ```
 
-### Пример 3: Использование профилей
+Это позволяет Maven видеть сгенерированный код при компиляции.
+
+## 📝 ServiceImpl - ручное создание
+
+**ServiceImpl классы НЕ генерируются автоматически** и создаются вручную по следующим причинам:
+
+1. OpenAPI Generator Spring не поддерживает отдельную генерацию ServiceImpl
+2. ServiceImpl содержит бизнес-логику, которую невозможно сгенерировать из спецификации
+3. Ручное создание даёт больше контроля над реализацией
+
+### Пример создания ServiceImpl
+
+```java
+package com.necpgame.backjava.service.impl;
+
+import com.necpgame.backjava.service.AuthService;
+import com.necpgame.backjava.repository.AccountRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class AuthServiceImpl implements AuthService {
+    
+    private final AccountRepository accountRepository;
+    private final PasswordEncoder passwordEncoder;
+    
+    @Override
+    public LoginResponse login(LoginRequest request) {
+        log.info("Login attempt for: {}", request.getEmail());
+        
+        // Реализация бизнес-логики
+        Account account = accountRepository
+            .findByEmail(request.getEmail())
+            .orElseThrow(() -> new UnauthorizedException("Invalid credentials"));
+        
+        // ... проверка пароля, создание токена и т.д.
+        
+        return new LoginResponse(token);
+    }
+}
+```
+
+## 🛠️ Параметры генерации
+
+### Общие параметры для всех слоёв
+
 ```bash
-# Генерация с профилем
-mvn clean generate-sources -Pcharacter-creation
+-g spring                    # Spring generator
+-t templates                 # Использовать кастомные шаблоны
+useSpringBoot3=true         # Spring Boot 3.x
+useJakartaEe=true           # Jakarta EE (javax -> jakarta)
 ```
 
-## Важные замечания
+### Специфичные параметры
 
-### ⚠️ Один набор шаблонов для всех файлов
-- ✅ Шаблоны универсальные - работают для всех OpenAPI файлов
-- ✅ Не нужно создавать новые шаблоны для каждого файла
-- ✅ Можно использовать один набор шаблонов для всех спецификаций
+#### DTOs & API Interfaces
+```bash
+interfaceOnly=true          # Только интерфейсы, без реализации
+useBeanValidation=true      # Jakarta Validation аннотации
+openApiNullable=false       # Не использовать JsonNullable
+```
 
-### ⚠️ Конфигурация в pom.xml
-- `inputSpec` - путь к OpenAPI файлу (можно менять через свойства)
-- `templateDirectory` - путь к шаблонам (один для всех)
-- `output` - директория для сгенерированных файлов
+#### JPA Entities
+```bash
+generateApis=false                              # Не генерировать API
+generateModels=true                             # Генерировать модели
+modelTemplateFiles=model.mustache=Entity.java  # Кастомный шаблон
+```
 
-### ⚠️ Именование файлов
-OpenAPI Generator автоматически создает имена файлов на основе:
-- Имен схем из `components/schemas`
-- Имен операций из `paths`
-- Имен классов из OpenAPI спецификации
+#### Service Interfaces
+```bash
+interfaceOnly=true          # Только интерфейсы
+--api-name-suffix Service   # Добавить суффикс Service к именам
+```
 
-**Не нужно указывать имена файлов в шаблонах!**
+#### Controllers
+```bash
+interfaceOnly=false         # Генерировать классы, не интерфейсы
+delegatePattern=false       # Не использовать Delegate pattern
+```
 
-## Документация
+## 🔍 Проверка результатов
 
-- [OpenAPI Generator Templates](https://openapi-generator.tech/docs/templating)
-- [Mustache Manual](https://mustache.github.io/mustache.5.html)
-- [OpenAPI Generator Variables](https://openapi-generator.tech/docs/generators)
+После генерации проверьте:
 
+1. **Количество файлов** - должны быть сгенерированы все сущности из OpenAPI
+2. **Компиляция** - `mvn compile` должна пройти без ошибок
+3. **Импорты** - проверьте, что используется `jakarta.*`, а не `javax.*`
+4. **Аннотации** - JPA, Spring, Validation должны быть на месте
 
+## 📚 Дополнительные ресурсы
+
+- [OpenAPI Generator Documentation](https://openapi-generator.tech/docs/generators/spring)
+- [Mustache Template Syntax](https://mustache.github.io/mustache.5.html)
+- [Spring Boot 3 Migration Guide](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.0-Migration-Guide)
+
+## ❓ FAQ
+
+### Почему не используется Maven plugin для генерации?
+
+PowerShell скрипт проще, понятнее и даёт больше контроля:
+- Легко отлаживать каждую команду
+- Можно генерировать отдельные слои
+- Не зависит от Maven lifecycle quirks
+- Прозрачность выполнения
+
+### Как добавить новый OpenAPI файл для генерации?
+
+Просто укажите путь к файлу:
+```powershell
+.\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/new/feature.yaml
+```
+
+### Что делать, если генерация падает с ошибкой?
+
+1. Проверьте корректность OpenAPI спецификации
+2. Убедитесь, что Node.js и npx установлены
+3. Проверьте наличие `templates/` директории с шаблонами
+4. Запустите генерацию отдельного слоя для отладки:
+   ```powershell
+   .\scripts\generate-openapi-layers.ps1 -Layers DTOs
+   ```
+
+### Можно ли изменить структуру генерируемого кода?
+
+Да! Отредактируйте соответствующий Mustache шаблон в `templates/`:
+- `api.mustache` - Service интерфейсы
+- `apiController.mustache` - Controllers
+- `model.mustache` - JPA Entities  
+- `repositoryModel.mustache` - Repositories
+
+После изменения шаблона перегенерируйте код.
+
+## 🔄 Workflow разработки
+
+1. **Изменяем OpenAPI спецификацию** в репозитории `API-SWAGGER`
+2. **Генерируем код**: `.\scripts\generate-openapi-layers.ps1`
+3. **Компилируем**: `mvn compile`
+4. **Создаём ServiceImpl** (если нужны новые сервисы)
+5. **Реализуем бизнес-логику** в ServiceImpl
+6. **Тестируем**: пишем unit и integration тесты
+7. **Коммитим** изменения через `.\scripts\autocommit.ps1`

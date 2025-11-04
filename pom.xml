@@ -280,7 +280,10 @@
                         </configuration>
                     </execution>
                     
-                    <!-- 5. Генерация ServiceImpl реализаций (заглушки) -->
+                    <!-- 5. Генерация ServiceImpl (отключено - создаются вручную) -->
+                    <!-- ServiceImpl заглушки создаются вручную по мере необходимости -->
+                    <!-- Для автоматической генерации требуется кастомный generator или постпроцессор -->
+                    <!--
                     <execution>
                         <id>generate-service-impl</id>
                         <phase>generate-sources</phase>
@@ -306,11 +309,12 @@
                                 <argument>--model-package</argument>
                                 <argument>com.necpgame.backjava.model</argument>
                                 <argument>-p</argument>
-                                <argument>interfaceOnly=false,generateApis=true,generateModels=false,useSpringBoot3=true,useJakartaEe=true,apiTemplateFiles=serviceImpl.mustache=ServiceImpl.java</argument>
+                                <argument>interfaceOnly=false,generateApis=true,generateModels=false,useSpringBoot3=true,useJakartaEe=true</argument>
                             </arguments>
                             <skip>${skip.openapi.generation}</skip>
                         </configuration>
                     </execution>
+                    -->
                     
                     <!-- 6. Генерация Controllers -->
                     <execution>
@@ -337,10 +341,8 @@
                                 <argument>com.necpgame.backjava.controller</argument>
                                 <argument>--model-package</argument>
                                 <argument>com.necpgame.backjava.model</argument>
-                                <argument>--api-name-suffix</argument>
-                                <argument>Controller</argument>
                                 <argument>-p</argument>
-                                <argument>interfaceOnly=false,generateApis=true,generateModels=false,useSpringBoot3=true,useJakartaEe=true</argument>
+                                <argument>interfaceOnly=false,generateApis=true,generateModels=false,useSpringBoot3=true,useJakartaEe=true,delegatePattern=false</argument>
                             </arguments>
                             <skip>${skip.openapi.generation}</skip>
                         </configuration>

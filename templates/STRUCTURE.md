@@ -6,32 +6,38 @@
 
 **Все шаблоны используются через OpenAPI Generator CLI с параметром `-t templates`**
 
-### Список шаблонов:
+### Список активных шаблонов:
 
-1. **`api.mustache`** → Service интерфейсы
-   - Генерирует: `*ApiService.java` в пакете `com.necpgame.backjava.service`
-   - Используется: `-p "apiTemplateFiles=api.mustache=Service.java"`
+1. **`api.mustache`** → Service интерфейсы ✅
+   - Генерирует: `*Service.java` в пакете `com.necpgame.backjava.service`
+   - Параметр: `--api-name-suffix Service` + `interfaceOnly=true`
    - Содержит: чистые Java интерфейсы без Spring MVC аннотаций
+   - Пример: `AuthService.java`, `CharactersService.java`
 
-2. **`serviceImpl.mustache`** → Service реализации (заглушки)
-   - Генерирует: `*ApiServiceImpl.java` в пакете `com.necpgame.backjava.service.impl`
-   - Используется: `-p "apiTemplateFiles=serviceImpl.mustache=ServiceImpl.java"`
-   - Содержит: stub методы с TODO и логированием
-
-3. **`apiController.mustache`** → REST Controllers
+2. **`apiController.mustache`** → REST Controllers ✅
    - Генерирует: `*ApiController.java` в пакете `com.necpgame.backjava.controller`
-   - Используется: `-p "apiTemplateFiles=apiController.mustache=Controller.java"`
-   - Содержит: полную реализацию контроллера с делегированием в Service
+   - Параметр: `interfaceOnly=false` + `delegatePattern=false`
+   - Содержит: Spring `@Controller` классы, реализующие API интерфейсы
+   - Пример: `AuthApiController.java implements AuthApi`
 
-4. **`model.mustache`** → JPA Entities
+3. **`model.mustache`** → JPA Entities ✅
    - Генерирует: `*Entity.java` в пакете `com.necpgame.backjava.entity`
-   - Используется: `-p "modelTemplateFiles=model.mustache=Entity.java"`
+   - Параметр: `modelTemplateFiles=model.mustache=Entity.java`
    - Содержит: JPA аннотации, Lombok, timestamps, UUID id
+   - Пример: `AccountEntity.java`, `CharacterEntity.java`
 
-5. **`repositoryModel.mustache`** → Spring Data Repositories
+4. **`repositoryModel.mustache`** → Spring Data Repositories ✅
    - Генерирует: `*Repository.java` в пакете `com.necpgame.backjava.repository`
-   - Используется: `-p "modelTemplateFiles=repositoryModel.mustache=Repository.java"`
+   - Параметр: `modelTemplateFiles=repositoryModel.mustache=Repository.java`
    - Содержит: Spring Data JPA интерфейс с базовыми CRUD операциями
+   - Пример: `AccountRepository.java extends JpaRepository`
+
+### Неактивные шаблоны:
+
+5. **`serviceImpl.mustache`** → Service реализации (НЕ ИСПОЛЬЗУЕТСЯ)
+   - **Статус**: Отключено в Maven
+   - **Причина**: OpenAPI Generator Spring не поддерживает отдельную генерацию ServiceImpl
+   - **Решение**: ServiceImpl создаются вручную по мере необходимости
 
 ## 🎯 Принцип работы
 
