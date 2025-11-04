@@ -1,30 +1,30 @@
 package com.necpgame.backjava.controller;
 
+import com.necpgame.backjava.api.CharactersApi;
 import com.necpgame.backjava.model.*;
 import com.necpgame.backjava.service.CharactersService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
 /**
  * REST Controller для работы с персонажами
+ * Реализует CharactersApi интерфейс - все Spring MVC аннотации определены там
  */
 @Slf4j
 @RestController
-@RequestMapping("/characters")
 @RequiredArgsConstructor
-public class CharactersController {
+public class CharactersController implements CharactersApi {
     
     private final CharactersService charactersService;
     
     /**
      * GET /characters - Список персонажей игрока
      */
-    @GetMapping
+    @Override
     public ResponseEntity<ListCharacters200Response> listCharacters() {
         log.info("GET /characters");
         ListCharacters200Response response = charactersService.listCharacters();
@@ -34,31 +34,18 @@ public class CharactersController {
     /**
      * POST /characters - Создать нового персонажа
      */
-    @PostMapping
-    public ResponseEntity<CreateCharacter201Response> createCharacter(@Valid @RequestBody CreateCharacterRequest request) {
-        log.info("POST /characters - {}", request.getName());
-        CreateCharacter201Response response = charactersService.createCharacter(request);
+    @Override
+    public ResponseEntity<CreateCharacter201Response> createCharacter(CreateCharacterRequest createCharacterRequest) {
+        log.info("POST /characters - {}", createCharacterRequest.getName());
+        CreateCharacter201Response response = charactersService.createCharacter(createCharacterRequest);
         return ResponseEntity.status(201).body(response);
-    }
-    
-    /**
-     * GET /characters/{characterId} - Детальная информация о персонаже
-     * TODO: Add this endpoint to OpenAPI spec
-     */
-    @GetMapping("/{characterId}")
-    public ResponseEntity<GameCharacter> getCharacterById(@PathVariable UUID characterId) {
-        log.info("GET /characters/{}", characterId);
-        // TODO: Временно закомментирован, пока не добавим в OpenAPI spec
-        // GameCharacter response = charactersService.getCharacter(characterId);
-        // return ResponseEntity.ok(response);
-        throw new UnsupportedOperationException("Endpoint not yet implemented");
     }
     
     /**
      * DELETE /characters/{characterId} - Удалить персонажа
      */
-    @DeleteMapping("/{characterId}")
-    public ResponseEntity<DeleteCharacter200Response> deleteCharacter(@PathVariable UUID characterId) {
+    @Override
+    public ResponseEntity<DeleteCharacter200Response> deleteCharacter(UUID characterId) {
         log.info("DELETE /characters/{}", characterId);
         DeleteCharacter200Response response = charactersService.deleteCharacter(characterId);
         return ResponseEntity.ok(response);
@@ -67,7 +54,7 @@ public class CharactersController {
     /**
      * GET /characters/classes - Список доступных классов персонажей
      */
-    @GetMapping("/classes")
+    @Override
     public ResponseEntity<GetCharacterClasses200Response> getCharacterClasses() {
         log.info("GET /characters/classes");
         GetCharacterClasses200Response response = charactersService.getCharacterClasses();
@@ -77,7 +64,7 @@ public class CharactersController {
     /**
      * GET /characters/origins - Список доступных происхождений персонажей
      */
-    @GetMapping("/origins")
+    @Override
     public ResponseEntity<GetCharacterOrigins200Response> getCharacterOrigins() {
         log.info("GET /characters/origins");
         GetCharacterOrigins200Response response = charactersService.getCharacterOrigins();
