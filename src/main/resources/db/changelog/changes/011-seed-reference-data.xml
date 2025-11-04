@@ -24,6 +24,50 @@
         </insert>
     </changeSet>
 
+    <changeSet id="011-seed-character-subclasses" author="system">
+        <!-- Character Subclasses for Solo -->
+        <insert tableName="character_subclasses">
+            <column name="subclass_code" value="solo_assault"/>
+            <column name="name" value="Assault Specialist"/>
+            <column name="description" value="Специализация на штурмовом оружии и прямых атаках"/>
+            <column name="class_code" value="solo"/>
+        </insert>
+        <insert tableName="character_subclasses">
+            <column name="subclass_code" value="solo_sniper"/>
+            <column name="name" value="Sniper"/>
+            <column name="description" value="Мастер снайперского дела и точных выстрелов"/>
+            <column name="class_code" value="solo"/>
+        </insert>
+        
+        <!-- Character Subclasses for Netrunner -->
+        <insert tableName="character_subclasses">
+            <column name="subclass_code" value="netrunner_infiltrator"/>
+            <column name="name" value="Data Infiltrator"/>
+            <column name="description" value="Специализация на проникновении в защищенные системы"/>
+            <column name="class_code" value="netrunner"/>
+        </insert>
+        <insert tableName="character_subclasses">
+            <column name="subclass_code" value="netrunner_combat"/>
+            <column name="name" value="Combat Netrunner"/>
+            <column name="description" value="Боевой хакер, использующий кибератаки в бою"/>
+            <column name="class_code" value="netrunner"/>
+        </insert>
+        
+        <!-- Character Subclasses for Fixer -->
+        <insert tableName="character_subclasses">
+            <column name="subclass_code" value="fixer_trader"/>
+            <column name="name" value="Master Trader"/>
+            <column name="description" value="Эксперт в торговле и экономике"/>
+            <column name="class_code" value="fixer"/>
+        </insert>
+        <insert tableName="character_subclasses">
+            <column name="subclass_code" value="fixer_diplomat"/>
+            <column name="name" value="Diplomat"/>
+            <column name="description" value="Мастер переговоров и разрешения конфликтов"/>
+            <column name="class_code" value="fixer"/>
+        </insert>
+    </changeSet>
+
     <changeSet id="011-seed-character-origins" author="system">
         <!-- Character Origins -->
         <insert tableName="character_origins">

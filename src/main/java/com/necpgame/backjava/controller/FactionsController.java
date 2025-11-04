@@ -23,10 +23,9 @@ public class FactionsController implements FactionsApi {
      * GET /factions - Список доступных фракций
      */
     @Override
-    public ResponseEntity<GetFactions200Response> getFactions(String origin) {
+    public GetFactions200Response getFactions(String origin) {
         log.info("GET /factions?origin={}", origin);
-        GetFactions200Response response = factionsService.getFactions(origin);
-        return ResponseEntity.ok(response);
+        return factionsService.getFactions(origin);
     }
 }
 

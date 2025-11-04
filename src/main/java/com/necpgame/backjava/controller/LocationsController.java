@@ -25,10 +25,9 @@ public class LocationsController implements LocationsApi {
      * GET /locations/cities - Список доступных городов
      */
     @Override
-    public ResponseEntity<GetCities200Response> getCities(UUID factionId, String region) {
+    public GetCities200Response getCities(UUID factionId, String region) {
         log.info("GET /locations/cities?factionId={}&region={}", factionId, region);
-        GetCities200Response response = locationsService.getCities(factionId, region);
-        return ResponseEntity.ok(response);
+        return locationsService.getCities(factionId, region);
     }
 }
 

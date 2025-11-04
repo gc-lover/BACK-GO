@@ -46,5 +46,10 @@ public interface CharacterRepository extends JpaRepository<CharacterEntity, UUID
      * Проверить существование персонажа с таким именем у аккаунта
      */
     boolean existsByNameAndAccountId(String name, UUID accountId);
+    
+    /**
+     * Посчитать количество персонажей у аккаунта
+     */
+    long countByAccountId(UUID accountId);
 }
 

@@ -43,12 +43,15 @@ public class CharactersController {
     
     /**
      * GET /characters/{characterId} - Детальная информация о персонаже
+     * TODO: Add this endpoint to OpenAPI spec
      */
     @GetMapping("/{characterId}")
     public ResponseEntity<GameCharacter> getCharacterById(@PathVariable UUID characterId) {
         log.info("GET /characters/{}", characterId);
-        GameCharacter response = charactersService.getCharacter(characterId);
-        return ResponseEntity.ok(response);
+        // TODO: Временно закомментирован, пока не добавим в OpenAPI spec
+        // GameCharacter response = charactersService.getCharacter(characterId);
+        // return ResponseEntity.ok(response);
+        throw new UnsupportedOperationException("Endpoint not yet implemented");
     }
     
     /**

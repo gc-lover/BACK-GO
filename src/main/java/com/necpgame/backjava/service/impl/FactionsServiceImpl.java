@@ -22,18 +22,23 @@ public class FactionsServiceImpl implements FactionsService {
     private final FactionRepository factionRepository;
     
     /**
-     * Получить список всех фракций
+     * Получить список всех фракций (с опциональной фильтрацией по происхождению)
      */
     @Override
     @Transactional(readOnly = true)
-    public GetFactions200Response getFactions() {
-        log.info("Getting all factions");
+    public GetFactions200Response getFactions(String origin) {
+        log.info("Getting factions for origin: {}", origin);
         
+        // TODO: Implement filtering by origin
         var factions = factionRepository.findAll().stream()
             .map(entity -> {
                 Faction dto = new Faction();
                 dto.setId(entity.getId());
                 dto.setName(entity.getName());
+                // Конвертируем Entity.FactionType в DTO.TypeEnum
+                if (entity.getType() != null) {
+                    dto.setType(Faction.TypeEnum.fromValue(entity.getType().name().toLowerCase()));
+                }
                 dto.setDescription(entity.getDescription());
                 return dto;
             })

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -93,7 +94,6 @@ public class CharactersServiceImpl implements CharactersService {
         // Внешность через MapStruct
         if (request.getAppearance() != null) {
             CharacterAppearanceEntity appearance = appearanceMapper.toEntity(request.getAppearance());
-            appearance.setCharacter(character);
             character.setAppearance(appearance);
         }
         
@@ -114,7 +114,6 @@ public class CharactersServiceImpl implements CharactersService {
     /**
      * Получить детальную информацию о персонаже
      */
-    @Override
     @Transactional(readOnly = true)
     public GameCharacter getCharacter(UUID characterId) {
         UUID accountId = SecurityUtil.getCurrentAccountId();
@@ -126,7 +125,7 @@ public class CharactersServiceImpl implements CharactersService {
         
         // Проверка владельца
         if (!character.getAccount().getId().equals(accountId)) {
-            throw new BusinessException(ErrorCode.ACCESS_DENIED, 
+            throw new BusinessException(ErrorCode.ACCESS_DENIED,
                 "You don't have access to this character");
         }
         
@@ -172,9 +171,10 @@ public class CharactersServiceImpl implements CharactersService {
         var classes = characterClassRepository.findAll().stream()
             .map(entity -> {
                 GameCharacterClass dto = new GameCharacterClass();
-                dto.setCode(entity.getClassCode());
+                dto.setId(entity.getClassCode());
                 dto.setName(entity.getName());
                 dto.setDescription(entity.getDescription());
+                dto.setSubclasses(new ArrayList<>()); // TODO: load subclasses
                 return dto;
             })
             .collect(Collectors.toList());
@@ -196,9 +196,14 @@ public class CharactersServiceImpl implements CharactersService {
         var origins = characterOriginRepository.findAll().stream()
             .map(entity -> {
                 GameCharacterOrigin dto = new GameCharacterOrigin();
-                dto.setCode(entity.getOriginCode());
+                // Используем enum из DTO
+                GameCharacterOrigin.IdEnum idEnum = GameCharacterOrigin.IdEnum.fromValue(entity.getOriginCode());
+                dto.setId(idEnum);
                 dto.setName(entity.getName());
                 dto.setDescription(entity.getDescription());
+                dto.setStartingSkills(new ArrayList<>()); // TODO: parse from JSON
+                dto.setAvailableFactions(new ArrayList<>()); // TODO: load factions
+                dto.setStartingResources(null); // TODO: map starting resources
                 return dto;
             })
             .collect(Collectors.toList());
@@ -207,24 +212,6 @@ public class CharactersServiceImpl implements CharactersService {
         response.setOrigins(origins);
         
         return response;
-    }
-    
-    /**
-     * Валидация создания персонажа
-     */
-    private void validateCharacterCreation(UUID accountId, CreateCharacterRequest request) {
-        // Проверка уникальности имени
-        if (characterRepository.existsByName(request.getName())) {
-            throw new BusinessException(ErrorCode.RESOURCE_ALREADY_EXISTS, 
-                "Character with this name already exists");
-        }
-        
-        // Проверка лимита персонажей (опционально)
-        long characterCount = characterRepository.countByAccountId(accountId);
-        if (characterCount >= 5) {
-            throw new BusinessException(ErrorCode.CHARACTER_LIMIT_REACHED, 
-                "Maximum character limit reached");
-        }
     }
 }
 

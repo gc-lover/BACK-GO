@@ -2,6 +2,7 @@ package com.necpgame.backjava.mapper;
 
 import com.necpgame.backjava.entity.AccountEntity;
 import com.necpgame.backjava.model.Account;
+import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,7 +24,8 @@ public class AccountMapper {
         dto.setEmail(entity.getEmail());
         dto.setUsername(entity.getUsername());
         dto.setCreatedAt(entity.getCreatedAt());
-        dto.setLastLogin(entity.getLastLogin());
+        dto.setLastLogin(entity.getLastLogin() != null ? 
+            JsonNullable.of(entity.getLastLogin()) : JsonNullable.undefined());
         dto.setIsActive(entity.getIsActive());
         
         return dto;
@@ -42,7 +44,8 @@ public class AccountMapper {
         entity.setEmail(dto.getEmail());
         entity.setUsername(dto.getUsername());
         entity.setCreatedAt(dto.getCreatedAt());
-        entity.setLastLogin(dto.getLastLogin());
+        entity.setLastLogin(dto.getLastLogin() != null && dto.getLastLogin().isPresent() ? 
+            dto.getLastLogin().get() : null);
         entity.setIsActive(dto.getIsActive());
         
         return entity;
