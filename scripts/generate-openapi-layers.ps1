@@ -4,14 +4,18 @@
     Генерация всех MVC слоёв из OpenAPI спецификации через OpenAPI Generator CLI
 
 .DESCRIPTION
-    Скрипт генерирует все слои приложения из OpenAPI спецификации:
-    - DTOs и API интерфейсы
-    - JPA Entities
-    - Spring Data Repositories
-    - Service интерфейсы
-    - REST Controllers
+    Скрипт генерирует ТОЛЬКО КОНТРАКТЫ из OpenAPI спецификации:
+    - DTOs (модели данных)
+    - API Interfaces (REST API контракты)
+    - Service Interfaces (бизнес-логика контракты)
     
-    OpenAPI спецификация является единственным источником правды для генерации.
+    РЕАЛИЗАЦИЯ создаётся вручную в src/main/java/:
+    - Entities (с relationships, indexes)
+    - Repositories (с custom queries)
+    - Controllers (с бизнес-логикой)
+    - ServiceImpl (вся бизнес-логика)
+    
+    OpenAPI спецификация является единственным источником правды для контрактов.
     
     Скрипт может работать:
     - С одним файлом (параметр -ApiSpec)
@@ -31,8 +35,11 @@
     По умолчанию: true
 
 .PARAMETER Layers
-    Какие слои генерировать: All, DTOs, Entities, Repositories, Services, Controllers
+    Какие контракты генерировать: All, DTOs, Services
     По умолчанию: All
+    
+    Примечание: Entities, Repositories, Controllers, ServiceImpl НЕ генерируются
+    автоматически - их нужно создавать вручную в src/main/java/
 
 .EXAMPLE
     .\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml
@@ -43,8 +50,8 @@
     Генерирует все слои из ВСЕХ OpenAPI файлов в директории
 
 .EXAMPLE
-    .\generate-openapi-layers.ps1 -ApiSpec path/to/api.yaml -Layers Controllers,Services
-    Генерирует только Controllers и Services из указанного файла
+    .\generate-openapi-layers.ps1 -ApiSpec path/to/api.yaml -Layers Services
+    Генерирует только Service Interfaces из указанного файла
 
 .EXAMPLE
     .\generate-openapi-layers.ps1 -ApiDirectory ../API-SWAGGER/api/ -CleanBefore $false
@@ -157,13 +164,10 @@ if ($CleanBefore) {
     }
 }
 
-# Проверяем, какие слои генерировать
+# Проверяем, какие контракты генерировать
 $GenerateAll = $Layers -contains "All"
 $GenerateDTOs = $GenerateAll -or ($Layers -contains "DTOs")
-$GenerateEntities = $GenerateAll -or ($Layers -contains "Entities")
-$GenerateRepositories = $GenerateAll -or ($Layers -contains "Repositories")
 $GenerateServices = $GenerateAll -or ($Layers -contains "Services")
-$GenerateControllers = $GenerateAll -or ($Layers -contains "Controllers")
 
 # Счетчики для статистики
 $TotalFiles = $ApiFiles.Count
@@ -191,10 +195,10 @@ foreach ($ApiFile in $ApiFiles) {
     )
 
     # ==============================================================================
-    # 1. Генерация DTOs и API Interfaces
+    # 1. Генерация DTOs и API Interfaces (контракты REST API)
     # ==============================================================================
     if ($GenerateDTOs) {
-        Write-Step "1/5 Генерация DTOs и API Interfaces"
+        Write-Step "1/2 Генерация DTOs и API Interfaces"
         
         $DtosParams = $CommonParams + @(
             "-o", "target/generated-sources/openapi",
@@ -216,56 +220,10 @@ foreach ($ApiFile in $ApiFiles) {
     }
 
     # ==============================================================================
-    # 2. Генерация JPA Entities
-    # ==============================================================================
-    if ($GenerateEntities) {
-        Write-Step "2/5 Генерация JPA Entities"
-        
-        $EntitiesParams = $CommonParams + @(
-            "-o", "target/generated-sources/entities",
-            "--model-package", "com.necpgame.backjava.entity",
-            "-p", "generateApis=false,generateModels=true,useSpringBoot3=true,useJakartaEe=true,modelTemplateFiles=model.mustache=Entity.java"
-        )
-        
-        $result = npx --yes @openapitools/openapi-generator-cli @EntitiesParams 2>&1
-        if ($LASTEXITCODE -eq 0) {
-            Write-Success "JPA Entities сгенерированы"
-        } else {
-            Write-Failed "Ошибка генерации Entities из $FileName"
-            Write-Host $result -ForegroundColor $ColorError
-            $FailedFiles++
-            continue
-        }
-    }
-
-    # ==============================================================================
-    # 3. Генерация Spring Data Repositories
-    # ==============================================================================
-    if ($GenerateRepositories) {
-        Write-Step "3/5 Генерация Spring Data Repositories"
-        
-        $RepositoriesParams = $CommonParams + @(
-            "-o", "target/generated-sources/repositories",
-            "--model-package", "com.necpgame.backjava.repository",
-            "-p", "generateApis=false,generateModels=true,useSpringBoot3=true,useJakartaEe=true,modelTemplateFiles=repositoryModel.mustache=Repository.java"
-        )
-        
-        $result = npx --yes @openapitools/openapi-generator-cli @RepositoriesParams 2>&1
-        if ($LASTEXITCODE -eq 0) {
-            Write-Success "Repositories сгенерированы"
-        } else {
-            Write-Failed "Ошибка генерации Repositories из $FileName"
-            Write-Host $result -ForegroundColor $ColorError
-            $FailedFiles++
-            continue
-        }
-    }
-
-    # ==============================================================================
-    # 4. Генерация Service интерфейсов
+    # 2. Генерация Service интерфейсов (контракты бизнес-логики)
     # ==============================================================================
     if ($GenerateServices) {
-        Write-Step "4/5 Генерация Service интерфейсов"
+        Write-Step "2/2 Генерация Service интерфейсов"
         
         $ServicesParams = $CommonParams + @(
             "-o", "target/generated-sources/services",
@@ -286,31 +244,7 @@ foreach ($ApiFile in $ApiFiles) {
         }
     }
 
-    # ==============================================================================
-    # 5. Генерация REST Controllers
-    # ==============================================================================
-    if ($GenerateControllers) {
-        Write-Step "5/5 Генерация REST Controllers"
-        
-        $ControllersParams = $CommonParams + @(
-            "-o", "target/generated-sources/controllers",
-            "--api-package", "com.necpgame.backjava.controller",
-            "--model-package", "com.necpgame.backjava.model",
-            "-p", "interfaceOnly=false,generateApis=true,generateModels=false,useSpringBoot3=true,useJakartaEe=true,delegatePattern=false"
-        )
-        
-        $result = npx --yes @openapitools/openapi-generator-cli @ControllersParams 2>&1
-        if ($LASTEXITCODE -eq 0) {
-            Write-Success "Controllers сгенерированы"
-        } else {
-            Write-Failed "Ошибка генерации Controllers из $FileName"
-            Write-Host $result -ForegroundColor $ColorError
-            $FailedFiles++
-            continue
-        }
-    }
-    
-    Write-Success "Файл $FileName обработан успешно"
+    Write-Success "Контракты из $FileName сгенерированы успешно"
 }
 
 # Конец цикла по файлам
@@ -340,17 +274,23 @@ if ($FailedFiles -gt 0) {
     Write-Host "   Ошибок: $FailedFiles" -ForegroundColor $ColorError
 }
 
-Write-Host "`n📁 Сгенерированные файлы находятся в:" -ForegroundColor $ColorInfo
-if ($GenerateDTOs) { Write-Host "   → target/generated-sources/openapi/" -ForegroundColor $ColorInfo }
-if ($GenerateEntities) { Write-Host "   → target/generated-sources/entities/" -ForegroundColor $ColorInfo }
-if ($GenerateRepositories) { Write-Host "   → target/generated-sources/repositories/" -ForegroundColor $ColorInfo }
-if ($GenerateServices) { Write-Host "   → target/generated-sources/services/" -ForegroundColor $ColorInfo }
-if ($GenerateControllers) { Write-Host "   → target/generated-sources/controllers/" -ForegroundColor $ColorInfo }
+Write-Host "`n📁 Сгенерированные контракты находятся в:" -ForegroundColor $ColorInfo
+if ($GenerateDTOs) { 
+    Write-Host "   → target/generated-sources/openapi/api/      (API Interfaces)" -ForegroundColor $ColorInfo 
+    Write-Host "   → target/generated-sources/openapi/model/    (DTOs)" -ForegroundColor $ColorInfo 
+}
+if ($GenerateServices) { 
+    Write-Host "   → target/generated-sources/services/         (Service Interfaces)" -ForegroundColor $ColorInfo 
+}
 
 Write-Host "`n💡 Следующие шаги:" -ForegroundColor $ColorInfo
-Write-Host "   1. Проверьте сгенерированные файлы" -ForegroundColor $ColorInfo
-Write-Host "   2. Запустите Maven build: mvn compile" -ForegroundColor $ColorInfo
-Write-Host "   3. Создайте ServiceImpl классы вручную (если нужно)" -ForegroundColor $ColorInfo
+Write-Host "   1. Проверьте сгенерированные контракты" -ForegroundColor $ColorInfo
+Write-Host "   2. Создайте ВРУЧНУЮ в src/main/java/:" -ForegroundColor $ColorInfo
+Write-Host "      • entity/        - JPA Entities с relationships и indexes" -ForegroundColor $ColorInfo
+Write-Host "      • repository/    - Spring Data Repositories с custom queries" -ForegroundColor $ColorInfo
+Write-Host "      • controller/    - REST Controllers с бизнес-логикой" -ForegroundColor $ColorInfo
+Write-Host "      • service/impl/  - Service implementations с бизнес-логикой" -ForegroundColor $ColorInfo
+Write-Host "   3. Запустите Maven build: mvn compile" -ForegroundColor $ColorInfo
 Write-Host ""
 
 # Выход с соответствующим кодом

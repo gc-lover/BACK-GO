@@ -1,142 +1,327 @@
 # Структура шаблонов OpenAPI Generator
 
+## 🎯 Философия: Контракты vs Реализация
+
+**OpenAPI спецификация = источник правды ТОЛЬКО для контрактов**
+
+### ✅ Что генерируется АВТОМАТИЧЕСКИ (контракты):
+1. **DTOs** - модели данных (можно безопасно перегенерировать)
+2. **API Interfaces** - контракты REST API (можно безопасно перегенерировать)
+3. **Service Interfaces** - контракты бизнес-логики (можно безопасно перегенерировать)
+
+### ✍️ Что создаётся ВРУЧНУЮ (реализация):
+4. **Entities** - JPA сущности с relationships, indexes, constraints
+5. **Repositories** - Spring Data репозитории с custom queries
+6. **Controllers** - REST контроллеры с бизнес-логикой
+7. **ServiceImpl** - реализация бизнес-логики
+
 ## 📁 Активные шаблоны в `templates/`
 
-### Кастомные Mustache шаблоны для генерации MVC слоёв
+### 1. **`api.mustache`** → Service интерфейсы ✅
+   - **Генерирует**: `*Service.java` в `target/generated-sources/services/`
+   - **Параметр**: `--api-name-suffix Service` + `interfaceOnly=true`
+   - **Содержит**: Чистые Java интерфейсы без Spring аннотаций
+   - **Пример**: `AuthService.java`, `CharactersService.java`
+   - **Использование**: Реализуем в `src/main/java/service/impl/AuthServiceImpl.java`
 
-**Все шаблоны используются через OpenAPI Generator CLI с параметром `-t templates`**
+### 2. Стандартные шаблоны Spring Generator
+   - **DTOs**: генерируются через стандартный `model.mustache`
+   - **API Interfaces**: генерируются через стандартный `api.mustache`
+   - **Расположение**: `target/generated-sources/openapi/`
 
-### Список активных шаблонов:
+### 🗑️ Неактивные шаблоны (не используются):
+- `apiController.mustache` - Controllers создаются вручную
+- `model.mustache` (кастомный) - Entities создаются вручную  
+- `repositoryModel.mustache` - Repositories создаются вручную
+- `serviceImpl.mustache` - ServiceImpl всегда создаются вручную
 
-1. **`api.mustache`** → Service интерфейсы ✅
-   - Генерирует: `*Service.java` в пакете `com.necpgame.backjava.service`
-   - Параметр: `--api-name-suffix Service` + `interfaceOnly=true`
-   - Содержит: чистые Java интерфейсы без Spring MVC аннотаций
-   - Пример: `AuthService.java`, `CharactersService.java`
+## 🔄 Процесс генерации
 
-2. **`apiController.mustache`** → REST Controllers ✅
-   - Генерирует: `*ApiController.java` в пакете `com.necpgame.backjava.controller`
-   - Параметр: `interfaceOnly=false` + `delegatePattern=false`
-   - Содержит: Spring `@Controller` классы, реализующие API интерфейсы
-   - Пример: `AuthApiController.java implements AuthApi`
+### Использование скрипта:
 
-3. **`model.mustache`** → JPA Entities ✅
-   - Генерирует: `*Entity.java` в пакете `com.necpgame.backjava.entity`
-   - Параметр: `modelTemplateFiles=model.mustache=Entity.java`
-   - Содержит: JPA аннотации, Lombok, timestamps, UUID id
-   - Пример: `AccountEntity.java`, `CharacterEntity.java`
+```powershell
+# Генерация контрактов из одного файла
+.\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml
 
-4. **`repositoryModel.mustache`** → Spring Data Repositories ✅
-   - Генерирует: `*Repository.java` в пакете `com.necpgame.backjava.repository`
-   - Параметр: `modelTemplateFiles=repositoryModel.mustache=Repository.java`
-   - Содержит: Spring Data JPA интерфейс с базовыми CRUD операциями
-   - Пример: `AccountRepository.java extends JpaRepository`
+# Генерация контрактов из всей директории
+.\scripts\generate-openapi-layers.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
 
-### Неактивные шаблоны:
+# Генерация только DTOs и API Interfaces
+.\scripts\generate-openapi-layers.ps1 -ApiSpec path/to/api.yaml -Layers DTOs
 
-5. **`serviceImpl.mustache`** → Service реализации (НЕ ИСПОЛЬЗУЕТСЯ)
-   - **Статус**: Отключено в Maven
-   - **Причина**: OpenAPI Generator Spring не поддерживает отдельную генерацию ServiceImpl
-   - **Решение**: ServiceImpl создаются вручную по мере необходимости
+# Генерация только Service Interfaces
+.\scripts\generate-openapi-layers.ps1 -ApiSpec path/to/api.yaml -Layers Services
+```
 
-## 🎯 Принцип работы
+### Генерируемая структура:
 
-Все шаблоны работают через **переопределение стандартных Mustache файлов OpenAPI Generator**:
+```
+target/generated-sources/
+├── openapi/
+│   ├── api/          ← API Interfaces (REST контракты)
+│   │   ├── AuthApi.java
+│   │   └── CharactersApi.java
+│   └── model/        ← DTOs (модели данных)
+│       ├── LoginRequest.java
+│       ├── LoginResponse.java
+│       └── Account.java
+└── services/         ← Service Interfaces (бизнес-логика контракты)
+    ├── AuthService.java
+    └── CharactersService.java
+```
 
-- **API шаблоны** (`api.mustache`, `serviceImpl.mustache`, `apiController.mustache`) используют контекст операций (endpoints)
-- **Model шаблоны** (`model.mustache`, `repositoryModel.mustache`) используют контекст схем (schemas)
+## ✍️ Ручное создание реализации
 
-### Параметры генерации:
+После генерации контрактов создай в `src/main/java/`:
 
+### 1. Entities (`src/main/java/entity/`)
+
+```java
+package com.necpgame.backjava.entity;
+
+import jakarta.persistence.*;
+import lombok.Data;
+import java.util.*;
+
+@Data
+@Entity
+@Table(name = "accounts", indexes = {
+    @Index(name = "idx_email", columnList = "email", unique = true),
+    @Index(name = "idx_username", columnList = "username", unique = true)
+})
+public class AccountEntity {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+    
+    @Column(nullable = false, unique = true)
+    private String email;
+    
+    @Column(nullable = false, unique = true)
+    private String username;
+    
+    @Column(nullable = false)
+    private String passwordHash;
+    
+    // Relationships
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<CharacterEntity> characters = new ArrayList<>();
+    
+    // Timestamps
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
+    
+    @Column(nullable = false)
+    private LocalDateTime updatedAt = LocalDateTime.now();
+    
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+}
+```
+
+### 2. Repositories (`src/main/java/repository/`)
+
+```java
+package com.necpgame.backjava.repository;
+
+import com.necpgame.backjava.entity.AccountEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+import java.util.*;
+
+@Repository
+public interface AccountRepository extends JpaRepository<AccountEntity, UUID> {
+    
+    // Spring Data Derived Queries
+    Optional<AccountEntity> findByEmail(String email);
+    Optional<AccountEntity> findByUsername(String username);
+    boolean existsByEmail(String email);
+    boolean existsByUsername(String username);
+    
+    // Custom JPQL Query
+    @Query("SELECT a FROM AccountEntity a WHERE a.email = :email AND a.active = true")
+    Optional<AccountEntity> findActiveByEmail(String email);
+}
+```
+
+### 3. Controllers (`src/main/java/controller/`)
+
+```java
+package com.necpgame.backjava.controller;
+
+import com.necpgame.backjava.api.AuthApi;  // Сгенерированный контракт
+import com.necpgame.backjava.model.*;       // Сгенерированные DTOs
+import com.necpgame.backjava.service.AuthService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+
+@Slf4j
+@RestController
+@RequiredArgsConstructor
+public class AuthController implements AuthApi {
+    
+    private final AuthService authService;
+    
+    @Override
+    public ResponseEntity<LoginResponse> login(LoginRequest request) {
+        log.info("Login attempt for: {}", request.getEmail());
+        LoginResponse response = authService.login(request);
+        return ResponseEntity.ok(response);
+    }
+    
+    @Override
+    public ResponseEntity<Register201Response> register(RegisterRequest request) {
+        log.info("Registration attempt for: {}", request.getEmail());
+        Register201Response response = authService.register(request);
+        return ResponseEntity.status(201).body(response);
+    }
+}
+```
+
+### 4. ServiceImpl (`src/main/java/service/impl/`)
+
+```java
+package com.necpgame.backjava.service.impl;
+
+import com.necpgame.backjava.service.AuthService;  // Сгенерированный контракт
+import com.necpgame.backjava.model.*;              // Сгенерированные DTOs
+import com.necpgame.backjava.entity.AccountEntity;
+import com.necpgame.backjava.repository.AccountRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class AuthServiceImpl implements AuthService {
+    
+    private final AccountRepository accountRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider tokenProvider;
+    
+    @Override
+    @Transactional
+    public LoginResponse login(LoginRequest request) {
+        log.info("Processing login for: {}", request.getEmail());
+        
+        // Бизнес-логика
+        AccountEntity account = accountRepository
+            .findByEmail(request.getEmail())
+            .orElseThrow(() -> new UnauthorizedException("Invalid credentials"));
+        
+        if (!passwordEncoder.matches(request.getPassword(), account.getPasswordHash())) {
+            throw new UnauthorizedException("Invalid credentials");
+        }
+        
+        String token = tokenProvider.createToken(account.getId());
+        
+        // Маппинг Entity → DTO
+        LoginResponse response = new LoginResponse();
+        response.setToken(token);
+        response.setAccount(mapToDto(account));
+        
+        return response;
+    }
+    
+    // Вспомогательные методы
+    private AccountDto mapToDto(AccountEntity entity) {
+        AccountDto dto = new AccountDto();
+        dto.setId(entity.getId());
+        dto.setEmail(entity.getEmail());
+        dto.setUsername(entity.getUsername());
+        return dto;
+    }
+}
+```
+
+## 🎯 Workflow разработки
+
+### 1. Изменяем OpenAPI спецификацию
 ```bash
-# Service интерфейсы
--p "interfaceOnly=true,generateApis=true,generateModels=false,apiTemplateFiles=api.mustache=Service.java"
-
-# ServiceImpl заглушки
--p "interfaceOnly=false,generateApis=true,generateModels=false,apiTemplateFiles=serviceImpl.mustache=ServiceImpl.java"
-
-# Controllers
--p "interfaceOnly=false,generateApis=true,generateModels=false,apiTemplateFiles=apiController.mustache=Controller.java"
-
-# JPA Entities
--p "generateApis=false,generateModels=true,modelTemplateFiles=model.mustache=Entity.java"
-
-# Repositories
--p "generateApis=false,generateModels=true,modelTemplateFiles=repositoryModel.mustache=Repository.java"
+# Редактируем API-SWAGGER/api/v1/auth/character-creation.yaml
 ```
 
-## 🔄 Процесс генерации (через PowerShell скрипт)
-
-Генерация происходит через универсальный PowerShell скрипт `scripts/generate-openapi-layers.ps1`:
-
-### Режимы работы:
-
-#### 1. Генерация из одного файла
+### 2. Генерируем контракты
 ```powershell
 .\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml
 ```
 
-#### 2. Генерация из всей директории (обрабатывает ВСЕ .yaml файлы)
-```powershell
-.\scripts\generate-openapi-layers.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
+### 3. Проверяем изменения в контрактах
+```
+target/generated-sources/
+├── openapi/api/      ← Смотрим новые/изменённые API Interfaces
+├── openapi/model/    ← Смотрим новые/изменённые DTOs
+└── services/         ← Смотрим новые/изменённые Service Interfaces
 ```
 
-#### 3. Генерация только определённых слоёв
-```powershell
-.\scripts\generate-openapi-layers.ps1 -ApiSpec path/to/api.yaml -Layers Controllers,Services
+### 4. Обновляем реализацию в `src/main/java/`
+- Если появились новые endpoints → создаём методы в Controller и ServiceImpl
+- Если изменились DTOs → обновляем маппинг в ServiceImpl
+- Если появились новые сущности → создаём Entity и Repository
+
+### 5. Компилируем и тестируем
+```bash
+mvn clean compile
+mvn test
 ```
 
-### Генерируемые слои:
-
-1. **DTOs + API Interfaces** → `target/generated-sources/openapi/`
-   - Стандартная генерация без кастомных шаблонов
-   - Пакеты: `com.necpgame.backjava.api`, `com.necpgame.backjava.model`
-
-2. **JPA Entities** → `target/generated-sources/entities/`
-   - Шаблон: `model.mustache`
-   - Пакет: `com.necpgame.backjava.entity`
-
-3. **Repositories** → `target/generated-sources/repositories/`
-   - Шаблон: `repositoryModel.mustache`
-   - Пакет: `com.necpgame.backjava.repository`
-
-4. **Service интерфейсы** → `target/generated-sources/services/`
-   - Шаблон: `api.mustache`
-   - Пакет: `com.necpgame.backjava.service`
-
-5. **Controllers** → `target/generated-sources/controllers/`
-   - Шаблон: `apiController.mustache`
-   - Пакет: `com.necpgame.backjava.controller`
-
-### Преимущества скрипта:
-- ✅ **Без хардкода** - требует явного указания файла или директории
-- ✅ **Прозрачность** - видим каждую команду генерации
-- ✅ **Гибкость** - можно генерировать отдельные слои
-- ✅ **Статистика** - показывает успешные/неудачные файлы
-- ✅ **Обработка ошибок** - продолжает работу после ошибок
-
-## 📋 Как добавить новый шаблон
-
-1. Создай `.mustache` файл в `templates/`
-2. Добавь секцию генерации в скрипт `scripts/generate-openapi-layers.ps1`
-3. Укажи параметр `-p` с `apiTemplateFiles` или `modelTemplateFiles`
-
-## 🚀 Быстрый старт
-
+### 6. Коммитим
 ```powershell
-# Генерация из одного файла (все слои)
-.\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml
-
-# Генерация из всей директории (обработает все .yaml файлы)
-.\scripts\generate-openapi-layers.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
-
-# Генерация только контроллеров
-.\scripts\generate-openapi-layers.ps1 -ApiSpec path/to/api.yaml -Layers Controllers
+.\scripts\autocommit.ps1 "feat: Add new authentication endpoints"
 ```
+
+## ⚡ Преимущества подхода
+
+### ✅ Контракты (генерируются):
+- ✅ **Всегда актуальны** - синхронизированы с OpenAPI
+- ✅ **Нет риска перезаписи** - никогда не редактируем вручную
+- ✅ **Type Safety** - полная типизация через Java
+- ✅ **Быстрая генерация** - 2-3 секунды для всех контрактов
+
+### ✅ Реализация (пишется вручную):
+- ✅ **Полный контроль** - пишем бизнес-логику как хотим
+- ✅ **Нет риска потери кода** - никогда не перегенерируем
+- ✅ **Гибкость** - relationships, custom queries, сложная логика
+- ✅ **Безопасно** - код в `src/main/java/` никогда не трогается генератором
 
 ## 📚 Дополнительная информация
 
 - [OpenAPI Generator Templates](https://openapi-generator.tech/docs/templating)
-- [Mustache Manual](https://mustache.github.io/mustache.5.html)
-- См. `templates/README.md` для подробностей о кастомных шаблонах
+- [Spring Data JPA](https://spring.io/projects/spring-data-jpa)
+- [Spring Boot 3 Documentation](https://spring.io/projects/spring-boot)
 
+## 🔧 Настройка Maven
+
+`pom.xml` содержит `build-helper-maven-plugin`, который автоматически добавляет сгенерированные источники:
+
+```xml
+<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>build-helper-maven-plugin</artifactId>
+    <executions>
+        <execution>
+            <phase>generate-sources</phase>
+            <goals>
+                <goal>add-source</goal>
+            </goals>
+            <configuration>
+                <sources>
+                    <source>target/generated-sources/openapi/src/main/java</source>
+                    <source>target/generated-sources/services/src/main/java</source>
+                </sources>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
+
+Это позволяет Maven видеть сгенерированные контракты при компиляции.

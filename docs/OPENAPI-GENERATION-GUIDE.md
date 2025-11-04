@@ -2,76 +2,137 @@
 
 ## 📖 Обзор
 
-Этот документ описывает процесс генерации кода из OpenAPI спецификаций для проекта NECPGAME Backend.
+Этот документ описывает процесс генерации **КОНТРАКТОВ** из OpenAPI спецификаций для проекта NECPGAME Backend.
 
-**Главный принцип:** OpenAPI спецификация является **единственным источником правды** для генерации всех MVC слоёв.
+**Главный принцип:** OpenAPI спецификация является **единственным источником правды ТОЛЬКО для контрактов** (API Interfaces, DTOs, Service Interfaces). Реализация (Entities, Repositories, Controllers, ServiceImpl) создаётся вручную в `src/main/java/`.
 
-## 🎯 Что генерируется
+## 🎯 Философия: Контракты vs Реализация
 
-Из одной OpenAPI спецификации генерируются все необходимые слои:
+### ✅ Генерируется АВТОМАТИЧЕСКИ (контракты):
 
-1. **DTOs и API Interfaces** - модели данных и REST API интерфейсы
-2. **JPA Entities** - сущности для работы с БД через Hibernate
-3. **Spring Data Repositories** - репозитории для CRUD операций
-4. **Service Interfaces** - интерфейсы бизнес-логики
-5. **REST Controllers** - Spring MVC контроллеры
+Эти файлы можно **безопасно перегенерировать** при изменении OpenAPI спецификации:
+
+1. **DTOs** (`target/generated-sources/openapi/model/`)
+   - Модели данных для REST API
+   - Содержат: поля, валидацию, геттеры/сеттеры
+   - **Никогда не редактируем вручную**
+
+2. **API Interfaces** (`target/generated-sources/openapi/api/`)
+   - Контракты REST API
+   - Содержат: Spring MVC аннотации, сигнатуры методов
+   - **Никогда не редактируем вручную**
+
+3. **Service Interfaces** (`target/generated-sources/services/`)
+   - Контракты бизнес-логики
+   - Содержат: сигнатуры методов без реализации
+   - **Никогда не редактируем вручную**
+
+### ✍️ Создаётся ВРУЧНУЮ (реализация):
+
+Эти файлы создаются в `src/main/java/` и **никогда не перегенерируются**:
+
+4. **Entities** (`src/main/java/entity/`)
+   - JPA сущности с relationships, indexes, constraints
+   - Сложная логика, которую невозможно вывести из OpenAPI
+
+5. **Repositories** (`src/main/java/repository/`)
+   - Spring Data репозитории с custom queries
+   - Специфичные для БД запросы
+
+6. **Controllers** (`src/main/java/controller/`)
+   - REST контроллеры, реализующие API Interfaces
+   - Бизнес-логика обработки запросов
+
+7. **ServiceImpl** (`src/main/java/service/impl/`)
+   - Реализация бизнес-логики
+   - Основная логика приложения
 
 ## 🚀 Быстрый старт
 
-### Генерация всех слоёв
+### Генерация контрактов из одного файла
 
 ```powershell
 # Из корня проекта BACK-GO
-.\scripts\generate-openapi-layers.ps1
+.\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml
 ```
 
 Эта команда:
 - Очистит `target/generated-sources/`
-- Сгенерирует все 5 слоёв из `character-creation.yaml`
+- Сгенерирует DTOs, API Interfaces и Service Interfaces
 - Покажет статистику генерации
 
-### Генерация из другого API файла
+### Генерация контрактов из всех файлов в директории
 
 ```powershell
-.\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/character/cyberpsychosis.yaml
+.\scripts\generate-openapi-layers.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
 ```
 
-### Генерация только определённых слоёв
+Обработает **все** `.yaml` и `.yml` файлы в указанной директории.
+
+### Генерация только определённых контрактов
 
 ```powershell
-# Только Controllers и Services
-.\scripts\generate-openapi-layers.ps1 -Layers Controllers,Services
+# Только DTOs и API Interfaces
+.\scripts\generate-openapi-layers.ps1 -ApiSpec path/to/api.yaml -Layers DTOs
 
-# Только Entities
-.\scripts\generate-openapi-layers.ps1 -Layers Entities
+# Только Service Interfaces
+.\scripts\generate-openapi-layers.ps1 -ApiSpec path/to/api.yaml -Layers Services
 ```
 
-Доступные слои: `DTOs`, `Entities`, `Repositories`, `Services`, `Controllers`, `All`
+Доступные контракты: `DTOs`, `Services`, `All`
 
-## 📁 Структура генерации
+## 📁 Структура проекта
+
+### Сгенерированные контракты (в `target/`):
 
 ```
 target/generated-sources/
-├── openapi/          # DTOs + API Interfaces
+├── openapi/          # DTOs + API Interfaces (КОНТРАКТЫ)
 │   └── src/main/java/com/necpgame/backjava/
 │       ├── api/      # AuthApi, CharactersApi, etc.
-│       └── model/    # Account, Character, LoginRequest, etc.
-│
-├── entities/         # JPA Entities
-│   └── src/main/java/com/necpgame/backjava/
-│       └── entity/   # AccountEntity, CharacterEntity, etc.
-│
-├── repositories/     # Spring Data Repositories
-│   └── src/main/java/com/necpgame/backjava/
-│       └── repository/  # AccountRepository, CharacterRepository, etc.
-│
-├── services/         # Service Interfaces
-│   └── src/main/java/com/necpgame/backjava/
-│       └── service/  # AuthService, CharactersService, etc.
-│
-└── controllers/      # REST Controllers
+│       │             # Реализуются в src/main/java/controller/
+│       └── model/    # LoginRequest, LoginResponse, Account, etc.
+│                     # Используются везде
+└── services/         # Service Interfaces (КОНТРАКТЫ)
     └── src/main/java/com/necpgame/backjava/
-        └── controller/  # AuthApiController, CharactersApiController, etc.
+        └── service/  # AuthService, CharactersService, etc.
+                      # Реализуются в src/main/java/service/impl/
+```
+
+### Ручная реализация (в `src/main/java/`):
+
+```
+src/main/java/com/necpgame/backjava/
+├── entity/           # JPA Entities (ВРУЧНУЮ)
+│   ├── AccountEntity.java
+│   ├── CharacterEntity.java
+│   └── ... (с relationships, indexes, constraints)
+│
+├── repository/       # Spring Data Repositories (ВРУЧНУЮ)
+│   ├── AccountRepository.java
+│   ├── CharacterRepository.java
+│   └── ... (с custom queries)
+│
+├── controller/       # REST Controllers (ВРУЧНУЮ)
+│   ├── AuthController.java       # implements AuthApi
+│   ├── CharactersController.java # implements CharactersApi
+│   └── ... (реализация API контрактов)
+│
+├── service/
+│   └── impl/         # Service Implementations (ВРУЧНУЮ)
+│       ├── AuthServiceImpl.java       # implements AuthService
+│       ├── CharactersServiceImpl.java # implements CharactersService
+│       └── ... (вся бизнес-логика)
+│
+├── exception/        # Custom Exceptions (ВРУЧНУЮ)
+│   ├── NotFoundException.java
+│   ├── ConflictException.java
+│   └── ...
+│
+└── mapper/           # Entity <-> DTO Mappers (ВРУЧНУЮ)
+    ├── AccountMapper.java
+    ├── CharacterMapper.java
+    └── ...
 ```
 
 ## 🔧 Кастомные шаблоны
@@ -134,24 +195,34 @@ target/generated-sources/
 
 Это позволяет Maven видеть сгенерированный код при компиляции.
 
-## 📝 ServiceImpl - ручное создание
+## 📝 Создание реализации вручную
 
-**ServiceImpl классы НЕ генерируются автоматически** и создаются вручную по следующим причинам:
+После генерации контрактов необходимо создать реализацию в `src/main/java/`.
 
-1. OpenAPI Generator Spring не поддерживает отдельную генерацию ServiceImpl
-2. ServiceImpl содержит бизнес-логику, которую невозможно сгенерировать из спецификации
-3. Ручное создание даёт больше контроля над реализацией
+### Примеры и шаблоны
 
-### Пример создания ServiceImpl
+Полные шаблоны для создания всех компонентов смотри в **[MANUAL-TEMPLATES.md](MANUAL-TEMPLATES.md)**:
+- Entity Template
+- Repository Template
+- Controller Template
+- ServiceImpl Template
+- Exception Templates
+- Mapper Template
+
+### Краткий пример: ServiceImpl
 
 ```java
 package com.necpgame.backjava.service.impl;
 
-import com.necpgame.backjava.service.AuthService;
+import com.necpgame.backjava.service.AuthService;  // Сгенерированный контракт
+import com.necpgame.backjava.model.*;              // Сгенерированные DTOs
+import com.necpgame.backjava.entity.AccountEntity;
 import com.necpgame.backjava.repository.AccountRepository;
+import com.necpgame.backjava.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -159,20 +230,61 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImpl implements AuthService {
     
     private final AccountRepository accountRepository;
+    private final AccountMapper accountMapper;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider tokenProvider;
     
     @Override
+    @Transactional
     public LoginResponse login(LoginRequest request) {
         log.info("Login attempt for: {}", request.getEmail());
         
-        // Реализация бизнес-логики
-        Account account = accountRepository
+        // Бизнес-логика
+        AccountEntity account = accountRepository
             .findByEmail(request.getEmail())
             .orElseThrow(() -> new UnauthorizedException("Invalid credentials"));
         
-        // ... проверка пароля, создание токена и т.д.
+        if (!passwordEncoder.matches(request.getPassword(), account.getPasswordHash())) {
+            throw new UnauthorizedException("Invalid credentials");
+        }
         
-        return new LoginResponse(token);
+        String token = tokenProvider.createToken(account.getId());
+        
+        // Маппинг Entity → DTO
+        LoginResponse response = new LoginResponse();
+        response.setToken(token);
+        response.setAccount(accountMapper.toDto(account));
+        
+        return response;
+    }
+}
+```
+
+### Краткий пример: Controller
+
+```java
+package com.necpgame.backjava.controller;
+
+import com.necpgame.backjava.api.AuthApi;  // Сгенерированный контракт
+import com.necpgame.backjava.model.*;      // Сгенерированные DTOs
+import com.necpgame.backjava.service.AuthService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+
+@Slf4j
+@RestController
+@RequiredArgsConstructor
+public class AuthController implements AuthApi {
+    
+    private final AuthService authService;
+    
+    @Override
+    public ResponseEntity<LoginResponse> login(LoginRequest request) {
+        log.info("Login request for: {}", request.getEmail());
+        LoginResponse response = authService.login(request);
+        return ResponseEntity.ok(response);
     }
 }
 ```
@@ -270,10 +382,106 @@ PowerShell скрипт проще, понятнее и даёт больше к
 
 ## 🔄 Workflow разработки
 
-1. **Изменяем OpenAPI спецификацию** в репозитории `API-SWAGGER`
-2. **Генерируем код**: `.\scripts\generate-openapi-layers.ps1`
-3. **Компилируем**: `mvn compile`
-4. **Создаём ServiceImpl** (если нужны новые сервисы)
-5. **Реализуем бизнес-логику** в ServiceImpl
-6. **Тестируем**: пишем unit и integration тесты
-7. **Коммитим** изменения через `.\scripts\autocommit.ps1`
+### Сценарий 1: Добавление нового API endpoint
+
+1. **Изменяем OpenAPI спецификацию** в `API-SWAGGER/`:
+   ```yaml
+   paths:
+     /auth/logout:
+       post:
+         operationId: logout
+         # ...
+   ```
+
+2. **Генерируем контракты**:
+   ```powershell
+   .\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml
+   ```
+
+3. **Проверяем сгенерированные контракты**:
+   - `target/generated-sources/openapi/api/AuthApi.java` - добавился метод `logout()`
+   - `target/generated-sources/services/AuthService.java` - добавился метод `logout()`
+
+4. **Реализуем в `src/main/java/`**:
+   - Добавляем метод `logout()` в `AuthController.java`
+   - Добавляем метод `logout()` в `AuthServiceImpl.java`
+   - Добавляем бизнес-логику (инвалидация токена, логирование, etc.)
+
+5. **Компилируем и тестируем**:
+   ```bash
+   mvn clean compile
+   mvn test
+   ```
+
+6. **Коммитим**:
+   ```powershell
+   .\scripts\autocommit.ps1 "feat: Add logout endpoint"
+   ```
+
+### Сценарий 2: Изменение существующего DTO
+
+1. **Изменяем OpenAPI спецификацию** (добавили поле в `LoginRequest`):
+   ```yaml
+   LoginRequest:
+     properties:
+       email: ...
+       password: ...
+       rememberMe:  # НОВОЕ ПОЛЕ
+         type: boolean
+   ```
+
+2. **Генерируем контракты**:
+   ```powershell
+   .\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml
+   ```
+
+3. **Проверяем сгенерированные контракты**:
+   - `target/generated-sources/openapi/model/LoginRequest.java` - добавилось поле `rememberMe`
+
+4. **Обновляем реализацию**:
+   - В `AuthServiceImpl.login()` используем новое поле `request.getRememberMe()`
+   - Обновляем логику создания токена (срок жизни токена)
+
+5. **Компилируем Maven**:
+   ```bash
+   mvn clean compile  # Покажет ошибки компиляции, если забыли обновить код
+   ```
+
+6. **Коммитим**:
+   ```powershell
+   .\scripts\autocommit.ps1 "feat: Add rememberMe support to login"
+   ```
+
+### Сценарий 3: Создание новой фичи с нуля
+
+1. **Создаём OpenAPI спецификацию** в `API-SWAGGER/api/v1/inventory/items.yaml`
+
+2. **Генерируем контракты**:
+   ```powershell
+   .\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/inventory/items.yaml
+   ```
+
+3. **Создаём реализацию вручную** (используя [MANUAL-TEMPLATES.md](MANUAL-TEMPLATES.md)):
+   - `src/main/java/entity/ItemEntity.java`
+   - `src/main/java/repository/ItemRepository.java`
+   - `src/main/java/controller/ItemsController.java`
+   - `src/main/java/service/impl/ItemsServiceImpl.java`
+   - `src/main/java/mapper/ItemMapper.java`
+
+4. **Создаём Liquibase миграцию**:
+   ```bash
+   mvn liquibase:diff -Dliquibase.diffChangeLogFile=db/changelog/changes/003-create-items-table.yaml
+   ```
+
+5. **Компилируем, тестируем, коммитим**
+
+### Сценарий 4: Перегенерация всех контрактов
+
+Если изменилось много в OpenAPI:
+
+```powershell
+# Генерация из всей директории
+.\scripts\generate-openapi-layers.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
+```
+
+Это перегенерирует **все** контракты, но **не затронет** реализацию в `src/main/java/`.
