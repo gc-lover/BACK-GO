@@ -77,7 +77,8 @@ public class CharactersServiceImpl implements CharactersService {
         character.setAccount(accountRepository.getReferenceById(accountId));
         character.setName(request.getName());
         character.setClassCode(request.getPropertyClass().getValue());
-        character.setGender(CharacterEntity.Gender.valueOf(request.getGender().name()));
+        // Преобразуем enum из DTO в enum Entity (используем getValue() чтобы получить lowercase значение)
+        character.setGender(CharacterEntity.Gender.valueOf(request.getGender().getValue()));
         character.setOriginCode(request.getOrigin().getValue());
         
         // Опциональные поля с JsonNullable

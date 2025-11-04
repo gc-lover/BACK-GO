@@ -39,7 +39,8 @@ public interface CharacterAppearanceMapperMS {
     
     @Named("enumToBodyType")
     default CharacterAppearanceEntity.BodyType enumToBodyType(GameCharacterAppearance.BodyTypeEnum bodyType) {
-        return bodyType != null ? CharacterAppearanceEntity.BodyType.valueOf(bodyType.name()) : null;
+        // Используем getValue() вместо name() чтобы получить lowercase значение ("muscular" вместо "MUSCULAR")
+        return bodyType != null ? CharacterAppearanceEntity.BodyType.valueOf(bodyType.getValue()) : null;
     }
 }
 
