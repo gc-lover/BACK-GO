@@ -1,5 +1,21 @@
 # Быстрый старт BACK-JAVA
 
+## 🎯 Workflow: Контракты + Реализация
+
+### Что генерируется автоматически:
+- ✅ DTOs (модели данных)
+- ✅ API Interfaces (REST контракты)
+- ✅ Service Interfaces (контракты бизнес-логики)
+
+### Что создаётся вручную:
+- ✍️ Entities (JPA сущности)
+- ✍️ Repositories (Spring Data)
+- ✍️ Controllers (REST контроллеры)
+- ✍️ ServiceImpl (бизнес-логика)
+- ✍️ Flyway миграции (SQL)
+
+---
+
 ## Установка зависимостей
 
 ```bash
@@ -10,29 +26,34 @@ mvn clean install
 ## Запуск PostgreSQL
 
 ```bash
-# Windows PowerShell
-docker-compose up -d
-docker-compose ps
-
-# Linux/Mac
 docker-compose up -d
 docker-compose ps
 ```
 
-## Генерация кода из OpenAPI
+## Генерация контрактов из OpenAPI
 
-```bash
-# Генерация всего кода одной командой
-mvn clean generate-sources
+```powershell
+# Генерация из одного файла
+.\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml
 
-# Или из конкретного OpenAPI файла
-mvn clean generate-sources -Dopenapi.spec=../API-SWAGGER/api/v1/auth/character-creation.yaml
+# Генерация из всей директории
+.\scripts\generate-openapi-layers.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
 ```
 
-**Что генерируется:**
-- ✅ DTOs/Models/Controllers (стандартные OpenAPI Generator шаблоны)
-- ✅ JPA Entities (кастомный шаблон `Entity.mustache`)
-- ✅ Repositories (скрипт `generate-repositories.ps1`)
+**Результат:**
+- ✅ DTOs в `target/generated-sources/openapi/model/`
+- ✅ API Interfaces в `target/generated-sources/openapi/api/`
+- ✅ Service Interfaces в `target/generated-sources/services/`
+
+## Создание реализации вручную
+
+Используй шаблоны из [MANUAL-TEMPLATES.md](./docs/MANUAL-TEMPLATES.md):
+
+1. **Entity** - `src/main/java/entity/AccountEntity.java`
+2. **Repository** - `src/main/java/repository/AccountRepository.java`
+3. **Controller** - `src/main/java/controller/AuthController.java`
+4. **ServiceImpl** - `src/main/java/service/impl/AuthServiceImpl.java`
+5. **Flyway миграция** - `src/main/resources/db/migration/V001__create_accounts_table.sql`
 
 ## Запуск сервера
 
@@ -44,34 +65,33 @@ mvn spring-boot:run
 java -jar target/back-java-1.0.0.jar
 ```
 
-## Проверка работы
+## Компиляция проекта
 
-Откройте в браузере: `http://localhost:8080/health`
-
-Или через curl:
 ```bash
-# Windows PowerShell
-curl http://localhost:8080/health
+# Компиляция (включая сгенерированные контракты)
+mvn clean compile
 
-# Linux/Mac
-curl http://localhost:8080/health
+# Запуск тестов
+mvn test
 ```
 
-Должен вернуться JSON:
-```json
-{
-  "status": "ok",
-  "message": "NECPGAME backend is running",
-  "version": "1.0.0"
-}
+## Проверка работы
+
+```bash
+# Запуск сервера
+mvn spring-boot:run
+
+# Проверка health endpoint (в другом терминале)
+curl http://localhost:8080/api/v1/health
 ```
 
 ## Доступные endpoints
 
-- `GET /health` - Health check основного сервера
-- `GET /api/v1/health` - API v1 health check
+После создания реализации:
+- `POST /api/v1/auth/register` - Регистрация
+- `POST /api/v1/auth/login` - Авторизация
+- `GET /api/v1/characters` - Список персонажей
 - `GET /swagger-ui.html` - Swagger UI документация
-- `GET /api-docs` - OpenAPI спецификация
 
 ## Остановка сервера
 

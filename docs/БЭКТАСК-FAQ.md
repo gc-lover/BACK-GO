@@ -2,73 +2,65 @@
 
 **Типичные проблемы, решения и примеры использования**
 
-📖 **Навигация:** [БЭКТАСК.MD](./БЭКТАСК.MD) | [БЭКТАСК-PROCESS.md](./БЭКТАСК-PROCESS.md) | [БЭКТАСК-REQUIREMENTS.md](./БЭКТАСК-REQUIREMENTS.md) | [БЭКТАСК-ARCHITECTURE.md](./БЭКТАСК-ARCHITECTURE.md)
+📖 **Навигация:** [БЭКТАСК.MD](./БЭКТАСК.MD) | [OPENAPI-GENERATION-GUIDE.md](./OPENAPI-GENERATION-GUIDE.md) | [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md) | [БЭКТАСК-ARCHITECTURE.md](./БЭКТАСК-ARCHITECTURE.md)
 
 ---
 
 ## Типичные проблемы и решения
 
-### Q: Как выбрать между OpenAPI Generator и Swagger Codegen?
+### Q: Как генерировать контракты из OpenAPI?
 
-**A:** Рекомендуется использовать OpenAPI Generator, так как он:
-- Активно поддерживается и обновляется
-- Поддерживает больше языков и фреймворков
-- Имеет лучшую документацию
-- Поддерживает последние версии OpenAPI спецификаций
-- Лучше работает с Java Spring Boot серверным кодом
-- Интегрируется с Maven через плагин
+**A:** Используй PowerShell скрипт для генерации:
 
-**Пример установки:**
-```bash
-# Через Maven (рекомендуется)
-# Плагин уже настроен в pom.xml
+```powershell
+# Генерация из одного файла
+.\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml
 
-# Или через npm (для CLI)
-npm install @openapitools/openapi-generator-cli -g
+# Генерация из всей директории
+.\scripts\generate-openapi-layers.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
 ```
+
+**Что генерируется:**
+- ✅ DTOs - модели данных
+- ✅ API Interfaces - контракты REST API
+- ✅ Service Interfaces - контракты бизнес-логики
+
+**Где находится:**
+- `target/generated-sources/openapi/model/` - DTOs
+- `target/generated-sources/openapi/api/` - API Interfaces
+- `target/generated-sources/services/` - Service Interfaces
 
 ---
 
-### Q: Какой Java Spring Boot генератор использовать?
+### Q: Как создать реализацию после генерации контрактов?
 
-**A:** Для Java Spring Boot используется генератор `spring`:
+**A:** Используй шаблоны из [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md):
 
-**Через Maven (рекомендуется):**
-```bash
-mvn clean generate-sources
-```
+**1. Entities** - создай JPA сущности в `src/main/java/entity/`
+**2. Repositories** - создай Spring Data репозитории в `src/main/java/repository/`
+**3. Controllers** - создай REST контроллеры в `src/main/java/controller/`
+**4. ServiceImpl** - создай реализации сервисов в `src/main/java/service/impl/`
 
-**Через OpenAPI Generator CLI:**
-```bash
-openapi-generator-cli generate \
-  -i API-SWAGGER/api/v1/auth/character-creation.yaml \
-  -g spring \
-  -o BACK-JAVA/target/generated-sources/openapi \
-  --additional-properties=library=spring-boot,useSpringBoot3=true,useJakartaEe=true
-```
-
-**Конфигурация в pom.xml:**
-OpenAPI Generator настроен в `pom.xml` и автоматически генерирует код при сборке проекта.
+**Все шаблоны с примерами кода в:** [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md)
 
 ---
 
-### Q: Что делать, если API Swagger файл находится в поддиректории?
+### Q: Почему Entities/Repositories не генерируются автоматически?
 
-**A:** Используй полный путь к файлу или обнови `inputSpec` в `pom.xml`:
+**A:** Мы сознательно отказались от автогенерации реализации, потому что:
 
-**Через Maven:**
-Обнови `inputSpec` в `pom.xml`:
-```xml
-<inputSpec>${project.basedir}/../API-SWAGGER/api/v1/auth/character-creation.yaml</inputSpec>
-```
+**Проблемы автогенерации:**
+- ❌ Перезапись кастомного кода при перегенерации
+- ❌ Невозможно описать relationships в OpenAPI
+- ❌ Отсутствие indexes, constraints
+- ❌ Нет поддержки custom queries
 
-**Через CLI:**
-```bash
-openapi-generator-cli generate \
-  -i API-SWAGGER/api/v1/auth/character-creation.yaml \
-  -g spring \
-  -o BACK-JAVA/target/generated-sources/openapi
-```
+**Преимущества ручного создания:**
+- ✅ Полный контроль над кодом
+- ✅ Relationships: `@OneToMany`, `@ManyToOne`, `@ManyToMany`
+- ✅ Indexes, constraints, lifecycle callbacks
+- ✅ Custom queries, сложная логика
+- ✅ Нет риска перезаписи кода
 
 ---
 
@@ -214,42 +206,46 @@ public class PersonalNpcService {
 
 ### Q: Как создать миграции БД?
 
-**A:** Используй Flyway:
+**A:** Создай Flyway миграции вручную на основе Entity классов:
 
-**Создание миграции:**
-```bash
-# Создать файл вручную: src/main/resources/db/migration/V{версия}__{название}.sql
-# Пример: V6__create_personal_npc_table.sql
+**Процесс:**
+1. Создай Entity в `src/main/java/entity/`
+2. Проанализируй поля, relationships, constraints
+3. Создай SQL миграцию в `src/main/resources/db/migration/`
+
+**Пример Entity:**
+```java
+@Entity
+@Table(name = "accounts")
+public class AccountEntity {
+    @Id @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+    
+    @Column(nullable = false, unique = true)
+    private String email;
+}
 ```
 
-**Структура миграции:**
+**Соответствующая миграция:**
 ```sql
--- V6__create_personal_npc_table.sql
-CREATE TABLE IF NOT EXISTS personal_npc (
+-- V001__create_accounts_table.sql
+CREATE TABLE IF NOT EXISTS accounts (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    name VARCHAR(255) NOT NULL,
-    owner_id UUID NOT NULL,
-    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
-    FOREIGN KEY (owner_id) REFERENCES accounts(id) ON DELETE CASCADE
+    email VARCHAR(255) NOT NULL UNIQUE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX IF NOT EXISTS idx_personal_npc_owner_id ON personal_npc(owner_id);
+CREATE INDEX IF NOT EXISTS idx_accounts_email ON accounts(email);
 ```
 
 **Применение миграций:**
 ```bash
 # Автоматически при запуске Spring Boot
 mvn spring-boot:run
-
-# Или через Maven плагин Flyway
-mvn flyway:migrate
 ```
 
-**ВАЖНО: Идемпотентность миграций**
-- Используй `CREATE TABLE IF NOT EXISTS` вместо `CREATE TABLE`
-- Используй `CREATE INDEX IF NOT EXISTS` вместо `CREATE INDEX`
-- Используй `DROP TABLE IF EXISTS` вместо `DROP TABLE`
+**ВАЖНО: Идемпотентность**
+- Всегда используй `IF NOT EXISTS` / `IF EXISTS`
 - Миграции должны быть безопасными для повторного применения
 
 ---
@@ -508,26 +504,57 @@ logging:
 
 ---
 
-## Использование Maven для генерации API
+## Workflow разработки
 
-### Генерация через Maven
+### Процесс создания нового API
 
-**Рекомендуется:** Использовать Maven плагин OpenAPI Generator, который уже настроен в `pom.xml`:
-
-```bash
-# Генерация Java Spring Boot кода
-mvn clean generate-sources
-
-# Или при сборке проекта
-mvn clean install
+**Шаг 1: Создать OpenAPI спецификацию**
+```yaml
+# API-SWAGGER/api/v1/users/users.yaml
+paths:
+  /users:
+    get:
+      operationId: listUsers
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
 ```
 
-**Конфигурация в pom.xml:**
-OpenAPI Generator настроен в `pom.xml` и автоматически генерирует код при сборке проекта.
+**Шаг 2: Сгенерировать контракты**
+```powershell
+.\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/users/users.yaml
+```
 
-**Результат:**
-- Controllers (интерфейсы) в `target/generated-sources/openapi/src/main/java/com/necpgame/backjava/api/`
-- Models/DTOs в `target/generated-sources/openapi/src/main/java/com/necpgame/backjava/model/`
+**Шаг 3: Создать реализацию вручную**
+
+Используя [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md):
+- Entity: `src/main/java/entity/UserEntity.java`
+- Repository: `src/main/java/repository/UserRepository.java`
+- Controller: `src/main/java/controller/UsersController.java`
+- ServiceImpl: `src/main/java/service/impl/UsersServiceImpl.java`
+- Mapper: `src/main/java/mapper/UserMapper.java`
+
+**Шаг 4: Создать Flyway миграцию**
+```sql
+-- src/main/resources/db/migration/V005__create_users_table.sql
+CREATE TABLE IF NOT EXISTS users (
+    id UUID PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    username VARCHAR(100) NOT NULL UNIQUE
+);
+```
+
+**Шаг 5: Компиляция и тестирование**
+```bash
+mvn clean compile
+mvn test
+mvn spring-boot:run
+```
 
 ---
 
@@ -584,4 +611,4 @@ powershell -Command "Get-ChildItem -Recurse -Filter *.java | ForEach-Object { (G
 
 ---
 
-📖 **Навигация:** [БЭКТАСК.MD](./БЭКТАСК.MD) | [БЭКТАСК-PROCESS.md](./БЭКТАСК-PROCESS.md) | [БЭКТАСК-REQUIREMENTS.md](./БЭКТАСК-REQUIREMENTS.md) | [БЭКТАСК-ARCHITECTURE.md](./БЭКТАСК-ARCHITECTURE.md)
+📖 **Навигация:** [БЭКТАСК.MD](./БЭКТАСК.MD) | [OPENAPI-GENERATION-GUIDE.md](./OPENAPI-GENERATION-GUIDE.md) | [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md) | [БЭКТАСК-ARCHITECTURE.md](./БЭКТАСК-ARCHITECTURE.md)

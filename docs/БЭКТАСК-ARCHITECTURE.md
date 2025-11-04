@@ -2,13 +2,25 @@
 
 **Архитектура, структура директорий и соответствие API-SWAGGER**
 
-📖 **Навигация:** [БЭКТАСК.MD](./БЭКТАСК.MD) | [БЭКТАСК-PROCESS.md](./БЭКТАСК-PROCESS.md) | [БЭКТАСК-REQUIREMENTS.md](./БЭКТАСК-REQUIREMENTS.md) | [БЭКТАСК-FAQ.md](./БЭКТАСК-FAQ.md)
+📖 **Навигация:** [БЭКТАСК.MD](./БЭКТАСК.MD) | [OPENAPI-GENERATION-GUIDE.md](./OPENAPI-GENERATION-GUIDE.md) | [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md)
 
 ---
 
-## Архитектура и иерархия директорий
+## 🎯 Философия: Контракты vs Реализация
 
-**ВАЖНО:** Агент ОБЯЗАН следовать установленной архитектуре и иерархии директорий для лучшего контроля действий и получения лучшего результата.
+**OpenAPI спецификация = источник правды ТОЛЬКО для контрактов**
+
+### ✅ Генерируется автоматически (контракты):
+- **DTOs** - модели данных (`target/generated-sources/openapi/model/`)
+- **API Interfaces** - контракты REST API (`target/generated-sources/openapi/api/`)
+- **Service Interfaces** - контракты бизнес-логики (`target/generated-sources/services/`)
+
+### ✍️ Создаётся вручную (реализация):
+- **Entities** - JPA сущности (`src/main/java/entity/`)
+- **Repositories** - Spring Data репозитории (`src/main/java/repository/`)
+- **Controllers** - REST контроллеры (`src/main/java/controller/`)
+- **ServiceImpl** - реализация бизнес-логики (`src/main/java/service/impl/`)
+- **Flyway миграции** - SQL миграции (`src/main/resources/db/migration/`)
 
 ---
 
@@ -19,7 +31,8 @@
 3. **Именование:** Файлы - `PascalCase.java` для Java файлов, директории - `kebab-case` или `snake_case`
 4. **Ограничение размера:** МАКСИМУМ 400 строк на файл, если больше - разбить на несколько файлов
 5. **Разделение ответственности:** Разделение на Controllers, Services, Repositories, Entities
-6. **Документация:** Каждая директория должна иметь README.md с обзором (если нужно)
+6. **Контракты в `target/`:** Сгенерированные контракты только в `target/`, никогда не редактируем
+7. **Реализация в `src/main/java/`:** Вся реализация создаётся вручную и никогда не перегенерируется
 
 ---
 
@@ -32,298 +45,367 @@ BACK-JAVA/
 │   │   ├── java/
 │   │   │   └── com/necpgame/backjava/
 │   │   │       ├── NecpgameBackendApplication.java
-│   │   │       ├── controllers/                    # HTTP Controllers для обработки запросов
-│   │   │       │   ├── common/                     # Общие Controllers
-│   │   │       │   │   ├── HealthController.java
-│   │   │       │   │   └── ErrorController.java
-│   │   │       │   ├── gameplay/                   # Соответствует API-SWAGGER/api/v1/gameplay/
-│   │   │       │   │   ├── social/                 # Соответствует API-SWAGGER/api/v1/gameplay/social/
-│   │   │       │   │   │   └── PersonalNpcController.java
-│   │   │       │   │   ├── economy/                 # Соответствует API-SWAGGER/api/v1/gameplay/economy/
-│   │   │       │   │   │   └── EquipmentMatrixController.java
-│   │   │       │   │   ├── combat/                 # Соответствует API-SWAGGER/api/v1/gameplay/combat/
-│   │   │       │   │   └── progression/            # Соответствует API-SWAGGER/api/v1/gameplay/progression/
-│   │   │       │   ├── lore/                       # Соответствует API-SWAGGER/api/v1/lore/
-│   │   │       │   │   ├── FactionsController.java
-│   │   │       │   │   ├── LocationsController.java
-│   │   │       │   │   └── CharactersController.java
-│   │   │       │   └── narrative/                  # Соответствует API-SWAGGER/api/v1/narrative/
-│   │   │       │       ├── QuestsController.java
-│   │   │       │       └── DialoguesController.java
-│   │   │       ├── services/                       # Сервисы для бизнес-логики
-│   │   │       │   ├── common/                     # Общие сервисы
-│   │   │       │   │   └── AuthService.java
-│   │   │       │   ├── gameplay/                   # Соответствует API-SWAGGER/api/v1/gameplay/
-│   │   │       │   │   ├── social/
-│   │   │       │   │   │   └── PersonalNpcService.java
-│   │   │       │   │   └── ...
+│   │   │       │
+│   │   │       ├── controller/                    # REST Controllers (ВРУЧНУЮ)
+│   │   │       │   ├── AuthController.java        # implements AuthApi
+│   │   │       │   ├── CharactersController.java   # implements CharactersApi
 │   │   │       │   └── ...
-│   │   │       ├── repositories/                   # Репозитории для работы с БД
-│   │   │       │   ├── common/                     # Общие репозитории
-│   │   │       │   │   └── BaseRepository.java
-│   │   │       │   ├── gameplay/                   # Соответствует API-SWAGGER/api/v1/gameplay/
-│   │   │       │   │   ├── social/
-│   │   │       │   │   │   └── PersonalNpcRepository.java
-│   │   │       │   │   └── ...
+│   │   │       │
+│   │   │       ├── service/
+│   │   │       │   └── impl/                       # Service Implementations (ВРУЧНУЮ)
+│   │   │       │       ├── AuthServiceImpl.java    # implements AuthService
+│   │   │       │       ├── CharactersServiceImpl.java
+│   │   │       │       └── ...
+│   │   │       │
+│   │   │       ├── repository/                     # Spring Data Repositories (ВРУЧНУЮ)
+│   │   │       │   ├── AccountRepository.java
+│   │   │       │   ├── CharacterRepository.java
 │   │   │       │   └── ...
-│   │   │       ├── entities/                       # JPA Entities
-│   │   │       │   ├── common/
-│   │   │       │   │   └── AccountEntity.java
-│   │   │       │   ├── gameplay/
-│   │   │       │   │   ├── social/
-│   │   │       │   │   │   └── PersonalNpcEntity.java
-│   │   │       │   │   └── ...
+│   │   │       │
+│   │   │       ├── entity/                         # JPA Entities (ВРУЧНУЮ)
+│   │   │       │   ├── AccountEntity.java
+│   │   │       │   ├── CharacterEntity.java
 │   │   │       │   └── ...
-│   │   │       ├── config/                         # Конфигурация приложения
-│   │   │       │   ├── SecurityConfig.java
-│   │   │       │   ├── WebConfig.java
-│   │   │       │   └── DatabaseConfig.java
-│   │   │       └── dto/                            # DTOs (если не сгенерированы)
-│   │   │           └── common/
+│   │   │       │
+│   │   │       ├── exception/                      # Custom Exceptions (ВРУЧНУЮ)
+│   │   │       │   ├── NotFoundException.java
+│   │   │       │   ├── ConflictException.java
+│   │   │       │   └── ...
+│   │   │       │
+│   │   │       ├── mapper/                         # Entity ↔ DTO Mappers (ВРУЧНУЮ)
+│   │   │       │   ├── AccountMapper.java
+│   │   │       │   ├── CharacterMapper.java
+│   │   │       │   └── ...
+│   │   │       │
+│   │   │       └── config/                         # Конфигурация (ВРУЧНУЮ)
+│   │   │           ├── SecurityConfig.java
+│   │   │           ├── WebConfig.java
+│   │   │           └── DatabaseConfig.java
+│   │   │
 │   │   └── resources/
 │   │       ├── application.yml
 │   │       └── db/
-│   │           └── migration/                     # Flyway миграции БД
-│   │               ├── V1__create_accounts_table.sql
-│   │               ├── V2__create_characters_table.sql
+│   │           └── migration/                     # Flyway миграции (ВРУЧНУЮ)
+│   │               ├── V001__create_accounts_table.sql
+│   │               ├── V002__create_characters_table.sql
 │   │               └── ...
+│   │
 │   └── test/
 │       └── java/
 │           └── com/necpgame/backjava/
 │               └── ...                             # Тесты
+│
 ├── target/
-│   └── generated-sources/
-│       ├── openapi/                                 # Сгенерированные DTOs/Models/Controllers из API-SWAGGER
+│   └── generated-sources/                          # КОНТРАКТЫ (автогенерация)
+│       ├── openapi/                                # DTOs + API Interfaces
 │       │   └── src/main/java/com/necpgame/backjava/
-│       │       ├── api/                             # Сгенерированные Controller интерфейсы
-│       │       │   └── PersonalNpcApi.java
-│       │       └── model/                           # Сгенерированные Models/DTOs
-│       │           └── PersonalNpc.java
-│       ├── entities/                                # Сгенерированные JPA Entities (кастомный шаблон)
-│       │   └── src/main/java/com/necpgame/backjava/entity/
-│       │       └── Account.java
-│       └── repositories/                            # Сгенерированные Repositories (скрипт)
-│           └── src/main/java/com/necpgame/backjava/repository/
-│               └── AccountRepository.java
-└── pom.xml
+│       │       ├── api/                            # API Interfaces
+│       │       │   ├── AuthApi.java
+│       │       │   ├── CharactersApi.java
+│       │       │   └── ...
+│       │       └── model/                          # DTOs
+│       │           ├── LoginRequest.java
+│       │           ├── LoginResponse.java
+│       │           ├── Account.java
+│       │           └── ...
+│       └── services/                               # Service Interfaces
+│           └── src/main/java/com/necpgame/backjava/service/
+│               ├── AuthService.java
+│               ├── CharactersService.java
+│               └── ...
+│
+├── scripts/
+│   ├── generate-openapi-layers.ps1               # Скрипт генерации контрактов
+│   ├── autocommit.ps1
+│   └── autocommit.sh
+│
+└── pom.xml                                        # Maven конфигурация
 ```
 
 ---
 
 ## Соответствие API-SWAGGER
 
-**ВАЖНО:** Структура бекенд кода должна строго соответствовать структуре API-SWAGGER:
+**ВАЖНО:** Структура бекенд кода должна соответствовать структуре API-SWAGGER
 
-- `API-SWAGGER/api/v1/gameplay/social/personal-npc-tool/` → `BACK-JAVA/src/main/java/com/necpgame/backjava/controllers/gameplay/social/PersonalNpcController.java`
-- `API-SWAGGER/api/v1/gameplay/economy/equipment-matrix/` → `BACK-JAVA/src/main/java/com/necpgame/backjava/controllers/gameplay/economy/EquipmentMatrixController.java`
-- `API-SWAGGER/api/v1/gameplay/combat/` → `BACK-JAVA/src/main/java/com/necpgame/backjava/controllers/gameplay/combat/`
-- `API-SWAGGER/api/v1/lore/` → `BACK-JAVA/src/main/java/com/necpgame/backjava/controllers/lore/`
-- `API-SWAGGER/api/v1/narrative/` → `BACK-JAVA/src/main/java/com/necpgame/backjava/controllers/narrative/`
+### Примеры соответствия:
+
+| API-SWAGGER | BACK-JAVA (контракты) | BACK-JAVA (реализация) |
+|-------------|------------------------|-------------------------|
+| `api/v1/auth/` | `target/.../api/AuthApi.java` | `src/.../controller/AuthController.java` |
+| `api/v1/characters/` | `target/.../api/CharactersApi.java` | `src/.../controller/CharactersController.java` |
+| `api/v1/gameplay/social/` | `target/.../api/SocialApi.java` | `src/.../controller/gameplay/SocialController.java` |
 
 **Принципы соответствия:**
-- Иерархия директорий должна повторять иерархию API-SWAGGER
-- Имена директорий должны совпадать (kebab-case или snake_case)
-- Имена файлов Controllers должны отражать суть API (PascalCase.java)
-- Сгенерированные файлы должны быть в `target/generated-sources/openapi/`
+- Имена API Interfaces соответствуют путям в OpenAPI
+- Controllers реализуют соответствующие API Interfaces
+- ServiceImpl реализуют соответствующие Service Interfaces
+- Именование: файлы - `PascalCase.java`, директории - `kebab-case` или `snake_case`
 
 ---
 
-## Структура файлов проекта
+## Разделение ответственности
+
+### 1. Controllers (REST API слой)
+
+**Создаётся:** ВРУЧНУЮ в `src/main/java/controller/`
+
+**Ответственность:**
+- Реализует сгенерированные API Interfaces из `target/generated-sources/openapi/api/`
+- Обработка HTTP запросов и ответов
+- Валидация входных данных (через Bean Validation)
+- Делегирование бизнес-логики Service слою
+- Обработка исключений (через `@ControllerAdvice`)
+
+**Пример:**
+```java
+@RestController
+@RequiredArgsConstructor
+public class AuthController implements AuthApi {
+    private final AuthService authService;
+    
+    @Override
+    public ResponseEntity<LoginResponse> login(LoginRequest request) {
+        return ResponseEntity.ok(authService.login(request));
+    }
+}
+```
+
+### 2. Services (бизнес-логика)
+
+**Service Interfaces создаются:** АВТОМАТИЧЕСКИ в `target/generated-sources/services/`
+
+**ServiceImpl создаётся:** ВРУЧНУЮ в `src/main/java/service/impl/`
+
+**Ответственность:**
+- Вся бизнес-логика приложения
+- Работа с Repositories
+- Маппинг между Entity и DTO
+- Транзакции (`@Transactional`)
+- Обработка ошибок бизнес-правил
+
+**Пример:**
+```java
+@Service
+@RequiredArgsConstructor
+public class AuthServiceImpl implements AuthService {
+    private final AccountRepository accountRepository;
+    private final AccountMapper accountMapper;
+    
+    @Override
+    @Transactional
+    public LoginResponse login(LoginRequest request) {
+        // Бизнес-логика
+    }
+}
+```
+
+### 3. Repositories (доступ к данным)
+
+**Создаётся:** ВРУЧНУЮ в `src/main/java/repository/`
+
+**Ответственность:**
+- Работа с базой данных через Spring Data JPA
+- CRUD операции (автоматически через JpaRepository)
+- Custom queries (JPQL, native SQL)
+- Derived query methods
+
+**Пример:**
+```java
+@Repository
+public interface AccountRepository extends JpaRepository<AccountEntity, UUID> {
+    Optional<AccountEntity> findByEmail(String email);
+    boolean existsByEmail(String email);
+}
+```
+
+### 4. Entities (доменная модель)
+
+**Создаётся:** ВРУЧНУЮ в `src/main/java/entity/`
+
+**Ответственность:**
+- JPA сущности для работы с БД
+- Relationships: `@OneToMany`, `@ManyToOne`, `@ManyToMany`
+- Indexes: `@Index`
+- Constraints: `@Column(nullable = false, unique = true)`
+- Lifecycle callbacks: `@PrePersist`, `@PreUpdate`
+
+**Пример:**
+```java
+@Entity
+@Table(name = "accounts")
+public class AccountEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+    
+    @Column(nullable = false, unique = true)
+    private String email;
+    
+    // Relationships
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<CharacterEntity> characters = new ArrayList<>();
+}
+```
+
+### 5. DTOs (контракты данных)
+
+**Создаётся:** АВТОМАТИЧЕСКИ в `target/generated-sources/openapi/model/`
+
+**Ответственность:**
+- Модели данных для REST API
+- Валидация: `@NotNull`, `@Email`, `@Size`, `@Pattern`
+- JSON сериализация/десериализация
+
+**Пример (сгенерированный):**
+```java
+public class LoginRequest {
+    @NotNull
+    @Email
+    private String email;
+    
+    @NotNull
+    @Size(min = 8)
+    private String password;
+    
+    // Геттеры/сеттеры
+}
+```
+
+---
+
+## Ограничение размера файлов
+
+**ОБЯЗАТЕЛЬНО:** Каждый файл не должен превышать 400 строк
+
+### Если файл больше 400 строк:
+
+#### Вариант 1: Разделить Controllers по методам HTTP
+
+```
+controller/
+├── AuthController.java          # Главный контроллер
+├── AuthControllerGet.java       # GET методы
+├── AuthControllerPost.java      # POST методы
+└── AuthControllerDelete.java    # DELETE методы
+```
+
+#### Вариант 2: Вынести логику в отдельные сервисы
+
+```
+service/impl/
+├── AuthServiceImpl.java         # Основная логика
+├── AuthValidationService.java   # Валидация
+└── AuthTokenService.java        # Работа с токенами
+```
+
+#### Вариант 3: Разделить Repository queries
+
+```
+repository/
+├── AccountRepository.java       # Основные queries
+├── AccountSearchRepository.java # Поиск
+└── AccountStatsRepository.java  # Статистика
+```
+
+---
+
+## Примеры структуры проекта
+
+### Пример 1: Простой API (Authentication)
 
 ```
 BACK-JAVA/
-├── БЭКТАСК.MD                           # Главный файл документации
-├── БЭКТАСК-PROCESS.md                   # Процесс работы агента
-├── БЭКТАСК-REQUIREMENTS.md              # Требования и критерии
-├── БЭКТАСК-FAQ.md                       # FAQ и примеры
-├── БЭКТАСК-ARCHITECTURE.md              # Этот файл
-├── .cursor/
-│   └── rules/
-│       └── back-java-rules.mdc          # Правила работы с бекендом
-├── src/
-│   ├── main/
-│   │   ├── java/com/necpgame/backjava/
-│   │   │   ├── NecpgameBackendApplication.java
-│   │   │   ├── controllers/            # Контроллеры
-│   │   │   │   └── {path}/              # Соответствует API-SWAGGER/api/v1/{path}/
-│   │   │   │       └── {ControllerName}.java  # Controllers (до 400 строк)
-│   │   │   ├── services/                # Сервисы
-│   │   │   │   └── {path}/              # Соответствует API-SWAGGER/api/v1/{path}/
-│   │   │   │       └── {ServiceName}.java  # Services (до 400 строк)
-│   │   │   ├── repositories/            # Репозитории
-│   │   │   │   └── {path}/              # Соответствует API-SWAGGER/api/v1/{path}/
-│   │   │   │       └── {RepositoryName}.java  # Repositories (до 400 строк)
-│   │   │   ├── entities/                # JPA Entities
-│   │   │   │   └── {path}/              # Соответствует API-SWAGGER/api/v1/{path}/
-│   │   │   │       └── {EntityName}.java  # Entities (до 400 строк)
-│   │   │   └── config/                  # Конфигурация
-│   │   └── resources/
-│   │       ├── application.yml
-│   │       └── db/migration/           # Flyway миграции
-│   └── test/
-│       └── java/com/necpgame/backjava/
-│           └── ...                      # Тесты
-├── target/
-│   └── generated-sources/
-│       └── openapi/                     # Сгенерированный код
-│           └── src/main/java/com/necpgame/backjava/
-│               ├── api/                  # Controller интерфейсы
-│               └── model/                # Models/DTOs
-├── scripts/
-│   ├── autocommit.ps1
-│   └── autocommit.sh
-└── pom.xml                               # Maven конфигурация
+├── target/generated-sources/
+│   ├── openapi/
+│   │   ├── api/AuthApi.java
+│   │   └── model/
+│   │       ├── LoginRequest.java
+│   │       ├── LoginResponse.java
+│   │       └── RegisterRequest.java
+│   └── services/
+│       └── AuthService.java
+│
+└── src/main/java/
+    ├── controller/
+    │   └── AuthController.java      # implements AuthApi
+    ├── service/impl/
+    │   └── AuthServiceImpl.java     # implements AuthService
+    ├── repository/
+    │   └── AccountRepository.java
+    ├── entity/
+    │   └── AccountEntity.java
+    ├── mapper/
+    │   └── AccountMapper.java
+    └── exception/
+        └── UnauthorizedException.java
 ```
 
----
-
-## Структура директории с Controllers
-
-Когда Controller разбит на несколько файлов (для соблюдения ограничения 400 строк), структура должна быть следующей:
+### Пример 2: Сложный API с иерархией (Characters)
 
 ```
-BACK-JAVA/src/main/java/com/necpgame/backjava/controllers/gameplay/social/
-├── README.md                            # ОБЯЗАТЕЛЬНО: описание структуры Controllers
-├── PersonalNpcController.java            # Главный Controller (до 400 строк)
-├── PersonalNpcControllerGet.java        # GET методы (до 400 строк)
-├── PersonalNpcControllerPost.java       # POST методы (до 400 строк)
-├── PersonalNpcControllerPut.java        # PUT методы (до 400 строк)
-└── PersonalNpcControllerDelete.java     # DELETE методы (до 400 строк)
-```
-
-### README.md в директории:
-
-```markdown
-# Personal NPC Controller
-
-Controllers для работы с Personal NPC Tool API.
-
-## Controllers
-
-- `PersonalNpcController.java` - Основной Controller
-- `PersonalNpcControllerGet.java` - GET методы
-- `PersonalNpcControllerPost.java` - POST методы
-- `PersonalNpcControllerPut.java` - PUT методы
-- `PersonalNpcControllerDelete.java` - DELETE методы
-
-## Services
-
-- `PersonalNpcService.java` - Сервис для бизнес-логики Personal NPC
-
-## Repositories
-
-- `PersonalNpcRepository.java` - Spring Data JPA Repository для работы с БД Personal NPC
-
-## Entities
-
-- `PersonalNpcEntity.java` - JPA Entity для Personal NPC
-
-## API
-
-- Сгенерированный код: `target/generated-sources/openapi/src/main/java/com/necpgame/backjava/api/PersonalNpcApi.java`
-- Источник: `API-SWAGGER/api/v1/gameplay/social/personal-npc-tool/`
+BACK-JAVA/
+├── target/generated-sources/
+│   ├── openapi/
+│   │   ├── api/
+│   │   │   ├── CharactersApi.java
+│   │   │   ├── CharacterClassesApi.java
+│   │   │   └── CharacterOriginsApi.java
+│   │   └── model/
+│   │       ├── Character.java
+│   │       ├── CharacterClass.java
+│   │       └── CharacterOrigin.java
+│   └── services/
+│       ├── CharactersService.java
+│       ├── CharacterClassesService.java
+│       └── CharacterOriginsService.java
+│
+└── src/main/java/
+    ├── controller/
+    │   ├── CharactersController.java
+    │   ├── CharacterClassesController.java
+    │   └── CharacterOriginsController.java
+    ├── service/impl/
+    │   ├── CharactersServiceImpl.java
+    │   ├── CharacterClassesServiceImpl.java
+    │   └── CharacterOriginsServiceImpl.java
+    ├── repository/
+    │   ├── CharacterRepository.java
+    │   ├── CharacterClassRepository.java
+    │   └── CharacterOriginRepository.java
+    ├── entity/
+    │   ├── CharacterEntity.java
+    │   ├── CharacterClassEntity.java
+    │   └── CharacterOriginEntity.java
+    └── mapper/
+        ├── CharacterMapper.java
+        ├── CharacterClassMapper.java
+        └── CharacterOriginMapper.java
 ```
 
 ---
 
 ## Важные моменты
 
-### Соответствие архитектуре:
+### ✅ DO (делать):
 
-- Структура бекенд кода должна строго соответствовать структуре API-SWAGGER
-- Каждая директория должна отражать путь в API-SWAGGER
-- Имена файлов должны быть понятными и отражать назначение
-- Файлы Controllers/Services/Repositories/Entities не должны превышать 400 строк
-- Именование: файлы - `PascalCase.java`, директории - `kebab-case` или `snake_case`
+1. ✅ **Использовать шаблоны** из [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md)
+2. ✅ **Соблюдать иерархию** - соответствие структуре API-SWAGGER
+3. ✅ **Генерировать контракты** через PowerShell скрипт
+4. ✅ **Создавать реализацию вручную** в `src/main/java/`
+5. ✅ **Проверять размер файлов** - не более 400 строк
+6. ✅ **Использовать Flyway миграции** для управления БД
+7. ✅ **Покрывать тестами** - не менее 50%
 
-### Использование сгенерированных файлов:
+### ❌ DON'T (не делать):
 
-- **ОБЯЗАТЕЛЬНО** использовать OpenAPI Generator для генерации Java Spring Boot кода
-- Сгенерированные файлы должны быть в `target/generated-sources/openapi/`
-- Не редактировать сгенерированный код вручную
-- Использовать типы из сгенерированных файлов
-
-### Разделение ответственности:
-
-- **Controllers** - только обработка HTTP запросов и валидация (реализация сгенерированных интерфейсов)
-- **Services** - бизнес-логика приложения
-- **Repositories** - работа с базой данных (Spring Data JPA интерфейсы)
-- **Entities** - JPA Entities для работы с БД
-- **DTOs** - модели данных (использовать сгенерированные из OpenAPI)
-
-### Ограничение размера файлов:
-
-- **ОБЯЗАТЕЛЬНО:** Каждый файл не должен превышать 400 строк
-- Если файл больше 400 строк - разбить на несколько файлов:
-  - Разделить Controllers по методам (GET, POST, PUT, DELETE)
-  - Вынести бизнес-логику в сервисы
-  - Вынести работу с БД в репозитории
-  - Разделить на подфайлы по функциональности
+1. ❌ **Не редактировать сгенерированные контракты** в `target/`
+2. ❌ **Не генерировать Entities/Repositories/Controllers/ServiceImpl** автоматически
+3. ❌ **Не хардкодить данные** в коде - всё в БД
+4. ❌ **Не создавать файлы больше 400 строк**
+5. ❌ **Не дублировать код** - использовать DRY принцип
+6. ❌ **Не смешивать ответственности** - SOLID принцип
 
 ---
 
-## Примеры соответствия
-
-### Пример 1: Personal NPC Tool
-
-**API-SWAGGER:**
-```
-API-SWAGGER/api/v1/gameplay/social/personal-npc-tool/
-├── personal-npc-tool.yaml
-├── personal-npc-tool-endpoints.yaml
-└── personal-npc-tool-models.yaml
-```
-
-**BACK-JAVA:**
-```
-BACK-JAVA/
-├── target/generated-sources/openapi/
-│   └── src/main/java/com/necpgame/backjava/
-│       ├── api/PersonalNpcApi.java        # Сгенерированный интерфейс
-│       └── model/PersonalNpc.java         # Сгенерированная модель
-├── src/main/java/com/necpgame/backjava/
-│   ├── controllers/gameplay/social/
-│   │   └── PersonalNpcController.java     # Реализация интерфейса
-│   ├── services/gameplay/social/
-│   │   └── PersonalNpcService.java
-│   ├── repositories/gameplay/social/
-│   │   └── PersonalNpcRepository.java    # Spring Data JPA интерфейс
-│   └── entities/gameplay/social/
-│       └── PersonalNpcEntity.java        # JPA Entity
-└── src/main/resources/db/migration/
-    └── V6__create_personal_npc_table.sql
-```
-
-### Пример 2: Equipment Matrix
-
-**API-SWAGGER:**
-```
-API-SWAGGER/api/v1/gameplay/economy/equipment-matrix/
-├── equipment-matrix.yaml
-├── equipment-matrix-items.yaml
-└── equipment-matrix-models.yaml
-```
-
-**BACK-JAVA:**
-```
-BACK-JAVA/
-├── target/generated-sources/openapi/
-│   └── src/main/java/com/necpgame/backjava/
-│       ├── api/EquipmentMatrixApi.java
-│       └── model/EquipmentMatrix.java
-├── src/main/java/com/necpgame/backjava/
-│   ├── controllers/gameplay/economy/
-│   │   └── EquipmentMatrixController.java
-│   ├── services/gameplay/economy/
-│   │   └── EquipmentMatrixService.java
-│   ├── repositories/gameplay/economy/
-│   │   └── EquipmentMatrixRepository.java
-│   └── entities/gameplay/economy/
-│       └── EquipmentMatrixEntity.java
-└── src/main/resources/db/migration/
-    └── V7__create_equipment_matrix_table.sql
-```
-
----
-
-📖 **Навигация:** [БЭКТАСК.MD](./БЭКТАСК.MD) | [БЭКТАСК-PROCESS.md](./БЭКТАСК-PROCESS.md) | [БЭКТАСК-REQUIREMENTS.md](./БЭКТАСК-REQUIREMENTS.md) | [БЭКТАСК-FAQ.md](./БЭКТАСК-FAQ.md)
+📖 **Навигация:** [БЭКТАСК.MD](./БЭКТАСК.MD) | [OPENAPI-GENERATION-GUIDE.md](./OPENAPI-GENERATION-GUIDE.md) | [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md)
