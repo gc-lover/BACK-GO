@@ -1,3 +1,20 @@
-<?xml version="1.1" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
+    <!-- Миграции для Character Creation API -->
+    <include file="db/changelog/changes/001-create-accounts-table.xml"/>
+    <include file="db/changelog/changes/002-create-character-classes-table.xml"/>
+    <include file="db/changelog/changes/003-create-character-subclasses-table.xml"/>
+    <include file="db/changelog/changes/004-create-character-origins-table.xml"/>
+    <include file="db/changelog/changes/005-create-factions-table.xml"/>
+    <include file="db/changelog/changes/006-create-cities-table.xml"/>
+    <include file="db/changelog/changes/007-create-origin-available-factions-table.xml"/>
+    <include file="db/changelog/changes/008-create-city-available-factions-table.xml"/>
+    <include file="db/changelog/changes/009-create-character-appearances-table.xml"/>
+    <include file="db/changelog/changes/010-create-characters-table.xml"/>
+
+</databaseChangeLog>

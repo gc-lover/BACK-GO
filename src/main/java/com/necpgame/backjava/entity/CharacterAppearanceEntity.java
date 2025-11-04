@@ -1,0 +1,53 @@
+package com.necpgame.backjava.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.UUID;
+
+/**
+ * Entity для таблицы character_appearances - внешность персонажей
+ * Соответствует CharacterAppearance DTO из OpenAPI спецификации
+ */
+@Data
+@Entity
+@Table(name = "character_appearances")
+@NoArgsConstructor
+@AllArgsConstructor
+public class CharacterAppearanceEntity {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
+    
+    @Column(name = "height", nullable = false)
+    private Integer height; // 150-220 cm
+    
+    @Column(name = "body_type", nullable = false, length = 50)
+    @Enumerated(EnumType.STRING)
+    private BodyType bodyType;
+    
+    @Column(name = "hair_color", nullable = false, length = 100)
+    private String hairColor;
+    
+    @Column(name = "eye_color", nullable = false, length = 100)
+    private String eyeColor;
+    
+    @Column(name = "skin_color", nullable = false, length = 100)
+    private String skinColor;
+    
+    @Column(name = "distinctive_features", length = 500)
+    private String distinctiveFeatures;
+    
+    // Enum для типа телосложения
+    public enum BodyType {
+        thin,
+        normal,
+        muscular,
+        large
+    }
+}
+
