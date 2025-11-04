@@ -2,7 +2,7 @@
 
 **Архитектура, структура директорий и соответствие API-SWAGGER**
 
-📖 **Навигация:** [БЭКТАСК.MD](./БЭКТАСК.MD) | [OPENAPI-GENERATION-GUIDE.md](./OPENAPI-GENERATION-GUIDE.md) | [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md)
+📖 **Навигация:** [БЭКТАСК.MD](./БЭКТАСК.MD) | [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md) | [БЭКТАСК-FAQ.md](./БЭКТАСК-FAQ.md)
 
 ---
 
@@ -20,7 +20,8 @@
 - **Repositories** - Spring Data репозитории (`src/main/java/repository/`)
 - **Controllers** - REST контроллеры (`src/main/java/controller/`)
 - **ServiceImpl** - реализация бизнес-логики (`src/main/java/service/impl/`)
-- **Flyway миграции** - SQL миграции (`src/main/resources/db/migration/`)
+- **Mappers (MapStruct)** - автоматическое маппинг Entity ↔ DTO (`src/main/java/mapper/`)
+- **Liquibase миграции** - XML/YAML changelog (`src/main/resources/db/changelog/`)
 
 ---
 
@@ -68,13 +69,18 @@ BACK-JAVA/
 │   │   │       │   └── ...
 │   │   │       │
 │   │   │       ├── exception/                      # Custom Exceptions (ВРУЧНУЮ)
-│   │   │       │   ├── NotFoundException.java
-│   │   │       │   ├── ConflictException.java
-│   │   │       │   └── ...
+│   │   │       │   ├── ApiException.java
+│   │   │       │   ├── AuthException.java
+│   │   │       │   ├── BusinessException.java
+│   │   │       │   ├── ValidationException.java
+│   │   │       │   ├── IntegrationException.java
+│   │   │       │   ├── ErrorCode.java              # Enum с кодами ошибок
+│   │   │       │   └── GlobalExceptionHandler.java
 │   │   │       │
-│   │   │       ├── mapper/                         # Entity ↔ DTO Mappers (ВРУЧНУЮ)
-│   │   │       │   ├── AccountMapper.java
-│   │   │       │   ├── CharacterMapper.java
+│   │   │       ├── mapper/                         # Entity ↔ DTO Mappers (MapStruct)
+│   │   │       │   ├── CharacterMapperMS.java      # с поддержкой JsonNullable
+│   │   │       │   ├── CharacterAppearanceMapperMS.java
+│   │   │       │   ├── JsonNullableMapper.java
 │   │   │       │   └── ...
 │   │   │       │
 │   │   │       └── config/                         # Конфигурация (ВРУЧНУЮ)
@@ -85,10 +91,12 @@ BACK-JAVA/
 │   │   └── resources/
 │   │       ├── application.yml
 │   │       └── db/
-│   │           └── migration/                     # Flyway миграции (ВРУЧНУЮ)
-│   │               ├── V001__create_accounts_table.sql
-│   │               ├── V002__create_characters_table.sql
-│   │               └── ...
+│   │           └── changelog/                     # Liquibase миграции (ВРУЧНУЮ)
+│   │               ├── db.changelog-master.xml
+│   │               └── changes/
+│   │                   ├── 001-create-accounts-table.xml
+│   │                   ├── 002-create-characters-table.xml
+│   │                   └── ...
 │   │
 │   └── test/
 │       └── java/
@@ -394,8 +402,9 @@ BACK-JAVA/
 3. ✅ **Генерировать контракты** через PowerShell скрипт
 4. ✅ **Создавать реализацию вручную** в `src/main/java/`
 5. ✅ **Проверять размер файлов** - не более 400 строк
-6. ✅ **Использовать Flyway миграции** для управления БД
-7. ✅ **Покрывать тестами** - не менее 50%
+6. ✅ **Использовать Liquibase миграции** для управления БД
+7. ✅ **Использовать MapStruct** для маппинга Entity ↔ DTO
+8. ✅ **Покрывать тестами** - не менее 50%
 
 ### ❌ DON'T (не делать):
 
@@ -408,4 +417,4 @@ BACK-JAVA/
 
 ---
 
-📖 **Навигация:** [БЭКТАСК.MD](./БЭКТАСК.MD) | [OPENAPI-GENERATION-GUIDE.md](./OPENAPI-GENERATION-GUIDE.md) | [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md)
+📖 **Навигация:** [БЭКТАСК.MD](./БЭКТАСК.MD) | [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md) | [БЭКТАСК-FAQ.md](./БЭКТАСК-FAQ.md)

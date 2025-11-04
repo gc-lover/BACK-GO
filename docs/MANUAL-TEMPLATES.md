@@ -630,81 +630,143 @@ public class ForbiddenException extends RuntimeException {
 
 ---
 
-## 6. Mapper Template
+## 6. Mapper Template (MapStruct)
 
-**Путь**: `src/main/java/mapper/YourMapper.java`
+**Путь**: `src/main/java/mapper/YourMapperMS.java`
+
+**⚠️ ВАЖНО:** Используем **MapStruct** для автоматической генерации маппинга. Не пишем маппинг вручную!
+
+### Основной Mapper
 
 ```java
 package com.necpgame.backjava.mapper;
 
 import com.necpgame.backjava.entity.YourEntity;
 import com.necpgame.backjava.model.*;  // Сгенерированные DTOs
-import org.springframework.stereotype.Component;
+import org.mapstruct.*;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 /**
- * Mapper для конвертации между Entity и DTO.
+ * MapStruct Mapper для автоматической конвертации между Entity и DTO.
  * 
- * Альтернатива: использовать MapStruct для автоматической генерации маппинга.
+ * MapStruct генерирует реализацию во время компиляции.
  */
-@Component
-public class YourMapper {
+@Mapper(
+    componentModel = "spring",
+    uses = {JsonNullableMapper.class},  // Используем утилиты для JsonNullable
+    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+)
+public interface YourMapperMS {
     
-    /**
-     * Entity → DTO
-     */
-    public YourDto toDto(YourEntity entity) {
-        if (entity == null) {
-            return null;
-        }
-        
-        YourDto dto = new YourDto();
-        dto.setId(entity.getId());
-        dto.setField1(entity.getField1());
-        dto.setField2(entity.getField2());
-        dto.setField3(entity.getField3());
-        dto.setActive(entity.getActive());
-        dto.setCreatedAt(entity.getCreatedAt());
-        dto.setUpdatedAt(entity.getUpdatedAt());
-        
-        // Маппинг relationships (если нужно)
-        if (entity.getParent() != null) {
-            dto.setParentId(entity.getParent().getId());
-        }
-        
-        return dto;
-    }
+    // Entity → DTO
+    @Mapping(source = "parent.id", target = "parentId")
+    @Mapping(source = "field1", target = "field1", qualifiedByName = "stringToJsonNullable")
+    YourDto toDto(YourEntity entity);
     
-    /**
-     * Create Request DTO → Entity
-     */
-    public YourEntity toEntity(YourCreateRequest request) {
-        if (request == null) {
-            return null;
-        }
-        
-        YourEntity entity = new YourEntity();
-        entity.setField1(request.getField1());
-        entity.setField2(request.getField2());
-        entity.setField3(request.getField3());
-        
-        return entity;
-    }
+    // Entity → Summary DTO
+    @Mapping(source = "parent.id", target = "parentId")
+    YourSummaryDto toSummaryDto(YourEntity entity);
     
-    /**
-     * Update Request DTO → Entity (обновление существующей entity)
-     */
-    public void updateEntityFromDto(YourUpdateRequest request, YourEntity entity) {
-        if (request == null || entity == null) {
-            return;
-        }
-        
-        entity.setField1(request.getField1());
-        entity.setField2(request.getField2());
-        entity.setField3(request.getField3());
-        entity.setActive(request.getActive());
+    // Create Request DTO → Entity
+    @Mapping(source = "field1", target = "field1", qualifiedByName = "jsonNullableToString")
+    YourEntity toEntity(YourCreateRequest request);
+    
+    // Custom mapping для enum (если нужно)
+    @Named("stringToEnum")
+    default YourDto.StatusEnum stringToEnum(String status) {
+        return status != null ? YourDto.StatusEnum.fromValue(status) : null;
     }
 }
 ```
+
+### JsonNullable Mapper (утилиты)
+
+**Путь**: `src/main/java/mapper/JsonNullableMapper.java`
+
+```java
+package com.necpgame.backjava.mapper;
+
+import org.mapstruct.Named;
+import org.openapitools.jackson.nullable.JsonNullable;
+import org.springframework.stereotype.Component;
+
+import java.time.OffsetDateTime;
+import java.util.UUID;
+
+/**
+ * Утилиты для работы с JsonNullable в MapStruct.
+ * 
+ * Сгенерированные DTOs используют JsonNullable для опциональных полей.
+ */
+@Component
+public class JsonNullableMapper {
+
+    @Named("stringToJsonNullable")
+    public JsonNullable<String> stringToJsonNullable(String value) {
+        return value != null ? JsonNullable.of(value) : JsonNullable.undefined();
+    }
+
+    @Named("jsonNullableToString")
+    public String jsonNullableToString(JsonNullable<String> jsonNullable) {
+        return jsonNullable != null && jsonNullable.isPresent() ? jsonNullable.get() : null;
+    }
+
+    @Named("uuidToJsonNullable")
+    public JsonNullable<UUID> uuidToJsonNullable(UUID value) {
+        return value != null ? JsonNullable.of(value) : JsonNullable.undefined();
+    }
+
+    @Named("jsonNullableToUuid")
+    public UUID jsonNullableToUuid(JsonNullable<UUID> jsonNullable) {
+        return jsonNullable != null && jsonNullable.isPresent() ? jsonNullable.get() : null;
+    }
+
+    @Named("dateToJsonNullable")
+    public JsonNullable<OffsetDateTime> dateToJsonNullable(OffsetDateTime value) {
+        return value != null ? JsonNullable.of(value) : JsonNullable.undefined();
+    }
+
+    @Named("jsonNullableToDate")
+    public OffsetDateTime jsonNullableToDate(JsonNullable<OffsetDateTime> jsonNullable) {
+        return jsonNullable != null && jsonNullable.isPresent() ? jsonNullable.get() : null;
+    }
+}
+```
+
+### Зависимости в pom.xml
+
+```xml
+<!-- MapStruct -->
+<dependency>
+    <groupId>org.mapstruct</groupId>
+    <artifactId>mapstruct</artifactId>
+    <version>1.5.5.Final</version>
+</dependency>
+
+<!-- MapStruct Processor -->
+<dependency>
+    <groupId>org.mapstruct</groupId>
+    <artifactId>mapstruct-processor</artifactId>
+    <version>1.5.5.Final</version>
+    <scope>provided</scope>
+</dependency>
+
+<!-- Lombok + MapStruct -->
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok-mapstruct-binding</artifactId>
+    <version>0.2.0</version>
+    <scope>provided</scope>
+</dependency>
+```
+
+### Преимущества MapStruct
+
+✅ **Автоматическая генерация** - нет boilerplate кода  
+✅ **Compile-time проверка** - ошибки на этапе компиляции  
+✅ **Производительность** - нет рефлексии, быстрый код  
+✅ **Поддержка JsonNullable** - через утилиты  
+✅ **Простота** - только интерфейсы и аннотации
 
 ---
 

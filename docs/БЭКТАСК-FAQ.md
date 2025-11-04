@@ -2,7 +2,7 @@
 
 **Типичные проблемы, решения и примеры использования**
 
-📖 **Навигация:** [БЭКТАСК.MD](./БЭКТАСК.MD) | [OPENAPI-GENERATION-GUIDE.md](./OPENAPI-GENERATION-GUIDE.md) | [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md) | [БЭКТАСК-ARCHITECTURE.md](./БЭКТАСК-ARCHITECTURE.md)
+📖 **Навигация:** [БЭКТАСК.MD](./БЭКТАСК.MD) | [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md) | [БЭКТАСК-ARCHITECTURE.md](./БЭКТАСК-ARCHITECTURE.md)
 
 ---
 
@@ -206,12 +206,12 @@ public class PersonalNpcService {
 
 ### Q: Как создать миграции БД?
 
-**A:** Создай Flyway миграции вручную на основе Entity классов:
+**A:** Создай Liquibase миграции вручную на основе Entity классов:
 
 **Процесс:**
 1. Создай Entity в `src/main/java/entity/`
 2. Проанализируй поля, relationships, constraints
-3. Создай SQL миграцию в `src/main/resources/db/migration/`
+3. Создай XML changelog в `src/main/resources/db/changelog/changes/`
 
 **Пример Entity:**
 ```java
@@ -227,15 +227,25 @@ public class AccountEntity {
 ```
 
 **Соответствующая миграция:**
-```sql
--- V001__create_accounts_table.sql
-CREATE TABLE IF NOT EXISTS accounts (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    email VARCHAR(255) NOT NULL UNIQUE,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE INDEX IF NOT EXISTS idx_accounts_email ON accounts(email);
+```xml
+<!-- 001-create-accounts-table.xml -->
+<changeSet id="001-create-accounts-table" author="system">
+    <createTable tableName="accounts">
+        <column name="id" type="UUID" defaultValueComputed="gen_random_uuid()">
+            <constraints primaryKey="true" nullable="false"/>
+        </column>
+        <column name="email" type="VARCHAR(255)">
+            <constraints nullable="false" unique="true"/>
+        </column>
+        <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+            <constraints nullable="false"/>
+        </column>
+    </createTable>
+    
+    <createIndex tableName="accounts" indexName="idx_accounts_email">
+        <column name="email"/>
+    </createIndex>
+</changeSet>
 ```
 
 **Применение миграций:**
@@ -244,9 +254,10 @@ CREATE INDEX IF NOT EXISTS idx_accounts_email ON accounts(email);
 mvn spring-boot:run
 ```
 
-**ВАЖНО: Идемпотентность**
-- Всегда используй `IF NOT EXISTS` / `IF EXISTS`
-- Миграции должны быть безопасными для повторного применения
+**ВАЖНО: Отслеживание изменений**
+- Liquibase автоматически отслеживает применённые changeSet в таблице `databasechangelog`
+- Каждый changeSet должен иметь уникальный `id` и `author`
+- Повторное применение применённых changeSet не происходит
 
 ---
 
@@ -255,17 +266,24 @@ mvn spring-boot:run
 **A:** **ОБЯЗАТЕЛЬНО: Проверка существования данных перед заливкой**
 
 **Способ 1: Seed миграция (рекомендуется)**
-```sql
--- V7__seed_personal_npc_data.sql
-DO $$
-BEGIN
-    -- Проверка наличия данных перед вставкой
-    IF NOT EXISTS (SELECT 1 FROM personal_npc LIMIT 1) THEN
-        INSERT INTO personal_npc (id, name, owner_id) VALUES
-        ('00000000-0000-0000-0000-000000000001', 'Test NPC 1', '00000000-0000-0000-0000-000000000001'),
-        ('00000000-0000-0000-0000-000000000002', 'Test NPC 2', '00000000-0000-0000-0000-000000000001');
-    END IF;
-END $$;
+```xml
+<!-- 007-seed-personal-npc-data.xml -->
+<changeSet id="007-seed-personal-npc-data" author="system">
+    <preConditions onFail="MARK_RAN">
+        <sqlCheck expectedResult="0">SELECT COUNT(*) FROM personal_npc</sqlCheck>
+    </preConditions>
+    
+    <insert tableName="personal_npc">
+        <column name="id" value="00000000-0000-0000-0000-000000000001"/>
+        <column name="name" value="Test NPC 1"/>
+        <column name="owner_id" value="00000000-0000-0000-0000-000000000001"/>
+    </insert>
+    <insert tableName="personal_npc">
+        <column name="id" value="00000000-0000-0000-0000-000000000002"/>
+        <column name="name" value="Test NPC 2"/>
+        <column name="owner_id" value="00000000-0000-0000-0000-000000000001"/>
+    </insert>
+</changeSet>
 ```
 
 **Способ 2: Java CommandLineRunner**
@@ -297,7 +315,7 @@ public class PersonalNpcSeeder implements CommandLineRunner {
 
 **Применение seed данных:**
 ```bash
-# Через Flyway (автоматически при запуске Spring Boot)
+# Через Liquibase (автоматически при запуске Spring Boot)
 mvn spring-boot:run
 
 # Или через CommandLineRunner (автоматически при запуске)
@@ -455,7 +473,7 @@ spring:
 
 **Применение миграций:**
 ```bash
-# Автоматически при запуске Spring Boot через Flyway
+# Автоматически при запуске Spring Boot через Liquibase
 mvn spring-boot:run
 ```
 
@@ -539,14 +557,22 @@ paths:
 - ServiceImpl: `src/main/java/service/impl/UsersServiceImpl.java`
 - Mapper: `src/main/java/mapper/UserMapper.java`
 
-**Шаг 4: Создать Flyway миграцию**
-```sql
--- src/main/resources/db/migration/V005__create_users_table.sql
-CREATE TABLE IF NOT EXISTS users (
-    id UUID PRIMARY KEY,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    username VARCHAR(100) NOT NULL UNIQUE
-);
+**Шаг 4: Создать Liquibase миграцию**
+```xml
+<!-- src/main/resources/db/changelog/changes/005-create-users-table.xml -->
+<changeSet id="005-create-users-table" author="system">
+    <createTable tableName="users">
+        <column name="id" type="UUID">
+            <constraints primaryKey="true" nullable="false"/>
+        </column>
+        <column name="email" type="VARCHAR(255)">
+            <constraints nullable="false" unique="true"/>
+        </column>
+        <column name="username" type="VARCHAR(100)">
+            <constraints nullable="false" unique="true"/>
+        </column>
+    </createTable>
+</changeSet>
 ```
 
 **Шаг 5: Компиляция и тестирование**
@@ -611,4 +637,4 @@ powershell -Command "Get-ChildItem -Recurse -Filter *.java | ForEach-Object { (G
 
 ---
 
-📖 **Навигация:** [БЭКТАСК.MD](./БЭКТАСК.MD) | [OPENAPI-GENERATION-GUIDE.md](./OPENAPI-GENERATION-GUIDE.md) | [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md) | [БЭКТАСК-ARCHITECTURE.md](./БЭКТАСК-ARCHITECTURE.md)
+📖 **Навигация:** [БЭКТАСК.MD](./БЭКТАСК.MD) | [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md) | [БЭКТАСК-ARCHITECTURE.md](./БЭКТАСК-ARCHITECTURE.md)

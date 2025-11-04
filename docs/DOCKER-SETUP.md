@@ -41,9 +41,9 @@ jdbc:postgresql://localhost:5433/necpgame
 
 ### Применение миграций
 
-Миграции применяются автоматически при запуске Spring Boot приложения через Flyway.
+Миграции применяются автоматически при запуске Spring Boot приложения через Liquibase.
 
-Миграции находятся в `src/main/resources/db/migration/`
+Миграции находятся в `src/main/resources/db/changelog/`
 
 ### Подключение через psql
 

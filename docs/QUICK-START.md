@@ -12,7 +12,8 @@
 - ✍️ Repositories (Spring Data)
 - ✍️ Controllers (REST контроллеры)
 - ✍️ ServiceImpl (бизнес-логика)
-- ✍️ Flyway миграции (SQL)
+- ✍️ Mappers (MapStruct)
+- ✍️ Liquibase миграции (XML/YAML)
 
 ---
 
@@ -41,9 +42,9 @@ docker-compose ps
 ```
 
 **Результат:**
-- ✅ DTOs в `target/generated-sources/openapi/model/`
-- ✅ API Interfaces в `target/generated-sources/openapi/api/`
-- ✅ Service Interfaces в `target/generated-sources/services/`
+- ✅ DTOs в `src/main/java/com/necpgame/backjava/model/`
+- ✅ API Interfaces в `src/main/java/com/necpgame/backjava/api/`
+- ✅ Service Interfaces в `src/main/java/com/necpgame/backjava/service/`
 
 ## Создание реализации вручную
 
@@ -53,7 +54,8 @@ docker-compose ps
 2. **Repository** - `src/main/java/repository/AccountRepository.java`
 3. **Controller** - `src/main/java/controller/AuthController.java`
 4. **ServiceImpl** - `src/main/java/service/impl/AuthServiceImpl.java`
-5. **Flyway миграция** - `src/main/resources/db/migration/V001__create_accounts_table.sql`
+5. **Mapper (MapStruct)** - `src/main/java/mapper/AccountMapperMS.java`
+6. **Liquibase миграция** - `src/main/resources/db/changelog/changes/001-create-accounts-table.xml`
 
 ## Запуск сервера
 
