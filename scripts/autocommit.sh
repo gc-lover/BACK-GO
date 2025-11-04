@@ -36,7 +36,7 @@ if [ "$COMMIT_MESSAGE" = "Автоматический коммит: обнов�
             ACTION="Документация"
         elif echo "$CHANGED_FILES" | grep -q "\.\(yaml\|yml\)$"; then
             ACTION="API спецификация"
-        elif echo "$CHANGED_FILES" | grep -q "\.\(go\|java\|js\|ts\|py\)$"; then
+        elif echo "$CHANGED_FILES" | grep -q "\.\(java\|js\|ts\|py\)$"; then
             ACTION="Реализация"
         elif echo "$CHANGED_FILES" | grep -q "rules\.mdc$"; then
             ACTION="Обновление правил"

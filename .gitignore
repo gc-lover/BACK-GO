@@ -1,48 +1,55 @@
-# Binaries for programs and plugins
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
-bin/
-dist/
+# Java
+*.class
+*.log
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
 
-# Test binary, built with `go test -c`
-*.test
-
-# Output of the go coverage tool
-*.out
-coverage.html
-coverage.out
-
-# Dependency directories
-vendor/
-
-# Go workspace file
-go.work
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
 
 # IDE
 .idea/
+*.iws
+*.iml
+*.ipr
 .vscode/
+.classpath
+.project
+.settings/
 *.swp
 *.swo
 *~
+
+# Spring Boot
+application-local.yml
+application-dev.yml
+application-prod.yml
+
+# Logs
+logs/
+*.log
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Environment variables
-.env
-.env.local
-.env.*.local
+# Docker
+.dockerignore
 
-# Logs
-*.log
-
-# Database
-*.db
-*.sqlite
-
-# Generated code (optional - если нужно игнорировать)
-# internal/api/generated/
+# Generated code
+target/generated-sources/

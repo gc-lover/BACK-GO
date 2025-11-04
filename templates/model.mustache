@@ -1,0 +1,98 @@
+{{#models}}
+{{#model}}
+package {{package}};
+
+{{#imports}}{{#import}}
+import {{import}};
+{{/import}}{{/imports}}
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import lombok.*;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+/**
+ * {{classname}} Entity
+ * {{#description}}{{{description}}}{{/description}}
+ */
+@Entity
+@Table(name = "{{#lambda.snake_case}}{{classname}}{{/lambda.snake_case}}s")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class {{classname}} {
+{{#vars}}
+
+    /**
+     * {{#description}}{{{description}}}{{/description}}
+     */
+    {{#isPrimitiveType}}
+    {{#isString}}
+    {{#isEmail}}
+    @Email
+    {{/isEmail}}
+    {{#minLength}}
+    @Size(min = {{minLength}}{{#maxLength}}, max = {{maxLength}}{{/maxLength}})
+    {{/minLength}}
+    {{^minLength}}{{#maxLength}}
+    @Size(max = {{maxLength}})
+    {{/maxLength}}{{/minLength}}
+    {{#pattern}}
+    @Pattern(regexp = "{{pattern}}")
+    {{/pattern}}
+    {{/isString}}
+    {{#isInteger}}
+    {{#minimum}}
+    @Min({{minimum}})
+    {{/minimum}}
+    {{#maximum}}
+    @Max({{maximum}})
+    {{/maximum}}
+    {{/isInteger}}
+    {{/isPrimitiveType}}
+    {{#required}}
+    @NotNull
+    {{/required}}
+    {{#isId}}
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    {{#baseName}}
+    @Column(name = "{{baseName}}")
+    {{/baseName}}
+    {{^baseName}}
+    @Column(name = "{{name}}")
+    {{/baseName}}
+    {{/isId}}
+    {{^isId}}
+    {{#baseName}}
+    @Column(name = "{{baseName}}"{{#required}}, nullable = false{{/required}}{{#unique}}, unique = true{{/unique}})
+    {{/baseName}}
+    {{^baseName}}
+    @Column(name = "{{name}}"{{#required}}, nullable = false{{/required}}{{#unique}}, unique = true{{/unique}})
+    {{/baseName}}
+    {{/isId}}
+    private {{{datatypeWithEnum}}} {{name}}{{#defaultValue}} = {{{.}}}{{/defaultValue}};
+{{/vars}}
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+}
+{{/model}}
+{{/models}}

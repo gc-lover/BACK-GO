@@ -1,0 +1,68 @@
+{{^classname.endsWith("Response")}}
+{{^classname.endsWith("Request")}}
+{{^classname.startsWith("Get")}}
+{{^classname.startsWith("List")}}
+{{^classname.startsWith("Create")}}
+{{^classname.startsWith("Delete")}}
+{{^classname.startsWith("Update")}}
+{{^classname.startsWith("Login")}}
+{{^classname.startsWith("Register")}}
+{{^classname.startsWith("Error")}}
+{{^classname.equals("CharacterAppearance")}}
+{{^classname.equals("CharacterSummary")}}
+{{^classname.equals("CharacterClassSubclassesInner")}}
+{{^classname.equals("CharacterOriginStartingResources")}}
+package com.necpgame.backjava.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import com.necpgame.backjava.entity.{{classname}};
+import java.util.Optional;
+import java.util.UUID;
+import java.util.List;
+
+/**
+ * Repository для {{classname}}
+ * {{#description}}{{description}}{{/description}}
+ */
+@Repository
+public interface {{classname}}Repository extends JpaRepository<{{classname}}, UUID> {
+{{#vars}}
+    {{#isEmail}}
+    Optional<{{classname}}> findByEmail(String email);
+    boolean existsByEmail(String email);
+    {{/isEmail}}
+    {{#isUnique}}
+    {{^isEmail}}
+    Optional<{{classname}}> findBy{{#lambda.capitalize}}{{name}}{{/lambda.capitalize}}({{datatype}} {{name}});
+    boolean existsBy{{#lambda.capitalize}}{{name}}{{/lambda.capitalize}}({{datatype}} {{name}});
+    {{/isEmail}}
+    {{/isUnique}}
+{{/vars}}
+    {{#hasRelations}}
+    {{#vars}}
+    {{#isForeignKey}}
+    @Query("SELECT e FROM {{classname}} e WHERE e.{{name}}.id = :{{name}}Id")
+    List<{{classname}}> findBy{{#lambda.capitalize}}{{name}}{{/lambda.capitalize}}Id(@Param("{{name}}Id") UUID {{name}}Id);
+    {{/isForeignKey}}
+    {{/vars}}
+    {{/hasRelations}}
+}
+{{/classname.equals("CharacterOriginStartingResources")}}
+{{/classname.equals("CharacterClassSubclassesInner")}}
+{{/classname.equals("CharacterSummary")}}
+{{/classname.equals("CharacterAppearance")}}
+{{/classname.startsWith("Error")}}
+{{/classname.startsWith("Register")}}
+{{/classname.startsWith("Login")}}
+{{/classname.startsWith("Update")}}
+{{/classname.startsWith("Delete")}}
+{{/classname.startsWith("Create")}}
+{{/classname.startsWith("List")}}
+{{/classname.startsWith("Get")}}
+{{/classname.endsWith("Request")}}
+{{/classname.endsWith("Response")}}
+
+

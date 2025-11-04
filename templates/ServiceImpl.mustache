@@ -1,0 +1,51 @@
+package {{package}};
+
+{{#imports}}import {{import}};
+{{/imports}}
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import jakarta.validation.Valid;
+import java.util.List;
+import java.util.UUID;
+import jakarta.annotation.Generated;
+
+/**
+ * {{#lambda.titlecase}}{{classname}}{{/lambda.titlecase}} Service Implementation
+ * {{#description}}{{description}}{{/description}}
+ */
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "{{generatedDate}}")
+@Service
+@Transactional
+public class {{classname}}ServiceImpl implements {{classname}}Service {
+
+{{#operations}}
+{{#operation}}
+    /**
+     * {{httpMethod}} {{path}} : {{summary}}
+     * {{#notes}}{{notes}}{{/notes}}
+     *
+{{#allParams}}
+     * @param {{paramName}} {{#description}}{{description}}{{/description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}
+{{/allParams}}
+{{#responses}}
+     * @return {{message}} (status code {{code}})
+{{/responses}}
+     */
+    @Override
+    public {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}void{{/returnType}} {{operationId}}({{#allParams}}{{#isBodyParam}}@Valid {{/isBodyParam}}{{dataType}} {{paramName}}{{#hasMore}}, {{/hasMore}}{{/allParams}}) {
+        // TODO: Реализовать бизнес-логику через Repository
+        {{#returnType}}
+        {{#returnContainer}}
+        return null;
+        {{/returnContainer}}
+        {{^returnContainer}}
+        return null;
+        {{/returnContainer}}
+        {{/returnType}}
+    }
+
+{{/operation}}
+{{/operations}}
+}

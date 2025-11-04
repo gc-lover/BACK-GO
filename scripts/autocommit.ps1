@@ -47,7 +47,7 @@ if ($CommitMessage -eq "Автоматический коммит: обновл�
             $Action = "Документация"
         } elseif ($ChangedFiles | Where-Object { $_ -match "\.(yaml|yml)$" }) {
             $Action = "API спецификация"
-        } elseif ($ChangedFiles | Where-Object { $_ -match "\.(go|java|js|ts|py)$" }) {
+        } elseif ($ChangedFiles | Where-Object { $_ -match "\.(java|js|ts|py)$" }) {
             $Action = "Реализация"
         } elseif ($ChangedFiles | Where-Object { $_ -match "rules\.mdc$" }) {
             $Action = "Обновление правил"
