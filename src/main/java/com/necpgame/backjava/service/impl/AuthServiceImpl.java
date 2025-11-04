@@ -10,7 +10,7 @@ import com.necpgame.backjava.model.Register201Response;
 import com.necpgame.backjava.model.RegisterRequest;
 import com.necpgame.backjava.repository.AccountRepository;
 import com.necpgame.backjava.service.AuthService;
-// import com.necpgame.backjava.util.JwtUtil; // TODO: Uncomment after fixing JWT
+import com.necpgame.backjava.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,7 +29,7 @@ public class AuthServiceImpl implements AuthService {
     
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
-    // private final JwtUtil jwtUtil; // TODO: Uncomment after fixing JWT
+    private final JwtUtil jwtUtil;
     
     /**
      * Регистрация нового аккаунта
@@ -60,11 +60,13 @@ public class AuthServiceImpl implements AuthService {
         account = accountRepository.save(account);
         log.info("Account created successfully: {}", account.getId());
         
+        // Генерация JWT токена
+        String token = jwtUtil.generateToken(account.getId(), account.getEmail());
+        
         // Формирование ответа
         Register201Response response = new Register201Response();
         response.setAccountId(account.getId());
         response.setMessage("Account created successfully");
-        // TODO: Add JWT token generation after fixing JWT dependencies
         
         return response;
     }
@@ -89,11 +91,13 @@ public class AuthServiceImpl implements AuthService {
         
         log.info("Login successful for account: {}", account.getId());
         
+        // Генерация JWT токена
+        String token = jwtUtil.generateToken(account.getId(), account.getEmail());
+        
         // Формирование ответа
         LoginResponse response = new LoginResponse();
         response.setAccountId(account.getId());
-        // TODO: Add JWT token generation after fixing JWT dependencies
-        response.setToken("temporary-token-" + account.getId()); // Временный токен
+        response.setToken(token);
         response.setExpiresAt(OffsetDateTime.now().plusHours(24));
         
         return response;
