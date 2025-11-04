@@ -200,12 +200,11 @@ foreach ($ApiFile in $ApiFiles) {
     Write-Host "  Файл $ProcessedFiles/$TotalFiles : $FileName" -ForegroundColor $ColorInfo
     Write-Host "═══════════════════════════════════════════════════════════════" -ForegroundColor $ColorInfo
     
-    # Общие параметры для текущего файла
+    # Общие параметры для текущего файла (без кастомных шаблонов для API)
     $CommonParams = @(
         "generate",
         "-i", $ApiFile,
-        "-g", "spring",
-        "-t", "templates"
+        "-g", "spring"
     )
 
     # ==============================================================================
@@ -219,7 +218,7 @@ foreach ($ApiFile in $ApiFiles) {
             "--api-package", "com.necpgame.backjava.api",
             "--model-package", "com.necpgame.backjava.model",
             "--invoker-package", "com.necpgame.backjava.invoker",
-            "-p", "interfaceOnly=true,useSpringBoot3=true,useJakartaEe=true,useBeanValidation=true,hideGenerationTimestamp=true,sourceFolder=."
+            "-p", "interfaceOnly=true,delegatePattern=false,useSpringBoot3=true,useJakartaEe=true,useBeanValidation=true,hideGenerationTimestamp=true,sourceFolder=."
         )
         
         $result = npx --yes @openapitools/openapi-generator-cli @DtosParams 2>&1
@@ -249,7 +248,11 @@ foreach ($ApiFile in $ApiFiles) {
     if ($GenerateServices) {
         Write-Step "2/2 Генерация Service интерфейсов"
         
-        $ServicesParams = $CommonParams + @(
+        $ServicesParams = @(
+            "generate",
+            "-i", $ApiFile,
+            "-g", "spring",
+            "-t", "templates",
             "-o", "target/generated-services-temp",
             "--api-package", "com.necpgame.backjava.service",
             "--model-package", "com.necpgame.backjava.model",

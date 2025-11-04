@@ -18,21 +18,31 @@
 ## 📁 Активные шаблоны в `templates/`
 
 ### 1. **`api.mustache`** → Service интерфейсы ✅
-   - **Генерирует**: `*Service.java` в `target/generated-sources/services/`
+   - **Генерирует**: `*Service.java` в `src/main/java/com/necpgame/backjava/service/`
    - **Параметр**: `--api-name-suffix Service` + `interfaceOnly=true`
    - **Содержит**: Чистые Java интерфейсы без Spring аннотаций
    - **Пример**: `AuthService.java`, `CharactersService.java`
    - **Использование**: Реализуем в `src/main/java/service/impl/AuthServiceImpl.java`
 
-### 2. Стандартные шаблоны Spring Generator
-   - **DTOs**: генерируются через стандартный `model.mustache`
-   - **API Interfaces**: генерируются через стандартный `api.mustache`
-   - **Расположение**: `target/generated-sources/openapi/`
+### 2. Стандартные шаблоны Spring Generator (OpenAPI - источник истины!)
+   - **API Interfaces**: генерируются со Spring MVC аннотациями (@RequestMapping, @RequestParam)
+   - **DTOs**: генерируются через стандартный генератор
+   - **Расположение**: `src/main/java/com/necpgame/backjava/api/` и `src/main/java/com/necpgame/backjava/model/`
 
-### 🗑️ Неактивные шаблоны (не используются):
-- `apiController.mustache` - Controllers создаются вручную
-- `model.mustache` (кастомный) - Entities создаются вручную  
-- `repositoryModel.mustache` - Repositories создаются вручную
+### ✅ Controllers реализуют API интерфейсы из OpenAPI:
+```java
+@RestController
+@RequiredArgsConstructor
+public class FactionsController implements FactionsApi {
+    // Все аннотации (@RequestMapping, @RequestParam) определены в FactionsApi
+    @Override
+    public ResponseEntity<GetFactions200Response> getFactions(String origin) {
+        ...
+    }
+}
+```
+
+### 🗑️ Шаблоны удалены (не используются):
 - `serviceImpl.mustache` - ServiceImpl всегда создаются вручную
 
 ## 🔄 Процесс генерации
