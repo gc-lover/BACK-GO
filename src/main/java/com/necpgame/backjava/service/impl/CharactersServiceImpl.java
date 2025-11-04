@@ -95,7 +95,7 @@ public class CharactersServiceImpl implements CharactersService {
         // Внешность через MapStruct
         // Appearance обязательное поле в Entity, поэтому всегда создаем его
         if (request.getAppearance() == null) {
-            throw new BusinessException(ErrorCode.VALIDATION_ERROR, 
+            throw new BusinessException(ErrorCode.BAD_REQUEST, 
                 "Appearance is required");
         }
         
