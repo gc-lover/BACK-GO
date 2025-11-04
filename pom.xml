@@ -280,41 +280,7 @@
                         </configuration>
                     </execution>
                     
-                    <!-- 5. Генерация ServiceImpl (отключено - создаются вручную) -->
-                    <!-- ServiceImpl заглушки создаются вручную по мере необходимости -->
-                    <!-- Для автоматической генерации требуется кастомный generator или постпроцессор -->
-                    <!--
-                    <execution>
-                        <id>generate-service-impl</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>npx</executable>
-                            <arguments>
-                                <argument>--yes</argument>
-                                <argument>@openapitools/openapi-generator-cli</argument>
-                                <argument>generate</argument>
-                                <argument>-i</argument>
-                                <argument>${openapi.spec}</argument>
-                                <argument>-g</argument>
-                                <argument>spring</argument>
-                                <argument>-t</argument>
-                                <argument>${project.basedir}/templates</argument>
-                                <argument>-o</argument>
-                                <argument>${project.build.directory}/generated-sources/services</argument>
-                                <argument>--api-package</argument>
-                                <argument>com.necpgame.backjava.service.impl</argument>
-                                <argument>--model-package</argument>
-                                <argument>com.necpgame.backjava.model</argument>
-                                <argument>-p</argument>
-                                <argument>interfaceOnly=false,generateApis=true,generateModels=false,useSpringBoot3=true,useJakartaEe=true</argument>
-                            </arguments>
-                            <skip>${skip.openapi.generation}</skip>
-                        </configuration>
-                    </execution>
-                    -->
+                    <!-- 5. Генерация ServiceImpl отключена - заглушки создаются вручную -->
                     
                     <!-- 6. Генерация Controllers -->
                     <execution>

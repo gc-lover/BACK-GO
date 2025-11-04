@@ -16,5 +16,6 @@
     <include file="db/changelog/changes/008-create-city-available-factions-table.xml"/>
     <include file="db/changelog/changes/009-create-character-appearances-table.xml"/>
     <include file="db/changelog/changes/010-create-characters-table.xml"/>
+    <include file="db/changelog/changes/011-seed-reference-data.xml"/>
 
 </databaseChangeLog>

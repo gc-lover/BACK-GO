@@ -1,69 +1,44 @@
 spring:
   application:
-    name: necpgame-backend
-  
+    name: NECPGAME Backend
+
+  # Database configuration
   datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5433}/${POSTGRES_DB:necpgame}
-    username: ${POSTGRES_USER:necpgame}
-    password: ${POSTGRES_PASSWORD:necpgame}
+    url: jdbc:postgresql://localhost:5433/necpgame
+    username: necpgame_user
+    password: necpgame_password
     driver-class-name: org.postgresql.Driver
-  
+
+  # JPA / Hibernate configuration
   jpa:
     hibernate:
-      ddl-auto: validate  # Не используем update/create в продакшене
+      ddl-auto: validate # Используем Liquibase для миграций
     show-sql: false
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-        physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-        implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
-        jdbc:
-          batch_size: 20
-        order_inserts: true
-        order_updates: true
-  
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # Liquibase configuration
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.xml
     default-schema: public
-    drop-first: false
-  
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${JWT_ISSUER_URI:}
 
-server:
-  port: ${SERVER_PORT:8080}
-  address: ${SERVER_HOST:0.0.0.0}
-
+# Logging configuration
 logging:
   level:
-    root: INFO
-    com.necpgame: ${LOG_LEVEL:DEBUG}
+    com.necpgame.backjava: INFO
     org.springframework.web: INFO
-    org.hibernate.SQL: ${LOG_LEVEL:DEBUG}
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
-    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    org.hibernate: WARN
 
-springdoc:
-  api-docs:
-    path: /api-docs
-  swagger-ui:
-    path: /swagger-ui.html
-    enabled: true
+# Server configuration
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1
 
-necpgame:
-  api:
-    version: v1
-    base-path: /api/v1
-  jwt:
-    secret: ${JWT_SECRET:your-secret-key-change-in-production}
-    expiration: 86400000  # 24 часа в миллисекундах
-  character:
-    max-per-account: 5
-
+# JWT configuration
+jwt:
+  secret: necpgame-secret-key-for-jwt-token-generation-change-in-production-please
+  expiration: 86400000 # 24 hours in milliseconds
