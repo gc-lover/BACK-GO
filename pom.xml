@@ -213,65 +213,9 @@
                         </configuration>
                     </execution>
                     
-                    <!-- 2. Генерация JPA Entities -->
-                    <execution>
-                        <id>generate-entities</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>npx</executable>
-                            <arguments>
-                                <argument>--yes</argument>
-                                <argument>@openapitools/openapi-generator-cli</argument>
-                                <argument>generate</argument>
-                                <argument>-i</argument>
-                                <argument>${openapi.spec}</argument>
-                                <argument>-g</argument>
-                                <argument>spring</argument>
-                                <argument>-t</argument>
-                                <argument>${project.basedir}/templates</argument>
-                                <argument>-o</argument>
-                                <argument>${project.build.directory}/generated-sources/entities</argument>
-                                <argument>--model-package</argument>
-                                <argument>com.necpgame.backjava.entity</argument>
-                                <argument>-p</argument>
-                                <argument>generateApis=false,generateModels=true,useSpringBoot3=true,useJakartaEe=true,modelTemplateFiles=model.mustache=Entity.java</argument>
-                            </arguments>
-                            <skip>${skip.openapi.generation}</skip>
-                        </configuration>
-                    </execution>
+                    <!-- 2. Генерация JPA Entities ОТКЛЮЧЕНА - Entities создаются ВРУЧНУЮ -->
                     
-                    <!-- 3. Генерация Repositories -->
-                    <execution>
-                        <id>generate-repositories</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>npx</executable>
-                            <arguments>
-                                <argument>--yes</argument>
-                                <argument>@openapitools/openapi-generator-cli</argument>
-                                <argument>generate</argument>
-                                <argument>-i</argument>
-                                <argument>${openapi.spec}</argument>
-                                <argument>-g</argument>
-                                <argument>spring</argument>
-                                <argument>-t</argument>
-                                <argument>${project.basedir}/templates</argument>
-                                <argument>-o</argument>
-                                <argument>${project.build.directory}/generated-sources/repositories</argument>
-                                <argument>--model-package</argument>
-                                <argument>com.necpgame.backjava.repository</argument>
-                                <argument>-p</argument>
-                                <argument>generateApis=false,generateModels=true,useSpringBoot3=true,useJakartaEe=true,modelTemplateFiles=repositoryModel.mustache=Repository.java</argument>
-                            </arguments>
-                            <skip>${skip.openapi.generation}</skip>
-                        </configuration>
-                    </execution>
+                    <!-- 3. Генерация Repositories ОТКЛЮЧЕНА - Repositories создаются ВРУЧНУЮ -->
                     
                     <!-- 4. Генерация Service интерфейсов -->
                     <execution>
@@ -309,37 +253,7 @@
                     
                     <!-- 5. Генерация ServiceImpl отключена - заглушки создаются вручную -->
                     
-                    <!-- 6. Генерация Controllers -->
-                    <execution>
-                        <id>generate-controllers</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>npx</executable>
-                            <arguments>
-                                <argument>--yes</argument>
-                                <argument>@openapitools/openapi-generator-cli</argument>
-                                <argument>generate</argument>
-                                <argument>-i</argument>
-                                <argument>${openapi.spec}</argument>
-                                <argument>-g</argument>
-                                <argument>spring</argument>
-                                <argument>-t</argument>
-                                <argument>${project.basedir}/templates</argument>
-                                <argument>-o</argument>
-                                <argument>${project.build.directory}/generated-sources/controllers</argument>
-                                <argument>--api-package</argument>
-                                <argument>com.necpgame.backjava.controller</argument>
-                                <argument>--model-package</argument>
-                                <argument>com.necpgame.backjava.model</argument>
-                                <argument>-p</argument>
-                                <argument>interfaceOnly=false,generateApis=true,generateModels=false,useSpringBoot3=true,useJakartaEe=true,delegatePattern=false</argument>
-                            </arguments>
-                            <skip>${skip.openapi.generation}</skip>
-                        </configuration>
-                    </execution>
+                    <!-- 6. Генерация Controllers ОТКЛЮЧЕНА - Controllers создаются ВРУЧНУЮ -->
                 </executions>
             </plugin>
 
@@ -399,9 +313,7 @@
                             <sources>
                                 <source>${project.build.directory}/generated-sources/openapi/src/main/java</source>
                                 <source>${project.build.directory}/generated-sources/services/src/main/java</source>
-                                <source>${project.build.directory}/generated-sources/entities/src/main/java</source>
-                                <source>${project.build.directory}/generated-sources/repositories/src/main/java</source>
-                                <source>${project.build.directory}/generated-sources/controllers/src/main/java</source>
+                                <!-- Entities, Repositories, Controllers создаются ВРУЧНУЮ в src/main/java -->
                             </sources>
                         </configuration>
                     </execution>
