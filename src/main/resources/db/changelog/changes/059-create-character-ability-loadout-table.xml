@@ -17,4 +17,3 @@
         <rollback><dropTable tableName="character_ability_loadout"/></rollback>
     </changeSet>
 </databaseChangeLog>
-

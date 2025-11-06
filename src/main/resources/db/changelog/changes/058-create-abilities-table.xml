@@ -27,4 +27,3 @@
         <rollback><dropTable tableName="abilities"/></rollback>
     </changeSet>
 </databaseChangeLog>
-

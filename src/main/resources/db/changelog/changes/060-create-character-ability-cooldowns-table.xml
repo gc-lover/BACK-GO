@@ -18,4 +18,3 @@
         <rollback><dropTable tableName="character_ability_cooldowns"/></rollback>
     </changeSet>
 </databaseChangeLog>
-
