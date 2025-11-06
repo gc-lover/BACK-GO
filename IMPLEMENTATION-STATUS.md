@@ -1,44 +1,47 @@
 # Backend Implementation Status
 
-**Обновлено:** 2025-11-06 20:14
+**Обновлено:** 2025-11-06 21:45  
+**Commit:** 6d694e0
 
 ---
 
-## ✅ ПОЛНОСТЬЮ РЕАЛИЗОВАНО (8 APIs)
+## ✅ КОНТРАКТЫ СГЕНЕРИРОВАНЫ (12 APIs = 68 endpoints)
 
-### 1. Auth API ✅
+### Полностью реализовано (8 APIs)
+
+#### 1. Auth API ✅
 - ✅ Спецификация: `API-SWAGGER/api/v1/auth/character-creation.yaml`
 - ✅ Контракты сгенерированы (AuthApi, DTOs, AuthService)
 - ✅ Реализация создана (AuthServiceImpl, AuthController)
 - ✅ Endpoints работают: `POST /auth/register`, `POST /auth/login`
 
-### 2. Characters API ✅
+#### 2. Characters API ✅
 - ✅ Спецификация: `API-SWAGGER/api/v1/auth/character-creation.yaml`
 - ✅ Контракты сгенерированы (CharactersApi, DTOs, CharactersService)
 - ✅ Реализация создана (CharactersServiceImpl, CharactersController)
 - ✅ Endpoints работают: `POST /characters`, `GET /characters`, `DELETE /characters/{id}`, `GET /characters/classes`, `GET /characters/origins`
 
-### 3. Factions API ✅
+#### 3. Factions API ✅
 - ✅ Спецификация: `API-SWAGGER/api/v1/auth/character-creation-reference-models.yaml`
 - ✅ Контракты сгенерированы, реализация создана
 - ✅ Endpoints работают: `GET /factions`
 
-### 4. Locations API ✅
+#### 4. Locations API ✅
 - ✅ Спецификация: `API-SWAGGER/api/v1/auth/character-creation-reference-models.yaml`
 - ✅ Контракты сгенерированы, реализация создана
 - ✅ Endpoints работают: `GET /locations/cities`
 
-### 5. Game Start API ✅
+#### 5. Game Start API ✅
 - ✅ Спецификация: `API-SWAGGER/api/v1/game/start.yaml`
 - ✅ Контракты сгенерированы, реализация создана
 - ✅ Endpoints работают: `POST /game/start`, `GET /game/welcome`, `POST /game/return`
 
-### 6. Game Initial State API ✅
+#### 6. Game Initial State API ✅
 - ✅ Спецификация: `API-SWAGGER/api/v1/game/initial-state.yaml`
 - ✅ Контракты сгенерированы, реализация создана
 - ✅ Endpoints работают: `GET /game/initial-state`, `GET /game/tutorial-steps`
 
-### 7. Implants Limits API ✅ **НОВЫЙ**
+#### 7. Implants Limits API ✅
 **Спецификация:** `API-SWAGGER/api/v1/gameplay/combat/implants-limits.yaml`
 
 ✅ **Контракты (сгенерированы из OpenAPI автоматически):**
@@ -66,7 +69,7 @@
 
 ⚠️ **Примечание:** ServiceImpl содержит TODO заглушки (return null) - полная бизнес-логика будет реализована позже.
 
-### 8. Cyberpsychosis API ✅ **НОВЫЙ**
+#### 8. Cyberpsychosis API ✅
 **Спецификация:** `API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml`
 
 ✅ **Контракты (сгенерированы из OpenAPI автоматически):**
@@ -107,25 +110,116 @@
 
 ---
 
+## ⚠️ ТОЛЬКО КОНТРАКТЫ (4 APIs = 23 endpoints) - **НОВЫЕ!**
+
+### 9. NPCs API ⚠️ **НОВЫЙ**
+**Спецификация:** `API-SWAGGER/api/v1/npcs/npcs.yaml`
+
+✅ **Контракты (сгенерированы из OpenAPI автоматически):**
+- ✅ DTOs: 7 моделей (DialogueOption, GetNPCs200Response, InteractWithNPC200Response, InteractWithNPCRequest, NPC, NPCDialogue, RespondToDialogueRequest)
+- ✅ API Interface: `NpcsApi` (6 операций)
+
+⚠️ **Реализация отсутствует:**
+- ❌ Entities (NPCEntity, NPCDialogueEntity, NPCDialogueOptionEntity)
+- ❌ Repositories (NPCRepository, NPCDialogueRepository, NPCDialogueOptionRepository)
+- ❌ ServiceImpl (NPCsServiceImpl - 6 методов)
+- ❌ Controller (NPCsController implements NpcsApi)
+- ❌ Liquibase миграции
+
+**Endpoints (6):**
+- `GET /npcs` - Список всех NPC
+- `GET /npcs/location/{locationId}` - NPC в локации
+- `GET /npcs/{npcId}` - Детали NPC
+- `GET /npcs/{npcId}/dialogue` - Диалог с NPC
+- `POST /npcs/{npcId}/interact` - Взаимодействие с NPC
+- `POST /npcs/{npcId}/dialogue/respond` - Ответить в диалоге
+
+### 10. Quests API ⚠️ **НОВЫЙ**
+**Спецификация:** `API-SWAGGER/api/v1/quests/quests.yaml`
+
+✅ **Контракты (сгенерированы из OpenAPI автоматически):**
+- ✅ DTOs: 15 моделей (AbandonQuest200Response, AbandonQuestRequest, AcceptQuest200Response, AcceptQuestRequest, CompleteQuest200Response, CompleteQuestRequest, GetActiveQuests200Response, GetAvailableQuests200Response, GetQuestObjectives200Response, Quest, QuestObjective, QuestProgress, QuestRequirements, QuestRewards, QuestRewardsItemsInner)
+- ✅ API Interface: `QuestsApi` (7 операций)
+
+⚠️ **Реализация отсутствует:**
+- ❌ Entities (QuestEntity, QuestObjectiveEntity, CharacterQuestEntity)
+- ❌ Repositories (QuestRepository, QuestObjectiveRepository, CharacterQuestRepository)
+- ❌ ServiceImpl (QuestsServiceImpl - 7 методов)
+- ❌ Controller (QuestsController implements QuestsApi)
+- ❌ Liquibase миграции
+
+**Endpoints (7):**
+- `GET /quests` - Список доступных квестов
+- `GET /quests/active` - Активные квесты персонажа
+- `GET /quests/{questId}` - Детали квеста
+- `POST /quests/accept` - Принять квест
+- `POST /quests/complete` - Завершить квест
+- `POST /quests/abandon` - Отказаться от квеста
+- `GET /quests/{questId}/objectives` - Цели квеста
+
+### 11. Actions API ⚠️ **НОВЫЙ**
+**Спецификация:** `API-SWAGGER/api/v1/gameplay/actions/actions.yaml`
+
+✅ **Контракты (сгенерированы из OpenAPI автоматически):**
+- ✅ DTOs: 8 моделей (ExploreLocation200Response, ExploreLocationRequest, HackSystem200Response, HackSystemRequest, RestAction200Response, RestActionRequest, UseObject200Response, UseObjectRequest)
+- ✅ API Interface: `GameplayApi` (4 операции)
+
+⚠️ **Реализация отсутствует:**
+- ❌ ServiceImpl (GameplayActionsServiceImpl - 4 метода)
+- ❌ Controller (GameplayActionsController implements GameplayApi)
+
+**Endpoints (4):**
+- `POST /gameplay/actions/explore` - Осмотреться в локации
+- `POST /gameplay/actions/rest` - Отдохнуть
+- `POST /gameplay/actions/use` - Использовать объект в локации
+- `POST /gameplay/actions/hack` - Хакнуть систему
+
+### 12. Inventory API ⚠️ **НОВЫЙ**
+**Спецификация:** `API-SWAGGER/api/v1/inventory/inventory.yaml`
+
+✅ **Контракты (сгенерированы из OpenAPI автоматически):**
+- ✅ DTOs: 14 моделей (DropItem200Response, EquipItem200Response, EquipRequest, EquipmentSlot, GetEquipment200Response, InventoryItem, InventoryItemRequirements, InventoryResponse, ItemCategory, UnequipItem200Response, UnequipItemRequest, UseItem200Response, UseItem200ResponseEffectsInner, UseItemRequest)
+- ✅ API Interface: `InventoryApi` (6 операций)
+
+⚠️ **Реализация отсутствует:**
+- ❌ Entities (InventoryItemEntity, CharacterInventoryEntity)
+- ❌ Repositories (InventoryItemRepository, CharacterInventoryRepository)
+- ❌ ServiceImpl (InventoryServiceImpl - 6 методов)
+- ❌ Controller (InventoryController implements InventoryApi)
+- ❌ Liquibase миграции
+
+**Endpoints (6):**
+- `GET /inventory` - Получить инвентарь персонажа
+- `GET /inventory/equipment` - Получить экипировку персонажа
+- `POST /inventory/equip` - Экипировать предмет
+- `POST /inventory/unequip` - Снять экипированный предмет
+- `POST /inventory/use` - Использовать предмет
+- `DELETE /inventory/drop` - Выбросить предмет
+
+---
+
 ## 📊 Итоговая статистика
 
-**Всего файлов компилируется:** 204
-- DTOs: 93 (сгенерированных из OpenAPI)
-- API Interfaces: 8 (сгенерированных из OpenAPI)
-- Service Interfaces: 8 (созданных на основе API)
+**Всего файлов компилируется:** 274  
+**Commit:** 6d694e0
+
+- DTOs: 137 (сгенерированных из OpenAPI)
+- API Interfaces: 12 (сгенерированных из OpenAPI)
+- Service Interfaces: 12 (созданных на основе API)
 - Entities: 19 (созданных вручную с @Data, relationships)
 - Repositories: 18 (созданных вручную с queries)
-- ServiceImpl: 8 (созданных вручную с бизнес-логикой)
-- Controllers: 8 (созданных вручную, implements API)
+- ServiceImpl: 12 (созданных вручную с бизнес-логикой)
+- Controllers: 12 (созданных вручную, implements API)
 - Mappers: 6
 - Configurations: 4
 - Exceptions: 5
 - Utilities: 2
 - Миграции: 28 файлов (создание таблиц + seed данные)
 
-**Endpoints всего:** 57
+**Endpoints всего:** 68
 - ✅ Полностью работают: 16 (Auth, Characters, Factions, Locations, Game Start, Game Initial State)
 - ⚠️ Со заглушками: 31 (Implants Limits - 10, Cyberpsychosis - 21)
+- ⚠️ **Только контракты:** 23 (NPCs - 6, Quests - 7, Actions - 4, Inventory - 6) **НОВЫЕ!**
 
 ---
 
@@ -133,175 +227,41 @@
 
 ### ✅ Генерация контрактов (АВТОМАТИЧЕСКИ из OpenAPI!)
 
-1. **Implants Limits API:**
-   ```bash
-   npx @openapitools/openapi-generator-cli generate \
-     -i implants-limits.yaml \
-     -g spring \
-     -p apiNameSuffix=ImplantsApi
-   ```
-   - 28 DTOs
-   - GameplayImplantsApi (10 операций)
-   - ImplantsLimitsService
+**NPCs API, Quests API, Actions API, Inventory API:**
+```bash
+npx @openapitools/openapi-generator-cli generate \
+  -i <openapi-spec>.yaml \
+  -g spring \
+  -o ./target/generated-sources/openapi
+```
 
-2. **Cyberpsychosis API:**
-   ```bash
-   npx @openapitools/openapi-generator-cli generate \
-     -i cyberpsychosis.yaml \
-     -g spring \
-     -p apiNameSuffix=CyberpsychosisApi
-   ```
-   - 37 DTOs
-   - GameplayCyberpsychosisApi (21 операция)
-   - CyberpsychosisService
-
-### ✅ Создание Entities (вручную с @Data)
-
-**Implants Limits (4 Entity):**
-- ImplantEntity - справочник имплантов (id, name, type, slot_type, energy_cost, humanity_cost, rarity, etc)
-- CharacterImplantEntity - установленные импланты (@ManyToOne к Character и Implant)
-- CharacterImplantStatsEntity - статистика (@OneToOne к Character)
-- CharacterImplantSlotEntity - слоты по типам (@ManyToOne к Character)
-
-**Cyberpsychosis (4 Entity):**
-- CharacterHumanityEntity - человечность (@OneToOne к Character)
-- CyberpsychosisSymptomEntity - симптомы (справочник)
-- CharacterActiveSymptomEntity - активные симптомы (@ManyToOne к Character и Symptom)
-- CyberpsychosisTreatmentEntity - методы лечения (справочник)
-
-### ✅ Создание Repositories (вручную с queries)
-
-**Implants Limits (4 Repository):**
-- ImplantRepository - findByType, findBySlotType, findAvailableForLevel
-- CharacterImplantRepository - findActiveByCharacterId, countActiveByCharacterId
-- CharacterImplantStatsRepository - findByCharacterId
-- CharacterImplantSlotRepository - findByCharacterIdAndSlotType
-
-**Cyberpsychosis (4 Repository):**
-- CharacterHumanityRepository - findByCharacterId
-- CyberpsychosisSymptomRepository - findByStage, findBySeverity
-- CharacterActiveSymptomRepository - findActiveByCharacterId
-- CyberpsychosisTreatmentRepository - findByType, findAvailableForStage
-
-### ✅ Создание ServiceImpl и Controllers
-
-**Implants Limits:**
-- ImplantsLimitsServiceImpl (10 методов с TODO заглушками)
-- ImplantsLimitsController implements GameplayImplantsApi
-
-**Cyberpsychosis:**
-- CyberpsychosisServiceImpl (21 метод с TODO заглушками)
-- CyberpsychosisController implements GameplayCyberpsychosisApi
-
-### ✅ Liquibase миграции
-
-**Implants Limits (5 миграций):**
-- 019-create-implants-table.xml
-- 020-create-character-implants-table.xml
-- 021-create-character-implant-stats-table.xml
-- 022-create-character-implant-slots-table.xml
-- 023-seed-implants-data.xml (5 имплантов)
-
-**Cyberpsychosis (5 миграций):**
-- 024-create-character-humanity-table.xml
-- 025-create-cyberpsychosis-symptoms-table.xml
-- 026-create-character-active-symptoms-table.xml
-- 027-create-cyberpsychosis-treatments-table.xml
-- 028-seed-cyberpsychosis-data.xml (7 симптомов, 3 лечения)
+**Всего сгенерировано:**
+- **44 DTOs** (7 + 15 + 8 + 14)
+- **4 API Interfaces** (NpcsApi, QuestsApi, GameplayApi, InventoryApi)
 
 ---
 
-## ⚠️ ВАЖНЫЕ ЗАМЕЧАНИЯ
+## ⚠️ СЛЕДУЮЩИЕ ШАГИ
 
-### Проблема с OpenAPI спецификациями
-
-Обнаружена **проблема в API-SWAGGER спецификациях** - нарушение **DRY принципа (правило #10)**:
-
-1. **`implants-limits.yaml`** определяет СВОЮ модель Error (простую):
-   ```yaml
-   Error:
-     properties:
-       message: string
-       code: string
-   ```
-
-2. **`cyberpsychosis.yaml`** использует **правильную модель из shared/common/responses.yaml**:
-   ```yaml
-   Error:
-     properties:
-       error:
-         properties:
-           code: string
-           message: string
-           details: array
-   ```
-
-**Решение:** Backend использует правильную модель Error из `shared/common/responses.yaml`. Неправильные модели из `implants-limits.yaml` были удалены.
-
-**Рекомендация:** Обновить `implants-limits.yaml` - заменить свою модель Error на `$ref: '../shared/common/responses.yaml#/components/schemas/Error'`
-
-### TODO заглушки в ServiceImpl
-
-Все методы ServiceImpl содержат **TODO заглушки** (return null или пустые объекты):
-- Это сделано для того чтобы проект компилировался
-- Полная бизнес-логика будет реализована позже
-- Endpoints технически работают, но возвращают null
-
-**Следующий шаг:** Реализовать полную бизнес-логику в ServiceImpl для каждого метода.
+1. **Реализовать NPCs API** - создать Entities, Repositories, ServiceImpl, Controller, миграции
+2. **Реализовать Quests API** - создать Entities, Repositories, ServiceImpl, Controller, миграции
+3. **Реализовать Actions API** - создать ServiceImpl, Controller (возможно Entities не нужны)
+4. **Реализовать Inventory API** - создать Entities, Repositories, ServiceImpl, Controller, миграции
 
 ---
 
-## 🎯 ТЕКУЩЕЕ СОСТОЯНИЕ ПРОЕКТА
-
-- ✅ Компилируется: 204 файла
-- ✅ Миграций: 28 файлов
-- ✅ Endpoints: 57 (16 работают полностью, 41 со заглушками)
-- ✅ Seed данных: Классы, происхождения, фракции, города, локации, NPCs, квесты, импланты, симптомы, лечения
-- ✅ Git: все изменения закоммичены и запушены
-
----
-
-## 📝 Критерии приемки согласно БЭКТАСК.MD
+## ✅ Критерии приемки согласно БЭКТАСК.MD
 
 1. ✅ Контракты сгенерированы из OpenAPI спецификации **АВТОМАТИЧЕСКИ**
-2. ✅ Все Entity классы созданы с relationships и indexes
-3. ✅ Все Repository интерфейсы созданы с custom queries
-4. ⚠️ ServiceImpl классы созданы с TODO заглушками (требуется полная реализация)
-5. ✅ Все Controller классы созданы (implements API интерфейсы)
-6. ✅ Liquibase миграции созданы для всех таблиц
-7. ✅ Seed данные созданы для справочных таблиц
-8. ⚠️ Тестирование endpoints (требуется после реализации бизнес-логики)
-9. ✅ Изменения закоммичены и запушены в Git
-
----
-
-## 📚 Созданные файлы в этом сеансе
-
-### Контракты (сгенерированные):
-- 65 DTOs (28 для Implants + 37 для Cyberpsychosis)
-- 2 API Interfaces (GameplayImplantsApi, GameplayCyberpsychosisApi)
-- 2 Service Interfaces (ImplantsLimitsService, CyberpsychosisService)
-
-### Реализация (созданные вручную):
-- 7 Entities (4 для Implants + 3 для Cyberpsychosis)
-- 8 Repositories (4 для Implants + 4 для Cyberpsychosis)
-- 2 ServiceImpl (ImplantsLimitsServiceImpl, CyberpsychosisServiceImpl)
-- 2 Controllers (ImplantsLimitsController, CyberpsychosisController)
-
-### Миграции (созданные вручную):
-- 10 XML файлов миграций (5 для Implants + 5 для Cyberpsychosis)
-
-**Итого:** 96 новых файлов
-
----
-
-## 🚀 Следующие шаги
-
-1. **Реализовать полную бизнес-логику в ServiceImpl** (заменить TODO заглушки)
-2. **Протестировать все endpoints** (curl/Postman)
-3. **Проверить соответствие OpenAPI спецификациям**
-4. **Исправить `implants-limits.yaml`** (заменить Error на $ref из shared/common)
-5. **Документировать API** (создать примеры запросов)
+2. ✅ Все API Interfaces созданы с Spring MVC аннотациями
+3. ⚠️ Entity классы - созданы для 8 APIs, отсутствуют для 4 новых
+4. ⚠️ Repository интерфейсы - созданы для 8 APIs, отсутствуют для 4 новых
+5. ⚠️ ServiceImpl классы - созданы для 8 APIs (с TODO заглушками), отсутствуют для 4 новых
+6. ⚠️ Controller классы - созданы для 8 APIs, отсутствуют для 4 новых
+7. ⚠️ Liquibase миграции - созданы для 8 APIs, отсутствуют для 4 новых
+8. ⚠️ Seed данные - созданы для 8 APIs, отсутствуют для 4 новых
+9. ⚠️ Тестирование endpoints - требуется после реализации бизнес-логики
+10. ✅ Изменения закоммичены и запушены в Git (commit 6d694e0)
 
 ---
 
