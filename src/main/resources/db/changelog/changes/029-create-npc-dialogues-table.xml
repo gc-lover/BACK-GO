@@ -5,26 +5,21 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
-    <changeSet id="025-create-cyberpsychosis-symptoms-table" author="system">
-        <createTable tableName="cyberpsychosis_symptoms">
+    <changeSet id="029-create-npc-dialogues-table" author="system">
+        <createTable tableName="npc_dialogues">
             <column name="id" type="VARCHAR(100)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="name" type="VARCHAR(200)">
+            <column name="npc_id" type="VARCHAR(100)">
+                <constraints nullable="false"
+                             foreignKeyName="fk_npc_dialogues_npc" 
+                             references="npcs(id)"/>
+            </column>
+            <column name="text" type="TEXT">
                 <constraints nullable="false"/>
             </column>
-            <column name="description" type="TEXT"/>
-            <column name="stage" type="VARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="severity" type="VARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="category" type="VARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="stat_effects" type="JSONB"/>
-            <column name="chance_to_trigger" type="INTEGER" defaultValueNumeric="0">
+            <column name="condition" type="JSONB"/>
+            <column name="is_initial" type="BOOLEAN" defaultValueBoolean="false">
                 <constraints nullable="false"/>
             </column>
             <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
@@ -35,12 +30,10 @@
             </column>
         </createTable>
         
-        <createIndex tableName="cyberpsychosis_symptoms" indexName="idx_cyberpsychosis_symptoms_stage">
-            <column name="stage"/>
-        </createIndex>
-        <createIndex tableName="cyberpsychosis_symptoms" indexName="idx_cyberpsychosis_symptoms_severity">
-            <column name="severity"/>
+        <createIndex tableName="npc_dialogues" indexName="idx_npc_dialogues_npc">
+            <column name="npc_id"/>
         </createIndex>
     </changeSet>
 
 </databaseChangeLog>
+
