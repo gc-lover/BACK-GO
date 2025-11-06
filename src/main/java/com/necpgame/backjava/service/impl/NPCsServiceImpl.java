@@ -77,8 +77,8 @@ public class NPCsServiceImpl implements NPCsService {
     
     @Override
     @Transactional
-    public NPCDialogue respondToDialogue(String npcId, String dialogueId, RespondToDialogueRequest request) {
-        log.info("Responding to dialogue: {} with NPC: {}", dialogueId, npcId);
+    public NPCDialogue respondToDialogue(String npcId, RespondToDialogueRequest request) {
+        log.info("Responding to dialogue with NPC: {}, optionId: {}", npcId, request.getOptionId());
         
         // TODO: Полная реализация
         return null;

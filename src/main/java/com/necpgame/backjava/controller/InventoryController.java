@@ -1,6 +1,6 @@
 package com.necpgame.backjava.controller;
 
-import com.necpgame.backjava.api.InventoryInventoryApi;
+import com.necpgame.backjava.api.InventoryApi;
 import com.necpgame.backjava.model.*;
 import com.necpgame.backjava.service.InventoryService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class InventoryController implements InventoryInventoryApi {
+public class InventoryController implements InventoryApi {
     
     private final InventoryService service;
     

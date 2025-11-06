@@ -41,6 +41,6 @@ public interface NPCsService {
     /**
      * Ответить в диалоге с NPC.
      */
-    NPCDialogue respondToDialogue(String npcId, String dialogueId, RespondToDialogueRequest request);
+    NPCDialogue respondToDialogue(String npcId, RespondToDialogueRequest request);
 }
 

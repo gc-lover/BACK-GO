@@ -1,6 +1,6 @@
 package com.necpgame.backjava.controller;
 
-import com.necpgame.backjava.api.QuestsQuestsApi;
+import com.necpgame.backjava.api.QuestsApi;
 import com.necpgame.backjava.model.*;
 import com.necpgame.backjava.service.QuestsService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class QuestsController implements QuestsQuestsApi {
+public class QuestsController implements QuestsApi {
     
     private final QuestsService service;
     

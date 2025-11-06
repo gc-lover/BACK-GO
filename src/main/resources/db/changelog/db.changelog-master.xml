@@ -45,5 +45,16 @@
     <include file="db/changelog/changes/029-create-npc-dialogues-table.xml"/>
     <include file="db/changelog/changes/030-create-npc-dialogue-options-table.xml"/>
     <include file="db/changelog/changes/031-create-character-npc-interactions-table.xml"/>
+    
+    <!-- Quest Objectives -->
+    <include file="db/changelog/changes/032-create-quest-objectives-table.xml"/>
+    <include file="db/changelog/changes/033-create-character-quest-objectives-table.xml"/>
+    <include file="db/changelog/changes/034-seed-quest-objectives-data.xml"/>
+    
+    <!-- Inventory System -->
+    <include file="db/changelog/changes/035-create-inventory-items-table.xml"/>
+    <include file="db/changelog/changes/036-create-character-inventory-table.xml"/>
+    <include file="db/changelog/changes/037-create-character-equipment-table.xml"/>
+    <include file="db/changelog/changes/038-seed-inventory-items-data.xml"/>
 
 </databaseChangeLog>

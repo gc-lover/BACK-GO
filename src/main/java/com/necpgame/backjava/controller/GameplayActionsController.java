@@ -1,6 +1,6 @@
 package com.necpgame.backjava.controller;
 
-import com.necpgame.backjava.api.GameplayActionsApi;
+import com.necpgame.backjava.api.GameplayApi;
 import com.necpgame.backjava.model.*;
 import com.necpgame.backjava.service.GameplayActionsService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class GameplayActionsController implements GameplayActionsApi {
+public class GameplayActionsController implements GameplayApi {
     
     private final GameplayActionsService service;
     

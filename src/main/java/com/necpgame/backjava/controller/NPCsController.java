@@ -1,6 +1,6 @@
 package com.necpgame.backjava.controller;
 
-import com.necpgame.backjava.api.NpcsNpcsApi;
+import com.necpgame.backjava.api.NpcsApi;
 import com.necpgame.backjava.model.*;
 import com.necpgame.backjava.service.NPCsService;
 import lombok.RequiredArgsConstructor;
@@ -13,13 +13,13 @@ import java.util.UUID;
 /**
  * REST Controller для работы с NPC и диалогами.
  * 
- * Реализует контракт {@link NpcsNpcsApi}, сгенерированный из OpenAPI спецификации.
+ * Реализует контракт {@link NpcsApi}, сгенерированный из OpenAPI спецификации.
  * Источник: API-SWAGGER/api/v1/npcs/npcs.yaml
  */
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class NPCsController implements NpcsNpcsApi {
+public class NPCsController implements NpcsApi {
     
     private final NPCsService service;
     
@@ -53,11 +53,10 @@ public class NPCsController implements NpcsNpcsApi {
         return ResponseEntity.ok(service.interactWithNPC(npcId, interactWithNPCRequest));
     }
     
-    // TODO: Закомментировано - несоответствие API интерфейсу
-    // @Override
-    // public ResponseEntity<NPCDialogue> respondToDialogue(String npcId, String dialogueId, RespondToDialogueRequest respondToDialogueRequest) {
-    //     log.info("POST /npcs/{}/dialogue/{}/respond", npcId, dialogueId);
-    //     return ResponseEntity.ok(service.respondToDialogue(npcId, dialogueId, respondToDialogueRequest));
-    // }
+    @Override
+    public ResponseEntity<NPCDialogue> respondToDialogue(String npcId, RespondToDialogueRequest respondToDialogueRequest) {
+        log.info("POST /npcs/{}/dialogue/respond", npcId);
+        return ResponseEntity.ok(service.respondToDialogue(npcId, respondToDialogueRequest));
+    }
 }
 
