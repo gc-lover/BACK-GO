@@ -1,44 +1,40 @@
 package com.necpgame.backjava.controller;
 
+import com.necpgame.backjava.api.AuthApi;
 import com.necpgame.backjava.model.LoginRequest;
 import com.necpgame.backjava.model.LoginResponse;
 import com.necpgame.backjava.model.Register201Response;
 import com.necpgame.backjava.model.RegisterRequest;
 import com.necpgame.backjava.service.AuthService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * REST Controller для аутентификации и регистрации
+ * REST Controller для аутентификации и регистрации.
+ * 
+ * Реализует контракт {@link AuthApi}, сгенерированный из OpenAPI спецификации.
+ * Источник: API-SWAGGER/api/v1/auth/character-creation.yaml
  */
 @Slf4j
 @RestController
-@RequestMapping("/auth")
 @RequiredArgsConstructor
-public class AuthController {
+public class AuthController implements AuthApi {
     
     private final AuthService authService;
     
-    /**
-     * POST /auth/register - Регистрация нового аккаунта
-     */
-    @PostMapping("/register")
-    public ResponseEntity<Register201Response> register(@Valid @RequestBody RegisterRequest request) {
-        log.info("POST /auth/register - {}", request.getEmail());
-        Register201Response response = authService.register(request);
+    @Override
+    public ResponseEntity<Register201Response> register(RegisterRequest registerRequest) {
+        log.info("POST /auth/register - {}", registerRequest.getEmail());
+        Register201Response response = authService.register(registerRequest);
         return ResponseEntity.status(201).body(response);
     }
     
-    /**
-     * POST /auth/login - Вход в систему
-     */
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
-        log.info("POST /auth/login - {}", request.getLogin());
-        LoginResponse response = authService.login(request);
+    @Override
+    public ResponseEntity<LoginResponse> login(LoginRequest loginRequest) {
+        log.info("POST /auth/login - {}", loginRequest.getLogin());
+        LoginResponse response = authService.login(loginRequest);
         return ResponseEntity.ok(response);
     }
 }
