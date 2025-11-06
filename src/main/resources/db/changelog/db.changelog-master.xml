@@ -56,5 +56,12 @@
     <include file="db/changelog/changes/036-create-character-inventory-table.xml"/>
     <include file="db/changelog/changes/037-create-character-equipment-table.xml"/>
     <include file="db/changelog/changes/038-seed-inventory-items-data.xml"/>
+    
+    <!-- Character Status & Skills -->
+    <include file="db/changelog/changes/039-create-character-status-table.xml"/>
+    <include file="db/changelog/changes/040-create-character-stats-table.xml"/>
+    <include file="db/changelog/changes/041-create-skills-table.xml"/>
+    <include file="db/changelog/changes/042-create-character-skills-table.xml"/>
+    <include file="db/changelog/changes/043-seed-skills-data.xml"/>
 
 </databaseChangeLog>
