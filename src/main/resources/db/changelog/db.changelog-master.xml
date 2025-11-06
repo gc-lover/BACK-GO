@@ -18,4 +18,13 @@
     <include file="db/changelog/changes/010-create-characters-table.xml"/>
     <include file="db/changelog/changes/011-seed-reference-data.xml"/>
 
+    <!-- Миграции для Game Start API -->
+    <include file="db/changelog/changes/012-create-locations-table.xml"/>
+    <include file="db/changelog/changes/013-create-npcs-table.xml"/>
+    <include file="db/changelog/changes/014-create-quests-table.xml"/>
+    <include file="db/changelog/changes/015-create-game-sessions-table.xml"/>
+    <include file="db/changelog/changes/016-create-tutorial-progress-table.xml"/>
+    <include file="db/changelog/changes/017-create-quest-progress-table.xml"/>
+    <include file="db/changelog/changes/018-seed-game-start-data.xml"/>
+
 </databaseChangeLog>

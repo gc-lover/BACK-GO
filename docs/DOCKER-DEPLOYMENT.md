@@ -449,3 +449,12 @@ ENTRYPOINT ["java", \
 - Swagger UI доступен на `http://localhost:8080/swagger-ui.html`
 - Health check endpoint: `http://localhost:8080/actuator/health`
 
+
+
+
+
+
+
+
+
+
