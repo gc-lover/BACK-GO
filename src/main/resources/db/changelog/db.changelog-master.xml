@@ -63,5 +63,10 @@
     <include file="db/changelog/changes/041-create-skills-table.xml"/>
     <include file="db/changelog/changes/042-create-character-skills-table.xml"/>
     <include file="db/changelog/changes/043-seed-skills-data.xml"/>
+    
+    <!-- Combat System -->
+    <include file="db/changelog/changes/044-create-combat-sessions-table.xml"/>
+    <include file="db/changelog/changes/045-create-combat-participants-table.xml"/>
+    <include file="db/changelog/changes/046-create-combat-log-table.xml"/>
 
 </databaseChangeLog>
