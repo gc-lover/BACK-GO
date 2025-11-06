@@ -1,8 +1,7 @@
 package com.necpgame.backjava.service.impl;
 
-import com.necpgame.backjava.model.City;
-import com.necpgame.backjava.model.GetCities200Response;
-import com.necpgame.backjava.repository.CityRepository;
+import com.necpgame.backjava.model.*;
+import com.necpgame.backjava.repository.*;
 import com.necpgame.backjava.service.LocationsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,49 +9,72 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 /**
- * Реализация сервиса локаций (городов)
+ * Реализация сервиса для работы с игровыми локациями.
+ * 
+ * Источник: API-SWAGGER/api/v1/locations/locations.yaml
  */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class LocationsServiceImpl implements LocationsService {
     
-    private final CityRepository cityRepository;
+    private final GameLocationRepository gameLocationRepository;
+    private final CharacterLocationRepository characterLocationRepository;
     
-    /**
-     * Получить список всех городов (с опциональной фильтрацией)
-     */
     @Override
     @Transactional(readOnly = true)
-    public GetCities200Response getCities(UUID factionId, String region) {
-        log.info("Getting cities - factionId: {}, region: {}", factionId, region);
+    public GetLocations200Response getLocations(UUID characterId, String region, String dangerLevel, Integer minLevel) {
+        log.info("Getting locations for character: {} (region: {}, dangerLevel: {}, minLevel: {})", 
+                 characterId, region, dangerLevel, minLevel);
         
-        try {
-            // TODO: Implement filtering by factionId and region
-            var cities = cityRepository.findAll().stream()
-                .map(entity -> {
-                    City dto = new City();
-                    dto.setId(entity.getId());
-                    dto.setName(entity.getName());
-                    dto.setRegion(entity.getRegion());
-                    dto.setDescription(entity.getDescription());
-                    // TODO: Add factionId when relationship is clarified
-                    return dto;
-                })
-                .collect(Collectors.toList());
-            
-            GetCities200Response response = new GetCities200Response();
-            response.setCities(cities);
-            
-            log.info("Successfully fetched {} cities", cities.size());
-            return response;
-        } catch (Exception e) {
-            log.error("Error fetching cities", e);
-            throw e;
-        }
+        // TODO: Полная реализация (загрузить доступные локации, учесть требования и фильтры)
+        return null;
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public LocationDetails getLocationDetails(String locationId, UUID characterId) {
+        log.info("Getting location details: {} for character: {}", locationId, characterId);
+        
+        // TODO: Полная реализация (загрузить детали локации)
+        return null;
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public LocationDetails getCurrentLocation(UUID characterId) {
+        log.info("Getting current location for character: {}", characterId);
+        
+        // TODO: Полная реализация (загрузить текущую локацию персонажа)
+        return null;
+    }
+    
+    @Override
+    @Transactional
+    public TravelResponse travelToLocation(TravelRequest request) {
+        log.info("Traveling character {} to location: {}", request.getCharacterId(), request.getTargetLocationId());
+        
+        // TODO: Полная реализация (переместить персонажа, проверить доступность)
+        return null;
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public GetLocationActions200Response getLocationActions(String locationId, UUID characterId) {
+        log.info("Getting location actions: {} for character: {}", locationId, characterId);
+        
+        // TODO: Полная реализация (загрузить доступные действия в локации)
+        return null;
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public GetConnectedLocations200Response getConnectedLocations(String locationId, UUID characterId) {
+        log.info("Getting connected locations for: {} (character: {})", locationId, characterId);
+        
+        // TODO: Полная реализация (загрузить список соседних локаций)
+        return null;
     }
 }
-

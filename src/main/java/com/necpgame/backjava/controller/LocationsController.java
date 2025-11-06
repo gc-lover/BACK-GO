@@ -1,7 +1,7 @@
 package com.necpgame.backjava.controller;
 
-import com.necpgame.backjava.api.LocationsApi;
-import com.necpgame.backjava.model.GetCities200Response;
+import com.necpgame.backjava.api.GameplayLocationsApi;
+import com.necpgame.backjava.model.*;
 import com.necpgame.backjava.service.LocationsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,25 +11,51 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 /**
- * REST Controller для работы с локациями (городами)
- * Реализует сгенерированный LocationsApi интерфейс из OpenAPI спецификации
+ * REST Controller для работы с игровыми локациями.
+ * 
+ * Реализует контракт {@link GameplayLocationsApi}, сгенерированный из OpenAPI спецификации.
+ * Источник: API-SWAGGER/api/v1/locations/locations.yaml
  */
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class LocationsController implements LocationsApi {
+public class LocationsController implements GameplayLocationsApi {
     
-    private final LocationsService locationsService;
+    private final LocationsService service;
     
-    /**
-     * GET /locations/cities - Список доступных городов
-     * OpenAPI спецификация определяет все аннотации (@RequestMapping, @RequestParam)
-     */
     @Override
-    public ResponseEntity<GetCities200Response> getCities(UUID factionId, String region) {
-        log.info("GET /locations/cities?factionId={}&region={}", factionId, region);
-        GetCities200Response response = locationsService.getCities(factionId, region);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<GetLocations200Response> getLocations(UUID characterId, String region, String dangerLevel, Integer minLevel) {
+        log.info("GET /locations?characterId={}", characterId);
+        return ResponseEntity.ok(service.getLocations(characterId, region, dangerLevel, minLevel));
+    }
+    
+    @Override
+    public ResponseEntity<LocationDetails> getLocationDetails(String locationId, UUID characterId) {
+        log.info("GET /locations/{}?characterId={}", locationId, characterId);
+        return ResponseEntity.ok(service.getLocationDetails(locationId, characterId));
+    }
+    
+    @Override
+    public ResponseEntity<LocationDetails> getCurrentLocation(UUID characterId) {
+        log.info("GET /locations/current?characterId={}", characterId);
+        return ResponseEntity.ok(service.getCurrentLocation(characterId));
+    }
+    
+    @Override
+    public ResponseEntity<TravelResponse> travelToLocation(TravelRequest travelRequest) {
+        log.info("POST /locations/travel");
+        return ResponseEntity.ok(service.travelToLocation(travelRequest));
+    }
+    
+    @Override
+    public ResponseEntity<GetLocationActions200Response> getLocationActions(String locationId, UUID characterId) {
+        log.info("GET /locations/{}/actions?characterId={}", locationId, characterId);
+        return ResponseEntity.ok(service.getLocationActions(locationId, characterId));
+    }
+    
+    @Override
+    public ResponseEntity<GetConnectedLocations200Response> getConnectedLocations(String locationId, UUID characterId) {
+        log.info("GET /locations/{}/connected?characterId={}", locationId, characterId);
+        return ResponseEntity.ok(service.getConnectedLocations(locationId, characterId));
     }
 }
-

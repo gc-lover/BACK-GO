@@ -5,58 +5,56 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
-    <changeSet id="044-create-combat-sessions-table" author="system">
+    <changeSet id="048-create-character-locations-table" author="system">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="combat_sessions"/>
+                <tableExists tableName="character_locations"/>
             </not>
         </preConditions>
 
-        <createTable tableName="combat_sessions">
+        <createTable tableName="character_locations">
             <column name="id" type="UUID">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="character_id" type="UUID">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="current_location_id" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>
-            <column name="location_id" type="VARCHAR(100)"/>
-            <column name="status" type="VARCHAR(20)" defaultValue="ACTIVE">
-                <constraints nullable="false"/>
-            </column>
-            <column name="current_turn" type="VARCHAR(100)"/>
-            <column name="round" type="INT" defaultValue="1">
-                <constraints nullable="false"/>
-            </column>
-            <column name="combat_log" type="TEXT"/>
+            <column name="previous_location_id" type="VARCHAR(100)"/>
             <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
             <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
-            <column name="ended_at" type="TIMESTAMP"/>
         </createTable>
 
         <addForeignKeyConstraint
-                baseTableName="combat_sessions"
+                baseTableName="character_locations"
                 baseColumnNames="character_id"
-                constraintName="fk_combat_sessions_character"
+                constraintName="fk_character_locations_character"
                 referencedTableName="characters"
                 referencedColumnNames="id"
                 onDelete="CASCADE"/>
 
-        <createIndex tableName="combat_sessions" indexName="idx_combat_sessions_character">
+        <addForeignKeyConstraint
+                baseTableName="character_locations"
+                baseColumnNames="current_location_id"
+                constraintName="fk_character_locations_current"
+                referencedTableName="game_locations"
+                referencedColumnNames="id"/>
+
+        <createIndex tableName="character_locations" indexName="idx_character_locations_character" unique="true">
             <column name="character_id"/>
         </createIndex>
-        <createIndex tableName="combat_sessions" indexName="idx_combat_sessions_status">
-            <column name="status"/>
-        </createIndex>
-        <createIndex tableName="combat_sessions" indexName="idx_combat_sessions_location">
-            <column name="location_id"/>
+        <createIndex tableName="character_locations" indexName="idx_character_locations_location">
+            <column name="current_location_id"/>
         </createIndex>
 
         <rollback>
-            <dropTable tableName="combat_sessions"/>
+            <dropTable tableName="character_locations"/>
         </rollback>
     </changeSet>
 

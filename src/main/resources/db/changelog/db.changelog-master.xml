@@ -68,5 +68,10 @@
     <include file="db/changelog/changes/044-create-combat-sessions-table.xml"/>
     <include file="db/changelog/changes/045-create-combat-participants-table.xml"/>
     <include file="db/changelog/changes/046-create-combat-log-table.xml"/>
+    
+    <!-- Locations System -->
+    <include file="db/changelog/changes/047-create-game-locations-table.xml"/>
+    <include file="db/changelog/changes/048-create-character-locations-table.xml"/>
+    <include file="db/changelog/changes/049-seed-game-locations-data.xml"/>
 
 </databaseChangeLog>
