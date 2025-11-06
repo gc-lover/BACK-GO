@@ -52,9 +52,14 @@ public class CitiesServiceImpl implements CitiesService {
             city.setName(entity.getName());
             city.setDescription(entity.getDescription());
             city.setRegion(entity.getRegion());
-            city.setPopulation(entity.getPopulation());
-            city.setDangerLevel(entity.getDangerLevel());
-            city.setImageUrl(entity.getImageUrl());
+            
+            // availableForFactions - convert entities to UUIDs
+            List<UUID> factionIds = new ArrayList<>();
+            if (entity.getAvailableFactions() != null) {
+                entity.getAvailableFactions().forEach(f -> factionIds.add(f.getId()));
+            }
+            city.setAvailableForFactions(factionIds);
+            
             cities.add(city);
         }
         
