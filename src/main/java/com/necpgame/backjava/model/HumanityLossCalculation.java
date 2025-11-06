@@ -17,10 +17,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Расчет потери человечности при установке импланта. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Система человечности 
+ * Р Р°СЃС‡РµС‚ РїРѕС‚РµСЂРё С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РїСЂРё СѓСЃС‚Р°РЅРѕРІРєРµ РёРјРїР»Р°РЅС‚Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РЎРёСЃС‚РµРјР° С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё 
  */
 
-@Schema(name = "HumanityLossCalculation", description = "Расчет потери человечности при установке импланта. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Система человечности ")
+@Schema(name = "HumanityLossCalculation", description = "Р Р°СЃС‡РµС‚ РїРѕС‚РµСЂРё С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РїСЂРё СѓСЃС‚Р°РЅРѕРІРєРµ РёРјРїР»Р°РЅС‚Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РЎРёСЃС‚РµРјР° С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class HumanityLossCalculation {
 
@@ -51,12 +51,12 @@ public class HumanityLossCalculation {
   }
 
   /**
-   * Базовая потеря человечности (зависит от типа и качества импланта)
+   * Р‘Р°Р·РѕРІР°СЏ РїРѕС‚РµСЂСЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё (Р·Р°РІРёСЃРёС‚ РѕС‚ С‚РёРїР° Рё РєР°С‡РµСЃС‚РІР° РёРјРїР»Р°РЅС‚Р°)
    * minimum: 0
    * @return baseLoss
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "base_loss", description = "Базовая потеря человечности (зависит от типа и качества импланта)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "base_loss", description = "Р‘Р°Р·РѕРІР°СЏ РїРѕС‚РµСЂСЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё (Р·Р°РІРёСЃРёС‚ РѕС‚ С‚РёРїР° Рё РєР°С‡РµСЃС‚РІР° РёРјРїР»Р°РЅС‚Р°)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("base_loss")
   public Float getBaseLoss() {
     return baseLoss;
@@ -92,12 +92,12 @@ public class HumanityLossCalculation {
   }
 
   /**
-   * Итоговая потеря человечности
+   * РС‚РѕРіРѕРІР°СЏ РїРѕС‚РµСЂСЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё
    * minimum: 0
    * @return totalLoss
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "total_loss", description = "Итоговая потеря человечности", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "total_loss", description = "РС‚РѕРіРѕРІР°СЏ РїРѕС‚РµСЂСЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("total_loss")
   public Float getTotalLoss() {
     return totalLoss;
@@ -113,13 +113,13 @@ public class HumanityLossCalculation {
   }
 
   /**
-   * Новый уровень человечности после потери
+   * РќРѕРІС‹Р№ СѓСЂРѕРІРµРЅСЊ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РїРѕСЃР»Рµ РїРѕС‚РµСЂРё
    * minimum: 0
    * maximum: 100
    * @return newHumanityLevel
    */
   @NotNull @DecimalMin(value = "0") @DecimalMax(value = "100") 
-  @Schema(name = "new_humanity_level", description = "Новый уровень человечности после потери", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "new_humanity_level", description = "РќРѕРІС‹Р№ СѓСЂРѕРІРµРЅСЊ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РїРѕСЃР»Рµ РїРѕС‚РµСЂРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("new_humanity_level")
   public Float getNewHumanityLevel() {
     return newHumanityLevel;

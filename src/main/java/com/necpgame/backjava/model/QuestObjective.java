@@ -124,7 +124,7 @@ public class QuestObjective {
    * @return description
    */
   @NotNull 
-  @Schema(name = "description", example = "Найти торговца", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "description", example = "РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {
     return description;

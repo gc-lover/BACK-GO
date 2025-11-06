@@ -22,15 +22,15 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Стадия киберпсихоза игрока. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Симптомы и прогрессия 
+ * РЎС‚Р°РґРёСЏ РєРёР±РµСЂРїСЃРёС…РѕР·Р° РёРіСЂРѕРєР°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РЎРёРјРїС‚РѕРјС‹ Рё РїСЂРѕРіСЂРµСЃСЃРёСЏ 
  */
 
-@Schema(name = "CyberpsychosisStage", description = "Стадия киберпсихоза игрока. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Симптомы и прогрессия ")
+@Schema(name = "CyberpsychosisStage", description = "РЎС‚Р°РґРёСЏ РєРёР±РµСЂРїСЃРёС…РѕР·Р° РёРіСЂРѕРєР°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РЎРёРјРїС‚РѕРјС‹ Рё РїСЂРѕРіСЂРµСЃСЃРёСЏ ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class CyberpsychosisStage {
 
   /**
-   * Название стадии
+   * РќР°Р·РІР°РЅРёРµ СЃС‚Р°РґРёРё
    */
   public enum StageEnum {
     EARLY("early"),
@@ -98,11 +98,11 @@ public class CyberpsychosisStage {
   }
 
   /**
-   * Название стадии
+   * РќР°Р·РІР°РЅРёРµ СЃС‚Р°РґРёРё
    * @return stage
    */
   @NotNull 
-  @Schema(name = "stage", description = "Название стадии", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "stage", description = "РќР°Р·РІР°РЅРёРµ СЃС‚Р°РґРёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("stage")
   public StageEnum getStage() {
     return stage;
@@ -146,11 +146,11 @@ public class CyberpsychosisStage {
   }
 
   /**
-   * Активные симптомы стадии
+   * РђРєС‚РёРІРЅС‹Рµ СЃРёРјРїС‚РѕРјС‹ СЃС‚Р°РґРёРё
    * @return symptoms
    */
   @NotNull @Valid 
-  @Schema(name = "symptoms", description = "Активные симптомы стадии", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "symptoms", description = "РђРєС‚РёРІРЅС‹Рµ СЃРёРјРїС‚РѕРјС‹ СЃС‚Р°РґРёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("symptoms")
   public List<@Valid Symptom> getSymptoms() {
     return symptoms;
@@ -174,11 +174,11 @@ public class CyberpsychosisStage {
   }
 
   /**
-   * Эффекты стадии (штрафы, визуальные индикаторы)
+   * Р­С„С„РµРєС‚С‹ СЃС‚Р°РґРёРё (С€С‚СЂР°С„С‹, РІРёР·СѓР°Р»СЊРЅС‹Рµ РёРЅРґРёРєР°С‚РѕСЂС‹)
    * @return effects
    */
   @NotNull 
-  @Schema(name = "effects", description = "Эффекты стадии (штрафы, визуальные индикаторы)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "effects", description = "Р­С„С„РµРєС‚С‹ СЃС‚Р°РґРёРё (С€С‚СЂР°С„С‹, РІРёР·СѓР°Р»СЊРЅС‹Рµ РёРЅРґРёРєР°С‚РѕСЂС‹)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("effects")
   public List<Object> getEffects() {
     return effects;

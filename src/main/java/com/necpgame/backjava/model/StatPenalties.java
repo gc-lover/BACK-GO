@@ -21,10 +21,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Штрафы к характеристикам от киберпсихоза. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Последствия 
+ * РЁС‚СЂР°С„С‹ Рє С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєР°Рј РѕС‚ РєРёР±РµСЂРїСЃРёС…РѕР·Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РџРѕСЃР»РµРґСЃС‚РІРёСЏ 
  */
 
-@Schema(name = "StatPenalties", description = "Штрафы к характеристикам от киберпсихоза. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Последствия ")
+@Schema(name = "StatPenalties", description = "РЁС‚СЂР°С„С‹ Рє С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєР°Рј РѕС‚ РєРёР±РµСЂРїСЃРёС…РѕР·Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РџРѕСЃР»РµРґСЃС‚РІРёСЏ ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class StatPenalties {
 
@@ -45,12 +45,12 @@ public class StatPenalties {
   }
 
   /**
-   * Штраф к точности (отрицательное значение)
+   * РЁС‚СЂР°С„ Рє С‚РѕС‡РЅРѕСЃС‚Рё (РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ)
    * maximum: 0
    * @return accuracy
    */
   @DecimalMax(value = "0") 
-  @Schema(name = "accuracy", description = "Штраф к точности (отрицательное значение)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "accuracy", description = "РЁС‚СЂР°С„ Рє С‚РѕС‡РЅРѕСЃС‚Рё (РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("accuracy")
   public @Nullable Float getAccuracy() {
     return accuracy;
@@ -66,12 +66,12 @@ public class StatPenalties {
   }
 
   /**
-   * Штраф к социальным навыкам (отрицательное значение)
+   * РЁС‚СЂР°С„ Рє СЃРѕС†РёР°Р»СЊРЅС‹Рј РЅР°РІС‹РєР°Рј (РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ)
    * maximum: 0
    * @return socialSkills
    */
   @DecimalMax(value = "0") 
-  @Schema(name = "social_skills", description = "Штраф к социальным навыкам (отрицательное значение)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "social_skills", description = "РЁС‚СЂР°С„ Рє СЃРѕС†РёР°Р»СЊРЅС‹Рј РЅР°РІС‹РєР°Рј (РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("social_skills")
   public @Nullable Float getSocialSkills() {
     return socialSkills;
@@ -87,12 +87,12 @@ public class StatPenalties {
   }
 
   /**
-   * Штраф к восстановлению здоровья (отрицательное значение)
+   * РЁС‚СЂР°С„ Рє РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЋ Р·РґРѕСЂРѕРІСЊСЏ (РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ)
    * maximum: 0
    * @return healthRegen
    */
   @DecimalMax(value = "0") 
-  @Schema(name = "health_regen", description = "Штраф к восстановлению здоровья (отрицательное значение)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "health_regen", description = "РЁС‚СЂР°С„ Рє РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЋ Р·РґРѕСЂРѕРІСЊСЏ (РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("health_regen")
   public @Nullable Float getHealthRegen() {
     return healthRegen;
@@ -108,12 +108,12 @@ public class StatPenalties {
   }
 
   /**
-   * Штраф к максимальной энергии (отрицательное значение)
+   * РЁС‚СЂР°С„ Рє РјР°РєСЃРёРјР°Р»СЊРЅРѕР№ СЌРЅРµСЂРіРёРё (РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ)
    * maximum: 0
    * @return energyMax
    */
   @DecimalMax(value = "0") 
-  @Schema(name = "energy_max", description = "Штраф к максимальной энергии (отрицательное значение)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "energy_max", description = "РЁС‚СЂР°С„ Рє РјР°РєСЃРёРјР°Р»СЊРЅРѕР№ СЌРЅРµСЂРіРёРё (РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("energy_max")
   public @Nullable Float getEnergyMax() {
     return energyMax;
@@ -137,11 +137,11 @@ public class StatPenalties {
   }
 
   /**
-   * Другие штрафы
+   * Р”СЂСѓРіРёРµ С€С‚СЂР°С„С‹
    * @return other
    */
   
-  @Schema(name = "other", description = "Другие штрафы", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "other", description = "Р”СЂСѓРіРёРµ С€С‚СЂР°С„С‹", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("other")
   public JsonNullable<Map<String, Float>> getOther() {
     return other;

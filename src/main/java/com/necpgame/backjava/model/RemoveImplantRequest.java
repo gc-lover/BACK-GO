@@ -17,10 +17,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Запрос на удаление импланта
+ * Р—Р°РїСЂРѕСЃ РЅР° СѓРґР°Р»РµРЅРёРµ РёРјРїР»Р°РЅС‚Р°
  */
 
-@Schema(name = "RemoveImplantRequest", description = "Запрос на удаление импланта")
+@Schema(name = "RemoveImplantRequest", description = "Р—Р°РїСЂРѕСЃ РЅР° СѓРґР°Р»РµРЅРёРµ РёРјРїР»Р°РЅС‚Р°")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class RemoveImplantRequest {
 
@@ -46,11 +46,11 @@ public class RemoveImplantRequest {
   }
 
   /**
-   * Идентификатор импланта для удаления
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРјРїР»Р°РЅС‚Р° РґР»СЏ СѓРґР°Р»РµРЅРёСЏ
    * @return implantId
    */
   @NotNull @Valid 
-  @Schema(name = "implant_id", description = "Идентификатор импланта для удаления", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "implant_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРјРїР»Р°РЅС‚Р° РґР»СЏ СѓРґР°Р»РµРЅРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("implant_id")
   public UUID getImplantId() {
     return implantId;
@@ -66,11 +66,11 @@ public class RemoveImplantRequest {
   }
 
   /**
-   * Идентификатор NPC (фиксёра) для удаления
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ NPC (С„РёРєСЃС‘СЂР°) РґР»СЏ СѓРґР°Р»РµРЅРёСЏ
    * @return npcId
    */
   @NotNull @Valid 
-  @Schema(name = "npc_id", description = "Идентификатор NPC (фиксёра) для удаления", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "npc_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ NPC (С„РёРєСЃС‘СЂР°) РґР»СЏ СѓРґР°Р»РµРЅРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("npc_id")
   public UUID getNpcId() {
     return npcId;

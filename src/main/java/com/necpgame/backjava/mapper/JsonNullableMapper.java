@@ -5,8 +5,8 @@ import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.stereotype.Component;
 
 /**
- * Общий маппер для конвертации в/из JsonNullable
- * Используется всеми MapStruct мапперами для избежания дублирования
+ * РћР±С‰РёР№ РјР°РїРїРµСЂ РґР»СЏ РєРѕРЅРІРµСЂС‚Р°С†РёРё РІ/РёР· JsonNullable
+ * РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РІСЃРµРјРё MapStruct РјР°РїРїРµСЂР°РјРё РґР»СЏ РёР·Р±РµР¶Р°РЅРёСЏ РґСѓР±Р»РёСЂРѕРІР°РЅРёСЏ
  */
 @Component
 public class JsonNullableMapper {

@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 /**
- * REST Controller для работы с боевой системой.
+ * REST Controller РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р±РѕРµРІРѕР№ СЃРёСЃС‚РµРјРѕР№.
  * 
- * Реализует контракт {@link CombatApi}, сгенерированный из OpenAPI спецификации.
- * Источник: API-SWAGGER/api/v1/combat/combat.yaml
+ * Р РµР°Р»РёР·СѓРµС‚ РєРѕРЅС‚СЂР°РєС‚ {@link CombatApi}, СЃРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅС‹Р№ РёР· OpenAPI СЃРїРµС†РёС„РёРєР°С†РёРё.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/combat/combat.yaml
  */
 @Slf4j
 @RestController

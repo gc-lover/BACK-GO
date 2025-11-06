@@ -62,11 +62,11 @@ public class GetEquipment200Response {
   }
 
   /**
-   * Слоты экипировки
+   * РЎР»РѕС‚С‹ СЌРєРёРїРёСЂРѕРІРєРё
    * @return slots
    */
   @NotNull @Valid 
-  @Schema(name = "slots", description = "Слоты экипировки", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "slots", description = "РЎР»РѕС‚С‹ СЌРєРёРїРёСЂРѕРІРєРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("slots")
   public List<@Valid EquipmentSlot> getSlots() {
     return slots;
@@ -90,11 +90,11 @@ public class GetEquipment200Response {
   }
 
   /**
-   * Суммарные бонусы от всей экипировки
+   * РЎСѓРјРјР°СЂРЅС‹Рµ Р±РѕРЅСѓСЃС‹ РѕС‚ РІСЃРµР№ СЌРєРёРїРёСЂРѕРІРєРё
    * @return totalBonuses
    */
   @NotNull 
-  @Schema(name = "totalBonuses", example = "{\"health\":50,\"armor\":25,\"damage\":15}", description = "Суммарные бонусы от всей экипировки", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "totalBonuses", example = "{\"health\":50,\"armor\":25,\"damage\":15}", description = "РЎСѓРјРјР°СЂРЅС‹Рµ Р±РѕРЅСѓСЃС‹ РѕС‚ РІСЃРµР№ СЌРєРёРїРёСЂРѕРІРєРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("totalBonuses")
   public Map<String, Integer> getTotalBonuses() {
     return totalBonuses;

@@ -23,10 +23,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Информация о прогрессии киберпсихоза. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Прогрессия 
+ * РРЅС„РѕСЂРјР°С†РёСЏ Рѕ РїСЂРѕРіСЂРµСЃСЃРёРё РєРёР±РµСЂРїСЃРёС…РѕР·Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РџСЂРѕРіСЂРµСЃСЃРёСЏ 
  */
 
-@Schema(name = "ProgressionInfo", description = "Информация о прогрессии киберпсихоза. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Прогрессия ")
+@Schema(name = "ProgressionInfo", description = "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ РїСЂРѕРіСЂРµСЃСЃРёРё РєРёР±РµСЂРїСЃРёС…РѕР·Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РџСЂРѕРіСЂРµСЃСЃРёСЏ ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class ProgressionInfo {
 
@@ -60,11 +60,11 @@ public class ProgressionInfo {
   }
 
   /**
-   * Текущая скорость прогрессии (человечность в день)
+   * РўРµРєСѓС‰Р°СЏ СЃРєРѕСЂРѕСЃС‚СЊ РїСЂРѕРіСЂРµСЃСЃРёРё (С‡РµР»РѕРІРµС‡РЅРѕСЃС‚СЊ РІ РґРµРЅСЊ)
    * @return currentProgressionRate
    */
   @NotNull 
-  @Schema(name = "current_progression_rate", description = "Текущая скорость прогрессии (человечность в день)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "current_progression_rate", description = "РўРµРєСѓС‰Р°СЏ СЃРєРѕСЂРѕСЃС‚СЊ РїСЂРѕРіСЂРµСЃСЃРёРё (С‡РµР»РѕРІРµС‡РЅРѕСЃС‚СЊ РІ РґРµРЅСЊ)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("current_progression_rate")
   public Float getCurrentProgressionRate() {
     return currentProgressionRate;
@@ -88,11 +88,11 @@ public class ProgressionInfo {
   }
 
   /**
-   * Активные факторы прогрессии (базовые и динамические)
+   * РђРєС‚РёРІРЅС‹Рµ С„Р°РєС‚РѕСЂС‹ РїСЂРѕРіСЂРµСЃСЃРёРё (Р±Р°Р·РѕРІС‹Рµ Рё РґРёРЅР°РјРёС‡РµСЃРєРёРµ)
    * @return factors
    */
   @NotNull 
-  @Schema(name = "factors", description = "Активные факторы прогрессии (базовые и динамические)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "factors", description = "РђРєС‚РёРІРЅС‹Рµ С„Р°РєС‚РѕСЂС‹ РїСЂРѕРіСЂРµСЃСЃРёРё (Р±Р°Р·РѕРІС‹Рµ Рё РґРёРЅР°РјРёС‡РµСЃРєРёРµ)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("factors")
   public List<Object> getFactors() {
     return factors;
@@ -116,11 +116,11 @@ public class ProgressionInfo {
   }
 
   /**
-   * Активные триггеры прогрессии
+   * РђРєС‚РёРІРЅС‹Рµ С‚СЂРёРіРіРµСЂС‹ РїСЂРѕРіСЂРµСЃСЃРёРё
    * @return triggers
    */
   @NotNull 
-  @Schema(name = "triggers", description = "Активные триггеры прогрессии", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "triggers", description = "РђРєС‚РёРІРЅС‹Рµ С‚СЂРёРіРіРµСЂС‹ РїСЂРѕРіСЂРµСЃСЃРёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("triggers")
   public List<Object> getTriggers() {
     return triggers;
@@ -136,11 +136,11 @@ public class ProgressionInfo {
   }
 
   /**
-   * Время следующей проверки прогрессии
+   * Р’СЂРµРјСЏ СЃР»РµРґСѓСЋС‰РµР№ РїСЂРѕРІРµСЂРєРё РїСЂРѕРіСЂРµСЃСЃРёРё
    * @return nextCheckTime
    */
   @Valid 
-  @Schema(name = "next_check_time", description = "Время следующей проверки прогрессии", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "next_check_time", description = "Р’СЂРµРјСЏ СЃР»РµРґСѓСЋС‰РµР№ РїСЂРѕРІРµСЂРєРё РїСЂРѕРіСЂРµСЃСЃРёРё", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("next_check_time")
   public JsonNullable<OffsetDateTime> getNextCheckTime() {
     return nextCheckTime;

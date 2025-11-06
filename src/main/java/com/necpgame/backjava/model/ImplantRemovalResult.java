@@ -21,10 +21,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Результат удаления импланта. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Удаление имплантов 
+ * Р РµР·СѓР»СЊС‚Р°С‚ СѓРґР°Р»РµРЅРёСЏ РёРјРїР»Р°РЅС‚Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РЈРґР°Р»РµРЅРёРµ РёРјРїР»Р°РЅС‚РѕРІ 
  */
 
-@Schema(name = "ImplantRemovalResult", description = "Результат удаления импланта. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Удаление имплантов ")
+@Schema(name = "ImplantRemovalResult", description = "Р РµР·СѓР»СЊС‚Р°С‚ СѓРґР°Р»РµРЅРёСЏ РёРјРїР»Р°РЅС‚Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РЈРґР°Р»РµРЅРёРµ РёРјРїР»Р°РЅС‚РѕРІ ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class ImplantRemovalResult {
 
@@ -53,12 +53,12 @@ public class ImplantRemovalResult {
   }
 
   /**
-   * Восстановленная человечность
+   * Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРЅР°СЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚СЊ
    * minimum: 0
    * @return humanityRestored
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "humanity_restored", description = "Восстановленная человечность", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "humanity_restored", description = "Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРЅР°СЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚СЊ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("humanity_restored")
   public Float getHumanityRestored() {
     return humanityRestored;
@@ -74,12 +74,12 @@ public class ImplantRemovalResult {
   }
 
   /**
-   * Стоимость удаления импланта
+   * РЎС‚РѕРёРјРѕСЃС‚СЊ СѓРґР°Р»РµРЅРёСЏ РёРјРїР»Р°РЅС‚Р°
    * minimum: 0
    * @return cost
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "cost", description = "Стоимость удаления импланта", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "cost", description = "РЎС‚РѕРёРјРѕСЃС‚СЊ СѓРґР°Р»РµРЅРёСЏ РёРјРїР»Р°РЅС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("cost")
   public Float getCost() {
     return cost;
@@ -103,11 +103,11 @@ public class ImplantRemovalResult {
   }
 
   /**
-   * Эффекты удаления (потеря характеристик импланта)
+   * Р­С„С„РµРєС‚С‹ СѓРґР°Р»РµРЅРёСЏ (РїРѕС‚РµСЂСЏ С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРє РёРјРїР»Р°РЅС‚Р°)
    * @return effects
    */
   
-  @Schema(name = "effects", description = "Эффекты удаления (потеря характеристик импланта)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "effects", description = "Р­С„С„РµРєС‚С‹ СѓРґР°Р»РµРЅРёСЏ (РїРѕС‚РµСЂСЏ С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРє РёРјРїР»Р°РЅС‚Р°)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("effects")
   public JsonNullable<Map<String, Object>> getEffects() {
     return effects;

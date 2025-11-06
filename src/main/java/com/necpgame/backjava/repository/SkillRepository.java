@@ -8,21 +8,21 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * SkillRepository - репозиторий для работы со справочником навыков.
+ * SkillRepository - СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃРѕ СЃРїСЂР°РІРѕС‡РЅРёРєРѕРј РЅР°РІС‹РєРѕРІ.
  * 
- * Источник: API-SWAGGER/api/v1/characters/status.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/characters/status.yaml
  */
 @Repository
 public interface SkillRepository extends JpaRepository<SkillEntity, String> {
 
     /**
-     * Найти навыки по категории.
+     * РќР°Р№С‚Рё РЅР°РІС‹РєРё РїРѕ РєР°С‚РµРіРѕСЂРёРё.
      */
     @Query("SELECT s FROM SkillEntity s WHERE s.category = :category ORDER BY s.name")
     List<SkillEntity> findByCategory(String category);
 
     /**
-     * Найти все навыки, отсортированные по имени.
+     * РќР°Р№С‚Рё РІСЃРµ РЅР°РІС‹РєРё, РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅС‹Рµ РїРѕ РёРјРµРЅРё.
      */
     @Query("SELECT s FROM SkillEntity s ORDER BY s.category, s.name")
     List<SkillEntity> findAllOrderByName();

@@ -55,11 +55,11 @@ public class GameCharacterClass {
   }
 
   /**
-   * Идентификатор класса
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РєР»Р°СЃСЃР°
    * @return id
    */
   @NotNull 
-  @Schema(name = "id", example = "solo", description = "Идентификатор класса", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "id", example = "solo", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РєР»Р°СЃСЃР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("id")
   public String getId() {
     return id;
@@ -75,11 +75,11 @@ public class GameCharacterClass {
   }
 
   /**
-   * Название класса
+   * РќР°Р·РІР°РЅРёРµ РєР»Р°СЃСЃР°
    * @return name
    */
   @NotNull 
-  @Schema(name = "name", example = "Solo", description = "Название класса", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "name", example = "Solo", description = "РќР°Р·РІР°РЅРёРµ РєР»Р°СЃСЃР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -95,11 +95,11 @@ public class GameCharacterClass {
   }
 
   /**
-   * Описание класса
+   * РћРїРёСЃР°РЅРёРµ РєР»Р°СЃСЃР°
    * @return description
    */
   @NotNull 
-  @Schema(name = "description", example = "Боевой класс, специализация на боевых навыках", description = "Описание класса", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "description", example = "Р‘РѕРµРІРѕР№ РєР»Р°СЃСЃ, СЃРїРµС†РёР°Р»РёР·Р°С†РёСЏ РЅР° Р±РѕРµРІС‹С… РЅР°РІС‹РєР°С…", description = "РћРїРёСЃР°РЅРёРµ РєР»Р°СЃСЃР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {
     return description;
@@ -123,11 +123,11 @@ public class GameCharacterClass {
   }
 
   /**
-   * Список подклассов
+   * РЎРїРёСЃРѕРє РїРѕРґРєР»Р°СЃСЃРѕРІ
    * @return subclasses
    */
   @NotNull @Valid 
-  @Schema(name = "subclasses", description = "Список подклассов", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "subclasses", description = "РЎРїРёСЃРѕРє РїРѕРґРєР»Р°СЃСЃРѕРІ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("subclasses")
   public List<@Valid GameCharacterClassSubclassesInner> getSubclasses() {
     return subclasses;

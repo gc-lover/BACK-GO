@@ -17,10 +17,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Запрос на валидацию установки импланта
+ * Р—Р°РїСЂРѕСЃ РЅР° РІР°Р»РёРґР°С†РёСЋ СѓСЃС‚Р°РЅРѕРІРєРё РёРјРїР»Р°РЅС‚Р°
  */
 
-@Schema(name = "ValidateInstallRequest", description = "Запрос на валидацию установки импланта")
+@Schema(name = "ValidateInstallRequest", description = "Р—Р°РїСЂРѕСЃ РЅР° РІР°Р»РёРґР°С†РёСЋ СѓСЃС‚Р°РЅРѕРІРєРё РёРјРїР»Р°РЅС‚Р°")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class ValidateInstallRequest {
 
@@ -46,11 +46,11 @@ public class ValidateInstallRequest {
   }
 
   /**
-   * Идентификатор импланта для установки
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРјРїР»Р°РЅС‚Р° РґР»СЏ СѓСЃС‚Р°РЅРѕРІРєРё
    * @return implantId
    */
   @NotNull @Valid 
-  @Schema(name = "implant_id", description = "Идентификатор импланта для установки", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "implant_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРјРїР»Р°РЅС‚Р° РґР»СЏ СѓСЃС‚Р°РЅРѕРІРєРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("implant_id")
   public UUID getImplantId() {
     return implantId;
@@ -66,11 +66,11 @@ public class ValidateInstallRequest {
   }
 
   /**
-   * Целевой слот для установки
+   * Р¦РµР»РµРІРѕР№ СЃР»РѕС‚ РґР»СЏ СѓСЃС‚Р°РЅРѕРІРєРё
    * @return targetSlot
    */
   @NotNull @Valid 
-  @Schema(name = "target_slot", description = "Целевой слот для установки", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "target_slot", description = "Р¦РµР»РµРІРѕР№ СЃР»РѕС‚ РґР»СЏ СѓСЃС‚Р°РЅРѕРІРєРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("target_slot")
   public UUID getTargetSlot() {
     return targetSlot;

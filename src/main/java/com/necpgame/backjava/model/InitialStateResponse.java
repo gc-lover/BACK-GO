@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * InitialStateResponse - начальное состояние игры
+ * InitialStateResponse - РЅР°С‡Р°Р»СЊРЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹
  */
-@Schema(description = "Начальное состояние игры")
+@Schema(description = "РќР°С‡Р°Р»СЊРЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹")
 public class InitialStateResponse {
 
     @JsonProperty("location")
@@ -27,7 +27,7 @@ public class InitialStateResponse {
     @JsonProperty("availableActions")
     private List<GameAction> availableActions = new ArrayList<>();
 
-    @Schema(description = "Текущая локация", required = true)
+    @Schema(description = "РўРµРєСѓС‰Р°СЏ Р»РѕРєР°С†РёСЏ", required = true)
     @NotNull
     @Valid
     public GameLocation getLocation() {
@@ -38,7 +38,7 @@ public class InitialStateResponse {
         this.location = location;
     }
 
-    @Schema(description = "Список доступных NPC в текущей локации", required = true)
+    @Schema(description = "РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… NPC РІ С‚РµРєСѓС‰РµР№ Р»РѕРєР°С†РёРё", required = true)
     @NotNull
     @Valid
     public List<GameNPC> getAvailableNPCs() {
@@ -49,7 +49,7 @@ public class InitialStateResponse {
         this.availableNPCs = availableNPCs;
     }
 
-    @Schema(description = "Первый квест", required = true)
+    @Schema(description = "РџРµСЂРІС‹Р№ РєРІРµСЃС‚", required = true)
     @NotNull
     @Valid
     public GameQuest getFirstQuest() {
@@ -60,7 +60,7 @@ public class InitialStateResponse {
         this.firstQuest = firstQuest;
     }
 
-    @Schema(description = "Список доступных действий в локации", required = true)
+    @Schema(description = "РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РґРµР№СЃС‚РІРёР№ РІ Р»РѕРєР°С†РёРё", required = true)
     @NotNull
     @Valid
     public List<GameAction> getAvailableActions() {

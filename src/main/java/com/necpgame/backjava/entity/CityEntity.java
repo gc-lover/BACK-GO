@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Entity для таблицы cities - города (справочник)
- * Соответствует City DTO из OpenAPI спецификации
+ * Entity РґР»СЏ С‚Р°Р±Р»РёС†С‹ cities - РіРѕСЂРѕРґР° (СЃРїСЂР°РІРѕС‡РЅРёРє)
+ * РЎРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ City DTO РёР· OpenAPI СЃРїРµС†РёС„РёРєР°С†РёРё
  */
 @Data
 @Entity
@@ -37,7 +37,7 @@ public class CityEntity {
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
     
-    // Relationships - many-to-many с Factions
+    // Relationships - many-to-many СЃ Factions
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "city_available_factions",

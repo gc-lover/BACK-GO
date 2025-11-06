@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * TutorialStepsResponse - шаги туториала
+ * TutorialStepsResponse - С€Р°РіРё С‚СѓС‚РѕСЂРёР°Р»Р°
  */
-@Schema(description = "Шаги туториала")
+@Schema(description = "РЁР°РіРё С‚СѓС‚РѕСЂРёР°Р»Р°")
 public class TutorialStepsResponse {
 
     @JsonProperty("steps")
@@ -27,7 +27,7 @@ public class TutorialStepsResponse {
     @JsonProperty("canSkip")
     private Boolean canSkip;
 
-    @Schema(description = "Список шагов туториала", required = true)
+    @Schema(description = "РЎРїРёСЃРѕРє С€Р°РіРѕРІ С‚СѓС‚РѕСЂРёР°Р»Р°", required = true)
     @NotNull
     @Valid
     public List<TutorialStep> getSteps() {
@@ -38,7 +38,7 @@ public class TutorialStepsResponse {
         this.steps = steps;
     }
 
-    @Schema(description = "Текущий шаг туториала (0-based индекс)", required = true)
+    @Schema(description = "РўРµРєСѓС‰РёР№ С€Р°Рі С‚СѓС‚РѕСЂРёР°Р»Р° (0-based РёРЅРґРµРєСЃ)", required = true)
     @NotNull
     @Min(0)
     public Integer getCurrentStep() {
@@ -49,7 +49,7 @@ public class TutorialStepsResponse {
         this.currentStep = currentStep;
     }
 
-    @Schema(description = "Общее количество шагов", required = true)
+    @Schema(description = "РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ С€Р°РіРѕРІ", required = true)
     @NotNull
     @Min(1)
     public Integer getTotalSteps() {
@@ -60,7 +60,7 @@ public class TutorialStepsResponse {
         this.totalSteps = totalSteps;
     }
 
-    @Schema(description = "Можно ли пропустить туториал", required = true)
+    @Schema(description = "РњРѕР¶РЅРѕ Р»Рё РїСЂРѕРїСѓСЃС‚РёС‚СЊ С‚СѓС‚РѕСЂРёР°Р»", required = true)
     @NotNull
     public Boolean getCanSkip() {
         return canSkip;

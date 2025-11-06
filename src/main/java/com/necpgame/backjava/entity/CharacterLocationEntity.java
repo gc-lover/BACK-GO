@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * CharacterLocationEntity - текущая локация персонажа.
+ * CharacterLocationEntity - С‚РµРєСѓС‰Р°СЏ Р»РѕРєР°С†РёСЏ РїРµСЂСЃРѕРЅР°Р¶Р°.
  * 
- * Хранит информацию о текущем местоположении персонажа в игровом мире.
- * Источник: API-SWAGGER/api/v1/locations/locations.yaml
+ * РҐСЂР°РЅРёС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ С‚РµРєСѓС‰РµРј РјРµСЃС‚РѕРїРѕР»РѕР¶РµРЅРёРё РїРµСЂСЃРѕРЅР°Р¶Р° РІ РёРіСЂРѕРІРѕРј РјРёСЂРµ.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/locations/locations.yaml
  */
 @Entity
 @Table(name = "character_locations", indexes = {

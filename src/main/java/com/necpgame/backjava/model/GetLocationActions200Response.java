@@ -56,11 +56,11 @@ public class GetLocationActions200Response {
   }
 
   /**
-   * Список доступных действий
+   * РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РґРµР№СЃС‚РІРёР№
    * @return actions
    */
   @NotNull @Valid 
-  @Schema(name = "actions", description = "Список доступных действий", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "actions", description = "РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РґРµР№СЃС‚РІРёР№", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("actions")
   public List<@Valid LocationAction> getActions() {
     return actions;

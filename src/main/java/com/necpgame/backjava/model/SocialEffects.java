@@ -19,10 +19,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Социальные эффекты киберпсихоза. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Социальные механики 
+ * РЎРѕС†РёР°Р»СЊРЅС‹Рµ СЌС„С„РµРєС‚С‹ РєРёР±РµСЂРїСЃРёС…РѕР·Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РЎРѕС†РёР°Р»СЊРЅС‹Рµ РјРµС…Р°РЅРёРєРё 
  */
 
-@Schema(name = "SocialEffects", description = "Социальные эффекты киберпсихоза. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Социальные механики ")
+@Schema(name = "SocialEffects", description = "РЎРѕС†РёР°Р»СЊРЅС‹Рµ СЌС„С„РµРєС‚С‹ РєРёР±РµСЂРїСЃРёС…РѕР·Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РЎРѕС†РёР°Р»СЊРЅС‹Рµ РјРµС…Р°РЅРёРєРё ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class SocialEffects {
 
@@ -40,12 +40,12 @@ public class SocialEffects {
   }
 
   /**
-   * Штраф к репутации с фракциями (отрицательное значение)
+   * РЁС‚СЂР°С„ Рє СЂРµРїСѓС‚Р°С†РёРё СЃ С„СЂР°РєС†РёСЏРјРё (РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ)
    * maximum: 0
    * @return reputationPenalty
    */
   @DecimalMax(value = "0") 
-  @Schema(name = "reputation_penalty", description = "Штраф к репутации с фракциями (отрицательное значение)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "reputation_penalty", description = "РЁС‚СЂР°С„ Рє СЂРµРїСѓС‚Р°С†РёРё СЃ С„СЂР°РєС†РёСЏРјРё (РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("reputation_penalty")
   public @Nullable Float getReputationPenalty() {
     return reputationPenalty;
@@ -69,11 +69,11 @@ public class SocialEffects {
   }
 
   /**
-   * Ограничения доступа к NPC/услугам
+   * РћРіСЂР°РЅРёС‡РµРЅРёСЏ РґРѕСЃС‚СѓРїР° Рє NPC/СѓСЃР»СѓРіР°Рј
    * @return npcAccessRestrictions
    */
   
-  @Schema(name = "npc_access_restrictions", description = "Ограничения доступа к NPC/услугам", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "npc_access_restrictions", description = "РћРіСЂР°РЅРёС‡РµРЅРёСЏ РґРѕСЃС‚СѓРїР° Рє NPC/СѓСЃР»СѓРіР°Рј", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("npc_access_restrictions")
   public List<Object> getNpcAccessRestrictions() {
     return npcAccessRestrictions;
@@ -97,11 +97,11 @@ public class SocialEffects {
   }
 
   /**
-   * Визуальные индикаторы для других игроков
+   * Р’РёР·СѓР°Р»СЊРЅС‹Рµ РёРЅРґРёРєР°С‚РѕСЂС‹ РґР»СЏ РґСЂСѓРіРёС… РёРіСЂРѕРєРѕРІ
    * @return visualIndicators
    */
   
-  @Schema(name = "visual_indicators", description = "Визуальные индикаторы для других игроков", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "visual_indicators", description = "Р’РёР·СѓР°Р»СЊРЅС‹Рµ РёРЅРґРёРєР°С‚РѕСЂС‹ РґР»СЏ РґСЂСѓРіРёС… РёРіСЂРѕРєРѕРІ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("visual_indicators")
   public List<String> getVisualIndicators() {
     return visualIndicators;

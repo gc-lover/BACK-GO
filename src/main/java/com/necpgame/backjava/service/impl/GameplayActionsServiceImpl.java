@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Реализация сервиса для игровых действий.
+ * Р РµР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІРёСЃР° РґР»СЏ РёРіСЂРѕРІС‹С… РґРµР№СЃС‚РІРёР№.
  * 
- * Источник: API-SWAGGER/api/v1/gameplay/actions/actions.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/gameplay/actions/actions.yaml
  */
 @Slf4j
 @Service
@@ -21,28 +21,28 @@ public class GameplayActionsServiceImpl implements GameplayActionsService {
     @Transactional(readOnly = true)
     public ExploreLocation200Response exploreLocation(ExploreLocationRequest request) {
         log.info("Exploring location for character: {}", request.getCharacterId());
-        return null; // TODO: Полная реализация
+        return null; // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
     }
     
     @Override
     @Transactional
     public RestAction200Response restAction(RestActionRequest request) {
         log.info("Rest action for character: {}", request.getCharacterId());
-        return null; // TODO: Полная реализация
+        return null; // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
     }
     
     @Override
     @Transactional
     public UseObject200Response useObject(UseObjectRequest request) {
         log.info("Using object for character: {}", request.getCharacterId());
-        return null; // TODO: Полная реализация
+        return null; // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
     }
     
     @Override
     @Transactional
     public HackSystem200Response hackSystem(HackSystemRequest request) {
         log.info("Hacking system for character: {}", request.getCharacterId());
-        return null; // TODO: Полная реализация
+        return null; // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
     }
 }
 

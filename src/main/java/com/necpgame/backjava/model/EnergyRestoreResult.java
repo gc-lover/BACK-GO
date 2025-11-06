@@ -19,10 +19,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Результат восстановления энергии. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Восстановление энергии 
+ * Р РµР·СѓР»СЊС‚Р°С‚ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ СЌРЅРµСЂРіРёРё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ СЌРЅРµСЂРіРёРё 
  */
 
-@Schema(name = "EnergyRestoreResult", description = "Результат восстановления энергии. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Восстановление энергии ")
+@Schema(name = "EnergyRestoreResult", description = "Р РµР·СѓР»СЊС‚Р°С‚ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ СЌРЅРµСЂРіРёРё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ СЌРЅРµСЂРіРёРё ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class EnergyRestoreResult {
 
@@ -50,12 +50,12 @@ public class EnergyRestoreResult {
   }
 
   /**
-   * Новый уровень энергии
+   * РќРѕРІС‹Р№ СѓСЂРѕРІРµРЅСЊ СЌРЅРµСЂРіРёРё
    * minimum: 0
    * @return newLevel
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "new_level", description = "Новый уровень энергии", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "new_level", description = "РќРѕРІС‹Р№ СѓСЂРѕРІРµРЅСЊ СЌРЅРµСЂРіРёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("new_level")
   public Float getNewLevel() {
     return newLevel;
@@ -71,12 +71,12 @@ public class EnergyRestoreResult {
   }
 
   /**
-   * Восстановленное количество энергии
+   * Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЌРЅРµСЂРіРёРё
    * minimum: 0
    * @return restoredAmount
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "restored_amount", description = "Восстановленное количество энергии", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "restored_amount", description = "Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЌРЅРµСЂРіРёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("restored_amount")
   public Float getRestoredAmount() {
     return restoredAmount;
@@ -92,12 +92,12 @@ public class EnergyRestoreResult {
   }
 
   /**
-   * Кулдаун до следующего восстановления в секундах
+   * РљСѓР»РґР°СѓРЅ РґРѕ СЃР»РµРґСѓСЋС‰РµРіРѕ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ РІ СЃРµРєСѓРЅРґР°С…
    * minimum: 0
    * @return cooldown
    */
   @DecimalMin(value = "0") 
-  @Schema(name = "cooldown", description = "Кулдаун до следующего восстановления в секундах", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "cooldown", description = "РљСѓР»РґР°СѓРЅ РґРѕ СЃР»РµРґСѓСЋС‰РµРіРѕ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ РІ СЃРµРєСѓРЅРґР°С…", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("cooldown")
   public JsonNullable<@DecimalMin(value = "0") Float> getCooldown() {
     return cooldown;

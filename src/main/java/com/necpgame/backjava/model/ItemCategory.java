@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Категория предмета: - weapons: Оружие (пистолеты, винтовки, ножи) - armor: Броня (голова, тело, руки, ноги) - implants: Импланты (кибернетика) - consumables: Расходники (медикаменты, еда, энергетики) - resources: Ресурсы для крафта - quest_items: Квестовые предметы - misc: Прочее 
+ * РљР°С‚РµРіРѕСЂРёСЏ РїСЂРµРґРјРµС‚Р°: - weapons: РћСЂСѓР¶РёРµ (РїРёСЃС‚РѕР»РµС‚С‹, РІРёРЅС‚РѕРІРєРё, РЅРѕР¶Рё) - armor: Р‘СЂРѕРЅСЏ (РіРѕР»РѕРІР°, С‚РµР»Рѕ, СЂСѓРєРё, РЅРѕРіРё) - implants: РРјРїР»Р°РЅС‚С‹ (РєРёР±РµСЂРЅРµС‚РёРєР°) - consumables: Р Р°СЃС…РѕРґРЅРёРєРё (РјРµРґРёРєР°РјРµРЅС‚С‹, РµРґР°, СЌРЅРµСЂРіРµС‚РёРєРё) - resources: Р РµСЃСѓСЂСЃС‹ РґР»СЏ РєСЂР°С„С‚Р° - quest_items: РљРІРµСЃС‚РѕРІС‹Рµ РїСЂРµРґРјРµС‚С‹ - misc: РџСЂРѕС‡РµРµ 
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:50:45.778329200+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")

@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * GameSessionEntity - игровая сессия.
+ * GameSessionEntity - РёРіСЂРѕРІР°СЏ СЃРµСЃСЃРёСЏ.
  * 
- * Отслеживает каждый вход игрока в игру.
+ * РћС‚СЃР»РµР¶РёРІР°РµС‚ РєР°Р¶РґС‹Р№ РІС…РѕРґ РёРіСЂРѕРєР° РІ РёРіСЂСѓ.
  */
 @Entity
 @Table(name = "game_sessions", indexes = {

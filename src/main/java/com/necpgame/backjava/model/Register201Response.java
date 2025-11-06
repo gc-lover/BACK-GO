@@ -47,11 +47,11 @@ public class Register201Response {
   }
 
   /**
-   * Уникальный идентификатор созданного аккаунта
+   * РЈРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃРѕР·РґР°РЅРЅРѕРіРѕ Р°РєРєР°СѓРЅС‚Р°
    * @return accountId
    */
   @NotNull @Valid 
-  @Schema(name = "account_id", example = "550e8400-e29b-41d4-a716-446655440000", description = "Уникальный идентификатор созданного аккаунта", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "account_id", example = "550e8400-e29b-41d4-a716-446655440000", description = "РЈРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃРѕР·РґР°РЅРЅРѕРіРѕ Р°РєРєР°СѓРЅС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("account_id")
   public UUID getAccountId() {
     return accountId;
@@ -67,11 +67,11 @@ public class Register201Response {
   }
 
   /**
-   * Сообщение об успешной регистрации
+   * РЎРѕРѕР±С‰РµРЅРёРµ РѕР± СѓСЃРїРµС€РЅРѕР№ СЂРµРіРёСЃС‚СЂР°С†РёРё
    * @return message
    */
   @NotNull 
-  @Schema(name = "message", example = "Account created successfully", description = "Сообщение об успешной регистрации", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "message", example = "Account created successfully", description = "РЎРѕРѕР±С‰РµРЅРёРµ РѕР± СѓСЃРїРµС€РЅРѕР№ СЂРµРіРёСЃС‚СЂР°С†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("message")
   public String getMessage() {
     return message;

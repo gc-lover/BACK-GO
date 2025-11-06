@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Entity для таблицы accounts - аккаунты игроков
- * Соответствует Account DTO из OpenAPI спецификации
+ * Entity РґР»СЏ С‚Р°Р±Р»РёС†С‹ accounts - Р°РєРєР°СѓРЅС‚С‹ РёРіСЂРѕРєРѕРІ
+ * РЎРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ Account DTO РёР· OpenAPI СЃРїРµС†РёС„РёРєР°С†РёРё
  */
 @Data
 @Entity

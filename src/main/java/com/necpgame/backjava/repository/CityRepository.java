@@ -11,23 +11,23 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Repository для работы с городами (справочник)
+ * Repository РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РіРѕСЂРѕРґР°РјРё (СЃРїСЂР°РІРѕС‡РЅРёРє)
  */
 @Repository
 public interface CityRepository extends JpaRepository<CityEntity, UUID> {
     
     /**
-     * Найти город по ID
+     * РќР°Р№С‚Рё РіРѕСЂРѕРґ РїРѕ ID
      */
     Optional<CityEntity> findById(UUID id);
     
     /**
-     * Найти города по региону
+     * РќР°Р№С‚Рё РіРѕСЂРѕРґР° РїРѕ СЂРµРіРёРѕРЅСѓ
      */
     List<CityEntity> findByRegion(String region);
     
     /**
-     * Найти города, доступные для фракции
+     * РќР°Р№С‚Рё РіРѕСЂРѕРґР°, РґРѕСЃС‚СѓРїРЅС‹Рµ РґР»СЏ С„СЂР°РєС†РёРё
      */
     @Query("SELECT c FROM CityEntity c " +
            "JOIN c.availableFactions f " +
@@ -35,7 +35,7 @@ public interface CityRepository extends JpaRepository<CityEntity, UUID> {
     List<CityEntity> findByAvailableForFaction(@Param("factionId") UUID factionId);
     
     /**
-     * Найти города по региону и фракции
+     * РќР°Р№С‚Рё РіРѕСЂРѕРґР° РїРѕ СЂРµРіРёРѕРЅСѓ Рё С„СЂР°РєС†РёРё
      */
     @Query("SELECT c FROM CityEntity c " +
            "JOIN c.availableFactions f " +
@@ -43,7 +43,7 @@ public interface CityRepository extends JpaRepository<CityEntity, UUID> {
     List<CityEntity> findByRegionAndFaction(@Param("region") String region, @Param("factionId") UUID factionId);
     
     /**
-     * Получить все города
+     * РџРѕР»СѓС‡РёС‚СЊ РІСЃРµ РіРѕСЂРѕРґР°
      */
     List<CityEntity> findAll();
 }

@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * JPA Entity для истории взаимодействий персонажа с NPC.
+ * JPA Entity РґР»СЏ РёСЃС‚РѕСЂРёРё РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёР№ РїРµСЂСЃРѕРЅР°Р¶Р° СЃ NPC.
  * 
- * Связанная таблица: character_npc_interactions
- * Источник: API-SWAGGER/api/v1/npcs/npcs.yaml
+ * РЎРІСЏР·Р°РЅРЅР°СЏ С‚Р°Р±Р»РёС†Р°: character_npc_interactions
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/npcs/npcs.yaml
  */
 @Data
 @NoArgsConstructor

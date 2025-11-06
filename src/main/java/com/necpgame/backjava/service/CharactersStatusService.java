@@ -5,29 +5,29 @@ import com.necpgame.backjava.model.*;
 import java.util.UUID;
 
 /**
- * CharactersStatusService - сервис для работы со статусом и характеристиками персонажа.
+ * CharactersStatusService - СЃРµСЂРІРёСЃ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃРѕ СЃС‚Р°С‚СѓСЃРѕРј Рё С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєР°РјРё РїРµСЂСЃРѕРЅР°Р¶Р°.
  * 
- * Сгенерировано на основе: API-SWAGGER/api/v1/characters/status.yaml
+ * РЎРіРµРЅРµСЂРёСЂРѕРІР°РЅРѕ РЅР° РѕСЃРЅРѕРІРµ: API-SWAGGER/api/v1/characters/status.yaml
  */
 public interface CharactersStatusService {
 
     /**
-     * Получить статус персонажа.
+     * РџРѕР»СѓС‡РёС‚СЊ СЃС‚Р°С‚СѓСЃ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     CharacterStatus getCharacterStatus(UUID characterId);
 
     /**
-     * Получить характеристики персонажа.
+     * РџРѕР»СѓС‡РёС‚СЊ С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     CharacterStats getCharacterStats(UUID characterId);
 
     /**
-     * Получить навыки персонажа.
+     * РџРѕР»СѓС‡РёС‚СЊ РЅР°РІС‹РєРё РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     GetCharacterSkills200Response getCharacterSkills(UUID characterId);
 
     /**
-     * Обновить статус персонажа (здоровье, энергия, человечность, опыт).
+     * РћР±РЅРѕРІРёС‚СЊ СЃС‚Р°С‚СѓСЃ РїРµСЂСЃРѕРЅР°Р¶Р° (Р·РґРѕСЂРѕРІСЊРµ, СЌРЅРµСЂРіРёСЏ, С‡РµР»РѕРІРµС‡РЅРѕСЃС‚СЊ, РѕРїС‹С‚).
      */
     CharacterStatus updateCharacterStatus(UUID characterId, UpdateCharacterStatusRequest request);
 }

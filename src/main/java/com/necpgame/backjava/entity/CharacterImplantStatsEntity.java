@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * JPA Entity для статистики имплантов и энергии персонажа.
+ * JPA Entity РґР»СЏ СЃС‚Р°С‚РёСЃС‚РёРєРё РёРјРїР»Р°РЅС‚РѕРІ Рё СЌРЅРµСЂРіРёРё РїРµСЂСЃРѕРЅР°Р¶Р°.
  * 
- * Связанная таблица: character_implant_stats
- * Источник: API-SWAGGER/api/v1/gameplay/combat/implants-limits.yaml
+ * РЎРІСЏР·Р°РЅРЅР°СЏ С‚Р°Р±Р»РёС†Р°: character_implant_stats
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/gameplay/combat/implants-limits.yaml
  */
 @Data
 @NoArgsConstructor
@@ -38,7 +38,7 @@ public class CharacterImplantStatsEntity {
                 foreignKey = @ForeignKey(name = "fk_character_implant_stats_character"))
     private CharacterEntity character;
     
-    // ===== Лимиты имплантов =====
+    // ===== Р›РёРјРёС‚С‹ РёРјРїР»Р°РЅС‚РѕРІ =====
     
     @Column(name = "base_implant_limit", nullable = false)
     private Integer baseImplantLimit = 10;
@@ -55,7 +55,7 @@ public class CharacterImplantStatsEntity {
     @Column(name = "used_implants", nullable = false)
     private Integer usedImplants = 0;
     
-    // ===== Энергетический пул =====
+    // ===== Р­РЅРµСЂРіРµС‚РёС‡РµСЃРєРёР№ РїСѓР» =====
     
     @Column(name = "total_energy_pool", nullable = false)
     private Float totalEnergyPool = 100.0f;
@@ -75,7 +75,7 @@ public class CharacterImplantStatsEntity {
     @Column(name = "max_energy_level")
     private Float maxEnergyLevel = 100.0f;
     
-    // ===== Временные модификаторы =====
+    // ===== Р’СЂРµРјРµРЅРЅС‹Рµ РјРѕРґРёС„РёРєР°С‚РѕСЂС‹ =====
     
     @Column(name = "can_exceed_limit_temporarily", nullable = false)
     private Boolean canExceedLimitTemporarily = false;

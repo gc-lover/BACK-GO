@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * CombatParticipantEntity - участник боя (игрок, враг, NPC).
+ * CombatParticipantEntity - СѓС‡Р°СЃС‚РЅРёРє Р±РѕСЏ (РёРіСЂРѕРє, РІСЂР°Рі, NPC).
  * 
- * Хранит информацию об участниках боевой сессии.
- * Источник: API-SWAGGER/api/v1/combat/combat.yaml (CombatParticipant schema)
+ * РҐСЂР°РЅРёС‚ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± СѓС‡Р°СЃС‚РЅРёРєР°С… Р±РѕРµРІРѕР№ СЃРµСЃСЃРёРё.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/combat/combat.yaml (CombatParticipant schema)
  */
 @Entity
 @Table(name = "combat_participants", indexes = {
@@ -35,7 +35,7 @@ public class CombatParticipantEntity {
     private UUID combatSessionId;
 
     @Column(name = "participant_id", nullable = false, length = 100)
-    private String participantId; // character_id или npc_id или enemy_id
+    private String participantId; // character_id РёР»Рё npc_id РёР»Рё enemy_id
 
     @Column(name = "participant_name", nullable = false, length = 200)
     private String participantName;
@@ -60,7 +60,7 @@ public class CombatParticipantEntity {
     private Boolean isAlive = true;
 
     @Column(name = "initiative", nullable = false)
-    private Integer initiative = 0; // Для порядка ходов
+    private Integer initiative = 0; // Р”Р»СЏ РїРѕСЂСЏРґРєР° С…РѕРґРѕРІ
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -76,7 +76,7 @@ public class CombatParticipantEntity {
     private CombatSessionEntity combatSession;
 
     /**
-     * Тип участника боя (из OpenAPI - CombatParticipant.type enum)
+     * РўРёРї СѓС‡Р°СЃС‚РЅРёРєР° Р±РѕСЏ (РёР· OpenAPI - CombatParticipant.type enum)
      */
     public enum ParticipantType {
         PLAYER,

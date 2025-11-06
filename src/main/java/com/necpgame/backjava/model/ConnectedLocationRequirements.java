@@ -20,10 +20,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Требования для доступа (если accessible&#x3D;false)
+ * РўСЂРµР±РѕРІР°РЅРёСЏ РґР»СЏ РґРѕСЃС‚СѓРїР° (РµСЃР»Рё accessible&#x3D;false)
  */
 
-@Schema(name = "ConnectedLocation_requirements", description = "Требования для доступа (если accessible=false)")
+@Schema(name = "ConnectedLocation_requirements", description = "РўСЂРµР±РѕРІР°РЅРёСЏ РґР»СЏ РґРѕСЃС‚СѓРїР° (РµСЃР»Рё accessible=false)")
 @JsonTypeName("ConnectedLocation_requirements")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T21:22:04.712198900+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class ConnectedLocationRequirements {
@@ -39,11 +39,11 @@ public class ConnectedLocationRequirements {
   }
 
   /**
-   * Минимальный уровень
+   * РњРёРЅРёРјР°Р»СЊРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ
    * @return minLevel
    */
   
-  @Schema(name = "minLevel", description = "Минимальный уровень", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "minLevel", description = "РњРёРЅРёРјР°Р»СЊРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("minLevel")
   public @Nullable Integer getMinLevel() {
     return minLevel;
@@ -67,11 +67,11 @@ public class ConnectedLocationRequirements {
   }
 
   /**
-   * Требуемые завершенные квесты
+   * РўСЂРµР±СѓРµРјС‹Рµ Р·Р°РІРµСЂС€РµРЅРЅС‹Рµ РєРІРµСЃС‚С‹
    * @return requiredQuests
    */
   
-  @Schema(name = "requiredQuests", description = "Требуемые завершенные квесты", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "requiredQuests", description = "РўСЂРµР±СѓРµРјС‹Рµ Р·Р°РІРµСЂС€РµРЅРЅС‹Рµ РєРІРµСЃС‚С‹", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("requiredQuests")
   public List<String> getRequiredQuests() {
     return requiredQuests;

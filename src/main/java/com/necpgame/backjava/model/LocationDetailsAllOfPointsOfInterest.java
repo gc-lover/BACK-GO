@@ -49,11 +49,11 @@ public class LocationDetailsAllOfPointsOfInterest {
   }
 
   /**
-   * ID точки интереса
+   * ID С‚РѕС‡РєРё РёРЅС‚РµСЂРµСЃР°
    * @return id
    */
   @NotNull 
-  @Schema(name = "id", description = "ID точки интереса", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "id", description = "ID С‚РѕС‡РєРё РёРЅС‚РµСЂРµСЃР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("id")
   public String getId() {
     return id;
@@ -69,11 +69,11 @@ public class LocationDetailsAllOfPointsOfInterest {
   }
 
   /**
-   * Название точки интереса
+   * РќР°Р·РІР°РЅРёРµ С‚РѕС‡РєРё РёРЅС‚РµСЂРµСЃР°
    * @return name
    */
   @NotNull 
-  @Schema(name = "name", description = "Название точки интереса", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "name", description = "РќР°Р·РІР°РЅРёРµ С‚РѕС‡РєРё РёРЅС‚РµСЂРµСЃР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -89,11 +89,11 @@ public class LocationDetailsAllOfPointsOfInterest {
   }
 
   /**
-   * Описание точки интереса
+   * РћРїРёСЃР°РЅРёРµ С‚РѕС‡РєРё РёРЅС‚РµСЂРµСЃР°
    * @return description
    */
   @NotNull 
-  @Schema(name = "description", description = "Описание точки интереса", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "description", description = "РћРїРёСЃР°РЅРёРµ С‚РѕС‡РєРё РёРЅС‚РµСЂРµСЃР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {
     return description;

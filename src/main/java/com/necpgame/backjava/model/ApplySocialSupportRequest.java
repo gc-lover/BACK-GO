@@ -18,15 +18,15 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Запрос на применение социальной поддержки
+ * Р—Р°РїСЂРѕСЃ РЅР° РїСЂРёРјРµРЅРµРЅРёРµ СЃРѕС†РёР°Р»СЊРЅРѕР№ РїРѕРґРґРµСЂР¶РєРё
  */
 
-@Schema(name = "ApplySocialSupportRequest", description = "Запрос на применение социальной поддержки")
+@Schema(name = "ApplySocialSupportRequest", description = "Р—Р°РїСЂРѕСЃ РЅР° РїСЂРёРјРµРЅРµРЅРёРµ СЃРѕС†РёР°Р»СЊРЅРѕР№ РїРѕРґРґРµСЂР¶РєРё")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class ApplySocialSupportRequest {
 
   /**
-   * Тип социальной поддержки
+   * РўРёРї СЃРѕС†РёР°Р»СЊРЅРѕР№ РїРѕРґРґРµСЂР¶РєРё
    */
   public enum SupportTypeEnum {
     FRIEND("friend"),
@@ -84,11 +84,11 @@ public class ApplySocialSupportRequest {
   }
 
   /**
-   * Тип социальной поддержки
+   * РўРёРї СЃРѕС†РёР°Р»СЊРЅРѕР№ РїРѕРґРґРµСЂР¶РєРё
    * @return supportType
    */
   @NotNull 
-  @Schema(name = "support_type", description = "Тип социальной поддержки", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "support_type", description = "РўРёРї СЃРѕС†РёР°Р»СЊРЅРѕР№ РїРѕРґРґРµСЂР¶РєРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("support_type")
   public SupportTypeEnum getSupportType() {
     return supportType;
@@ -104,11 +104,11 @@ public class ApplySocialSupportRequest {
   }
 
   /**
-   * Идентификатор источника поддержки (друг, фракция, NPC)
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёСЃС‚РѕС‡РЅРёРєР° РїРѕРґРґРµСЂР¶РєРё (РґСЂСѓРі, С„СЂР°РєС†РёСЏ, NPC)
    * @return sourceId
    */
   @NotNull @Valid 
-  @Schema(name = "source_id", description = "Идентификатор источника поддержки (друг, фракция, NPC)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "source_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёСЃС‚РѕС‡РЅРёРєР° РїРѕРґРґРµСЂР¶РєРё (РґСЂСѓРі, С„СЂР°РєС†РёСЏ, NPC)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("source_id")
   public UUID getSourceId() {
     return sourceId;

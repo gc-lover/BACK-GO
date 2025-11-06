@@ -16,10 +16,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Запрос на расчет лимита имплантов
+ * Р—Р°РїСЂРѕСЃ РЅР° СЂР°СЃС‡РµС‚ Р»РёРјРёС‚Р° РёРјРїР»Р°РЅС‚РѕРІ
  */
 
-@Schema(name = "CalculateLimitRequest", description = "Запрос на расчет лимита имплантов")
+@Schema(name = "CalculateLimitRequest", description = "Р—Р°РїСЂРѕСЃ РЅР° СЂР°СЃС‡РµС‚ Р»РёРјРёС‚Р° РёРјРїР»Р°РЅС‚РѕРІ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class CalculateLimitRequest {
 
@@ -35,12 +35,12 @@ public class CalculateLimitRequest {
   }
 
   /**
-   * Бонус от класса
+   * Р‘РѕРЅСѓСЃ РѕС‚ РєР»Р°СЃСЃР°
    * minimum: 0
    * @return classBonus
    */
   @Min(value = 0) 
-  @Schema(name = "class_bonus", description = "Бонус от класса", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "class_bonus", description = "Р‘РѕРЅСѓСЃ РѕС‚ РєР»Р°СЃСЃР°", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("class_bonus")
   public @Nullable Integer getClassBonus() {
     return classBonus;
@@ -56,12 +56,12 @@ public class CalculateLimitRequest {
   }
 
   /**
-   * Бонус от прокачки
+   * Р‘РѕРЅСѓСЃ РѕС‚ РїСЂРѕРєР°С‡РєРё
    * minimum: 0
    * @return progressionBonus
    */
   @Min(value = 0) 
-  @Schema(name = "progression_bonus", description = "Бонус от прокачки", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "progression_bonus", description = "Р‘РѕРЅСѓСЃ РѕС‚ РїСЂРѕРєР°С‡РєРё", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("progression_bonus")
   public @Nullable Integer getProgressionBonus() {
     return progressionBonus;
@@ -77,13 +77,13 @@ public class CalculateLimitRequest {
   }
 
   /**
-   * Уровень человечности (0-100)
+   * РЈСЂРѕРІРµРЅСЊ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё (0-100)
    * minimum: 0
    * maximum: 100
    * @return humanityLevel
    */
   @DecimalMin(value = "0") @DecimalMax(value = "100") 
-  @Schema(name = "humanity_level", description = "Уровень человечности (0-100)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "humanity_level", description = "РЈСЂРѕРІРµРЅСЊ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё (0-100)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("humanity_level")
   public @Nullable Float getHumanityLevel() {
     return humanityLevel;

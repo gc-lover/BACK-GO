@@ -74,7 +74,7 @@ public class UnequipItem200Response {
    * @return message
    */
   @NotNull 
-  @Schema(name = "message", example = "Предмет успешно снят", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "message", example = "РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ СЃРЅСЏС‚", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("message")
   public String getMessage() {
     return message;

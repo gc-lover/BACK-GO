@@ -12,33 +12,33 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * CharacterInventoryRepository - репозиторий для работы с инвентарем персонажа.
+ * CharacterInventoryRepository - СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РёРЅРІРµРЅС‚Р°СЂРµРј РїРµСЂСЃРѕРЅР°Р¶Р°.
  * 
- * Источник: API-SWAGGER/api/v1/inventory/inventory.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/inventory/inventory.yaml
  */
 @Repository
 public interface CharacterInventoryRepository extends JpaRepository<CharacterInventoryEntity, UUID> {
 
     /**
-     * Найти все предметы в инвентаре персонажа.
+     * РќР°Р№С‚Рё РІСЃРµ РїСЂРµРґРјРµС‚С‹ РІ РёРЅРІРµРЅС‚Р°СЂРµ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT ci FROM CharacterInventoryEntity ci WHERE ci.characterId = :characterId ORDER BY ci.slotPosition")
     List<CharacterInventoryEntity> findByCharacterIdOrderBySlotPosition(UUID characterId);
 
     /**
-     * Найти предмет в инвентаре персонажа.
+     * РќР°Р№С‚Рё РїСЂРµРґРјРµС‚ РІ РёРЅРІРµРЅС‚Р°СЂРµ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT ci FROM CharacterInventoryEntity ci WHERE ci.characterId = :characterId AND ci.itemId = :itemId")
     Optional<CharacterInventoryEntity> findByCharacterIdAndItemId(UUID characterId, String itemId);
 
     /**
-     * Проверить есть ли предмет в инвентаре.
+     * РџСЂРѕРІРµСЂРёС‚СЊ РµСЃС‚СЊ Р»Рё РїСЂРµРґРјРµС‚ РІ РёРЅРІРµРЅС‚Р°СЂРµ.
      */
     @Query("SELECT COUNT(ci) > 0 FROM CharacterInventoryEntity ci WHERE ci.characterId = :characterId AND ci.itemId = :itemId")
     boolean existsByCharacterIdAndItemId(UUID characterId, String itemId);
 
     /**
-     * Посчитать общий вес инвентаря персонажа.
+     * РџРѕСЃС‡РёС‚Р°С‚СЊ РѕР±С‰РёР№ РІРµСЃ РёРЅРІРµРЅС‚Р°СЂСЏ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT COALESCE(SUM(ii.weight * ci.quantity), 0) FROM CharacterInventoryEntity ci " +
            "JOIN InventoryItemEntity ii ON ci.itemId = ii.id " +
@@ -46,7 +46,7 @@ public interface CharacterInventoryRepository extends JpaRepository<CharacterInv
     BigDecimal calculateTotalWeight(UUID characterId);
 
     /**
-     * Найти предметы по категории в инвентаре персонажа.
+     * РќР°Р№С‚Рё РїСЂРµРґРјРµС‚С‹ РїРѕ РєР°С‚РµРіРѕСЂРёРё РІ РёРЅРІРµРЅС‚Р°СЂРµ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT ci FROM CharacterInventoryEntity ci " +
            "JOIN InventoryItemEntity ii ON ci.itemId = ii.id " +
@@ -54,7 +54,7 @@ public interface CharacterInventoryRepository extends JpaRepository<CharacterInv
     List<CharacterInventoryEntity> findByCharacterIdAndCategory(UUID characterId, InventoryItemEntity.ItemCategory category);
 
     /**
-     * Удалить предмет из инвентаря.
+     * РЈРґР°Р»РёС‚СЊ РїСЂРµРґРјРµС‚ РёР· РёРЅРІРµРЅС‚Р°СЂСЏ.
      */
     void deleteByCharacterIdAndItemId(UUID characterId, String itemId);
 }

@@ -5,27 +5,27 @@ import com.necpgame.backjava.model.*;
 import java.util.UUID;
 
 /**
- * GameInitialStateService - сервис для получения начального состояния игры.
+ * GameInitialStateService - СЃРµСЂРІРёСЃ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РЅР°С‡Р°Р»СЊРЅРѕРіРѕ СЃРѕСЃС‚РѕСЏРЅРёСЏ РёРіСЂС‹.
  * 
- * Сгенерировано из: API-SWAGGER/api/v1/game/initial-state.yaml
+ * РЎРіРµРЅРµСЂРёСЂРѕРІР°РЅРѕ РёР·: API-SWAGGER/api/v1/game/initial-state.yaml
  * 
- * НЕ редактируйте этот файл вручную - он генерируется автоматически!
+ * РќР• СЂРµРґР°РєС‚РёСЂСѓР№С‚Рµ СЌС‚РѕС‚ С„Р°Р№Р» РІСЂСѓС‡РЅСѓСЋ - РѕРЅ РіРµРЅРµСЂРёСЂСѓРµС‚СЃСЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё!
  */
 public interface GameInitialStateService {
 
     /**
-     * Получить начальное состояние игры для персонажа.
+     * РџРѕР»СѓС‡РёС‚СЊ РЅР°С‡Р°Р»СЊРЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹ РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°.
      * 
-     * @param characterId ID персонажа
-     * @return начальное состояние игры
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р°
+     * @return РЅР°С‡Р°Р»СЊРЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹
      */
     InitialStateResponse getInitialState(UUID characterId);
 
     /**
-     * Получить шаги туториала для нового игрока.
+     * РџРѕР»СѓС‡РёС‚СЊ С€Р°РіРё С‚СѓС‚РѕСЂРёР°Р»Р° РґР»СЏ РЅРѕРІРѕРіРѕ РёРіСЂРѕРєР°.
      * 
-     * @param characterId ID персонажа
-     * @return шаги туториала
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р°
+     * @return С€Р°РіРё С‚СѓС‚РѕСЂРёР°Р»Р°
      */
     TutorialStepsResponse getTutorialSteps(UUID characterId);
 }

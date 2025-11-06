@@ -11,39 +11,39 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * GameSessionRepository - репозиторий для работы с игровыми сессиями.
+ * GameSessionRepository - СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РёРіСЂРѕРІС‹РјРё СЃРµСЃСЃРёСЏРјРё.
  */
 @Repository
 public interface GameSessionRepository extends JpaRepository<GameSessionEntity, UUID> {
 
     /**
-     * Найти активную сессию для персонажа.
+     * РќР°Р№С‚Рё Р°РєС‚РёРІРЅСѓСЋ СЃРµСЃСЃРёСЋ РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°.
      *
-     * @param characterId ID персонажа
-     * @return активная сессия
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р°
+     * @return Р°РєС‚РёРІРЅР°СЏ СЃРµСЃСЃРёСЏ
      */
     Optional<GameSessionEntity> findByCharacterIdAndIsActiveTrue(UUID characterId);
 
     /**
-     * Найти все сессии персонажа.
+     * РќР°Р№С‚Рё РІСЃРµ СЃРµСЃСЃРёРё РїРµСЂСЃРѕРЅР°Р¶Р°.
      *
-     * @param characterId ID персонажа
-     * @return список сессий
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р°
+     * @return СЃРїРёСЃРѕРє СЃРµСЃСЃРёР№
      */
     List<GameSessionEntity> findByCharacterIdOrderByCreatedAtDesc(UUID characterId);
 
     /**
-     * Найти все активные сессии аккаунта.
+     * РќР°Р№С‚Рё РІСЃРµ Р°РєС‚РёРІРЅС‹Рµ СЃРµСЃСЃРёРё Р°РєРєР°СѓРЅС‚Р°.
      *
-     * @param accountId ID аккаунта
-     * @return список активных сессий
+     * @param accountId ID Р°РєРєР°СѓРЅС‚Р°
+     * @return СЃРїРёСЃРѕРє Р°РєС‚РёРІРЅС‹С… СЃРµСЃСЃРёР№
      */
     List<GameSessionEntity> findByAccountIdAndIsActiveTrue(UUID accountId);
 
     /**
-     * Деактивировать все сессии персонажа.
+     * Р”РµР°РєС‚РёРІРёСЂРѕРІР°С‚СЊ РІСЃРµ СЃРµСЃСЃРёРё РїРµСЂСЃРѕРЅР°Р¶Р°.
      *
-     * @param characterId ID персонажа
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р°
      */
     @Query("UPDATE GameSessionEntity s SET s.isActive = false WHERE s.characterId = :characterId AND s.isActive = true")
     void deactivateAllSessionsByCharacterId(@Param("characterId") UUID characterId);

@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
- * Конфигурация Spring Security
+ * РљРѕРЅС„РёРіСѓСЂР°С†РёСЏ Spring Security
  */
 @Configuration
 @EnableWebSecurity
@@ -21,11 +21,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
-            .cors(Customizer.withDefaults())  // Включаем CORS (настройки из WebConfig)
+            .cors(Customizer.withDefaults())  // Р’РєР»СЋС‡Р°РµРј CORS (РЅР°СЃС‚СЂРѕР№РєРё РёР· WebConfig)
             .sessionManagement(session -> 
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll()  // Временно разрешаем всё для тестирования
+                .anyRequest().permitAll()  // Р’СЂРµРјРµРЅРЅРѕ СЂР°Р·СЂРµС€Р°РµРј РІСЃС‘ РґР»СЏ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ
             );
         
         return http.build();

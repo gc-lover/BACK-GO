@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * WelcomeScreenResponse - приветственный экран
+ * WelcomeScreenResponse - РїСЂРёРІРµС‚СЃС‚РІРµРЅРЅС‹Р№ СЌРєСЂР°РЅ
  */
-@Schema(description = "Приветственный экран")
+@Schema(description = "РџСЂРёРІРµС‚СЃС‚РІРµРЅРЅС‹Р№ СЌРєСЂР°РЅ")
 public class WelcomeScreenResponse {
 
     @JsonProperty("message")
@@ -30,7 +30,7 @@ public class WelcomeScreenResponse {
     @JsonProperty("buttons")
     private List<WelcomeButton> buttons = new ArrayList<>();
 
-    @Schema(description = "Приветственное сообщение", required = true)
+    @Schema(description = "РџСЂРёРІРµС‚СЃС‚РІРµРЅРЅРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ", required = true)
     @NotNull
     public String getMessage() {
         return message;
@@ -40,7 +40,7 @@ public class WelcomeScreenResponse {
         this.message = message;
     }
 
-    @Schema(description = "Подзаголовок", required = true)
+    @Schema(description = "РџРѕРґР·Р°РіРѕР»РѕРІРѕРє", required = true)
     @NotNull
     public String getSubtitle() {
         return subtitle;
@@ -50,7 +50,7 @@ public class WelcomeScreenResponse {
         this.subtitle = subtitle;
     }
 
-    @Schema(description = "Информация о персонаже", required = true)
+    @Schema(description = "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ РїРµСЂСЃРѕРЅР°Р¶Рµ", required = true)
     @NotNull
     @Valid
     public WelcomeCharacterInfo getCharacter() {
@@ -61,7 +61,7 @@ public class WelcomeScreenResponse {
         this.character = character;
     }
 
-    @Schema(description = "Стартовая локация", required = true)
+    @Schema(description = "РЎС‚Р°СЂС‚РѕРІР°СЏ Р»РѕРєР°С†РёСЏ", required = true)
     @NotNull
     public String getStartingLocation() {
         return startingLocation;
@@ -71,7 +71,7 @@ public class WelcomeScreenResponse {
         this.startingLocation = startingLocation;
     }
 
-    @Schema(description = "Кнопки", required = true)
+    @Schema(description = "РљРЅРѕРїРєРё", required = true)
     @NotNull
     public List<WelcomeButton> getButtons() {
         return buttons;
@@ -82,9 +82,9 @@ public class WelcomeScreenResponse {
     }
 
     /**
-     * Информация о персонаже для приветственного экрана
+     * РРЅС„РѕСЂРјР°С†РёСЏ Рѕ РїРµСЂСЃРѕРЅР°Р¶Рµ РґР»СЏ РїСЂРёРІРµС‚СЃС‚РІРµРЅРЅРѕРіРѕ СЌРєСЂР°РЅР°
      */
-    @Schema(description = "Информация о персонаже")
+    @Schema(description = "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ РїРµСЂСЃРѕРЅР°Р¶Рµ")
     public static class WelcomeCharacterInfo {
         @JsonProperty("name")
         private String name;
@@ -95,7 +95,7 @@ public class WelcomeScreenResponse {
         @JsonProperty("level")
         private Integer level;
 
-        @Schema(description = "Имя персонажа", required = true)
+        @Schema(description = "РРјСЏ РїРµСЂСЃРѕРЅР°Р¶Р°", required = true)
         @NotNull
         public String getName() {
             return name;
@@ -105,7 +105,7 @@ public class WelcomeScreenResponse {
             this.name = name;
         }
 
-        @Schema(description = "Класс персонажа", required = true)
+        @Schema(description = "РљР»Р°СЃСЃ РїРµСЂСЃРѕРЅР°Р¶Р°", required = true)
         @NotNull
         public String getCharacterClass() {
             return characterClass;
@@ -115,7 +115,7 @@ public class WelcomeScreenResponse {
             this.characterClass = characterClass;
         }
 
-        @Schema(description = "Уровень персонажа", required = true)
+        @Schema(description = "РЈСЂРѕРІРµРЅСЊ РїРµСЂСЃРѕРЅР°Р¶Р°", required = true)
         @NotNull
         public Integer getLevel() {
             return level;
@@ -151,9 +151,9 @@ public class WelcomeScreenResponse {
     }
 
     /**
-     * Кнопка на приветственном экране
+     * РљРЅРѕРїРєР° РЅР° РїСЂРёРІРµС‚СЃС‚РІРµРЅРЅРѕРј СЌРєСЂР°РЅРµ
      */
-    @Schema(description = "Кнопка")
+    @Schema(description = "РљРЅРѕРїРєР°")
     public static class WelcomeButton {
         @JsonProperty("id")
         private String id;
@@ -161,7 +161,7 @@ public class WelcomeScreenResponse {
         @JsonProperty("label")
         private String label;
 
-        @Schema(description = "ID кнопки")
+        @Schema(description = "ID РєРЅРѕРїРєРё")
         public String getId() {
             return id;
         }
@@ -170,7 +170,7 @@ public class WelcomeScreenResponse {
             this.id = id;
         }
 
-        @Schema(description = "Текст кнопки")
+        @Schema(description = "РўРµРєСЃС‚ РєРЅРѕРїРєРё")
         public String getLabel() {
             return label;
         }

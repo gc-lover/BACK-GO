@@ -17,10 +17,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Штрафы к лимиту
+ * РЁС‚СЂР°С„С‹ Рє Р»РёРјРёС‚Сѓ
  */
 
-@Schema(name = "ImplantLimitCalculation_penalties", description = "Штрафы к лимиту")
+@Schema(name = "ImplantLimitCalculation_penalties", description = "РЁС‚СЂР°С„С‹ Рє Р»РёРјРёС‚Сѓ")
 @JsonTypeName("ImplantLimitCalculation_penalties")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class ImplantLimitCalculationPenalties {

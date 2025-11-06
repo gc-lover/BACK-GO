@@ -142,7 +142,7 @@ public class Quest {
    * @return name
    */
   @NotNull 
-  @Schema(name = "name", example = "Найти торговца", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "name", example = "РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -162,7 +162,7 @@ public class Quest {
    * @return description
    */
   @NotNull 
-  @Schema(name = "description", example = "Найдите торговца Джейка в районе Watson", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "description", example = "РќР°Р№РґРёС‚Рµ С‚РѕСЂРіРѕРІС†Р° Р”Р¶РµР№РєР° РІ СЂР°Р№РѕРЅРµ Watson", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {
     return description;
@@ -287,11 +287,11 @@ public class Quest {
   }
 
   /**
-   * NPC ID который дает квест
+   * NPC ID РєРѕС‚РѕСЂС‹Р№ РґР°РµС‚ РєРІРµСЃС‚
    * @return giver
    */
   
-  @Schema(name = "giver", example = "npc_trader_joe", description = "NPC ID который дает квест", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "giver", example = "npc_trader_joe", description = "NPC ID РєРѕС‚РѕСЂС‹Р№ РґР°РµС‚ РєРІРµСЃС‚", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("giver")
   public @Nullable String getGiver() {
     return giver;
@@ -307,11 +307,11 @@ public class Quest {
   }
 
   /**
-   * Локация где можно принять квест
+   * Р›РѕРєР°С†РёСЏ РіРґРµ РјРѕР¶РЅРѕ РїСЂРёРЅСЏС‚СЊ РєРІРµСЃС‚
    * @return location
    */
   
-  @Schema(name = "location", description = "Локация где можно принять квест", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "location", description = "Р›РѕРєР°С†РёСЏ РіРґРµ РјРѕР¶РЅРѕ РїСЂРёРЅСЏС‚СЊ РєРІРµСЃС‚", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("location")
   public @Nullable String getLocation() {
     return location;
@@ -347,11 +347,11 @@ public class Quest {
   }
 
   /**
-   * Лимит времени в минутах
+   * Р›РёРјРёС‚ РІСЂРµРјРµРЅРё РІ РјРёРЅСѓС‚Р°С…
    * @return timeLimit
    */
   
-  @Schema(name = "timeLimit", description = "Лимит времени в минутах", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "timeLimit", description = "Р›РёРјРёС‚ РІСЂРµРјРµРЅРё РІ РјРёРЅСѓС‚Р°С…", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("timeLimit")
   public JsonNullable<Integer> getTimeLimit() {
     return timeLimit;

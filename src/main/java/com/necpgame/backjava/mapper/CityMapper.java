@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 import java.util.stream.Collectors;
 
 /**
- * Mapper для преобразования CityEntity ↔ City DTO
+ * Mapper РґР»СЏ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ CityEntity в†” City DTO
  */
 @Component
 public class CityMapper {
     
     /**
-     * Преобразовать Entity в DTO
+     * РџСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ Entity РІ DTO
      */
     public City toDto(CityEntity entity) {
         if (entity == null) {

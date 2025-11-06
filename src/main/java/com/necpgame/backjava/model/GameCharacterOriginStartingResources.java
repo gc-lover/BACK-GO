@@ -50,11 +50,11 @@ public class GameCharacterOriginStartingResources {
   }
 
   /**
-   * Стартовая валюта
+   * РЎС‚Р°СЂС‚РѕРІР°СЏ РІР°Р»СЋС‚Р°
    * @return currency
    */
   @NotNull 
-  @Schema(name = "currency", example = "1000", description = "Стартовая валюта", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "currency", example = "1000", description = "РЎС‚Р°СЂС‚РѕРІР°СЏ РІР°Р»СЋС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("currency")
   public Integer getCurrency() {
     return currency;
@@ -78,11 +78,11 @@ public class GameCharacterOriginStartingResources {
   }
 
   /**
-   * Список стартовых предметов
+   * РЎРїРёСЃРѕРє СЃС‚Р°СЂС‚РѕРІС‹С… РїСЂРµРґРјРµС‚РѕРІ
    * @return items
    */
   @NotNull 
-  @Schema(name = "items", example = "[\"basic_pistol\",\"street_clothes\"]", description = "Список стартовых предметов", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "items", example = "[\"basic_pistol\",\"street_clothes\"]", description = "РЎРїРёСЃРѕРє СЃС‚Р°СЂС‚РѕРІС‹С… РїСЂРµРґРјРµС‚РѕРІ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("items")
   public List<String> getItems() {
     return items;

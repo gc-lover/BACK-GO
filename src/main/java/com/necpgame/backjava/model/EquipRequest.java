@@ -29,7 +29,7 @@ public class EquipRequest {
   private String itemId;
 
   /**
-   * Тип слота экипировки
+   * РўРёРї СЃР»РѕС‚Р° СЌРєРёРїРёСЂРѕРІРєРё
    */
   public enum SlotTypeEnum {
     HEAD("head"),
@@ -98,11 +98,11 @@ public class EquipRequest {
   }
 
   /**
-   * ID персонажа
+   * ID РїРµСЂСЃРѕРЅР°Р¶Р°
    * @return characterId
    */
   @NotNull @Valid 
-  @Schema(name = "characterId", example = "550e8400-e29b-41d4-a716-446655440000", description = "ID персонажа", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "characterId", example = "550e8400-e29b-41d4-a716-446655440000", description = "ID РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("characterId")
   public UUID getCharacterId() {
     return characterId;
@@ -118,11 +118,11 @@ public class EquipRequest {
   }
 
   /**
-   * ID предмета для экипировки
+   * ID РїСЂРµРґРјРµС‚Р° РґР»СЏ СЌРєРёРїРёСЂРѕРІРєРё
    * @return itemId
    */
   @NotNull 
-  @Schema(name = "itemId", example = "item_pistol_01", description = "ID предмета для экипировки", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "itemId", example = "item_pistol_01", description = "ID РїСЂРµРґРјРµС‚Р° РґР»СЏ СЌРєРёРїРёСЂРѕРІРєРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("itemId")
   public String getItemId() {
     return itemId;
@@ -138,11 +138,11 @@ public class EquipRequest {
   }
 
   /**
-   * Тип слота экипировки
+   * РўРёРї СЃР»РѕС‚Р° СЌРєРёРїРёСЂРѕРІРєРё
    * @return slotType
    */
   @NotNull 
-  @Schema(name = "slotType", example = "weapon_primary", description = "Тип слота экипировки", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "slotType", example = "weapon_primary", description = "РўРёРї СЃР»РѕС‚Р° СЌРєРёРїРёСЂРѕРІРєРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("slotType")
   public SlotTypeEnum getSlotType() {
     return slotType;

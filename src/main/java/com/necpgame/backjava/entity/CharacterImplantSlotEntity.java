@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 import java.util.UUID;
 
 /**
- * JPA Entity для слотов имплантов персонажа по типам.
+ * JPA Entity РґР»СЏ СЃР»РѕС‚РѕРІ РёРјРїР»Р°РЅС‚РѕРІ РїРµСЂСЃРѕРЅР°Р¶Р° РїРѕ С‚РёРїР°Рј.
  * 
- * Связанная таблица: character_implant_slots
- * Источник: API-SWAGGER/api/v1/gameplay/combat/implants-limits.yaml
+ * РЎРІСЏР·Р°РЅРЅР°СЏ С‚Р°Р±Р»РёС†Р°: character_implant_slots
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/gameplay/combat/implants-limits.yaml
  */
 @Data
 @NoArgsConstructor
@@ -40,7 +40,7 @@ public class CharacterImplantSlotEntity {
     private CharacterEntity character;
     
     /**
-     * Тип слота: neural, skeletal, optical, circulatory, dermal, internal
+     * РўРёРї СЃР»РѕС‚Р°: neural, skeletal, optical, circulatory, dermal, internal
      */
     @Column(name = "slot_type", nullable = false, length = 50)
     @Enumerated(EnumType.STRING)

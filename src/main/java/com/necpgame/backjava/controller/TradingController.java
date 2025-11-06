@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 /**
- * REST Controller для работы с торговлей.
+ * REST Controller РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ С‚РѕСЂРіРѕРІР»РµР№.
  * 
- * Реализует контракт {@link TradingApi}, сгенерированный из OpenAPI спецификации.
- * Источник: API-SWAGGER/api/v1/trading/trading.yaml
+ * Р РµР°Р»РёР·СѓРµС‚ РєРѕРЅС‚СЂР°РєС‚ {@link TradingApi}, СЃРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅС‹Р№ РёР· OpenAPI СЃРїРµС†РёС„РёРєР°С†РёРё.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/trading/trading.yaml
  */
 @Slf4j
 @RestController

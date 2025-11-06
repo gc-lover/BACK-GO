@@ -24,10 +24,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Стоимость лечения. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Экономика управления 
+ * РЎС‚РѕРёРјРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Р­РєРѕРЅРѕРјРёРєР° СѓРїСЂР°РІР»РµРЅРёСЏ 
  */
 
-@Schema(name = "TreatmentCosts", description = "Стоимость лечения. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Экономика управления ")
+@Schema(name = "TreatmentCosts", description = "РЎС‚РѕРёРјРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Р­РєРѕРЅРѕРјРёРєР° СѓРїСЂР°РІР»РµРЅРёСЏ ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class TreatmentCosts {
 
@@ -62,12 +62,12 @@ public class TreatmentCosts {
   }
 
   /**
-   * Базовая стоимость лечения
+   * Р‘Р°Р·РѕРІР°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ
    * minimum: 0
    * @return baseCost
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "base_cost", description = "Базовая стоимость лечения", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "base_cost", description = "Р‘Р°Р·РѕРІР°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("base_cost")
   public Float getBaseCost() {
     return baseCost;
@@ -91,11 +91,11 @@ public class TreatmentCosts {
   }
 
   /**
-   * Модификаторы стоимости
+   * РњРѕРґРёС„РёРєР°С‚РѕСЂС‹ СЃС‚РѕРёРјРѕСЃС‚Рё
    * @return modifiers
    */
   @Valid 
-  @Schema(name = "modifiers", description = "Модификаторы стоимости", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "modifiers", description = "РњРѕРґРёС„РёРєР°С‚РѕСЂС‹ СЃС‚РѕРёРјРѕСЃС‚Рё", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("modifiers")
   public JsonNullable<Map<String, BigDecimal>> getModifiers() {
     return modifiers;
@@ -111,12 +111,12 @@ public class TreatmentCosts {
   }
 
   /**
-   * Итоговая стоимость лечения
+   * РС‚РѕРіРѕРІР°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ
    * minimum: 0
    * @return totalCost
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "total_cost", description = "Итоговая стоимость лечения", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "total_cost", description = "РС‚РѕРіРѕРІР°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("total_cost")
   public Float getTotalCost() {
     return totalCost;
@@ -132,11 +132,11 @@ public class TreatmentCosts {
   }
 
   /**
-   * Валюта
+   * Р’Р°Р»СЋС‚Р°
    * @return currency
    */
   @NotNull 
-  @Schema(name = "currency", description = "Валюта", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "currency", description = "Р’Р°Р»СЋС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("currency")
   public String getCurrency() {
     return currency;
@@ -160,11 +160,11 @@ public class TreatmentCosts {
   }
 
   /**
-   * Примененные скидки
+   * РџСЂРёРјРµРЅРµРЅРЅС‹Рµ СЃРєРёРґРєРё
    * @return discounts
    */
   
-  @Schema(name = "discounts", description = "Примененные скидки", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "discounts", description = "РџСЂРёРјРµРЅРµРЅРЅС‹Рµ СЃРєРёРґРєРё", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("discounts")
   public List<Object> getDiscounts() {
     return discounts;

@@ -52,26 +52,26 @@ public interface NpcsApi {
 
     String PATH_GET_NPC_DETAILS = "/npcs/{npcId}";
     /**
-     * GET /npcs/{npcId} : Детали NPC
+     * GET /npcs/{npcId} : Р”РµС‚Р°Р»Рё NPC
      *
      * @param npcId  (required)
      * @param characterId  (required)
-     * @return Детали NPC (status code 200)
-     *         or Запрошенный ресурс не найден.  (status code 404)
+     * @return Р”РµС‚Р°Р»Рё NPC (status code 200)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
      */
     @Operation(
         operationId = "getNPCDetails",
-        summary = "Детали NPC",
+        summary = "Р”РµС‚Р°Р»Рё NPC",
         tags = { "NPCs" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Детали NPC", content = {
+            @ApiResponse(responseCode = "200", description = "Р”РµС‚Р°Р»Рё NPC", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = NPC.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
@@ -98,7 +98,7 @@ public interface NpcsApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -111,18 +111,18 @@ public interface NpcsApi {
 
     String PATH_GET_NPC_DIALOGUE = "/npcs/{npcId}/dialogue";
     /**
-     * GET /npcs/{npcId}/dialogue : Диалог с NPC
+     * GET /npcs/{npcId}/dialogue : Р”РёР°Р»РѕРі СЃ NPC
      *
      * @param npcId  (required)
      * @param characterId  (required)
-     * @return Диалог с NPC (status code 200)
+     * @return Р”РёР°Р»РѕРі СЃ NPC (status code 200)
      */
     @Operation(
         operationId = "getNPCDialogue",
-        summary = "Диалог с NPC",
+        summary = "Р”РёР°Р»РѕРі СЃ NPC",
         tags = { "NPCs", "Dialogues" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Диалог с NPC", content = {
+            @ApiResponse(responseCode = "200", description = "Р”РёР°Р»РѕРі СЃ NPC", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = NPCDialogue.class))
             })
         },
@@ -155,26 +155,26 @@ public interface NpcsApi {
 
     String PATH_GET_NPCS = "/npcs";
     /**
-     * GET /npcs : Список всех NPC
+     * GET /npcs : РЎРїРёСЃРѕРє РІСЃРµС… NPC
      *
      * @param characterId  (required)
      * @param type  (optional)
-     * @return Список NPC (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     * @return РЎРїРёСЃРѕРє NPC (status code 200)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
      */
     @Operation(
         operationId = "getNPCs",
-        summary = "Список всех NPC",
+        summary = "РЎРїРёСЃРѕРє РІСЃРµС… NPC",
         tags = { "NPCs" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Список NPC", content = {
+            @ApiResponse(responseCode = "200", description = "РЎРїРёСЃРѕРє NPC", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GetNPCs200Response.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
@@ -201,7 +201,7 @@ public interface NpcsApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -214,18 +214,18 @@ public interface NpcsApi {
 
     String PATH_GET_NPCS_BY_LOCATION = "/npcs/location/{locationId}";
     /**
-     * GET /npcs/location/{locationId} : NPC в локации
+     * GET /npcs/location/{locationId} : NPC РІ Р»РѕРєР°С†РёРё
      *
      * @param locationId  (required)
      * @param characterId  (required)
-     * @return NPC в локации (status code 200)
+     * @return NPC РІ Р»РѕРєР°С†РёРё (status code 200)
      */
     @Operation(
         operationId = "getNPCsByLocation",
-        summary = "NPC в локации",
+        summary = "NPC РІ Р»РѕРєР°С†РёРё",
         tags = { "NPCs" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "NPC в локации", content = {
+            @ApiResponse(responseCode = "200", description = "NPC РІ Р»РѕРєР°С†РёРё", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GetNPCs200Response.class))
             })
         },
@@ -258,18 +258,18 @@ public interface NpcsApi {
 
     String PATH_INTERACT_WITH_NPC = "/npcs/{npcId}/interact";
     /**
-     * POST /npcs/{npcId}/interact : Взаимодействие с NPC
+     * POST /npcs/{npcId}/interact : Р’Р·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ NPC
      *
      * @param npcId  (required)
      * @param interactWithNPCRequest  (optional)
-     * @return Результат взаимодействия (status code 200)
+     * @return Р РµР·СѓР»СЊС‚Р°С‚ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёСЏ (status code 200)
      */
     @Operation(
         operationId = "interactWithNPC",
-        summary = "Взаимодействие с NPC",
+        summary = "Р’Р·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ СЃ NPC",
         tags = { "NPCs" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Результат взаимодействия", content = {
+            @ApiResponse(responseCode = "200", description = "Р РµР·СѓР»СЊС‚Р°С‚ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёСЏ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = InteractWithNPC200Response.class))
             })
         },
@@ -303,18 +303,18 @@ public interface NpcsApi {
 
     String PATH_RESPOND_TO_DIALOGUE = "/npcs/{npcId}/dialogue/respond";
     /**
-     * POST /npcs/{npcId}/dialogue/respond : Ответить в диалоге
+     * POST /npcs/{npcId}/dialogue/respond : РћС‚РІРµС‚РёС‚СЊ РІ РґРёР°Р»РѕРіРµ
      *
      * @param npcId  (required)
      * @param respondToDialogueRequest  (optional)
-     * @return Следующий диалог (status code 200)
+     * @return РЎР»РµРґСѓСЋС‰РёР№ РґРёР°Р»РѕРі (status code 200)
      */
     @Operation(
         operationId = "respondToDialogue",
-        summary = "Ответить в диалоге",
+        summary = "РћС‚РІРµС‚РёС‚СЊ РІ РґРёР°Р»РѕРіРµ",
         tags = { "NPCs", "Dialogues" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Следующий диалог", content = {
+            @ApiResponse(responseCode = "200", description = "РЎР»РµРґСѓСЋС‰РёР№ РґРёР°Р»РѕРі", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = NPCDialogue.class))
             })
         },

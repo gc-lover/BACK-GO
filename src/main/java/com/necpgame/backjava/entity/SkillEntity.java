@@ -10,9 +10,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 /**
- * SkillEntity - справочник навыков в игре.
+ * SkillEntity - СЃРїСЂР°РІРѕС‡РЅРёРє РЅР°РІС‹РєРѕРІ РІ РёРіСЂРµ.
  * 
- * Источник: API-SWAGGER/api/v1/characters/status.yaml (Skill schema)
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/characters/status.yaml (Skill schema)
  */
 @Entity
 @Table(name = "skills", indexes = {

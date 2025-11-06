@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * CombatSessionEntity - сессия боя.
+ * CombatSessionEntity - СЃРµСЃСЃРёСЏ Р±РѕСЏ.
  * 
- * Хранит информацию о боевой сессии (активный бой).
- * Источник: API-SWAGGER/api/v1/combat/combat.yaml (CombatState schema)
+ * РҐСЂР°РЅРёС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ Р±РѕРµРІРѕР№ СЃРµСЃСЃРёРё (Р°РєС‚РёРІРЅС‹Р№ Р±РѕР№).
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/combat/combat.yaml (CombatState schema)
  */
 @Entity
 @Table(name = "combat_sessions", indexes = {
@@ -42,7 +42,7 @@ public class CombatSessionEntity {
     private CombatStatus status = CombatStatus.ACTIVE;
 
     @Column(name = "current_turn", length = 100)
-    private String currentTurn; // ID участника, чей ход
+    private String currentTurn; // ID СѓС‡Р°СЃС‚РЅРёРєР°, С‡РµР№ С…РѕРґ
 
     @Column(name = "round", nullable = false)
     private Integer round = 1;
@@ -67,7 +67,7 @@ public class CombatSessionEntity {
     private CharacterEntity character;
 
     /**
-     * Статус боя (из OpenAPI - CombatState.status enum)
+     * РЎС‚Р°С‚СѓСЃ Р±РѕСЏ (РёР· OpenAPI - CombatState.status enum)
      */
     public enum CombatStatus {
         ACTIVE,

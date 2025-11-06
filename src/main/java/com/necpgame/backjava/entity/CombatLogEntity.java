@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * CombatLogEntity - лог боя (история действий).
+ * CombatLogEntity - Р»РѕРі Р±РѕСЏ (РёСЃС‚РѕСЂРёСЏ РґРµР№СЃС‚РІРёР№).
  * 
- * Хранит историю всех действий в боевой сессии.
- * Источник: API-SWAGGER/api/v1/combat/combat.yaml (CombatState.log)
+ * РҐСЂР°РЅРёС‚ РёСЃС‚РѕСЂРёСЋ РІСЃРµС… РґРµР№СЃС‚РІРёР№ РІ Р±РѕРµРІРѕР№ СЃРµСЃСЃРёРё.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/combat/combat.yaml (CombatState.log)
  */
 @Entity
 @Table(name = "combat_log", indexes = {
@@ -36,7 +36,7 @@ public class CombatLogEntity {
     private Integer round;
 
     @Column(name = "action_order", nullable = false)
-    private Integer actionOrder; // Порядок действия в раунде
+    private Integer actionOrder; // РџРѕСЂСЏРґРѕРє РґРµР№СЃС‚РІРёСЏ РІ СЂР°СѓРЅРґРµ
 
     @Column(name = "actor_id", length = 100)
     private String actorId;
@@ -48,7 +48,7 @@ public class CombatLogEntity {
     private String targetId;
 
     @Column(name = "message", nullable = false, length = 500)
-    private String message; // "Player атаковал Enemy и нанес 25 урона"
+    private String message; // "Player Р°С‚Р°РєРѕРІР°Р» Enemy Рё РЅР°РЅРµСЃ 25 СѓСЂРѕРЅР°"
 
     @Column(name = "damage_dealt")
     private Integer damageDealt;

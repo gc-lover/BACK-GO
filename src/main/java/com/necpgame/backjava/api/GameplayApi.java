@@ -52,17 +52,17 @@ public interface GameplayApi {
 
     String PATH_EXPLORE_LOCATION = "/gameplay/actions/explore";
     /**
-     * POST /gameplay/actions/explore : Осмотреться в локации
+     * POST /gameplay/actions/explore : РћСЃРјРѕС‚СЂРµС‚СЊСЃСЏ РІ Р»РѕРєР°С†РёРё
      *
      * @param exploreLocationRequest  (optional)
-     * @return Детальное описание локации (status code 200)
+     * @return Р”РµС‚Р°Р»СЊРЅРѕРµ РѕРїРёСЃР°РЅРёРµ Р»РѕРєР°С†РёРё (status code 200)
      */
     @Operation(
         operationId = "exploreLocation",
-        summary = "Осмотреться в локации",
+        summary = "РћСЃРјРѕС‚СЂРµС‚СЊСЃСЏ РІ Р»РѕРєР°С†РёРё",
         tags = { "Gameplay", "Actions" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Детальное описание локации", content = {
+            @ApiResponse(responseCode = "200", description = "Р”РµС‚Р°Р»СЊРЅРѕРµ РѕРїРёСЃР°РЅРёРµ Р»РѕРєР°С†РёРё", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ExploreLocation200Response.class))
             })
         },
@@ -95,17 +95,17 @@ public interface GameplayApi {
 
     String PATH_HACK_SYSTEM = "/gameplay/actions/hack";
     /**
-     * POST /gameplay/actions/hack : Хакнуть систему
+     * POST /gameplay/actions/hack : РҐР°РєРЅСѓС‚СЊ СЃРёСЃС‚РµРјСѓ
      *
      * @param hackSystemRequest  (optional)
-     * @return Результат взлома (status code 200)
+     * @return Р РµР·СѓР»СЊС‚Р°С‚ РІР·Р»РѕРјР° (status code 200)
      */
     @Operation(
         operationId = "hackSystem",
-        summary = "Хакнуть систему",
+        summary = "РҐР°РєРЅСѓС‚СЊ СЃРёСЃС‚РµРјСѓ",
         tags = { "Gameplay", "Actions" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Результат взлома", content = {
+            @ApiResponse(responseCode = "200", description = "Р РµР·СѓР»СЊС‚Р°С‚ РІР·Р»РѕРјР°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = HackSystem200Response.class))
             })
         },
@@ -138,17 +138,17 @@ public interface GameplayApi {
 
     String PATH_REST_ACTION = "/gameplay/actions/rest";
     /**
-     * POST /gameplay/actions/rest : Отдохнуть
+     * POST /gameplay/actions/rest : РћС‚РґРѕС…РЅСѓС‚СЊ
      *
      * @param restActionRequest  (optional)
-     * @return Результат отдыха (status code 200)
+     * @return Р РµР·СѓР»СЊС‚Р°С‚ РѕС‚РґС‹С…Р° (status code 200)
      */
     @Operation(
         operationId = "restAction",
-        summary = "Отдохнуть",
+        summary = "РћС‚РґРѕС…РЅСѓС‚СЊ",
         tags = { "Gameplay", "Actions" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Результат отдыха", content = {
+            @ApiResponse(responseCode = "200", description = "Р РµР·СѓР»СЊС‚Р°С‚ РѕС‚РґС‹С…Р°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = RestAction200Response.class))
             })
         },
@@ -181,17 +181,17 @@ public interface GameplayApi {
 
     String PATH_USE_OBJECT = "/gameplay/actions/use";
     /**
-     * POST /gameplay/actions/use : Использовать объект в локации
+     * POST /gameplay/actions/use : РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РѕР±СЉРµРєС‚ РІ Р»РѕРєР°С†РёРё
      *
      * @param useObjectRequest  (optional)
-     * @return Результат использования объекта (status code 200)
+     * @return Р РµР·СѓР»СЊС‚Р°С‚ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РѕР±СЉРµРєС‚Р° (status code 200)
      */
     @Operation(
         operationId = "useObject",
-        summary = "Использовать объект в локации",
+        summary = "РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РѕР±СЉРµРєС‚ РІ Р»РѕРєР°С†РёРё",
         tags = { "Gameplay", "Actions" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Результат использования объекта", content = {
+            @ApiResponse(responseCode = "200", description = "Р РµР·СѓР»СЊС‚Р°С‚ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РѕР±СЉРµРєС‚Р°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = UseObject200Response.class))
             })
         },

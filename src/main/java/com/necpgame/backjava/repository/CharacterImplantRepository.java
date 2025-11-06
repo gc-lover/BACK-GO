@@ -9,33 +9,33 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Repository для управления установленными имплантами персонажа.
+ * Repository РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹РјРё РёРјРїР»Р°РЅС‚Р°РјРё РїРµСЂСЃРѕРЅР°Р¶Р°.
  * 
- * Источник: API-SWAGGER/api/v1/gameplay/combat/implants-limits.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/gameplay/combat/implants-limits.yaml
  */
 @Repository
 public interface CharacterImplantRepository extends JpaRepository<CharacterImplantEntity, UUID> {
     
     /**
-     * Найти все импланты персонажа.
+     * РќР°Р№С‚Рё РІСЃРµ РёРјРїР»Р°РЅС‚С‹ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT ci FROM CharacterImplantEntity ci WHERE ci.character.id = :characterId")
     List<CharacterImplantEntity> findByCharacterId(UUID characterId);
     
     /**
-     * Найти активные импланты персонажа.
+     * РќР°Р№С‚Рё Р°РєС‚РёРІРЅС‹Рµ РёРјРїР»Р°РЅС‚С‹ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT ci FROM CharacterImplantEntity ci WHERE ci.character.id = :characterId AND ci.isActive = true")
     List<CharacterImplantEntity> findActiveByCharacterId(UUID characterId);
     
     /**
-     * Подсчитать количество активных имплантов персонажа.
+     * РџРѕРґСЃС‡РёС‚Р°С‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ Р°РєС‚РёРІРЅС‹С… РёРјРїР»Р°РЅС‚РѕРІ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT COUNT(ci) FROM CharacterImplantEntity ci WHERE ci.character.id = :characterId AND ci.isActive = true")
     Long countActiveByCharacterId(UUID characterId);
     
     /**
-     * Проверить существование установленного импланта у персонажа.
+     * РџСЂРѕРІРµСЂРёС‚СЊ СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅРѕРіРѕ РёРјРїР»Р°РЅС‚Р° Сѓ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT COUNT(ci) > 0 FROM CharacterImplantEntity ci WHERE ci.character.id = :characterId AND ci.implant.id = :implantId")
     boolean existsByCharacterIdAndImplantId(UUID characterId, String implantId);

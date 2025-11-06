@@ -7,9 +7,9 @@ import jakarta.validation.constraints.*;
 import java.util.Objects;
 
 /**
- * GameAction - действие в игре
+ * GameAction - РґРµР№СЃС‚РІРёРµ РІ РёРіСЂРµ
  */
-@Schema(description = "Действие в игре")
+@Schema(description = "Р”РµР№СЃС‚РІРёРµ РІ РёРіСЂРµ")
 public class GameAction {
 
     @JsonProperty("id")
@@ -24,7 +24,7 @@ public class GameAction {
     @JsonProperty("enabled")
     private Boolean enabled = true;
 
-    @Schema(description = "Уникальный идентификатор действия", required = true)
+    @Schema(description = "РЈРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РґРµР№СЃС‚РІРёСЏ", required = true)
     @NotNull
     public String getId() {
         return id;
@@ -34,7 +34,7 @@ public class GameAction {
         this.id = id;
     }
 
-    @Schema(description = "Название действия для отображения", required = true)
+    @Schema(description = "РќР°Р·РІР°РЅРёРµ РґРµР№СЃС‚РІРёСЏ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ", required = true)
     @NotNull
     @Size(min = 1, max = 100)
     public String getLabel() {
@@ -45,7 +45,7 @@ public class GameAction {
         this.label = label;
     }
 
-    @Schema(description = "Описание действия")
+    @Schema(description = "РћРїРёСЃР°РЅРёРµ РґРµР№СЃС‚РІРёСЏ")
     @Size(max = 500)
     public String getDescription() {
         return description;
@@ -55,7 +55,7 @@ public class GameAction {
         this.description = description;
     }
 
-    @Schema(description = "Доступно ли действие в данный момент")
+    @Schema(description = "Р”РѕСЃС‚СѓРїРЅРѕ Р»Рё РґРµР№СЃС‚РІРёРµ РІ РґР°РЅРЅС‹Р№ РјРѕРјРµРЅС‚")
     public Boolean getEnabled() {
         return enabled;
     }

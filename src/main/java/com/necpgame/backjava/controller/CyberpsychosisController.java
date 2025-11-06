@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * REST Controller для работы с системой киберпсихоза.
+ * REST Controller РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ СЃРёСЃС‚РµРјРѕР№ РєРёР±РµСЂРїСЃРёС…РѕР·Р°.
  * 
- * Реализует контракт {@link GameplayCyberpsychosisApi}, сгенерированный из OpenAPI спецификации.
- * Источник: API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
+ * Р РµР°Р»РёР·СѓРµС‚ РєРѕРЅС‚СЂР°РєС‚ {@link GameplayCyberpsychosisApi}, СЃРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅС‹Р№ РёР· OpenAPI СЃРїРµС†РёС„РёРєР°С†РёРё.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
  */
 @Slf4j
 @RestController
@@ -24,7 +24,7 @@ public class CyberpsychosisController implements GameplayCyberpsychosisApi {
     
     private final CyberpsychosisService service;
     
-    // ===== Управление человечностью =====
+    // ===== РЈРїСЂР°РІР»РµРЅРёРµ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚СЊСЋ =====
     
     @Override
     public ResponseEntity<HumanityInfo> getHumanity(UUID playerId) {
@@ -44,7 +44,7 @@ public class CyberpsychosisController implements GameplayCyberpsychosisApi {
         return ResponseEntity.ok(service.applyHumanityLoss(playerId, applyLossRequest));
     }
     
-    // ===== Стадии киберпсихоза =====
+    // ===== РЎС‚Р°РґРёРё РєРёР±РµСЂРїСЃРёС…РѕР·Р° =====
     
     @Override
     public ResponseEntity<CyberpsychosisStage> getCyberpsychosisStage(UUID playerId) {
@@ -64,7 +64,7 @@ public class CyberpsychosisController implements GameplayCyberpsychosisApi {
         return ResponseEntity.ok(service.getStageInfo(stageId));
     }
     
-    // ===== Прогрессия киберпсихоза =====
+    // ===== РџСЂРѕРіСЂРµСЃСЃРёСЏ РєРёР±РµСЂРїСЃРёС…РѕР·Р° =====
     
     @Override
     public ResponseEntity<ProgressionInfo> getProgression(UUID playerId) {
@@ -84,7 +84,7 @@ public class CyberpsychosisController implements GameplayCyberpsychosisApi {
         return ResponseEntity.ok(service.triggerProgression(playerId, triggerProgressionRequest));
     }
     
-    // ===== Последствия киберпсихоза =====
+    // ===== РџРѕСЃР»РµРґСЃС‚РІРёСЏ РєРёР±РµСЂРїСЃРёС…РѕР·Р° =====
     
     @Override
     public ResponseEntity<ConsequencesInfo> getConsequences(UUID playerId) {
@@ -104,7 +104,7 @@ public class CyberpsychosisController implements GameplayCyberpsychosisApi {
         return ResponseEntity.ok(service.getSocialEffects(playerId));
     }
     
-    // ===== Управление киберпсихозом =====
+    // ===== РЈРїСЂР°РІР»РµРЅРёРµ РєРёР±РµСЂРїСЃРёС…РѕР·РѕРј =====
     
     @Override
     public ResponseEntity<PreventionResult> applyPrevention(UUID playerId, ApplyPreventionRequest applyPreventionRequest) {
@@ -118,7 +118,7 @@ public class CyberpsychosisController implements GameplayCyberpsychosisApi {
         return ResponseEntity.ok(service.applyTreatment(playerId, applyTreatmentRequest));
     }
     
-    // TODO: Временно закомментировано из-за несоответствия API интерфейсу
+    // TODO: Р’СЂРµРјРµРЅРЅРѕ Р·Р°РєРѕРјРјРµРЅС‚РёСЂРѕРІР°РЅРѕ РёР·-Р·Р° РЅРµСЃРѕРѕС‚РІРµС‚СЃС‚РІРёСЏ API РёРЅС‚РµСЂС„РµР№СЃСѓ
     // @Override
     // public ResponseEntity<GetTreatments200Response> getTreatments(UUID playerId) {
     //     log.info("GET /gameplay/combat/cyberpsychosis/{}/treatments", playerId);

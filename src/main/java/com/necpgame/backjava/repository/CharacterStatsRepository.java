@@ -9,21 +9,21 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * CharacterStatsRepository - репозиторий для работы с характеристиками персонажа.
+ * CharacterStatsRepository - СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєР°РјРё РїРµСЂСЃРѕРЅР°Р¶Р°.
  * 
- * Источник: API-SWAGGER/api/v1/characters/status.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/characters/status.yaml
  */
 @Repository
 public interface CharacterStatsRepository extends JpaRepository<CharacterStatsEntity, UUID> {
 
     /**
-     * Найти характеристики персонажа.
+     * РќР°Р№С‚Рё С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT cs FROM CharacterStatsEntity cs WHERE cs.characterId = :characterId")
     Optional<CharacterStatsEntity> findByCharacterId(UUID characterId);
 
     /**
-     * Проверить существование характеристик персонажа.
+     * РџСЂРѕРІРµСЂРёС‚СЊ СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРє РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT COUNT(cs) > 0 FROM CharacterStatsEntity cs WHERE cs.characterId = :characterId")
     boolean existsByCharacterId(UUID characterId);

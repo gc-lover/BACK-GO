@@ -11,18 +11,18 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Repository для работы с фракциями (справочник)
+ * Repository РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ С„СЂР°РєС†РёСЏРјРё (СЃРїСЂР°РІРѕС‡РЅРёРє)
  */
 @Repository
 public interface FactionRepository extends JpaRepository<FactionEntity, UUID> {
     
     /**
-     * Найти фракцию по ID
+     * РќР°Р№С‚Рё С„СЂР°РєС†РёСЋ РїРѕ ID
      */
     Optional<FactionEntity> findById(UUID id);
     
     /**
-     * Найти фракции, доступные для происхождения
+     * РќР°Р№С‚Рё С„СЂР°РєС†РёРё, РґРѕСЃС‚СѓРїРЅС‹Рµ РґР»СЏ РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёСЏ
      */
     @Query("SELECT f FROM FactionEntity f " +
            "JOIN f.origins o " +
@@ -30,7 +30,7 @@ public interface FactionRepository extends JpaRepository<FactionEntity, UUID> {
     List<FactionEntity> findByAvailableForOrigin(@Param("originCode") String originCode);
     
     /**
-     * Получить все фракции
+     * РџРѕР»СѓС‡РёС‚СЊ РІСЃРµ С„СЂР°РєС†РёРё
      */
     List<FactionEntity> findAll();
 }

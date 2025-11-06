@@ -10,8 +10,8 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 /**
- * Entity для таблицы characters - персонажи игроков
- * Соответствует Character DTO из OpenAPI спецификации
+ * Entity РґР»СЏ С‚Р°Р±Р»РёС†С‹ characters - РїРµСЂСЃРѕРЅР°Р¶Рё РёРіСЂРѕРєРѕРІ
+ * РЎРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ Character DTO РёР· OpenAPI СЃРїРµС†РёС„РёРєР°С†РёРё
  */
 @Data
 @Entity
@@ -41,17 +41,17 @@ public class CharacterEntity {
     private String name;
     
     @Column(name = "class_code", nullable = false, length = 50)
-    private String classCode; // Solo, Netrunner, etc. - ссылка на CharacterClass
+    private String classCode; // Solo, Netrunner, etc. - СЃСЃС‹Р»РєР° РЅР° CharacterClass
     
     @Column(name = "subclass_code", length = 50)
-    private String subclassCode; // solo_assassin, etc. - ссылка на CharacterSubclass
+    private String subclassCode; // solo_assassin, etc. - СЃСЃС‹Р»РєР° РЅР° CharacterSubclass
     
     @Column(name = "gender", nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
     private Gender gender;
     
     @Column(name = "origin_code", nullable = false, length = 50)
-    private String originCode; // street_kid, corpo, nomad - ссылка на CharacterOrigin
+    private String originCode; // street_kid, corpo, nomad - СЃСЃС‹Р»РєР° РЅР° CharacterOrigin
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "faction_id")
@@ -75,7 +75,7 @@ public class CharacterEntity {
     @Column(name = "last_login")
     private OffsetDateTime lastLogin;
     
-    // Enum для пола
+    // Enum РґР»СЏ РїРѕР»Р°
     public enum Gender {
         male,
         female,

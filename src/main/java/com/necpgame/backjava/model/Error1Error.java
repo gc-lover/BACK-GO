@@ -53,11 +53,11 @@ public class Error1Error {
   }
 
   /**
-   * Код ошибки для программной обработки
+   * РљРѕРґ РѕС€РёР±РєРё РґР»СЏ РїСЂРѕРіСЂР°РјРјРЅРѕР№ РѕР±СЂР°Р±РѕС‚РєРё
    * @return code
    */
   @NotNull 
-  @Schema(name = "code", example = "VALIDATION_ERROR", description = "Код ошибки для программной обработки", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "code", example = "VALIDATION_ERROR", description = "РљРѕРґ РѕС€РёР±РєРё РґР»СЏ РїСЂРѕРіСЂР°РјРјРЅРѕР№ РѕР±СЂР°Р±РѕС‚РєРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("code")
   public String getCode() {
     return code;
@@ -73,11 +73,11 @@ public class Error1Error {
   }
 
   /**
-   * Человекочитаемое сообщение об ошибке
+   * Р§РµР»РѕРІРµРєРѕС‡РёС‚Р°РµРјРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ
    * @return message
    */
   @NotNull 
-  @Schema(name = "message", example = "Неверные параметры запроса", description = "Человекочитаемое сообщение об ошибке", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "message", example = "РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°", description = "Р§РµР»РѕРІРµРєРѕС‡РёС‚Р°РµРјРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("message")
   public String getMessage() {
     return message;
@@ -101,11 +101,11 @@ public class Error1Error {
   }
 
   /**
-   * Детальная информация об ошибке (опционально)
+   * Р”РµС‚Р°Р»СЊРЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ РѕР± РѕС€РёР±РєРµ (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ)
    * @return details
    */
   @Valid 
-  @Schema(name = "details", description = "Детальная информация об ошибке (опционально)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "details", description = "Р”РµС‚Р°Р»СЊРЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ РѕР± РѕС€РёР±РєРµ (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("details")
   public List<@Valid Error1ErrorDetailsInner> getDetails() {
     return details;

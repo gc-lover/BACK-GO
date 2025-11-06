@@ -21,15 +21,15 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Информация о стадии киберпсихоза. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Симптомы по стадиям 
+ * РРЅС„РѕСЂРјР°С†РёСЏ Рѕ СЃС‚Р°РґРёРё РєРёР±РµСЂРїСЃРёС…РѕР·Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РЎРёРјРїС‚РѕРјС‹ РїРѕ СЃС‚Р°РґРёСЏРј 
  */
 
-@Schema(name = "StageInfo", description = "Информация о стадии киберпсихоза. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Симптомы по стадиям ")
+@Schema(name = "StageInfo", description = "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ СЃС‚Р°РґРёРё РєРёР±РµСЂРїСЃРёС…РѕР·Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РЎРёРјРїС‚РѕРјС‹ РїРѕ СЃС‚Р°РґРёСЏРј ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class StageInfo {
 
   /**
-   * Название стадии
+   * РќР°Р·РІР°РЅРёРµ СЃС‚Р°РґРёРё
    */
   public enum NameEnum {
     EARLY("early"),
@@ -101,11 +101,11 @@ public class StageInfo {
   }
 
   /**
-   * Название стадии
+   * РќР°Р·РІР°РЅРёРµ СЃС‚Р°РґРёРё
    * @return name
    */
   @NotNull 
-  @Schema(name = "name", description = "Название стадии", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "name", description = "РќР°Р·РІР°РЅРёРµ СЃС‚Р°РґРёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("name")
   public NameEnum getName() {
     return name;
@@ -149,11 +149,11 @@ public class StageInfo {
   }
 
   /**
-   * Список возможных симптомов для стадии
+   * РЎРїРёСЃРѕРє РІРѕР·РјРѕР¶РЅС‹С… СЃРёРјРїС‚РѕРјРѕРІ РґР»СЏ СЃС‚Р°РґРёРё
    * @return symptoms
    */
   @NotNull 
-  @Schema(name = "symptoms", description = "Список возможных симптомов для стадии", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "symptoms", description = "РЎРїРёСЃРѕРє РІРѕР·РјРѕР¶РЅС‹С… СЃРёРјРїС‚РѕРјРѕРІ РґР»СЏ СЃС‚Р°РґРёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("symptoms")
   public List<Object> getSymptoms() {
     return symptoms;
@@ -177,11 +177,11 @@ public class StageInfo {
   }
 
   /**
-   * Эффекты стадии
+   * Р­С„С„РµРєС‚С‹ СЃС‚Р°РґРёРё
    * @return effects
    */
   @NotNull 
-  @Schema(name = "effects", description = "Эффекты стадии", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "effects", description = "Р­С„С„РµРєС‚С‹ СЃС‚Р°РґРёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("effects")
   public List<Object> getEffects() {
     return effects;
@@ -205,11 +205,11 @@ public class StageInfo {
   }
 
   /**
-   * Последствия стадии
+   * РџРѕСЃР»РµРґСЃС‚РІРёСЏ СЃС‚Р°РґРёРё
    * @return consequences
    */
   @NotNull 
-  @Schema(name = "consequences", description = "Последствия стадии", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "consequences", description = "РџРѕСЃР»РµРґСЃС‚РІРёСЏ СЃС‚Р°РґРёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("consequences")
   public List<Object> getConsequences() {
     return consequences;

@@ -10,10 +10,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 /**
- * JPA Entity для методов лечения киберпсихоза (справочник).
+ * JPA Entity РґР»СЏ РјРµС‚РѕРґРѕРІ Р»РµС‡РµРЅРёСЏ РєРёР±РµСЂРїСЃРёС…РѕР·Р° (СЃРїСЂР°РІРѕС‡РЅРёРє).
  * 
- * Связанная таблица: cyberpsychosis_treatments
- * Источник: API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
+ * РЎРІСЏР·Р°РЅРЅР°СЏ С‚Р°Р±Р»РёС†Р°: cyberpsychosis_treatments
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
  */
 @Data
 @NoArgsConstructor
@@ -39,7 +39,7 @@ public class CyberpsychosisTreatmentEntity {
     private String description;
     
     /**
-     * Тип лечения: therapy, medication, implant_removal, detox, social_support
+     * РўРёРї Р»РµС‡РµРЅРёСЏ: therapy, medication, implant_removal, detox, social_support
      */
     @Column(name = "type", nullable = false, length = 50)
     @Enumerated(EnumType.STRING)
@@ -55,7 +55,7 @@ public class CyberpsychosisTreatmentEntity {
     private Integer durationHours = 1;
     
     /**
-     * Минимальная стадия для применения: early, middle, late, cyberpsychosis
+     * РњРёРЅРёРјР°Р»СЊРЅР°СЏ СЃС‚Р°РґРёСЏ РґР»СЏ РїСЂРёРјРµРЅРµРЅРёСЏ: early, middle, late, cyberpsychosis
      */
     @Column(name = "required_stage", length = 50)
     @Enumerated(EnumType.STRING)

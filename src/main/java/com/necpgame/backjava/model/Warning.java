@@ -17,17 +17,17 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Предупреждение
+ * РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ
  */
 
-@Schema(name = "Warning", description = "Предупреждение")
+@Schema(name = "Warning", description = "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class Warning {
 
   private String message;
 
   /**
-   * Тип предупреждения
+   * РўРёРї РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ
    */
   public enum TypeEnum {
     COMPATIBILITY("compatibility"),
@@ -85,11 +85,11 @@ public class Warning {
   }
 
   /**
-   * Текст предупреждения
+   * РўРµРєСЃС‚ РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ
    * @return message
    */
   @NotNull 
-  @Schema(name = "message", description = "Текст предупреждения", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "message", description = "РўРµРєСЃС‚ РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("message")
   public String getMessage() {
     return message;
@@ -105,11 +105,11 @@ public class Warning {
   }
 
   /**
-   * Тип предупреждения
+   * РўРёРї РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ
    * @return type
    */
   @NotNull 
-  @Schema(name = "type", description = "Тип предупреждения", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "type", description = "РўРёРї РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("type")
   public TypeEnum getType() {
     return type;

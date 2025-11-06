@@ -15,9 +15,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Реализация сервиса для работы с NPC и диалогами.
+ * Р РµР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІРёСЃР° РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ NPC Рё РґРёР°Р»РѕРіР°РјРё.
  * 
- * Источник: API-SWAGGER/api/v1/npcs/npcs.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/npcs/npcs.yaml
  */
 @Slf4j
 @Service
@@ -35,7 +35,7 @@ public class NPCsServiceImpl implements NPCsService {
     public GetNPCs200Response getNPCs(UUID characterId, String type) {
         log.info("Getting NPCs for character: {}, type: {}", characterId, type);
         
-        // TODO: Полная реализация с фильтрацией по типу
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ СЃ С„РёР»СЊС‚СЂР°С†РёРµР№ РїРѕ С‚РёРїСѓ
         return null;
     }
     
@@ -44,7 +44,7 @@ public class NPCsServiceImpl implements NPCsService {
     public GetNPCs200Response getNPCsByLocation(String locationId, UUID characterId) {
         log.info("Getting NPCs in location: {} for character: {}", locationId, characterId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -53,7 +53,7 @@ public class NPCsServiceImpl implements NPCsService {
     public NPC getNPCDetails(String npcId, UUID characterId) {
         log.info("Getting NPC details: {} for character: {}", npcId, characterId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -62,7 +62,7 @@ public class NPCsServiceImpl implements NPCsService {
     public NPCDialogue getNPCDialogue(String npcId, UUID characterId) {
         log.info("Getting dialogue with NPC: {} for character: {}", npcId, characterId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -71,7 +71,7 @@ public class NPCsServiceImpl implements NPCsService {
     public InteractWithNPC200Response interactWithNPC(String npcId, InteractWithNPCRequest request) {
         log.info("Interacting with NPC: {}", npcId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -80,7 +80,7 @@ public class NPCsServiceImpl implements NPCsService {
     public NPCDialogue respondToDialogue(String npcId, RespondToDialogueRequest request) {
         log.info("Responding to dialogue with NPC: {}, optionId: {}", npcId, request.getOptionId());
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
 }

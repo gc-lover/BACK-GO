@@ -8,31 +8,31 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * TutorialProgressRepository - репозиторий для работы с прогрессом туториала.
+ * TutorialProgressRepository - СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РїСЂРѕРіСЂРµСЃСЃРѕРј С‚СѓС‚РѕСЂРёР°Р»Р°.
  */
 @Repository
 public interface TutorialProgressRepository extends JpaRepository<TutorialProgressEntity, UUID> {
 
     /**
-     * Найти прогресс туториала для персонажа.
+     * РќР°Р№С‚Рё РїСЂРѕРіСЂРµСЃСЃ С‚СѓС‚РѕСЂРёР°Р»Р° РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°.
      *
-     * @param characterId ID персонажа
-     * @return прогресс туториала
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р°
+     * @return РїСЂРѕРіСЂРµСЃСЃ С‚СѓС‚РѕСЂРёР°Р»Р°
      */
     Optional<TutorialProgressEntity> findByCharacterId(UUID characterId);
 
     /**
-     * Проверить существование прогресса туториала для персонажа.
+     * РџСЂРѕРІРµСЂРёС‚СЊ СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ РїСЂРѕРіСЂРµСЃСЃР° С‚СѓС‚РѕСЂРёР°Р»Р° РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°.
      *
-     * @param characterId ID персонажа
-     * @return true, если прогресс существует
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р°
+     * @return true, РµСЃР»Рё РїСЂРѕРіСЂРµСЃСЃ СЃСѓС‰РµСЃС‚РІСѓРµС‚
      */
     boolean existsByCharacterId(UUID characterId);
 
     /**
-     * Удалить прогресс туториала для персонажа.
+     * РЈРґР°Р»РёС‚СЊ РїСЂРѕРіСЂРµСЃСЃ С‚СѓС‚РѕСЂРёР°Р»Р° РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°.
      *
-     * @param characterId ID персонажа
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р°
      */
     void deleteByCharacterId(UUID characterId);
 }

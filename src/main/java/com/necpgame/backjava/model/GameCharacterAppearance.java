@@ -29,7 +29,7 @@ public class GameCharacterAppearance {
   private Integer height;
 
   /**
-   * Телосложение
+   * РўРµР»РѕСЃР»РѕР¶РµРЅРёРµ
    */
   public enum BodyTypeEnum {
     THIN("thin"),
@@ -98,13 +98,13 @@ public class GameCharacterAppearance {
   }
 
   /**
-   * Рост в см
+   * Р РѕСЃС‚ РІ СЃРј
    * minimum: 150
    * maximum: 220
    * @return height
    */
   @NotNull @Min(value = 150) @Max(value = 220) 
-  @Schema(name = "height", example = "180", description = "Рост в см", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "height", example = "180", description = "Р РѕСЃС‚ РІ СЃРј", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("height")
   public Integer getHeight() {
     return height;
@@ -120,11 +120,11 @@ public class GameCharacterAppearance {
   }
 
   /**
-   * Телосложение
+   * РўРµР»РѕСЃР»РѕР¶РµРЅРёРµ
    * @return bodyType
    */
   @NotNull 
-  @Schema(name = "body_type", example = "normal", description = "Телосложение", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "body_type", example = "normal", description = "РўРµР»РѕСЃР»РѕР¶РµРЅРёРµ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("body_type")
   public BodyTypeEnum getBodyType() {
     return bodyType;
@@ -140,11 +140,11 @@ public class GameCharacterAppearance {
   }
 
   /**
-   * Цвет волос
+   * Р¦РІРµС‚ РІРѕР»РѕСЃ
    * @return hairColor
    */
   @NotNull 
-  @Schema(name = "hair_color", example = "black", description = "Цвет волос", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "hair_color", example = "black", description = "Р¦РІРµС‚ РІРѕР»РѕСЃ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("hair_color")
   public String getHairColor() {
     return hairColor;
@@ -160,11 +160,11 @@ public class GameCharacterAppearance {
   }
 
   /**
-   * Цвет глаз
+   * Р¦РІРµС‚ РіР»Р°Р·
    * @return eyeColor
    */
   @NotNull 
-  @Schema(name = "eye_color", example = "brown", description = "Цвет глаз", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "eye_color", example = "brown", description = "Р¦РІРµС‚ РіР»Р°Р·", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("eye_color")
   public String getEyeColor() {
     return eyeColor;
@@ -180,11 +180,11 @@ public class GameCharacterAppearance {
   }
 
   /**
-   * Цвет кожи
+   * Р¦РІРµС‚ РєРѕР¶Рё
    * @return skinColor
    */
   @NotNull 
-  @Schema(name = "skin_color", example = "light", description = "Цвет кожи", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "skin_color", example = "light", description = "Р¦РІРµС‚ РєРѕР¶Рё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("skin_color")
   public String getSkinColor() {
     return skinColor;
@@ -200,11 +200,11 @@ public class GameCharacterAppearance {
   }
 
   /**
-   * Особые приметы (максимум 500 символов)
+   * РћСЃРѕР±С‹Рµ РїСЂРёРјРµС‚С‹ (РјР°РєСЃРёРјСѓРј 500 СЃРёРјРІРѕР»РѕРІ)
    * @return distinctiveFeatures
    */
   @Size(max = 500) 
-  @Schema(name = "distinctive_features", example = "Scar on left cheek", description = "Особые приметы (максимум 500 символов)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "distinctive_features", example = "Scar on left cheek", description = "РћСЃРѕР±С‹Рµ РїСЂРёРјРµС‚С‹ (РјР°РєСЃРёРјСѓРј 500 СЃРёРјРІРѕР»РѕРІ)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("distinctive_features")
   public JsonNullable<@Size(max = 500) String> getDistinctiveFeatures() {
     return distinctiveFeatures;

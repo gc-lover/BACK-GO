@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * VendorInventoryEntity - инвентарь торговца (ассортимент товаров).
+ * VendorInventoryEntity - РёРЅРІРµРЅС‚Р°СЂСЊ С‚РѕСЂРіРѕРІС†Р° (Р°СЃСЃРѕСЂС‚РёРјРµРЅС‚ С‚РѕРІР°СЂРѕРІ).
  * 
- * Связь между торговцами и предметами, которые они продают.
- * Источник: API-SWAGGER/api/v1/trading/trading.yaml (VendorInventory schema)
+ * РЎРІСЏР·СЊ РјРµР¶РґСѓ С‚РѕСЂРіРѕРІС†Р°РјРё Рё РїСЂРµРґРјРµС‚Р°РјРё, РєРѕС‚РѕСЂС‹Рµ РѕРЅРё РїСЂРѕРґР°СЋС‚.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/trading/trading.yaml (VendorInventory schema)
  */
 @Entity
 @Table(name = "vendor_inventory", indexes = {
@@ -37,10 +37,10 @@ public class VendorInventoryEntity {
     private String itemId;
 
     @Column(name = "stock_quantity")
-    private Integer stockQuantity; // null = безлимитный запас
+    private Integer stockQuantity; // null = Р±РµР·Р»РёРјРёС‚РЅС‹Р№ Р·Р°РїР°СЃ
 
     @Column(name = "price", nullable = false)
-    private Integer price; // цена в эддисах (eddies)
+    private Integer price; // С†РµРЅР° РІ СЌРґРґРёСЃР°С… (eddies)
 
     @Column(name = "available", nullable = false)
     private Boolean available = true;

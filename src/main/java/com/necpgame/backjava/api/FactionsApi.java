@@ -46,37 +46,37 @@ public interface FactionsApi {
 
     String PATH_GET_FACTIONS = "/factions";
     /**
-     * GET /factions : Список доступных фракций
-     * Получает список всех доступных фракций. Может быть отфильтрован по происхождению.
+     * GET /factions : РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… С„СЂР°РєС†РёР№
+     * РџРѕР»СѓС‡Р°РµС‚ СЃРїРёСЃРѕРє РІСЃРµС… РґРѕСЃС‚СѓРїРЅС‹С… С„СЂР°РєС†РёР№. РњРѕР¶РµС‚ Р±С‹С‚СЊ РѕС‚С„РёР»СЊС‚СЂРѕРІР°РЅ РїРѕ РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёСЋ.
      *
-     * @param origin Фильтр по происхождению (опционально) (optional)
-     * @return Список фракций (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @param origin Р¤РёР»СЊС‚СЂ РїРѕ РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёСЋ (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ) (optional)
+     * @return РЎРїРёСЃРѕРє С„СЂР°РєС†РёР№ (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getFactions",
-        summary = "Список доступных фракций",
-        description = "Получает список всех доступных фракций. Может быть отфильтрован по происхождению.",
+        summary = "РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… С„СЂР°РєС†РёР№",
+        description = "РџРѕР»СѓС‡Р°РµС‚ СЃРїРёСЃРѕРє РІСЃРµС… РґРѕСЃС‚СѓРїРЅС‹С… С„СЂР°РєС†РёР№. РњРѕР¶РµС‚ Р±С‹С‚СЊ РѕС‚С„РёР»СЊС‚СЂРѕРІР°РЅ РїРѕ РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёСЋ.",
         tags = { "Reference Data", "Factions" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Список фракций", content = {
+            @ApiResponse(responseCode = "200", description = "РЎРїРёСЃРѕРє С„СЂР°РєС†РёР№", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GetFactions200Response.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -89,22 +89,22 @@ public interface FactionsApi {
         produces = { "application/json" }
     )
     default ResponseEntity<GetFactions200Response> getFactions(
-        @Parameter(name = "origin", description = "Фильтр по происхождению (опционально)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "origin", required = false) @Nullable String origin
+        @Parameter(name = "origin", description = "Р¤РёР»СЊС‚СЂ РїРѕ РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёСЋ (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "origin", required = false) @Nullable String origin
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"factions\" : [ { \"available_for_origins\" : [ \"corpo\", \"street_kid\" ], \"name\" : \"Arasaka\", \"description\" : \"Корпорация, технологии, власть\", \"id\" : \"550e8400-e29b-41d4-a716-446655440000\", \"type\" : \"corporation\" }, { \"available_for_origins\" : [ \"corpo\", \"street_kid\" ], \"name\" : \"Arasaka\", \"description\" : \"Корпорация, технологии, власть\", \"id\" : \"550e8400-e29b-41d4-a716-446655440000\", \"type\" : \"corporation\" } ] }";
+                    String exampleString = "{ \"factions\" : [ { \"available_for_origins\" : [ \"corpo\", \"street_kid\" ], \"name\" : \"Arasaka\", \"description\" : \"РљРѕСЂРїРѕСЂР°С†РёСЏ, С‚РµС…РЅРѕР»РѕРіРёРё, РІР»Р°СЃС‚СЊ\", \"id\" : \"550e8400-e29b-41d4-a716-446655440000\", \"type\" : \"corporation\" }, { \"available_for_origins\" : [ \"corpo\", \"street_kid\" ], \"name\" : \"Arasaka\", \"description\" : \"РљРѕСЂРїРѕСЂР°С†РёСЏ, С‚РµС…РЅРѕР»РѕРіРёРё, РІР»Р°СЃС‚СЊ\", \"id\" : \"550e8400-e29b-41d4-a716-446655440000\", \"type\" : \"corporation\" } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

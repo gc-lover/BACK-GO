@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 /**
- * REST Controller для работы с ограничениями и энергетикой имплантов.
+ * REST Controller РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РѕРіСЂР°РЅРёС‡РµРЅРёСЏРјРё Рё СЌРЅРµСЂРіРµС‚РёРєРѕР№ РёРјРїР»Р°РЅС‚РѕРІ.
  * 
- * Реализует контракт {@link GameplayImplantsApi}, сгенерированный из OpenAPI спецификации.
- * Источник: API-SWAGGER/api/v1/gameplay/combat/implants-limits.yaml
+ * Р РµР°Р»РёР·СѓРµС‚ РєРѕРЅС‚СЂР°РєС‚ {@link GameplayImplantsApi}, СЃРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅС‹Р№ РёР· OpenAPI СЃРїРµС†РёС„РёРєР°С†РёРё.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/gameplay/combat/implants-limits.yaml
  */
 @Slf4j
 @RestController
@@ -65,7 +65,7 @@ public class ImplantsLimitsController implements GameplayImplantsApi {
         return ResponseEntity.ok(service.getImplantSlots(playerId, type));
     }
     
-    // TODO: Временно закомментировано из-за несоответствия API интерфейсу
+    // TODO: Р’СЂРµРјРµРЅРЅРѕ Р·Р°РєРѕРјРјРµРЅС‚РёСЂРѕРІР°РЅРѕ РёР·-Р·Р° РЅРµСЃРѕРѕС‚РІРµС‚СЃС‚РІРёСЏ API РёРЅС‚РµСЂС„РµР№СЃСѓ
     // @Override
     // public ResponseEntity<List<IndividualEnergyLimits>> getIndividualEnergyLimits(UUID playerId) {
     //     log.info("GET /gameplay/combat/implants/{}/energy/individual", playerId);

@@ -8,9 +8,9 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * GameStartRequest - запрос на начало игры
+ * GameStartRequest - Р·Р°РїСЂРѕСЃ РЅР° РЅР°С‡Р°Р»Рѕ РёРіСЂС‹
  */
-@Schema(description = "Запрос на начало игры")
+@Schema(description = "Р—Р°РїСЂРѕСЃ РЅР° РЅР°С‡Р°Р»Рѕ РёРіСЂС‹")
 public class GameStartRequest {
 
     @JsonProperty("characterId")
@@ -20,9 +20,9 @@ public class GameStartRequest {
     private Boolean skipTutorial = false;
 
     /**
-     * ID созданного персонажа
+     * ID СЃРѕР·РґР°РЅРЅРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°
      */
-    @Schema(description = "ID созданного персонажа", example = "550e8400-e29b-41d4-a716-446655440000", required = true)
+    @Schema(description = "ID СЃРѕР·РґР°РЅРЅРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°", example = "550e8400-e29b-41d4-a716-446655440000", required = true)
     @NotNull
     public UUID getCharacterId() {
         return characterId;
@@ -33,9 +33,9 @@ public class GameStartRequest {
     }
 
     /**
-     * Пропустить туториал
+     * РџСЂРѕРїСѓСЃС‚РёС‚СЊ С‚СѓС‚РѕСЂРёР°Р»
      */
-    @Schema(description = "Пропустить туториал", example = "false")
+    @Schema(description = "РџСЂРѕРїСѓСЃС‚РёС‚СЊ С‚СѓС‚РѕСЂРёР°Р»", example = "false")
     public Boolean getSkipTutorial() {
         return skipTutorial;
     }

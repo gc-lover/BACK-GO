@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 /**
- * GameStartController - REST контроллер для запуска игры.
+ * GameStartController - REST РєРѕРЅС‚СЂРѕР»Р»РµСЂ РґР»СЏ Р·Р°РїСѓСЃРєР° РёРіСЂС‹.
  * 
- * Реализует API интерфейс GameStartApi.
- * Все Spring MVC аннотации определены в интерфейсе.
+ * Р РµР°Р»РёР·СѓРµС‚ API РёРЅС‚РµСЂС„РµР№СЃ GameStartApi.
+ * Р’СЃРµ Spring MVC Р°РЅРЅРѕС‚Р°С†РёРё РѕРїСЂРµРґРµР»РµРЅС‹ РІ РёРЅС‚РµСЂС„РµР№СЃРµ.
  */
 @RestController
 @RequiredArgsConstructor

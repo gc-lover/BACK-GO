@@ -56,11 +56,11 @@ public class GetConnectedLocations200Response {
   }
 
   /**
-   * Список связанных локаций
+   * РЎРїРёСЃРѕРє СЃРІСЏР·Р°РЅРЅС‹С… Р»РѕРєР°С†РёР№
    * @return connectedLocations
    */
   @NotNull @Valid 
-  @Schema(name = "connectedLocations", description = "Список связанных локаций", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "connectedLocations", description = "РЎРїРёСЃРѕРє СЃРІСЏР·Р°РЅРЅС‹С… Р»РѕРєР°С†РёР№", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("connectedLocations")
   public List<@Valid ConnectedLocation> getConnectedLocations() {
     return connectedLocations;

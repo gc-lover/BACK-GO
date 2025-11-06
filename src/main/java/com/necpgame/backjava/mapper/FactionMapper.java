@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Mapper для преобразования FactionEntity ↔ Faction DTO
+ * Mapper РґР»СЏ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ FactionEntity в†” Faction DTO
  */
 @Slf4j
 @Component
@@ -23,7 +23,7 @@ public class FactionMapper {
     private final ObjectMapper objectMapper;
     
     /**
-     * Преобразовать Entity в DTO
+     * РџСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ Entity РІ DTO
      */
     public Faction toDto(FactionEntity entity) {
         if (entity == null) {
@@ -46,7 +46,7 @@ public class FactionMapper {
     }
     
     /**
-     * Парсинг JSON массива в List<String>
+     * РџР°СЂСЃРёРЅРі JSON РјР°СЃСЃРёРІР° РІ List<String>
      */
     private List<String> parseJsonArray(String json) {
         try {

@@ -20,10 +20,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Требования для выполнения действия (если enabled&#x3D;false)
+ * РўСЂРµР±РѕРІР°РЅРёСЏ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґРµР№СЃС‚РІРёСЏ (РµСЃР»Рё enabled&#x3D;false)
  */
 
-@Schema(name = "LocationAction_requirements", description = "Требования для выполнения действия (если enabled=false)")
+@Schema(name = "LocationAction_requirements", description = "РўСЂРµР±РѕРІР°РЅРёСЏ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґРµР№СЃС‚РІРёСЏ (РµСЃР»Рё enabled=false)")
 @JsonTypeName("LocationAction_requirements")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T21:22:04.712198900+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class LocationActionRequirements {
@@ -45,11 +45,11 @@ public class LocationActionRequirements {
   }
 
   /**
-   * Минимальный уровень персонажа
+   * РњРёРЅРёРјР°Р»СЊРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ РїРµСЂСЃРѕРЅР°Р¶Р°
    * @return minLevel
    */
   
-  @Schema(name = "minLevel", description = "Минимальный уровень персонажа", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "minLevel", description = "РњРёРЅРёРјР°Р»СЊРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("minLevel")
   public @Nullable Integer getMinLevel() {
     return minLevel;
@@ -73,11 +73,11 @@ public class LocationActionRequirements {
   }
 
   /**
-   * Требуемые навыки
+   * РўСЂРµР±СѓРµРјС‹Рµ РЅР°РІС‹РєРё
    * @return requiredSkills
    */
   
-  @Schema(name = "requiredSkills", description = "Требуемые навыки", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "requiredSkills", description = "РўСЂРµР±СѓРµРјС‹Рµ РЅР°РІС‹РєРё", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("requiredSkills")
   public List<String> getRequiredSkills() {
     return requiredSkills;
@@ -101,11 +101,11 @@ public class LocationActionRequirements {
   }
 
   /**
-   * Требуемые предметы
+   * РўСЂРµР±СѓРµРјС‹Рµ РїСЂРµРґРјРµС‚С‹
    * @return requiredItems
    */
   
-  @Schema(name = "requiredItems", description = "Требуемые предметы", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "requiredItems", description = "РўСЂРµР±СѓРµРјС‹Рµ РїСЂРµРґРјРµС‚С‹", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("requiredItems")
   public List<String> getRequiredItems() {
     return requiredItems;
@@ -129,11 +129,11 @@ public class LocationActionRequirements {
   }
 
   /**
-   * Требуемые завершенные квесты
+   * РўСЂРµР±СѓРµРјС‹Рµ Р·Р°РІРµСЂС€РµРЅРЅС‹Рµ РєРІРµСЃС‚С‹
    * @return requiredQuests
    */
   
-  @Schema(name = "requiredQuests", description = "Требуемые завершенные квесты", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "requiredQuests", description = "РўСЂРµР±СѓРµРјС‹Рµ Р·Р°РІРµСЂС€РµРЅРЅС‹Рµ РєРІРµСЃС‚С‹", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("requiredQuests")
   public List<String> getRequiredQuests() {
     return requiredQuests;

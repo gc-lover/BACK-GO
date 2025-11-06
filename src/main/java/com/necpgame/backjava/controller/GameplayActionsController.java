@@ -9,10 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * REST Controller для игровых действий.
+ * REST Controller РґР»СЏ РёРіСЂРѕРІС‹С… РґРµР№СЃС‚РІРёР№.
  * 
- * Реализует контракт {@link GameplayActionsApi}, сгенерированный из OpenAPI.
- * Источник: API-SWAGGER/api/v1/gameplay/actions/actions.yaml
+ * Р РµР°Р»РёР·СѓРµС‚ РєРѕРЅС‚СЂР°РєС‚ {@link GameplayActionsApi}, СЃРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅС‹Р№ РёР· OpenAPI.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/gameplay/actions/actions.yaml
  */
 @Slf4j
 @RestController

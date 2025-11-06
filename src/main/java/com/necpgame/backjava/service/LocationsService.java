@@ -5,39 +5,39 @@ import com.necpgame.backjava.model.*;
 import java.util.UUID;
 
 /**
- * LocationsService - сервис для работы с игровыми локациями.
+ * LocationsService - СЃРµСЂРІРёСЃ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РёРіСЂРѕРІС‹РјРё Р»РѕРєР°С†РёСЏРјРё.
  * 
- * Сгенерировано на основе: API-SWAGGER/api/v1/locations/locations.yaml
+ * РЎРіРµРЅРµСЂРёСЂРѕРІР°РЅРѕ РЅР° РѕСЃРЅРѕРІРµ: API-SWAGGER/api/v1/locations/locations.yaml
  */
 public interface LocationsService {
 
     /**
-     * Получить список всех доступных локаций.
+     * РџРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє РІСЃРµС… РґРѕСЃС‚СѓРїРЅС‹С… Р»РѕРєР°С†РёР№.
      */
     GetLocations200Response getLocations(UUID characterId, String region, String dangerLevel, Integer minLevel);
 
     /**
-     * Получить детальную информацию о локации.
+     * РџРѕР»СѓС‡РёС‚СЊ РґРµС‚Р°Р»СЊРЅСѓСЋ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ Р»РѕРєР°С†РёРё.
      */
     LocationDetails getLocationDetails(String locationId, UUID characterId);
 
     /**
-     * Получить текущую локацию персонажа.
+     * РџРѕР»СѓС‡РёС‚СЊ С‚РµРєСѓС‰СѓСЋ Р»РѕРєР°С†РёСЋ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     LocationDetails getCurrentLocation(UUID characterId);
 
     /**
-     * Переместиться в другую локацию.
+     * РџРµСЂРµРјРµСЃС‚РёС‚СЊСЃСЏ РІ РґСЂСѓРіСѓСЋ Р»РѕРєР°С†РёСЋ.
      */
     TravelResponse travelToLocation(TravelRequest request);
 
     /**
-     * Получить доступные действия в локации.
+     * РџРѕР»СѓС‡РёС‚СЊ РґРѕСЃС‚СѓРїРЅС‹Рµ РґРµР№СЃС‚РІРёСЏ РІ Р»РѕРєР°С†РёРё.
      */
     GetLocationActions200Response getLocationActions(String locationId, UUID characterId);
 
     /**
-     * Получить список соседних локаций.
+     * РџРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє СЃРѕСЃРµРґРЅРёС… Р»РѕРєР°С†РёР№.
      */
     GetConnectedLocations200Response getConnectedLocations(String locationId, UUID characterId);
 }

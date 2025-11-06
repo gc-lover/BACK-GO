@@ -69,11 +69,11 @@ public class InitiateCombatRequest {
   }
 
   /**
-   * ID врага/NPC
+   * ID РІСЂР°РіР°/NPC
    * @return targetId
    */
   @NotNull 
-  @Schema(name = "targetId", description = "ID врага/NPC", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "targetId", description = "ID РІСЂР°РіР°/NPC", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("targetId")
   public String getTargetId() {
     return targetId;

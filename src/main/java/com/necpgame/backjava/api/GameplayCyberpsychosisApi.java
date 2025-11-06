@@ -77,68 +77,68 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_APPLY_HUMANITY_LOSS = "/gameplay/combat/cyberpsychosis/{player_id}/humanity/apply-loss";
     /**
-     * POST /gameplay/combat/cyberpsychosis/{player_id}/humanity/apply-loss : Применить потерю человечности
-     * Применяет потерю человечности при установке импланта и проверяет переходы между стадиями. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Система человечности 
+     * POST /gameplay/combat/cyberpsychosis/{player_id}/humanity/apply-loss : РџСЂРёРјРµРЅРёС‚СЊ РїРѕС‚РµСЂСЋ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё
+     * РџСЂРёРјРµРЅСЏРµС‚ РїРѕС‚РµСЂСЋ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РїСЂРё СѓСЃС‚Р°РЅРѕРІРєРµ РёРјРїР»Р°РЅС‚Р° Рё РїСЂРѕРІРµСЂСЏРµС‚ РїРµСЂРµС…РѕРґС‹ РјРµР¶РґСѓ СЃС‚Р°РґРёСЏРјРё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РЎРёСЃС‚РµРјР° С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё 
      *
-     * @param playerId Идентификатор игрока (required)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
      * @param applyLossRequest  (required)
-     * @return Потеря человечности применена (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Запрос синтаксически корректен, но семантически неверен. Например, некорректное состояние ресурса для операции.  (status code 422)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @return РџРѕС‚РµСЂСЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РїСЂРёРјРµРЅРµРЅР° (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р—Р°РїСЂРѕСЃ СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєРё РєРѕСЂСЂРµРєС‚РµРЅ, РЅРѕ СЃРµРјР°РЅС‚РёС‡РµСЃРєРё РЅРµРІРµСЂРµРЅ. РќР°РїСЂРёРјРµСЂ, РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЂРµСЃСѓСЂСЃР° РґР»СЏ РѕРїРµСЂР°С†РёРё.  (status code 422)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "applyHumanityLoss",
-        summary = "Применить потерю человечности",
-        description = "Применяет потерю человечности при установке импланта и проверяет переходы между стадиями. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Система человечности ",
+        summary = "РџСЂРёРјРµРЅРёС‚СЊ РїРѕС‚РµСЂСЋ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё",
+        description = "РџСЂРёРјРµРЅСЏРµС‚ РїРѕС‚РµСЂСЋ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РїСЂРё СѓСЃС‚Р°РЅРѕРІРєРµ РёРјРїР»Р°РЅС‚Р° Рё РїСЂРѕРІРµСЂСЏРµС‚ РїРµСЂРµС…РѕРґС‹ РјРµР¶РґСѓ СЃС‚Р°РґРёСЏРјРё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РЎРёСЃС‚РµРјР° С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё ",
         tags = { "Combat", "Cyberpsychosis", "Humanity" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Потеря человечности применена", content = {
+            @ApiResponse(responseCode = "200", description = "РџРѕС‚РµСЂСЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РїСЂРёРјРµРЅРµРЅР°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = HumanityUpdateResult.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "422", description = "Запрос синтаксически корректен, но семантически неверен. Например, некорректное состояние ресурса для операции. ", content = {
+            @ApiResponse(responseCode = "422", description = "Р—Р°РїСЂРѕСЃ СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєРё РєРѕСЂСЂРµРєС‚РµРЅ, РЅРѕ СЃРµРјР°РЅС‚РёС‡РµСЃРєРё РЅРµРІРµСЂРµРЅ. РќР°РїСЂРёРјРµСЂ, РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЂРµСЃСѓСЂСЃР° РґР»СЏ РѕРїРµСЂР°С†РёРё. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INVALID_STATE\",\"message\":\"Операция невозможна в текущем состоянии ресурса\",\"details\":[{\"field\":\"status\",\"message\":\"Нельзя отменить выполненный сценарий\",\"code\":\"INVALID_STATE\"}]}}"
+                        value = "{\"error\":{\"code\":\"INVALID_STATE\",\"message\":\"РћРїРµСЂР°С†РёСЏ РЅРµРІРѕР·РјРѕР¶РЅР° РІ С‚РµРєСѓС‰РµРј СЃРѕСЃС‚РѕСЏРЅРёРё СЂРµСЃСѓСЂСЃР°\",\"details\":[{\"field\":\"status\",\"message\":\"РќРµР»СЊР·СЏ РѕС‚РјРµРЅРёС‚СЊ РІС‹РїРѕР»РЅРµРЅРЅС‹Р№ СЃС†РµРЅР°СЂРёР№\",\"code\":\"INVALID_STATE\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -155,7 +155,7 @@ public interface GameplayCyberpsychosisApi {
         consumes = { "application/json" }
     )
     default ResponseEntity<HumanityUpdateResult> applyHumanityLoss(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
         @Parameter(name = "ApplyLossRequest", description = "", required = true) @Valid @RequestBody ApplyLossRequest applyLossRequest
     ) {
         getRequest().ifPresent(request -> {
@@ -166,27 +166,27 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -199,68 +199,68 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_APPLY_PREVENTION = "/gameplay/combat/cyberpsychosis/{player_id}/prevention/apply";
     /**
-     * POST /gameplay/combat/cyberpsychosis/{player_id}/prevention/apply : Применить профилактическую меру
-     * Применяет профилактическую меру для замедления прогрессии киберпсихоза. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Профилактика 
+     * POST /gameplay/combat/cyberpsychosis/{player_id}/prevention/apply : РџСЂРёРјРµРЅРёС‚СЊ РїСЂРѕС„РёР»Р°РєС‚РёС‡РµСЃРєСѓСЋ РјРµСЂСѓ
+     * РџСЂРёРјРµРЅСЏРµС‚ РїСЂРѕС„РёР»Р°РєС‚РёС‡РµСЃРєСѓСЋ РјРµСЂСѓ РґР»СЏ Р·Р°РјРµРґР»РµРЅРёСЏ РїСЂРѕРіСЂРµСЃСЃРёРё РєРёР±РµСЂРїСЃРёС…РѕР·Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РџСЂРѕС„РёР»Р°РєС‚РёРєР° 
      *
-     * @param playerId Идентификатор игрока (required)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
      * @param applyPreventionRequest  (required)
-     * @return Профилактическая мера применена (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Запрос синтаксически корректен, но семантически неверен. Например, некорректное состояние ресурса для операции.  (status code 422)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @return РџСЂРѕС„РёР»Р°РєС‚РёС‡РµСЃРєР°СЏ РјРµСЂР° РїСЂРёРјРµРЅРµРЅР° (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р—Р°РїСЂРѕСЃ СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєРё РєРѕСЂСЂРµРєС‚РµРЅ, РЅРѕ СЃРµРјР°РЅС‚РёС‡РµСЃРєРё РЅРµРІРµСЂРµРЅ. РќР°РїСЂРёРјРµСЂ, РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЂРµСЃСѓСЂСЃР° РґР»СЏ РѕРїРµСЂР°С†РёРё.  (status code 422)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "applyPrevention",
-        summary = "Применить профилактическую меру",
-        description = "Применяет профилактическую меру для замедления прогрессии киберпсихоза. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Профилактика ",
+        summary = "РџСЂРёРјРµРЅРёС‚СЊ РїСЂРѕС„РёР»Р°РєС‚РёС‡РµСЃРєСѓСЋ РјРµСЂСѓ",
+        description = "РџСЂРёРјРµРЅСЏРµС‚ РїСЂРѕС„РёР»Р°РєС‚РёС‡РµСЃРєСѓСЋ РјРµСЂСѓ РґР»СЏ Р·Р°РјРµРґР»РµРЅРёСЏ РїСЂРѕРіСЂРµСЃСЃРёРё РєРёР±РµСЂРїСЃРёС…РѕР·Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РџСЂРѕС„РёР»Р°РєС‚РёРєР° ",
         tags = { "Combat", "Cyberpsychosis", "Management" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Профилактическая мера применена", content = {
+            @ApiResponse(responseCode = "200", description = "РџСЂРѕС„РёР»Р°РєС‚РёС‡РµСЃРєР°СЏ РјРµСЂР° РїСЂРёРјРµРЅРµРЅР°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = PreventionResult.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "422", description = "Запрос синтаксически корректен, но семантически неверен. Например, некорректное состояние ресурса для операции. ", content = {
+            @ApiResponse(responseCode = "422", description = "Р—Р°РїСЂРѕСЃ СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєРё РєРѕСЂСЂРµРєС‚РµРЅ, РЅРѕ СЃРµРјР°РЅС‚РёС‡РµСЃРєРё РЅРµРІРµСЂРµРЅ. РќР°РїСЂРёРјРµСЂ, РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЂРµСЃСѓСЂСЃР° РґР»СЏ РѕРїРµСЂР°С†РёРё. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INVALID_STATE\",\"message\":\"Операция невозможна в текущем состоянии ресурса\",\"details\":[{\"field\":\"status\",\"message\":\"Нельзя отменить выполненный сценарий\",\"code\":\"INVALID_STATE\"}]}}"
+                        value = "{\"error\":{\"code\":\"INVALID_STATE\",\"message\":\"РћРїРµСЂР°С†РёСЏ РЅРµРІРѕР·РјРѕР¶РЅР° РІ С‚РµРєСѓС‰РµРј СЃРѕСЃС‚РѕСЏРЅРёРё СЂРµСЃСѓСЂСЃР°\",\"details\":[{\"field\":\"status\",\"message\":\"РќРµР»СЊР·СЏ РѕС‚РјРµРЅРёС‚СЊ РІС‹РїРѕР»РЅРµРЅРЅС‹Р№ СЃС†РµРЅР°СЂРёР№\",\"code\":\"INVALID_STATE\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -277,7 +277,7 @@ public interface GameplayCyberpsychosisApi {
         consumes = { "application/json" }
     )
     default ResponseEntity<PreventionResult> applyPrevention(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
         @Parameter(name = "ApplyPreventionRequest", description = "", required = true) @Valid @RequestBody ApplyPreventionRequest applyPreventionRequest
     ) {
         getRequest().ifPresent(request -> {
@@ -288,27 +288,27 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -321,68 +321,68 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_APPLY_SOCIAL_SUPPORT = "/gameplay/combat/cyberpsychosis/{player_id}/social-support/apply";
     /**
-     * POST /gameplay/combat/cyberpsychosis/{player_id}/social-support/apply : Применить социальную поддержку
-     * Применяет социальную поддержку для снижения стресса и замедления прогрессии. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Социальные механики 
+     * POST /gameplay/combat/cyberpsychosis/{player_id}/social-support/apply : РџСЂРёРјРµРЅРёС‚СЊ СЃРѕС†РёР°Р»СЊРЅСѓСЋ РїРѕРґРґРµСЂР¶РєСѓ
+     * РџСЂРёРјРµРЅСЏРµС‚ СЃРѕС†РёР°Р»СЊРЅСѓСЋ РїРѕРґРґРµСЂР¶РєСѓ РґР»СЏ СЃРЅРёР¶РµРЅРёСЏ СЃС‚СЂРµСЃСЃР° Рё Р·Р°РјРµРґР»РµРЅРёСЏ РїСЂРѕРіСЂРµСЃСЃРёРё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РЎРѕС†РёР°Р»СЊРЅС‹Рµ РјРµС…Р°РЅРёРєРё 
      *
-     * @param playerId Идентификатор игрока (required)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
      * @param applySocialSupportRequest  (required)
-     * @return Социальная поддержка применена (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Запрос синтаксически корректен, но семантически неверен. Например, некорректное состояние ресурса для операции.  (status code 422)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @return РЎРѕС†РёР°Р»СЊРЅР°СЏ РїРѕРґРґРµСЂР¶РєР° РїСЂРёРјРµРЅРµРЅР° (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р—Р°РїСЂРѕСЃ СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєРё РєРѕСЂСЂРµРєС‚РµРЅ, РЅРѕ СЃРµРјР°РЅС‚РёС‡РµСЃРєРё РЅРµРІРµСЂРµРЅ. РќР°РїСЂРёРјРµСЂ, РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЂРµСЃСѓСЂСЃР° РґР»СЏ РѕРїРµСЂР°С†РёРё.  (status code 422)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "applySocialSupport",
-        summary = "Применить социальную поддержку",
-        description = "Применяет социальную поддержку для снижения стресса и замедления прогрессии. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Социальные механики ",
+        summary = "РџСЂРёРјРµРЅРёС‚СЊ СЃРѕС†РёР°Р»СЊРЅСѓСЋ РїРѕРґРґРµСЂР¶РєСѓ",
+        description = "РџСЂРёРјРµРЅСЏРµС‚ СЃРѕС†РёР°Р»СЊРЅСѓСЋ РїРѕРґРґРµСЂР¶РєСѓ РґР»СЏ СЃРЅРёР¶РµРЅРёСЏ СЃС‚СЂРµСЃСЃР° Рё Р·Р°РјРµРґР»РµРЅРёСЏ РїСЂРѕРіСЂРµСЃСЃРёРё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РЎРѕС†РёР°Р»СЊРЅС‹Рµ РјРµС…Р°РЅРёРєРё ",
         tags = { "Combat", "Cyberpsychosis", "Social" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Социальная поддержка применена", content = {
+            @ApiResponse(responseCode = "200", description = "РЎРѕС†РёР°Р»СЊРЅР°СЏ РїРѕРґРґРµСЂР¶РєР° РїСЂРёРјРµРЅРµРЅР°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = SocialSupportResult.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "422", description = "Запрос синтаксически корректен, но семантически неверен. Например, некорректное состояние ресурса для операции. ", content = {
+            @ApiResponse(responseCode = "422", description = "Р—Р°РїСЂРѕСЃ СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєРё РєРѕСЂСЂРµРєС‚РµРЅ, РЅРѕ СЃРµРјР°РЅС‚РёС‡РµСЃРєРё РЅРµРІРµСЂРµРЅ. РќР°РїСЂРёРјРµСЂ, РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЂРµСЃСѓСЂСЃР° РґР»СЏ РѕРїРµСЂР°С†РёРё. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INVALID_STATE\",\"message\":\"Операция невозможна в текущем состоянии ресурса\",\"details\":[{\"field\":\"status\",\"message\":\"Нельзя отменить выполненный сценарий\",\"code\":\"INVALID_STATE\"}]}}"
+                        value = "{\"error\":{\"code\":\"INVALID_STATE\",\"message\":\"РћРїРµСЂР°С†РёСЏ РЅРµРІРѕР·РјРѕР¶РЅР° РІ С‚РµРєСѓС‰РµРј СЃРѕСЃС‚РѕСЏРЅРёРё СЂРµСЃСѓСЂСЃР°\",\"details\":[{\"field\":\"status\",\"message\":\"РќРµР»СЊР·СЏ РѕС‚РјРµРЅРёС‚СЊ РІС‹РїРѕР»РЅРµРЅРЅС‹Р№ СЃС†РµРЅР°СЂРёР№\",\"code\":\"INVALID_STATE\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -399,7 +399,7 @@ public interface GameplayCyberpsychosisApi {
         consumes = { "application/json" }
     )
     default ResponseEntity<SocialSupportResult> applySocialSupport(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
         @Parameter(name = "ApplySocialSupportRequest", description = "", required = true) @Valid @RequestBody ApplySocialSupportRequest applySocialSupportRequest
     ) {
         getRequest().ifPresent(request -> {
@@ -410,27 +410,27 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -443,68 +443,68 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_APPLY_SYMPTOM_MANAGEMENT = "/gameplay/combat/cyberpsychosis/{player_id}/symptom-management/apply";
     /**
-     * POST /gameplay/combat/cyberpsychosis/{player_id}/symptom-management/apply : Применить управление симптомами
-     * Применяет управление симптомами для контроля их влияния. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Управление симптомами 
+     * POST /gameplay/combat/cyberpsychosis/{player_id}/symptom-management/apply : РџСЂРёРјРµРЅРёС‚СЊ СѓРїСЂР°РІР»РµРЅРёРµ СЃРёРјРїС‚РѕРјР°РјРё
+     * РџСЂРёРјРµРЅСЏРµС‚ СѓРїСЂР°РІР»РµРЅРёРµ СЃРёРјРїС‚РѕРјР°РјРё РґР»СЏ РєРѕРЅС‚СЂРѕР»СЏ РёС… РІР»РёСЏРЅРёСЏ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РЈРїСЂР°РІР»РµРЅРёРµ СЃРёРјРїС‚РѕРјР°РјРё 
      *
-     * @param playerId Идентификатор игрока (required)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
      * @param applySymptomManagementRequest  (required)
-     * @return Управление симптомами применено (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Запрос синтаксически корректен, но семантически неверен. Например, некорректное состояние ресурса для операции.  (status code 422)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @return РЈРїСЂР°РІР»РµРЅРёРµ СЃРёРјРїС‚РѕРјР°РјРё РїСЂРёРјРµРЅРµРЅРѕ (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р—Р°РїСЂРѕСЃ СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєРё РєРѕСЂСЂРµРєС‚РµРЅ, РЅРѕ СЃРµРјР°РЅС‚РёС‡РµСЃРєРё РЅРµРІРµСЂРµРЅ. РќР°РїСЂРёРјРµСЂ, РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЂРµСЃСѓСЂСЃР° РґР»СЏ РѕРїРµСЂР°С†РёРё.  (status code 422)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "applySymptomManagement",
-        summary = "Применить управление симптомами",
-        description = "Применяет управление симптомами для контроля их влияния. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Управление симптомами ",
+        summary = "РџСЂРёРјРµРЅРёС‚СЊ СѓРїСЂР°РІР»РµРЅРёРµ СЃРёРјРїС‚РѕРјР°РјРё",
+        description = "РџСЂРёРјРµРЅСЏРµС‚ СѓРїСЂР°РІР»РµРЅРёРµ СЃРёРјРїС‚РѕРјР°РјРё РґР»СЏ РєРѕРЅС‚СЂРѕР»СЏ РёС… РІР»РёСЏРЅРёСЏ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РЈРїСЂР°РІР»РµРЅРёРµ СЃРёРјРїС‚РѕРјР°РјРё ",
         tags = { "Combat", "Cyberpsychosis", "Management" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Управление симптомами применено", content = {
+            @ApiResponse(responseCode = "200", description = "РЈРїСЂР°РІР»РµРЅРёРµ СЃРёРјРїС‚РѕРјР°РјРё РїСЂРёРјРµРЅРµРЅРѕ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = SymptomManagementResult.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "422", description = "Запрос синтаксически корректен, но семантически неверен. Например, некорректное состояние ресурса для операции. ", content = {
+            @ApiResponse(responseCode = "422", description = "Р—Р°РїСЂРѕСЃ СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєРё РєРѕСЂСЂРµРєС‚РµРЅ, РЅРѕ СЃРµРјР°РЅС‚РёС‡РµСЃРєРё РЅРµРІРµСЂРµРЅ. РќР°РїСЂРёРјРµСЂ, РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЂРµСЃСѓСЂСЃР° РґР»СЏ РѕРїРµСЂР°С†РёРё. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INVALID_STATE\",\"message\":\"Операция невозможна в текущем состоянии ресурса\",\"details\":[{\"field\":\"status\",\"message\":\"Нельзя отменить выполненный сценарий\",\"code\":\"INVALID_STATE\"}]}}"
+                        value = "{\"error\":{\"code\":\"INVALID_STATE\",\"message\":\"РћРїРµСЂР°С†РёСЏ РЅРµРІРѕР·РјРѕР¶РЅР° РІ С‚РµРєСѓС‰РµРј СЃРѕСЃС‚РѕСЏРЅРёРё СЂРµСЃСѓСЂСЃР°\",\"details\":[{\"field\":\"status\",\"message\":\"РќРµР»СЊР·СЏ РѕС‚РјРµРЅРёС‚СЊ РІС‹РїРѕР»РЅРµРЅРЅС‹Р№ СЃС†РµРЅР°СЂРёР№\",\"code\":\"INVALID_STATE\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -521,7 +521,7 @@ public interface GameplayCyberpsychosisApi {
         consumes = { "application/json" }
     )
     default ResponseEntity<SymptomManagementResult> applySymptomManagement(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
         @Parameter(name = "ApplySymptomManagementRequest", description = "", required = true) @Valid @RequestBody ApplySymptomManagementRequest applySymptomManagementRequest
     ) {
         getRequest().ifPresent(request -> {
@@ -532,27 +532,27 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -565,68 +565,68 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_APPLY_TREATMENT = "/gameplay/combat/cyberpsychosis/{player_id}/treatment/apply";
     /**
-     * POST /gameplay/combat/cyberpsychosis/{player_id}/treatment/apply : Применить лечение
-     * Применяет лечение для восстановления человечности. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Лечение 
+     * POST /gameplay/combat/cyberpsychosis/{player_id}/treatment/apply : РџСЂРёРјРµРЅРёС‚СЊ Р»РµС‡РµРЅРёРµ
+     * РџСЂРёРјРµРЅСЏРµС‚ Р»РµС‡РµРЅРёРµ РґР»СЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Р›РµС‡РµРЅРёРµ 
      *
-     * @param playerId Идентификатор игрока (required)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
      * @param applyTreatmentRequest  (required)
-     * @return Лечение применено (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Запрос синтаксически корректен, но семантически неверен. Например, некорректное состояние ресурса для операции.  (status code 422)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @return Р›РµС‡РµРЅРёРµ РїСЂРёРјРµРЅРµРЅРѕ (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р—Р°РїСЂРѕСЃ СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєРё РєРѕСЂСЂРµРєС‚РµРЅ, РЅРѕ СЃРµРјР°РЅС‚РёС‡РµСЃРєРё РЅРµРІРµСЂРµРЅ. РќР°РїСЂРёРјРµСЂ, РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЂРµСЃСѓСЂСЃР° РґР»СЏ РѕРїРµСЂР°С†РёРё.  (status code 422)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "applyTreatment",
-        summary = "Применить лечение",
-        description = "Применяет лечение для восстановления человечности. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Лечение ",
+        summary = "РџСЂРёРјРµРЅРёС‚СЊ Р»РµС‡РµРЅРёРµ",
+        description = "РџСЂРёРјРµРЅСЏРµС‚ Р»РµС‡РµРЅРёРµ РґР»СЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Р›РµС‡РµРЅРёРµ ",
         tags = { "Combat", "Cyberpsychosis", "Management" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Лечение применено", content = {
+            @ApiResponse(responseCode = "200", description = "Р›РµС‡РµРЅРёРµ РїСЂРёРјРµРЅРµРЅРѕ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = TreatmentResult.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "422", description = "Запрос синтаксически корректен, но семантически неверен. Например, некорректное состояние ресурса для операции. ", content = {
+            @ApiResponse(responseCode = "422", description = "Р—Р°РїСЂРѕСЃ СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєРё РєРѕСЂСЂРµРєС‚РµРЅ, РЅРѕ СЃРµРјР°РЅС‚РёС‡РµСЃРєРё РЅРµРІРµСЂРµРЅ. РќР°РїСЂРёРјРµСЂ, РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЂРµСЃСѓСЂСЃР° РґР»СЏ РѕРїРµСЂР°С†РёРё. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INVALID_STATE\",\"message\":\"Операция невозможна в текущем состоянии ресурса\",\"details\":[{\"field\":\"status\",\"message\":\"Нельзя отменить выполненный сценарий\",\"code\":\"INVALID_STATE\"}]}}"
+                        value = "{\"error\":{\"code\":\"INVALID_STATE\",\"message\":\"РћРїРµСЂР°С†РёСЏ РЅРµРІРѕР·РјРѕР¶РЅР° РІ С‚РµРєСѓС‰РµРј СЃРѕСЃС‚РѕСЏРЅРёРё СЂРµСЃСѓСЂСЃР°\",\"details\":[{\"field\":\"status\",\"message\":\"РќРµР»СЊР·СЏ РѕС‚РјРµРЅРёС‚СЊ РІС‹РїРѕР»РЅРµРЅРЅС‹Р№ СЃС†РµРЅР°СЂРёР№\",\"code\":\"INVALID_STATE\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -643,7 +643,7 @@ public interface GameplayCyberpsychosisApi {
         consumes = { "application/json" }
     )
     default ResponseEntity<TreatmentResult> applyTreatment(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
         @Parameter(name = "ApplyTreatmentRequest", description = "", required = true) @Valid @RequestBody ApplyTreatmentRequest applyTreatmentRequest
     ) {
         getRequest().ifPresent(request -> {
@@ -654,27 +654,27 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -687,58 +687,58 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_CALCULATE_HUMANITY_LOSS = "/gameplay/combat/cyberpsychosis/{player_id}/humanity/calculate-loss";
     /**
-     * POST /gameplay/combat/cyberpsychosis/{player_id}/humanity/calculate-loss : Рассчитать потерю человечности при установке импланта
-     * Рассчитывает потерю человечности при установке импланта с учетом всех факторов. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Система человечности 
+     * POST /gameplay/combat/cyberpsychosis/{player_id}/humanity/calculate-loss : Р Р°СЃСЃС‡РёС‚Р°С‚СЊ РїРѕС‚РµСЂСЋ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РїСЂРё СѓСЃС‚Р°РЅРѕРІРєРµ РёРјРїР»Р°РЅС‚Р°
+     * Р Р°СЃСЃС‡РёС‚С‹РІР°РµС‚ РїРѕС‚РµСЂСЋ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РїСЂРё СѓСЃС‚Р°РЅРѕРІРєРµ РёРјРїР»Р°РЅС‚Р° СЃ СѓС‡РµС‚РѕРј РІСЃРµС… С„Р°РєС‚РѕСЂРѕРІ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РЎРёСЃС‚РµРјР° С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё 
      *
-     * @param playerId Идентификатор игрока (required)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
      * @param calculateLossRequest  (required)
-     * @return Расчет потери человечности (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @return Р Р°СЃС‡РµС‚ РїРѕС‚РµСЂРё С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "calculateHumanityLoss",
-        summary = "Рассчитать потерю человечности при установке импланта",
-        description = "Рассчитывает потерю человечности при установке импланта с учетом всех факторов. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Система человечности ",
+        summary = "Р Р°СЃСЃС‡РёС‚Р°С‚СЊ РїРѕС‚РµСЂСЋ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РїСЂРё СѓСЃС‚Р°РЅРѕРІРєРµ РёРјРїР»Р°РЅС‚Р°",
+        description = "Р Р°СЃСЃС‡РёС‚С‹РІР°РµС‚ РїРѕС‚РµСЂСЋ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РїСЂРё СѓСЃС‚Р°РЅРѕРІРєРµ РёРјРїР»Р°РЅС‚Р° СЃ СѓС‡РµС‚РѕРј РІСЃРµС… С„Р°РєС‚РѕСЂРѕРІ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РЎРёСЃС‚РµРјР° С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё ",
         tags = { "Combat", "Cyberpsychosis", "Humanity" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Расчет потери человечности", content = {
+            @ApiResponse(responseCode = "200", description = "Р Р°СЃС‡РµС‚ РїРѕС‚РµСЂРё С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = HumanityLossCalculation.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -755,7 +755,7 @@ public interface GameplayCyberpsychosisApi {
         consumes = { "application/json" }
     )
     default ResponseEntity<HumanityLossCalculation> calculateHumanityLoss(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
         @Parameter(name = "CalculateLossRequest", description = "", required = true) @Valid @RequestBody CalculateLossRequest calculateLossRequest
     ) {
         getRequest().ifPresent(request -> {
@@ -766,22 +766,22 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -794,58 +794,58 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_CALCULATE_PROGRESSION = "/gameplay/combat/cyberpsychosis/{player_id}/progression/calculate";
     /**
-     * POST /gameplay/combat/cyberpsychosis/{player_id}/progression/calculate : Рассчитать прогрессию с учетом всех факторов
-     * Рассчитывает прогрессию киберпсихоза с учетом базовых и динамических факторов, триггеров. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Прогрессия 
+     * POST /gameplay/combat/cyberpsychosis/{player_id}/progression/calculate : Р Р°СЃСЃС‡РёС‚Р°С‚СЊ РїСЂРѕРіСЂРµСЃСЃРёСЋ СЃ СѓС‡РµС‚РѕРј РІСЃРµС… С„Р°РєС‚РѕСЂРѕРІ
+     * Р Р°СЃСЃС‡РёС‚С‹РІР°РµС‚ РїСЂРѕРіСЂРµСЃСЃРёСЋ РєРёР±РµСЂРїСЃРёС…РѕР·Р° СЃ СѓС‡РµС‚РѕРј Р±Р°Р·РѕРІС‹С… Рё РґРёРЅР°РјРёС‡РµСЃРєРёС… С„Р°РєС‚РѕСЂРѕРІ, С‚СЂРёРіРіРµСЂРѕРІ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РџСЂРѕРіСЂРµСЃСЃРёСЏ 
      *
-     * @param playerId Идентификатор игрока (required)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
      * @param calculateProgressionRequest  (required)
-     * @return Расчет прогрессии (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @return Р Р°СЃС‡РµС‚ РїСЂРѕРіСЂРµСЃСЃРёРё (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "calculateProgression",
-        summary = "Рассчитать прогрессию с учетом всех факторов",
-        description = "Рассчитывает прогрессию киберпсихоза с учетом базовых и динамических факторов, триггеров. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Прогрессия ",
+        summary = "Р Р°СЃСЃС‡РёС‚Р°С‚СЊ РїСЂРѕРіСЂРµСЃСЃРёСЋ СЃ СѓС‡РµС‚РѕРј РІСЃРµС… С„Р°РєС‚РѕСЂРѕРІ",
+        description = "Р Р°СЃСЃС‡РёС‚С‹РІР°РµС‚ РїСЂРѕРіСЂРµСЃСЃРёСЋ РєРёР±РµСЂРїСЃРёС…РѕР·Р° СЃ СѓС‡РµС‚РѕРј Р±Р°Р·РѕРІС‹С… Рё РґРёРЅР°РјРёС‡РµСЃРєРёС… С„Р°РєС‚РѕСЂРѕРІ, С‚СЂРёРіРіРµСЂРѕРІ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РџСЂРѕРіСЂРµСЃСЃРёСЏ ",
         tags = { "Combat", "Cyberpsychosis", "Progression" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Расчет прогрессии", content = {
+            @ApiResponse(responseCode = "200", description = "Р Р°СЃС‡РµС‚ РїСЂРѕРіСЂРµСЃСЃРёРё", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ProgressionCalculation.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -862,7 +862,7 @@ public interface GameplayCyberpsychosisApi {
         consumes = { "application/json" }
     )
     default ResponseEntity<ProgressionCalculation> calculateProgression(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
         @Parameter(name = "CalculateProgressionRequest", description = "", required = true) @Valid @RequestBody CalculateProgressionRequest calculateProgressionRequest
     ) {
         getRequest().ifPresent(request -> {
@@ -873,22 +873,22 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -901,47 +901,47 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_GET_ADAPTATION = "/gameplay/combat/cyberpsychosis/{player_id}/adaptation";
     /**
-     * GET /gameplay/combat/cyberpsychosis/{player_id}/adaptation : Получить информацию об адаптации к симптомам
-     * Возвращает информацию об адаптации игрока к симптомам (привыкание через время). Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Адаптация 
+     * GET /gameplay/combat/cyberpsychosis/{player_id}/adaptation : РџРѕР»СѓС‡РёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± Р°РґР°РїС‚Р°С†РёРё Рє СЃРёРјРїС‚РѕРјР°Рј
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± Р°РґР°РїС‚Р°С†РёРё РёРіСЂРѕРєР° Рє СЃРёРјРїС‚РѕРјР°Рј (РїСЂРёРІС‹РєР°РЅРёРµ С‡РµСЂРµР· РІСЂРµРјСЏ). РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РђРґР°РїС‚Р°С†РёСЏ 
      *
-     * @param playerId Идентификатор игрока (required)
-     * @return Информация об адаптации (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
+     * @return РРЅС„РѕСЂРјР°С†РёСЏ РѕР± Р°РґР°РїС‚Р°С†РёРё (status code 200)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getAdaptation",
-        summary = "Получить информацию об адаптации к симптомам",
-        description = "Возвращает информацию об адаптации игрока к симптомам (привыкание через время). Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Адаптация ",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± Р°РґР°РїС‚Р°С†РёРё Рє СЃРёРјРїС‚РѕРјР°Рј",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± Р°РґР°РїС‚Р°С†РёРё РёРіСЂРѕРєР° Рє СЃРёРјРїС‚РѕРјР°Рј (РїСЂРёРІС‹РєР°РЅРёРµ С‡РµСЂРµР· РІСЂРµРјСЏ). РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РђРґР°РїС‚Р°С†РёСЏ ",
         tags = { "Combat", "Cyberpsychosis", "Management" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Информация об адаптации", content = {
+            @ApiResponse(responseCode = "200", description = "РРЅС„РѕСЂРјР°С†РёСЏ РѕР± Р°РґР°РїС‚Р°С†РёРё", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = AdaptationInfo.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -957,7 +957,7 @@ public interface GameplayCyberpsychosisApi {
         produces = { "application/json" }
     )
     default ResponseEntity<AdaptationInfo> getAdaptation(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -967,17 +967,17 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -990,47 +990,47 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_GET_CONSEQUENCES = "/gameplay/combat/cyberpsychosis/{player_id}/consequences";
     /**
-     * GET /gameplay/combat/cyberpsychosis/{player_id}/consequences : Получить список последствий киберпсихоза
-     * Возвращает список последствий киберпсихоза: штрафы к характеристикам, социальные эффекты, влияние на контроль. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Последствия 
+     * GET /gameplay/combat/cyberpsychosis/{player_id}/consequences : РџРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє РїРѕСЃР»РµРґСЃС‚РІРёР№ РєРёР±РµСЂРїСЃРёС…РѕР·Р°
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РїРѕСЃР»РµРґСЃС‚РІРёР№ РєРёР±РµСЂРїСЃРёС…РѕР·Р°: С€С‚СЂР°С„С‹ Рє С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєР°Рј, СЃРѕС†РёР°Р»СЊРЅС‹Рµ СЌС„С„РµРєС‚С‹, РІР»РёСЏРЅРёРµ РЅР° РєРѕРЅС‚СЂРѕР»СЊ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РџРѕСЃР»РµРґСЃС‚РІРёСЏ 
      *
-     * @param playerId Идентификатор игрока (required)
-     * @return Информация о последствиях (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
+     * @return РРЅС„РѕСЂРјР°С†РёСЏ Рѕ РїРѕСЃР»РµРґСЃС‚РІРёСЏС… (status code 200)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getConsequences",
-        summary = "Получить список последствий киберпсихоза",
-        description = "Возвращает список последствий киберпсихоза: штрафы к характеристикам, социальные эффекты, влияние на контроль. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Последствия ",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє РїРѕСЃР»РµРґСЃС‚РІРёР№ РєРёР±РµСЂРїСЃРёС…РѕР·Р°",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РїРѕСЃР»РµРґСЃС‚РІРёР№ РєРёР±РµСЂРїСЃРёС…РѕР·Р°: С€С‚СЂР°С„С‹ Рє С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєР°Рј, СЃРѕС†РёР°Р»СЊРЅС‹Рµ СЌС„С„РµРєС‚С‹, РІР»РёСЏРЅРёРµ РЅР° РєРѕРЅС‚СЂРѕР»СЊ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РџРѕСЃР»РµРґСЃС‚РІРёСЏ ",
         tags = { "Combat", "Cyberpsychosis", "Consequences" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Информация о последствиях", content = {
+            @ApiResponse(responseCode = "200", description = "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ РїРѕСЃР»РµРґСЃС‚РІРёСЏС…", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ConsequencesInfo.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -1046,7 +1046,7 @@ public interface GameplayCyberpsychosisApi {
         produces = { "application/json" }
     )
     default ResponseEntity<ConsequencesInfo> getConsequences(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -1056,17 +1056,17 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -1079,47 +1079,47 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_GET_CYBERPSYCHOSIS_STAGE = "/gameplay/combat/cyberpsychosis/{player_id}/stage";
     /**
-     * GET /gameplay/combat/cyberpsychosis/{player_id}/stage : Получить текущую стадию киберпсихоза
-     * Возвращает текущую стадию киберпсихоза игрока с симптомами и эффектами. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Симптомы и прогрессия 
+     * GET /gameplay/combat/cyberpsychosis/{player_id}/stage : РџРѕР»СѓС‡РёС‚СЊ С‚РµРєСѓС‰СѓСЋ СЃС‚Р°РґРёСЋ РєРёР±РµСЂРїСЃРёС…РѕР·Р°
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰СѓСЋ СЃС‚Р°РґРёСЋ РєРёР±РµСЂРїСЃРёС…РѕР·Р° РёРіСЂРѕРєР° СЃ СЃРёРјРїС‚РѕРјР°РјРё Рё СЌС„С„РµРєС‚Р°РјРё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РЎРёРјРїС‚РѕРјС‹ Рё РїСЂРѕРіСЂРµСЃСЃРёСЏ 
      *
-     * @param playerId Идентификатор игрока (required)
-     * @return Информация о стадии киберпсихоза (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
+     * @return РРЅС„РѕСЂРјР°С†РёСЏ Рѕ СЃС‚Р°РґРёРё РєРёР±РµСЂРїСЃРёС…РѕР·Р° (status code 200)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getCyberpsychosisStage",
-        summary = "Получить текущую стадию киберпсихоза",
-        description = "Возвращает текущую стадию киберпсихоза игрока с симптомами и эффектами. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Симптомы и прогрессия ",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ С‚РµРєСѓС‰СѓСЋ СЃС‚Р°РґРёСЋ РєРёР±РµСЂРїСЃРёС…РѕР·Р°",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰СѓСЋ СЃС‚Р°РґРёСЋ РєРёР±РµСЂРїСЃРёС…РѕР·Р° РёРіСЂРѕРєР° СЃ СЃРёРјРїС‚РѕРјР°РјРё Рё СЌС„С„РµРєС‚Р°РјРё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РЎРёРјРїС‚РѕРјС‹ Рё РїСЂРѕРіСЂРµСЃСЃРёСЏ ",
         tags = { "Combat", "Cyberpsychosis", "Stages" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Информация о стадии киберпсихоза", content = {
+            @ApiResponse(responseCode = "200", description = "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ СЃС‚Р°РґРёРё РєРёР±РµСЂРїСЃРёС…РѕР·Р°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = CyberpsychosisStage.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -1135,7 +1135,7 @@ public interface GameplayCyberpsychosisApi {
         produces = { "application/json" }
     )
     default ResponseEntity<CyberpsychosisStage> getCyberpsychosisStage(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -1145,17 +1145,17 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -1168,47 +1168,47 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_GET_HUMANITY = "/gameplay/combat/cyberpsychosis/{player_id}/humanity";
     /**
-     * GET /gameplay/combat/cyberpsychosis/{player_id}/humanity : Получить текущий уровень человечности
-     * Возвращает текущий уровень человечности игрока, включая процент потери и текущую стадию. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Система человечности 
+     * GET /gameplay/combat/cyberpsychosis/{player_id}/humanity : РџРѕР»СѓС‡РёС‚СЊ С‚РµРєСѓС‰РёР№ СѓСЂРѕРІРµРЅСЊ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰РёР№ СѓСЂРѕРІРµРЅСЊ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РёРіСЂРѕРєР°, РІРєР»СЋС‡Р°СЏ РїСЂРѕС†РµРЅС‚ РїРѕС‚РµСЂРё Рё С‚РµРєСѓС‰СѓСЋ СЃС‚Р°РґРёСЋ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РЎРёСЃС‚РµРјР° С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё 
      *
-     * @param playerId Идентификатор игрока (required)
-     * @return Информация о человечности (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
+     * @return РРЅС„РѕСЂРјР°С†РёСЏ Рѕ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё (status code 200)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getHumanity",
-        summary = "Получить текущий уровень человечности",
-        description = "Возвращает текущий уровень человечности игрока, включая процент потери и текущую стадию. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Система человечности ",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ С‚РµРєСѓС‰РёР№ СѓСЂРѕРІРµРЅСЊ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰РёР№ СѓСЂРѕРІРµРЅСЊ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РёРіСЂРѕРєР°, РІРєР»СЋС‡Р°СЏ РїСЂРѕС†РµРЅС‚ РїРѕС‚РµСЂРё Рё С‚РµРєСѓС‰СѓСЋ СЃС‚Р°РґРёСЋ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РЎРёСЃС‚РµРјР° С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё ",
         tags = { "Combat", "Cyberpsychosis", "Humanity" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Информация о человечности", content = {
+            @ApiResponse(responseCode = "200", description = "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = HumanityInfo.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -1224,7 +1224,7 @@ public interface GameplayCyberpsychosisApi {
         produces = { "application/json" }
     )
     default ResponseEntity<HumanityInfo> getHumanity(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -1234,17 +1234,17 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -1257,47 +1257,47 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_GET_PROGRESSION = "/gameplay/combat/cyberpsychosis/{player_id}/progression";
     /**
-     * GET /gameplay/combat/cyberpsychosis/{player_id}/progression : Получить информацию о прогрессии
-     * Возвращает информацию о прогрессии киберпсихоза, включая факторы, триггеры и скорость. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Прогрессия 
+     * GET /gameplay/combat/cyberpsychosis/{player_id}/progression : РџРѕР»СѓС‡РёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РїСЂРѕРіСЂРµСЃСЃРёРё
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РїСЂРѕРіСЂРµСЃСЃРёРё РєРёР±РµСЂРїСЃРёС…РѕР·Р°, РІРєР»СЋС‡Р°СЏ С„Р°РєС‚РѕСЂС‹, С‚СЂРёРіРіРµСЂС‹ Рё СЃРєРѕСЂРѕСЃС‚СЊ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РџСЂРѕРіСЂРµСЃСЃРёСЏ 
      *
-     * @param playerId Идентификатор игрока (required)
-     * @return Информация о прогрессии (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
+     * @return РРЅС„РѕСЂРјР°С†РёСЏ Рѕ РїСЂРѕРіСЂРµСЃСЃРёРё (status code 200)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getProgression",
-        summary = "Получить информацию о прогрессии",
-        description = "Возвращает информацию о прогрессии киберпсихоза, включая факторы, триггеры и скорость. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Прогрессия ",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РїСЂРѕРіСЂРµСЃСЃРёРё",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РїСЂРѕРіСЂРµСЃСЃРёРё РєРёР±РµСЂРїСЃРёС…РѕР·Р°, РІРєР»СЋС‡Р°СЏ С„Р°РєС‚РѕСЂС‹, С‚СЂРёРіРіРµСЂС‹ Рё СЃРєРѕСЂРѕСЃС‚СЊ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РџСЂРѕРіСЂРµСЃСЃРёСЏ ",
         tags = { "Combat", "Cyberpsychosis", "Progression" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Информация о прогрессии", content = {
+            @ApiResponse(responseCode = "200", description = "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ РїСЂРѕРіСЂРµСЃСЃРёРё", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ProgressionInfo.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -1313,7 +1313,7 @@ public interface GameplayCyberpsychosisApi {
         produces = { "application/json" }
     )
     default ResponseEntity<ProgressionInfo> getProgression(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -1323,17 +1323,17 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -1346,47 +1346,47 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_GET_SOCIAL_EFFECTS = "/gameplay/combat/cyberpsychosis/{player_id}/social-effects";
     /**
-     * GET /gameplay/combat/cyberpsychosis/{player_id}/social-effects : Получить влияние на социальные взаимодействия
-     * Возвращает влияние киберпсихоза на социальные взаимодействия: репутацию, доступ к NPC. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Социальные механики 
+     * GET /gameplay/combat/cyberpsychosis/{player_id}/social-effects : РџРѕР»СѓС‡РёС‚СЊ РІР»РёСЏРЅРёРµ РЅР° СЃРѕС†РёР°Р»СЊРЅС‹Рµ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёСЏ
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ РІР»РёСЏРЅРёРµ РєРёР±РµСЂРїСЃРёС…РѕР·Р° РЅР° СЃРѕС†РёР°Р»СЊРЅС‹Рµ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёСЏ: СЂРµРїСѓС‚Р°С†РёСЋ, РґРѕСЃС‚СѓРї Рє NPC. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РЎРѕС†РёР°Р»СЊРЅС‹Рµ РјРµС…Р°РЅРёРєРё 
      *
-     * @param playerId Идентификатор игрока (required)
-     * @return Социальные эффекты (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
+     * @return РЎРѕС†РёР°Р»СЊРЅС‹Рµ СЌС„С„РµРєС‚С‹ (status code 200)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getSocialEffects",
-        summary = "Получить влияние на социальные взаимодействия",
-        description = "Возвращает влияние киберпсихоза на социальные взаимодействия: репутацию, доступ к NPC. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Социальные механики ",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ РІР»РёСЏРЅРёРµ РЅР° СЃРѕС†РёР°Р»СЊРЅС‹Рµ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёСЏ",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ РІР»РёСЏРЅРёРµ РєРёР±РµСЂРїСЃРёС…РѕР·Р° РЅР° СЃРѕС†РёР°Р»СЊРЅС‹Рµ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёСЏ: СЂРµРїСѓС‚Р°С†РёСЋ, РґРѕСЃС‚СѓРї Рє NPC. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РЎРѕС†РёР°Р»СЊРЅС‹Рµ РјРµС…Р°РЅРёРєРё ",
         tags = { "Combat", "Cyberpsychosis", "Consequences" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Социальные эффекты", content = {
+            @ApiResponse(responseCode = "200", description = "РЎРѕС†РёР°Р»СЊРЅС‹Рµ СЌС„С„РµРєС‚С‹", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = SocialEffects.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -1402,7 +1402,7 @@ public interface GameplayCyberpsychosisApi {
         produces = { "application/json" }
     )
     default ResponseEntity<SocialEffects> getSocialEffects(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -1412,17 +1412,17 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -1435,47 +1435,47 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_GET_STAGE_INFO = "/gameplay/combat/cyberpsychosis/stages/{stage_name}";
     /**
-     * GET /gameplay/combat/cyberpsychosis/stages/{stage_name} : Получить информацию о стадии
-     * Возвращает информацию о стадии киберпсихоза (ранняя, средняя, поздняя, киберпсихоз).
+     * GET /gameplay/combat/cyberpsychosis/stages/{stage_name} : РџРѕР»СѓС‡РёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЃС‚Р°РґРёРё
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЃС‚Р°РґРёРё РєРёР±РµСЂРїСЃРёС…РѕР·Р° (СЂР°РЅРЅСЏСЏ, СЃСЂРµРґРЅСЏСЏ, РїРѕР·РґРЅСЏСЏ, РєРёР±РµСЂРїСЃРёС…РѕР·).
      *
-     * @param stageName Название стадии (required)
-     * @return Информация о стадии (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @param stageName РќР°Р·РІР°РЅРёРµ СЃС‚Р°РґРёРё (required)
+     * @return РРЅС„РѕСЂРјР°С†РёСЏ Рѕ СЃС‚Р°РґРёРё (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getStageInfo",
-        summary = "Получить информацию о стадии",
-        description = "Возвращает информацию о стадии киберпсихоза (ранняя, средняя, поздняя, киберпсихоз).",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЃС‚Р°РґРёРё",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЃС‚Р°РґРёРё РєРёР±РµСЂРїСЃРёС…РѕР·Р° (СЂР°РЅРЅСЏСЏ, СЃСЂРµРґРЅСЏСЏ, РїРѕР·РґРЅСЏСЏ, РєРёР±РµСЂРїСЃРёС…РѕР·).",
         tags = { "Combat", "Cyberpsychosis", "Stages" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Информация о стадии", content = {
+            @ApiResponse(responseCode = "200", description = "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ СЃС‚Р°РґРёРё", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = StageInfo.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -1491,7 +1491,7 @@ public interface GameplayCyberpsychosisApi {
         produces = { "application/json" }
     )
     default ResponseEntity<StageInfo> getStageInfo(
-        @NotNull @Parameter(name = "stage_name", description = "Название стадии", required = true, in = ParameterIn.PATH) @PathVariable("stage_name") String stageName
+        @NotNull @Parameter(name = "stage_name", description = "РќР°Р·РІР°РЅРёРµ СЃС‚Р°РґРёРё", required = true, in = ParameterIn.PATH) @PathVariable("stage_name") String stageName
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -1501,17 +1501,17 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -1524,47 +1524,47 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_GET_STAT_PENALTIES = "/gameplay/combat/cyberpsychosis/{player_id}/stat-penalties";
     /**
-     * GET /gameplay/combat/cyberpsychosis/{player_id}/stat-penalties : Получить штрафы к характеристикам
-     * Возвращает штрафы к характеристикам от киберпсихоза.
+     * GET /gameplay/combat/cyberpsychosis/{player_id}/stat-penalties : РџРѕР»СѓС‡РёС‚СЊ С€С‚СЂР°С„С‹ Рє С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєР°Рј
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ С€С‚СЂР°С„С‹ Рє С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєР°Рј РѕС‚ РєРёР±РµСЂРїСЃРёС…РѕР·Р°.
      *
-     * @param playerId Идентификатор игрока (required)
-     * @return Штрафы к характеристикам (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
+     * @return РЁС‚СЂР°С„С‹ Рє С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєР°Рј (status code 200)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getStatPenalties",
-        summary = "Получить штрафы к характеристикам",
-        description = "Возвращает штрафы к характеристикам от киберпсихоза.",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ С€С‚СЂР°С„С‹ Рє С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєР°Рј",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ С€С‚СЂР°С„С‹ Рє С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєР°Рј РѕС‚ РєРёР±РµСЂРїСЃРёС…РѕР·Р°.",
         tags = { "Combat", "Cyberpsychosis", "Consequences" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Штрафы к характеристикам", content = {
+            @ApiResponse(responseCode = "200", description = "РЁС‚СЂР°С„С‹ Рє С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєР°Рј", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = StatPenalties.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -1580,7 +1580,7 @@ public interface GameplayCyberpsychosisApi {
         produces = { "application/json" }
     )
     default ResponseEntity<StatPenalties> getStatPenalties(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -1590,17 +1590,17 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -1613,47 +1613,47 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_GET_SYMPTOMS = "/gameplay/combat/cyberpsychosis/{player_id}/symptoms";
     /**
-     * GET /gameplay/combat/cyberpsychosis/{player_id}/symptoms : Получить список активных симптомов
-     * Возвращает список активных симптомов игрока с их эффектами.
+     * GET /gameplay/combat/cyberpsychosis/{player_id}/symptoms : РџРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє Р°РєС‚РёРІРЅС‹С… СЃРёРјРїС‚РѕРјРѕРІ
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє Р°РєС‚РёРІРЅС‹С… СЃРёРјРїС‚РѕРјРѕРІ РёРіСЂРѕРєР° СЃ РёС… СЌС„С„РµРєС‚Р°РјРё.
      *
-     * @param playerId Идентификатор игрока (required)
-     * @return Список активных симптомов (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
+     * @return РЎРїРёСЃРѕРє Р°РєС‚РёРІРЅС‹С… СЃРёРјРїС‚РѕРјРѕРІ (status code 200)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getSymptoms",
-        summary = "Получить список активных симптомов",
-        description = "Возвращает список активных симптомов игрока с их эффектами.",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє Р°РєС‚РёРІРЅС‹С… СЃРёРјРїС‚РѕРјРѕРІ",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє Р°РєС‚РёРІРЅС‹С… СЃРёРјРїС‚РѕРјРѕРІ РёРіСЂРѕРєР° СЃ РёС… СЌС„С„РµРєС‚Р°РјРё.",
         tags = { "Combat", "Cyberpsychosis", "Symptoms" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Список активных симптомов", content = {
+            @ApiResponse(responseCode = "200", description = "РЎРїРёСЃРѕРє Р°РєС‚РёРІРЅС‹С… СЃРёРјРїС‚РѕРјРѕРІ", content = {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Symptom.class)))
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -1669,7 +1669,7 @@ public interface GameplayCyberpsychosisApi {
         produces = { "application/json" }
     )
     default ResponseEntity<List<Symptom>> getSymptoms(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -1679,17 +1679,17 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -1702,58 +1702,58 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_GET_TREATMENT_COSTS = "/gameplay/combat/cyberpsychosis/{player_id}/treatment-costs";
     /**
-     * GET /gameplay/combat/cyberpsychosis/{player_id}/treatment-costs : Получить стоимость лечения
-     * Возвращает стоимость лечения с учетом типа лечения, модификаторов и скидок. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Экономика управления 
+     * GET /gameplay/combat/cyberpsychosis/{player_id}/treatment-costs : РџРѕР»СѓС‡РёС‚СЊ СЃС‚РѕРёРјРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃС‚РѕРёРјРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ СЃ СѓС‡РµС‚РѕРј С‚РёРїР° Р»РµС‡РµРЅРёСЏ, РјРѕРґРёС„РёРєР°С‚РѕСЂРѕРІ Рё СЃРєРёРґРѕРє. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Р­РєРѕРЅРѕРјРёРєР° СѓРїСЂР°РІР»РµРЅРёСЏ 
      *
-     * @param playerId Идентификатор игрока (required)
-     * @param treatmentType Тип лечения (optional)
-     * @return Стоимость лечения (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
+     * @param treatmentType РўРёРї Р»РµС‡РµРЅРёСЏ (optional)
+     * @return РЎС‚РѕРёРјРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getTreatmentCosts",
-        summary = "Получить стоимость лечения",
-        description = "Возвращает стоимость лечения с учетом типа лечения, модификаторов и скидок. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Экономика управления ",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ СЃС‚РѕРёРјРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃС‚РѕРёРјРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ СЃ СѓС‡РµС‚РѕРј С‚РёРїР° Р»РµС‡РµРЅРёСЏ, РјРѕРґРёС„РёРєР°С‚РѕСЂРѕРІ Рё СЃРєРёРґРѕРє. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Р­РєРѕРЅРѕРјРёРєР° СѓРїСЂР°РІР»РµРЅРёСЏ ",
         tags = { "Combat", "Cyberpsychosis", "Economy" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Стоимость лечения", content = {
+            @ApiResponse(responseCode = "200", description = "РЎС‚РѕРёРјРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = TreatmentCosts.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -1769,8 +1769,8 @@ public interface GameplayCyberpsychosisApi {
         produces = { "application/json" }
     )
     default ResponseEntity<TreatmentCosts> getTreatmentCosts(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
-        @Parameter(name = "treatment_type", description = "Тип лечения", in = ParameterIn.QUERY) @Valid @RequestParam(value = "treatment_type", required = false) @Nullable String treatmentType
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
+        @Parameter(name = "treatment_type", description = "РўРёРї Р»РµС‡РµРЅРёСЏ", in = ParameterIn.QUERY) @Valid @RequestParam(value = "treatment_type", required = false) @Nullable String treatmentType
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -1780,22 +1780,22 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -1808,39 +1808,39 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_GET_TREATMENTS = "/gameplay/combat/cyberpsychosis/treatments";
     /**
-     * GET /gameplay/combat/cyberpsychosis/treatments : Получить список доступных методов лечения
-     * Возвращает список доступных методов лечения с описанием, стоимостью и эффективностью.
+     * GET /gameplay/combat/cyberpsychosis/treatments : РџРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РјРµС‚РѕРґРѕРІ Р»РµС‡РµРЅРёСЏ
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РјРµС‚РѕРґРѕРІ Р»РµС‡РµРЅРёСЏ СЃ РѕРїРёСЃР°РЅРёРµРј, СЃС‚РѕРёРјРѕСЃС‚СЊСЋ Рё СЌС„С„РµРєС‚РёРІРЅРѕСЃС‚СЊСЋ.
      *
-     * @param playerId Идентификатор игрока (для проверки доступности) (optional)
-     * @param page Номер страницы (начинается с 1) (optional, default to 1)
-     * @param pageSize Количество элементов на странице (optional, default to 20)
-     * @return Список методов лечения (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (РґР»СЏ РїСЂРѕРІРµСЂРєРё РґРѕСЃС‚СѓРїРЅРѕСЃС‚Рё) (optional)
+     * @param page РќРѕРјРµСЂ СЃС‚СЂР°РЅРёС†С‹ (РЅР°С‡РёРЅР°РµС‚СЃСЏ СЃ 1) (optional, default to 1)
+     * @param pageSize РљРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ РЅР° СЃС‚СЂР°РЅРёС†Рµ (optional, default to 20)
+     * @return РЎРїРёСЃРѕРє РјРµС‚РѕРґРѕРІ Р»РµС‡РµРЅРёСЏ (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getTreatments",
-        summary = "Получить список доступных методов лечения",
-        description = "Возвращает список доступных методов лечения с описанием, стоимостью и эффективностью.",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РјРµС‚РѕРґРѕРІ Р»РµС‡РµРЅРёСЏ",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РјРµС‚РѕРґРѕРІ Р»РµС‡РµРЅРёСЏ СЃ РѕРїРёСЃР°РЅРёРµРј, СЃС‚РѕРёРјРѕСЃС‚СЊСЋ Рё СЌС„С„РµРєС‚РёРІРЅРѕСЃС‚СЊСЋ.",
         tags = { "Combat", "Cyberpsychosis", "Management" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Список методов лечения", content = {
+            @ApiResponse(responseCode = "200", description = "РЎРїРёСЃРѕРє РјРµС‚РѕРґРѕРІ Р»РµС‡РµРЅРёСЏ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GetTreatments200Response.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -1856,9 +1856,9 @@ public interface GameplayCyberpsychosisApi {
         produces = { "application/json" }
     )
     default ResponseEntity<GetTreatments200Response> getTreatments(
-        @Parameter(name = "player_id", description = "Идентификатор игрока (для проверки доступности)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "player_id", required = false) @Nullable UUID playerId,
-        @Min(value = 1) @Parameter(name = "page", description = "Номер страницы (начинается с 1)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-        @Min(value = 1) @Max(value = 100) @Parameter(name = "page_size", description = "Количество элементов на странице", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page_size", required = false, defaultValue = "20") Integer pageSize
+        @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (РґР»СЏ РїСЂРѕРІРµСЂРєРё РґРѕСЃС‚СѓРїРЅРѕСЃС‚Рё)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "player_id", required = false) @Nullable UUID playerId,
+        @Min(value = 1) @Parameter(name = "page", description = "РќРѕРјРµСЂ СЃС‚СЂР°РЅРёС†С‹ (РЅР°С‡РёРЅР°РµС‚СЃСЏ СЃ 1)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+        @Min(value = 1) @Max(value = 100) @Parameter(name = "page_size", description = "РљРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ РЅР° СЃС‚СЂР°РЅРёС†Рµ", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page_size", required = false, defaultValue = "20") Integer pageSize
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -1868,12 +1868,12 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -1886,68 +1886,68 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_PERFORM_DETOXIFICATION = "/gameplay/combat/cyberpsychosis/{player_id}/detoxification";
     /**
-     * POST /gameplay/combat/cyberpsychosis/{player_id}/detoxification : Выполнить детоксикацию
-     * Выполняет детоксикацию для восстановления человечности. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Детоксикация 
+     * POST /gameplay/combat/cyberpsychosis/{player_id}/detoxification : Р’С‹РїРѕР»РЅРёС‚СЊ РґРµС‚РѕРєСЃРёРєР°С†РёСЋ
+     * Р’С‹РїРѕР»РЅСЏРµС‚ РґРµС‚РѕРєСЃРёРєР°С†РёСЋ РґР»СЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Р”РµС‚РѕРєСЃРёРєР°С†РёСЏ 
      *
-     * @param playerId Идентификатор игрока (required)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
      * @param detoxificationRequest  (required)
-     * @return Детоксикация выполнена (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Запрос синтаксически корректен, но семантически неверен. Например, некорректное состояние ресурса для операции.  (status code 422)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @return Р”РµС‚РѕРєСЃРёРєР°С†РёСЏ РІС‹РїРѕР»РЅРµРЅР° (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р—Р°РїСЂРѕСЃ СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєРё РєРѕСЂСЂРµРєС‚РµРЅ, РЅРѕ СЃРµРјР°РЅС‚РёС‡РµСЃРєРё РЅРµРІРµСЂРµРЅ. РќР°РїСЂРёРјРµСЂ, РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЂРµСЃСѓСЂСЃР° РґР»СЏ РѕРїРµСЂР°С†РёРё.  (status code 422)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "performDetoxification",
-        summary = "Выполнить детоксикацию",
-        description = "Выполняет детоксикацию для восстановления человечности. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Детоксикация ",
+        summary = "Р’С‹РїРѕР»РЅРёС‚СЊ РґРµС‚РѕРєСЃРёРєР°С†РёСЋ",
+        description = "Р’С‹РїРѕР»РЅСЏРµС‚ РґРµС‚РѕРєСЃРёРєР°С†РёСЋ РґР»СЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Р”РµС‚РѕРєСЃРёРєР°С†РёСЏ ",
         tags = { "Combat", "Cyberpsychosis", "Management" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Детоксикация выполнена", content = {
+            @ApiResponse(responseCode = "200", description = "Р”РµС‚РѕРєСЃРёРєР°С†РёСЏ РІС‹РїРѕР»РЅРµРЅР°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = DetoxificationResult.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "422", description = "Запрос синтаксически корректен, но семантически неверен. Например, некорректное состояние ресурса для операции. ", content = {
+            @ApiResponse(responseCode = "422", description = "Р—Р°РїСЂРѕСЃ СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєРё РєРѕСЂСЂРµРєС‚РµРЅ, РЅРѕ СЃРµРјР°РЅС‚РёС‡РµСЃРєРё РЅРµРІРµСЂРµРЅ. РќР°РїСЂРёРјРµСЂ, РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЂРµСЃСѓСЂСЃР° РґР»СЏ РѕРїРµСЂР°С†РёРё. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INVALID_STATE\",\"message\":\"Операция невозможна в текущем состоянии ресурса\",\"details\":[{\"field\":\"status\",\"message\":\"Нельзя отменить выполненный сценарий\",\"code\":\"INVALID_STATE\"}]}}"
+                        value = "{\"error\":{\"code\":\"INVALID_STATE\",\"message\":\"РћРїРµСЂР°С†РёСЏ РЅРµРІРѕР·РјРѕР¶РЅР° РІ С‚РµРєСѓС‰РµРј СЃРѕСЃС‚РѕСЏРЅРёРё СЂРµСЃСѓСЂСЃР°\",\"details\":[{\"field\":\"status\",\"message\":\"РќРµР»СЊР·СЏ РѕС‚РјРµРЅРёС‚СЊ РІС‹РїРѕР»РЅРµРЅРЅС‹Р№ СЃС†РµРЅР°СЂРёР№\",\"code\":\"INVALID_STATE\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -1964,7 +1964,7 @@ public interface GameplayCyberpsychosisApi {
         consumes = { "application/json" }
     )
     default ResponseEntity<DetoxificationResult> performDetoxification(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
         @Parameter(name = "DetoxificationRequest", description = "", required = true) @Valid @RequestBody DetoxificationRequest detoxificationRequest
     ) {
         getRequest().ifPresent(request -> {
@@ -1975,27 +1975,27 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -2008,68 +2008,68 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_REMOVE_IMPLANT = "/gameplay/combat/cyberpsychosis/{player_id}/implant-removal";
     /**
-     * POST /gameplay/combat/cyberpsychosis/{player_id}/implant-removal : Удалить имплант для восстановления человечности
-     * Удаляет имплант через фиксёра для частичного восстановления человечности. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Удаление имплантов 
+     * POST /gameplay/combat/cyberpsychosis/{player_id}/implant-removal : РЈРґР°Р»РёС‚СЊ РёРјРїР»Р°РЅС‚ РґР»СЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё
+     * РЈРґР°Р»СЏРµС‚ РёРјРїР»Р°РЅС‚ С‡РµСЂРµР· С„РёРєСЃС‘СЂР° РґР»СЏ С‡Р°СЃС‚РёС‡РЅРѕРіРѕ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РЈРґР°Р»РµРЅРёРµ РёРјРїР»Р°РЅС‚РѕРІ 
      *
-     * @param playerId Идентификатор игрока (required)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
      * @param removeImplantRequest  (required)
-     * @return Имплант удален (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Запрос синтаксически корректен, но семантически неверен. Например, некорректное состояние ресурса для операции.  (status code 422)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @return РРјРїР»Р°РЅС‚ СѓРґР°Р»РµРЅ (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р—Р°РїСЂРѕСЃ СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєРё РєРѕСЂСЂРµРєС‚РµРЅ, РЅРѕ СЃРµРјР°РЅС‚РёС‡РµСЃРєРё РЅРµРІРµСЂРµРЅ. РќР°РїСЂРёРјРµСЂ, РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЂРµСЃСѓСЂСЃР° РґР»СЏ РѕРїРµСЂР°С†РёРё.  (status code 422)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "removeImplant",
-        summary = "Удалить имплант для восстановления человечности",
-        description = "Удаляет имплант через фиксёра для частичного восстановления человечности. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Удаление имплантов ",
+        summary = "РЈРґР°Р»РёС‚СЊ РёРјРїР»Р°РЅС‚ РґР»СЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё",
+        description = "РЈРґР°Р»СЏРµС‚ РёРјРїР»Р°РЅС‚ С‡РµСЂРµР· С„РёРєСЃС‘СЂР° РґР»СЏ С‡Р°СЃС‚РёС‡РЅРѕРіРѕ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РЈРґР°Р»РµРЅРёРµ РёРјРїР»Р°РЅС‚РѕРІ ",
         tags = { "Combat", "Cyberpsychosis", "Management" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Имплант удален", content = {
+            @ApiResponse(responseCode = "200", description = "РРјРїР»Р°РЅС‚ СѓРґР°Р»РµРЅ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ImplantRemovalResult.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "422", description = "Запрос синтаксически корректен, но семантически неверен. Например, некорректное состояние ресурса для операции. ", content = {
+            @ApiResponse(responseCode = "422", description = "Р—Р°РїСЂРѕСЃ СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєРё РєРѕСЂСЂРµРєС‚РµРЅ, РЅРѕ СЃРµРјР°РЅС‚РёС‡РµСЃРєРё РЅРµРІРµСЂРµРЅ. РќР°РїСЂРёРјРµСЂ, РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЂРµСЃСѓСЂСЃР° РґР»СЏ РѕРїРµСЂР°С†РёРё. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INVALID_STATE\",\"message\":\"Операция невозможна в текущем состоянии ресурса\",\"details\":[{\"field\":\"status\",\"message\":\"Нельзя отменить выполненный сценарий\",\"code\":\"INVALID_STATE\"}]}}"
+                        value = "{\"error\":{\"code\":\"INVALID_STATE\",\"message\":\"РћРїРµСЂР°С†РёСЏ РЅРµРІРѕР·РјРѕР¶РЅР° РІ С‚РµРєСѓС‰РµРј СЃРѕСЃС‚РѕСЏРЅРёРё СЂРµСЃСѓСЂСЃР°\",\"details\":[{\"field\":\"status\",\"message\":\"РќРµР»СЊР·СЏ РѕС‚РјРµРЅРёС‚СЊ РІС‹РїРѕР»РЅРµРЅРЅС‹Р№ СЃС†РµРЅР°СЂРёР№\",\"code\":\"INVALID_STATE\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -2086,7 +2086,7 @@ public interface GameplayCyberpsychosisApi {
         consumes = { "application/json" }
     )
     default ResponseEntity<ImplantRemovalResult> removeImplant(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
         @Parameter(name = "RemoveImplantRequest", description = "", required = true) @Valid @RequestBody RemoveImplantRequest removeImplantRequest
     ) {
         getRequest().ifPresent(request -> {
@@ -2097,27 +2097,27 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -2130,58 +2130,58 @@ public interface GameplayCyberpsychosisApi {
 
     String PATH_TRIGGER_PROGRESSION = "/gameplay/combat/cyberpsychosis/{player_id}/progression/trigger";
     /**
-     * POST /gameplay/combat/cyberpsychosis/{player_id}/progression/trigger : Сработать триггер прогрессии
-     * Срабатывает триггер прогрессии (критические моменты, накопление стресса, временные всплески). Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Триггеры прогрессии 
+     * POST /gameplay/combat/cyberpsychosis/{player_id}/progression/trigger : РЎСЂР°Р±РѕС‚Р°С‚СЊ С‚СЂРёРіРіРµСЂ РїСЂРѕРіСЂРµСЃСЃРёРё
+     * РЎСЂР°Р±Р°С‚С‹РІР°РµС‚ С‚СЂРёРіРіРµСЂ РїСЂРѕРіСЂРµСЃСЃРёРё (РєСЂРёС‚РёС‡РµСЃРєРёРµ РјРѕРјРµРЅС‚С‹, РЅР°РєРѕРїР»РµРЅРёРµ СЃС‚СЂРµСЃСЃР°, РІСЂРµРјРµРЅРЅС‹Рµ РІСЃРїР»РµСЃРєРё). РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РўСЂРёРіРіРµСЂС‹ РїСЂРѕРіСЂРµСЃСЃРёРё 
      *
-     * @param playerId Идентификатор игрока (required)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
      * @param triggerProgressionRequest  (required)
-     * @return Триггер прогрессии сработан (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @return РўСЂРёРіРіРµСЂ РїСЂРѕРіСЂРµСЃСЃРёРё СЃСЂР°Р±РѕС‚Р°РЅ (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "triggerProgression",
-        summary = "Сработать триггер прогрессии",
-        description = "Срабатывает триггер прогрессии (критические моменты, накопление стресса, временные всплески). Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Триггеры прогрессии ",
+        summary = "РЎСЂР°Р±РѕС‚Р°С‚СЊ С‚СЂРёРіРіРµСЂ РїСЂРѕРіСЂРµСЃСЃРёРё",
+        description = "РЎСЂР°Р±Р°С‚С‹РІР°РµС‚ С‚СЂРёРіРіРµСЂ РїСЂРѕРіСЂРµСЃСЃРёРё (РєСЂРёС‚РёС‡РµСЃРєРёРµ РјРѕРјРµРЅС‚С‹, РЅР°РєРѕРїР»РµРЅРёРµ СЃС‚СЂРµСЃСЃР°, РІСЂРµРјРµРЅРЅС‹Рµ РІСЃРїР»РµСЃРєРё). РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РўСЂРёРіРіРµСЂС‹ РїСЂРѕРіСЂРµСЃСЃРёРё ",
         tags = { "Combat", "Cyberpsychosis", "Progression" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Триггер прогрессии сработан", content = {
+            @ApiResponse(responseCode = "200", description = "РўСЂРёРіРіРµСЂ РїСЂРѕРіСЂРµСЃСЃРёРё СЃСЂР°Р±РѕС‚Р°РЅ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ProgressionTriggerResult.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -2198,7 +2198,7 @@ public interface GameplayCyberpsychosisApi {
         consumes = { "application/json" }
     )
     default ResponseEntity<ProgressionTriggerResult> triggerProgression(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
         @Parameter(name = "TriggerProgressionRequest", description = "", required = true) @Valid @RequestBody TriggerProgressionRequest triggerProgressionRequest
     ) {
         getRequest().ifPresent(request -> {
@@ -2209,22 +2209,22 @@ public interface GameplayCyberpsychosisApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

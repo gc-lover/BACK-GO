@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 import java.util.UUID;
 
 /**
- * Entity для таблицы character_appearances - внешность персонажей
- * Соответствует CharacterAppearance DTO из OpenAPI спецификации
+ * Entity РґР»СЏ С‚Р°Р±Р»РёС†С‹ character_appearances - РІРЅРµС€РЅРѕСЃС‚СЊ РїРµСЂСЃРѕРЅР°Р¶РµР№
+ * РЎРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ CharacterAppearance DTO РёР· OpenAPI СЃРїРµС†РёС„РёРєР°С†РёРё
  */
 @Data
 @Entity
@@ -42,7 +42,7 @@ public class CharacterAppearanceEntity {
     @Column(name = "distinctive_features", length = 500)
     private String distinctiveFeatures;
     
-    // Enum для типа телосложения
+    // Enum РґР»СЏ С‚РёРїР° С‚РµР»РѕСЃР»РѕР¶РµРЅРёСЏ
     public enum BodyType {
         thin,
         normal,

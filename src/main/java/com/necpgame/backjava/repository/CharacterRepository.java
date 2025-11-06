@@ -11,13 +11,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Repository для работы с персонажами игроков
+ * Repository РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РїРµСЂСЃРѕРЅР°Р¶Р°РјРё РёРіСЂРѕРєРѕРІ
  */
 @Repository
 public interface CharacterRepository extends JpaRepository<CharacterEntity, UUID> {
     
     /**
-     * Найти все персонажи аккаунта
+     * РќР°Р№С‚Рё РІСЃРµ РїРµСЂСЃРѕРЅР°Р¶Рё Р°РєРєР°СѓРЅС‚Р°
      */
     @Query("SELECT c FROM CharacterEntity c " +
            "LEFT JOIN FETCH c.city " +
@@ -27,7 +27,7 @@ public interface CharacterRepository extends JpaRepository<CharacterEntity, UUID
     List<CharacterEntity> findAllByAccountId(@Param("accountId") UUID accountId);
     
     /**
-     * Найти персонажа по ID с загрузкой всех связанных данных
+     * РќР°Р№С‚Рё РїРµСЂСЃРѕРЅР°Р¶Р° РїРѕ ID СЃ Р·Р°РіСЂСѓР·РєРѕР№ РІСЃРµС… СЃРІСЏР·Р°РЅРЅС‹С… РґР°РЅРЅС‹С…
      */
     @Query("SELECT c FROM CharacterEntity c " +
            "LEFT JOIN FETCH c.account " +
@@ -38,17 +38,17 @@ public interface CharacterRepository extends JpaRepository<CharacterEntity, UUID
     Optional<CharacterEntity> findByIdWithDetails(@Param("id") UUID id);
     
     /**
-     * Найти персонажа по ID и аккаунту (для проверки владения)
+     * РќР°Р№С‚Рё РїРµСЂСЃРѕРЅР°Р¶Р° РїРѕ ID Рё Р°РєРєР°СѓРЅС‚Сѓ (РґР»СЏ РїСЂРѕРІРµСЂРєРё РІР»Р°РґРµРЅРёСЏ)
      */
     Optional<CharacterEntity> findByIdAndAccountId(UUID id, UUID accountId);
     
     /**
-     * Проверить существование персонажа с таким именем у аккаунта
+     * РџСЂРѕРІРµСЂРёС‚СЊ СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р° СЃ С‚Р°РєРёРј РёРјРµРЅРµРј Сѓ Р°РєРєР°СѓРЅС‚Р°
      */
     boolean existsByNameAndAccountId(String name, UUID accountId);
     
     /**
-     * Посчитать количество персонажей у аккаунта
+     * РџРѕСЃС‡РёС‚Р°С‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂСЃРѕРЅР°Р¶РµР№ Сѓ Р°РєРєР°СѓРЅС‚Р°
      */
     long countByAccountId(UUID accountId);
 }

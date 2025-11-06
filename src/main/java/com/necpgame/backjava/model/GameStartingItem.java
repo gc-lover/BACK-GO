@@ -7,9 +7,9 @@ import jakarta.validation.constraints.*;
 import java.util.Objects;
 
 /**
- * GameStartingItem - стартовый предмет
+ * GameStartingItem - СЃС‚Р°СЂС‚РѕРІС‹Р№ РїСЂРµРґРјРµС‚
  */
-@Schema(description = "Стартовый предмет")
+@Schema(description = "РЎС‚Р°СЂС‚РѕРІС‹Р№ РїСЂРµРґРјРµС‚")
 public class GameStartingItem {
 
     @JsonProperty("itemId")
@@ -18,7 +18,7 @@ public class GameStartingItem {
     @JsonProperty("quantity")
     private Integer quantity;
 
-    @Schema(description = "ID предмета из базы данных", example = "item-pistol-liberty", required = true)
+    @Schema(description = "ID РїСЂРµРґРјРµС‚Р° РёР· Р±Р°Р·С‹ РґР°РЅРЅС‹С…", example = "item-pistol-liberty", required = true)
     @NotNull
     public String getItemId() {
         return itemId;
@@ -28,7 +28,7 @@ public class GameStartingItem {
         this.itemId = itemId;
     }
 
-    @Schema(description = "Количество предметов", example = "1", required = true)
+    @Schema(description = "РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРµРґРјРµС‚РѕРІ", example = "1", required = true)
     @NotNull
     @Min(1)
     public Integer getQuantity() {

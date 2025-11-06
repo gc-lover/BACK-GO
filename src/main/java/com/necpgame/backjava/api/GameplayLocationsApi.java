@@ -52,38 +52,38 @@ public interface GameplayLocationsApi {
 
     String PATH_GET_CONNECTED_LOCATIONS = "/locations/{locationId}/connected";
     /**
-     * GET /locations/{locationId}/connected : Связанные локации
-     * Возвращает список локаций, связанных с текущей, с информацией о доступности и времени пути.  **Бизнес-логика:** - Возвращает только связанные локации - Проверяет доступность каждой локации - Возвращает время пути и расстояние - Указывает требования для недоступных локаций  **Источник:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Раздел 4.1, 4.2) 
+     * GET /locations/{locationId}/connected : РЎРІСЏР·Р°РЅРЅС‹Рµ Р»РѕРєР°С†РёРё
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє Р»РѕРєР°С†РёР№, СЃРІСЏР·Р°РЅРЅС‹С… СЃ С‚РµРєСѓС‰РµР№, СЃ РёРЅС„РѕСЂРјР°С†РёРµР№ Рѕ РґРѕСЃС‚СѓРїРЅРѕСЃС‚Рё Рё РІСЂРµРјРµРЅРё РїСѓС‚Рё.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РѕР»СЊРєРѕ СЃРІСЏР·Р°РЅРЅС‹Рµ Р»РѕРєР°С†РёРё - РџСЂРѕРІРµСЂСЏРµС‚ РґРѕСЃС‚СѓРїРЅРѕСЃС‚СЊ РєР°Р¶РґРѕР№ Р»РѕРєР°С†РёРё - Р’РѕР·РІСЂР°С‰Р°РµС‚ РІСЂРµРјСЏ РїСѓС‚Рё Рё СЂР°СЃСЃС‚РѕСЏРЅРёРµ - РЈРєР°Р·С‹РІР°РµС‚ С‚СЂРµР±РѕРІР°РЅРёСЏ РґР»СЏ РЅРµРґРѕСЃС‚СѓРїРЅС‹С… Р»РѕРєР°С†РёР№  **РСЃС‚РѕС‡РЅРёРє:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Р Р°Р·РґРµР» 4.1, 4.2) 
      *
-     * @param locationId ID локации (required)
-     * @param characterId ID персонажа (для проверки доступности) (optional)
-     * @return Список связанных локаций (status code 200)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     * @param locationId ID Р»РѕРєР°С†РёРё (required)
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р° (РґР»СЏ РїСЂРѕРІРµСЂРєРё РґРѕСЃС‚СѓРїРЅРѕСЃС‚Рё) (optional)
+     * @return РЎРїРёСЃРѕРє СЃРІСЏР·Р°РЅРЅС‹С… Р»РѕРєР°С†РёР№ (status code 200)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
      */
     @Operation(
         operationId = "getConnectedLocations",
-        summary = "Связанные локации",
-        description = "Возвращает список локаций, связанных с текущей, с информацией о доступности и времени пути.  **Бизнес-логика:** - Возвращает только связанные локации - Проверяет доступность каждой локации - Возвращает время пути и расстояние - Указывает требования для недоступных локаций  **Источник:** `.BRAIN/05-technical/ui-main-game.md` (Раздел 4.1, 4.2) ",
+        summary = "РЎРІСЏР·Р°РЅРЅС‹Рµ Р»РѕРєР°С†РёРё",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє Р»РѕРєР°С†РёР№, СЃРІСЏР·Р°РЅРЅС‹С… СЃ С‚РµРєСѓС‰РµР№, СЃ РёРЅС„РѕСЂРјР°С†РёРµР№ Рѕ РґРѕСЃС‚СѓРїРЅРѕСЃС‚Рё Рё РІСЂРµРјРµРЅРё РїСѓС‚Рё.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РѕР»СЊРєРѕ СЃРІСЏР·Р°РЅРЅС‹Рµ Р»РѕРєР°С†РёРё - РџСЂРѕРІРµСЂСЏРµС‚ РґРѕСЃС‚СѓРїРЅРѕСЃС‚СЊ РєР°Р¶РґРѕР№ Р»РѕРєР°С†РёРё - Р’РѕР·РІСЂР°С‰Р°РµС‚ РІСЂРµРјСЏ РїСѓС‚Рё Рё СЂР°СЃСЃС‚РѕСЏРЅРёРµ - РЈРєР°Р·С‹РІР°РµС‚ С‚СЂРµР±РѕРІР°РЅРёСЏ РґР»СЏ РЅРµРґРѕСЃС‚СѓРїРЅС‹С… Р»РѕРєР°С†РёР№  **РСЃС‚РѕС‡РЅРёРє:** `.BRAIN/05-technical/ui-main-game.md` (Р Р°Р·РґРµР» 4.1, 4.2) ",
         tags = { "Locations", "Travel" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Список связанных локаций", content = {
+            @ApiResponse(responseCode = "200", description = "РЎРїРёСЃРѕРє СЃРІСЏР·Р°РЅРЅС‹С… Р»РѕРєР°С†РёР№", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GetConnectedLocations200Response.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
@@ -99,8 +99,8 @@ public interface GameplayLocationsApi {
         produces = { "application/json" }
     )
     default ResponseEntity<GetConnectedLocations200Response> getConnectedLocations(
-        @NotNull @Parameter(name = "locationId", description = "ID локации", required = true, in = ParameterIn.PATH) @PathVariable("locationId") String locationId,
-        @Parameter(name = "characterId", description = "ID персонажа (для проверки доступности)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "characterId", required = false) @Nullable UUID characterId
+        @NotNull @Parameter(name = "locationId", description = "ID Р»РѕРєР°С†РёРё", required = true, in = ParameterIn.PATH) @PathVariable("locationId") String locationId,
+        @Parameter(name = "characterId", description = "ID РїРµСЂСЃРѕРЅР°Р¶Р° (РґР»СЏ РїСЂРѕРІРµСЂРєРё РґРѕСЃС‚СѓРїРЅРѕСЃС‚Рё)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "characterId", required = false) @Nullable UUID characterId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -110,12 +110,12 @@ public interface GameplayLocationsApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -128,37 +128,37 @@ public interface GameplayLocationsApi {
 
     String PATH_GET_CURRENT_LOCATION = "/locations/current";
     /**
-     * GET /locations/current : Текущая локация персонажа
-     * Возвращает текущую локацию персонажа с полным описанием и доступными действиями.  **Бизнес-логика:** - Загружает текущую локацию персонажа из БД - Возвращает атмосферное описание - Возвращает список доступных действий в локации - Возвращает список доступных NPC  **Источник:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Раздел 1.2) 
+     * GET /locations/current : РўРµРєСѓС‰Р°СЏ Р»РѕРєР°С†РёСЏ РїРµСЂСЃРѕРЅР°Р¶Р°
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰СѓСЋ Р»РѕРєР°С†РёСЋ РїРµСЂСЃРѕРЅР°Р¶Р° СЃ РїРѕР»РЅС‹Рј РѕРїРёСЃР°РЅРёРµРј Рё РґРѕСЃС‚СѓРїРЅС‹РјРё РґРµР№СЃС‚РІРёСЏРјРё.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - Р—Р°РіСЂСѓР¶Р°РµС‚ С‚РµРєСѓС‰СѓСЋ Р»РѕРєР°С†РёСЋ РїРµСЂСЃРѕРЅР°Р¶Р° РёР· Р‘Р” - Р’РѕР·РІСЂР°С‰Р°РµС‚ Р°С‚РјРѕСЃС„РµСЂРЅРѕРµ РѕРїРёСЃР°РЅРёРµ - Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РґРµР№СЃС‚РІРёР№ РІ Р»РѕРєР°С†РёРё - Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… NPC  **РСЃС‚РѕС‡РЅРёРє:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Р Р°Р·РґРµР» 1.2) 
      *
-     * @param characterId ID персонажа (required)
-     * @return Текущая локация персонажа (status code 200)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р° (required)
+     * @return РўРµРєСѓС‰Р°СЏ Р»РѕРєР°С†РёСЏ РїРµСЂСЃРѕРЅР°Р¶Р° (status code 200)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
      */
     @Operation(
         operationId = "getCurrentLocation",
-        summary = "Текущая локация персонажа",
-        description = "Возвращает текущую локацию персонажа с полным описанием и доступными действиями.  **Бизнес-логика:** - Загружает текущую локацию персонажа из БД - Возвращает атмосферное описание - Возвращает список доступных действий в локации - Возвращает список доступных NPC  **Источник:** `.BRAIN/05-technical/ui-main-game.md` (Раздел 1.2) ",
+        summary = "РўРµРєСѓС‰Р°СЏ Р»РѕРєР°С†РёСЏ РїРµСЂСЃРѕРЅР°Р¶Р°",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰СѓСЋ Р»РѕРєР°С†РёСЋ РїРµСЂСЃРѕРЅР°Р¶Р° СЃ РїРѕР»РЅС‹Рј РѕРїРёСЃР°РЅРёРµРј Рё РґРѕСЃС‚СѓРїРЅС‹РјРё РґРµР№СЃС‚РІРёСЏРјРё.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - Р—Р°РіСЂСѓР¶Р°РµС‚ С‚РµРєСѓС‰СѓСЋ Р»РѕРєР°С†РёСЋ РїРµСЂСЃРѕРЅР°Р¶Р° РёР· Р‘Р” - Р’РѕР·РІСЂР°С‰Р°РµС‚ Р°С‚РјРѕСЃС„РµСЂРЅРѕРµ РѕРїРёСЃР°РЅРёРµ - Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РґРµР№СЃС‚РІРёР№ РІ Р»РѕРєР°С†РёРё - Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… NPC  **РСЃС‚РѕС‡РЅРёРє:** `.BRAIN/05-technical/ui-main-game.md` (Р Р°Р·РґРµР» 1.2) ",
         tags = { "Locations" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Текущая локация персонажа", content = {
+            @ApiResponse(responseCode = "200", description = "РўРµРєСѓС‰Р°СЏ Р»РѕРєР°С†РёСЏ РїРµСЂСЃРѕРЅР°Р¶Р°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = LocationDetails.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
@@ -174,22 +174,22 @@ public interface GameplayLocationsApi {
         produces = { "application/json" }
     )
     default ResponseEntity<LocationDetails> getCurrentLocation(
-        @NotNull @Parameter(name = "characterId", description = "ID персонажа", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "characterId", required = true) UUID characterId
+        @NotNull @Parameter(name = "characterId", description = "ID РїРµСЂСЃРѕРЅР°Р¶Р°", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "characterId", required = true) UUID characterId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"atmosphere\" : \"Небоскребы упираются в облака, неоновые огни...\", \"availableActions\" : [ { \"actionType\" : \"exploration\", \"disabledReason\" : \"Требуется уровень 5\", \"requirements\" : { \"minLevel\" : 0, \"requiredSkills\" : [ \"requiredSkills\", \"requiredSkills\" ], \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ], \"requiredItems\" : [ \"requiredItems\", \"requiredItems\" ] }, \"description\" : \"Посетить местный рынок и посмотреть товары\", \"id\" : \"explore_market\", \"label\" : \"Исследовать рынок\", \"enabled\" : true }, { \"actionType\" : \"exploration\", \"disabledReason\" : \"Требуется уровень 5\", \"requirements\" : { \"minLevel\" : 0, \"requiredSkills\" : [ \"requiredSkills\", \"requiredSkills\" ], \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ], \"requiredItems\" : [ \"requiredItems\", \"requiredItems\" ] }, \"description\" : \"Посетить местный рынок и посмотреть товары\", \"id\" : \"explore_market\", \"label\" : \"Исследовать рынок\", \"enabled\" : true } ], \"accessible\" : true, \"city\" : \"Night City\", \"dangerLevel\" : \"low\", \"connectedLocations\" : [ \"watson_kabuki\", \"westbrook_japantown\" ], \"description\" : \"Сердце Night City, центр корпоративной власти\", \"type\" : \"corporate\", \"minLevel\" : 1, \"district\" : \"Downtown\", \"name\" : \"City Center\", \"pointsOfInterest\" : [ { \"id\" : \"arasaka_tower\", \"name\" : \"Башня Arasaka\", \"description\" : \"Впечатляющий небоскреб корпорации Arasaka\" } ], \"availableNPCs\" : [ \"npc_id_1\", \"npc_id_2\" ], \"id\" : \"downtown_city_center\", \"region\" : \"night_city\", \"events\" : [ { \"name\" : \"name\", \"description\" : \"description\", \"id\" : \"id\" }, { \"name\" : \"name\", \"description\" : \"description\", \"id\" : \"id\" } ] }";
+                    String exampleString = "{ \"atmosphere\" : \"РќРµР±РѕСЃРєСЂРµР±С‹ СѓРїРёСЂР°СЋС‚СЃСЏ РІ РѕР±Р»Р°РєР°, РЅРµРѕРЅРѕРІС‹Рµ РѕРіРЅРё...\", \"availableActions\" : [ { \"actionType\" : \"exploration\", \"disabledReason\" : \"РўСЂРµР±СѓРµС‚СЃСЏ СѓСЂРѕРІРµРЅСЊ 5\", \"requirements\" : { \"minLevel\" : 0, \"requiredSkills\" : [ \"requiredSkills\", \"requiredSkills\" ], \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ], \"requiredItems\" : [ \"requiredItems\", \"requiredItems\" ] }, \"description\" : \"РџРѕСЃРµС‚РёС‚СЊ РјРµСЃС‚РЅС‹Р№ СЂС‹РЅРѕРє Рё РїРѕСЃРјРѕС‚СЂРµС‚СЊ С‚РѕРІР°СЂС‹\", \"id\" : \"explore_market\", \"label\" : \"РСЃСЃР»РµРґРѕРІР°С‚СЊ СЂС‹РЅРѕРє\", \"enabled\" : true }, { \"actionType\" : \"exploration\", \"disabledReason\" : \"РўСЂРµР±СѓРµС‚СЃСЏ СѓСЂРѕРІРµРЅСЊ 5\", \"requirements\" : { \"minLevel\" : 0, \"requiredSkills\" : [ \"requiredSkills\", \"requiredSkills\" ], \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ], \"requiredItems\" : [ \"requiredItems\", \"requiredItems\" ] }, \"description\" : \"РџРѕСЃРµС‚РёС‚СЊ РјРµСЃС‚РЅС‹Р№ СЂС‹РЅРѕРє Рё РїРѕСЃРјРѕС‚СЂРµС‚СЊ С‚РѕРІР°СЂС‹\", \"id\" : \"explore_market\", \"label\" : \"РСЃСЃР»РµРґРѕРІР°С‚СЊ СЂС‹РЅРѕРє\", \"enabled\" : true } ], \"accessible\" : true, \"city\" : \"Night City\", \"dangerLevel\" : \"low\", \"connectedLocations\" : [ \"watson_kabuki\", \"westbrook_japantown\" ], \"description\" : \"РЎРµСЂРґС†Рµ Night City, С†РµРЅС‚СЂ РєРѕСЂРїРѕСЂР°С‚РёРІРЅРѕР№ РІР»Р°СЃС‚Рё\", \"type\" : \"corporate\", \"minLevel\" : 1, \"district\" : \"Downtown\", \"name\" : \"City Center\", \"pointsOfInterest\" : [ { \"id\" : \"arasaka_tower\", \"name\" : \"Р‘Р°С€РЅСЏ Arasaka\", \"description\" : \"Р’РїРµС‡Р°С‚Р»СЏСЋС‰РёР№ РЅРµР±РѕСЃРєСЂРµР± РєРѕСЂРїРѕСЂР°С†РёРё Arasaka\" } ], \"availableNPCs\" : [ \"npc_id_1\", \"npc_id_2\" ], \"id\" : \"downtown_city_center\", \"region\" : \"night_city\", \"events\" : [ { \"name\" : \"name\", \"description\" : \"description\", \"id\" : \"id\" }, { \"name\" : \"name\", \"description\" : \"description\", \"id\" : \"id\" } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -202,38 +202,38 @@ public interface GameplayLocationsApi {
 
     String PATH_GET_LOCATION_ACTIONS = "/locations/{locationId}/actions";
     /**
-     * GET /locations/{locationId}/actions : Доступные действия в локации
-     * Возвращает список доступных действий в конкретной локации для персонажа.  **Бизнес-логика:** - Возвращает только действия, доступные для персонажа - Проверяет требования (уровень, навыки, предметы, квесты) - Возвращает информацию о том, почему действие недоступно  **Источник:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Раздел 2.1) 
+     * GET /locations/{locationId}/actions : Р”РѕСЃС‚СѓРїРЅС‹Рµ РґРµР№СЃС‚РІРёСЏ РІ Р»РѕРєР°С†РёРё
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РґРµР№СЃС‚РІРёР№ РІ РєРѕРЅРєСЂРµС‚РЅРѕР№ Р»РѕРєР°С†РёРё РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РѕР»СЊРєРѕ РґРµР№СЃС‚РІРёСЏ, РґРѕСЃС‚СѓРїРЅС‹Рµ РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р° - РџСЂРѕРІРµСЂСЏРµС‚ С‚СЂРµР±РѕРІР°РЅРёСЏ (СѓСЂРѕРІРµРЅСЊ, РЅР°РІС‹РєРё, РїСЂРµРґРјРµС‚С‹, РєРІРµСЃС‚С‹) - Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ С‚РѕРј, РїРѕС‡РµРјСѓ РґРµР№СЃС‚РІРёРµ РЅРµРґРѕСЃС‚СѓРїРЅРѕ  **РСЃС‚РѕС‡РЅРёРє:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Р Р°Р·РґРµР» 2.1) 
      *
-     * @param locationId ID локации (required)
-     * @param characterId ID персонажа (required)
-     * @return Список доступных действий (status code 200)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     * @param locationId ID Р»РѕРєР°С†РёРё (required)
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р° (required)
+     * @return РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РґРµР№СЃС‚РІРёР№ (status code 200)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
      */
     @Operation(
         operationId = "getLocationActions",
-        summary = "Доступные действия в локации",
-        description = "Возвращает список доступных действий в конкретной локации для персонажа.  **Бизнес-логика:** - Возвращает только действия, доступные для персонажа - Проверяет требования (уровень, навыки, предметы, квесты) - Возвращает информацию о том, почему действие недоступно  **Источник:** `.BRAIN/05-technical/ui-main-game.md` (Раздел 2.1) ",
+        summary = "Р”РѕСЃС‚СѓРїРЅС‹Рµ РґРµР№СЃС‚РІРёСЏ РІ Р»РѕРєР°С†РёРё",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РґРµР№СЃС‚РІРёР№ РІ РєРѕРЅРєСЂРµС‚РЅРѕР№ Р»РѕРєР°С†РёРё РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РѕР»СЊРєРѕ РґРµР№СЃС‚РІРёСЏ, РґРѕСЃС‚СѓРїРЅС‹Рµ РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р° - РџСЂРѕРІРµСЂСЏРµС‚ С‚СЂРµР±РѕРІР°РЅРёСЏ (СѓСЂРѕРІРµРЅСЊ, РЅР°РІС‹РєРё, РїСЂРµРґРјРµС‚С‹, РєРІРµСЃС‚С‹) - Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ С‚РѕРј, РїРѕС‡РµРјСѓ РґРµР№СЃС‚РІРёРµ РЅРµРґРѕСЃС‚СѓРїРЅРѕ  **РСЃС‚РѕС‡РЅРёРє:** `.BRAIN/05-technical/ui-main-game.md` (Р Р°Р·РґРµР» 2.1) ",
         tags = { "Locations", "Actions" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Список доступных действий", content = {
+            @ApiResponse(responseCode = "200", description = "РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РґРµР№СЃС‚РІРёР№", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GetLocationActions200Response.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
@@ -249,23 +249,23 @@ public interface GameplayLocationsApi {
         produces = { "application/json" }
     )
     default ResponseEntity<GetLocationActions200Response> getLocationActions(
-        @NotNull @Parameter(name = "locationId", description = "ID локации", required = true, in = ParameterIn.PATH) @PathVariable("locationId") String locationId,
-        @NotNull @Parameter(name = "characterId", description = "ID персонажа", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "characterId", required = true) UUID characterId
+        @NotNull @Parameter(name = "locationId", description = "ID Р»РѕРєР°С†РёРё", required = true, in = ParameterIn.PATH) @PathVariable("locationId") String locationId,
+        @NotNull @Parameter(name = "characterId", description = "ID РїРµСЂСЃРѕРЅР°Р¶Р°", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "characterId", required = true) UUID characterId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"actions\" : [ { \"actionType\" : \"exploration\", \"disabledReason\" : \"Требуется уровень 5\", \"requirements\" : { \"minLevel\" : 0, \"requiredSkills\" : [ \"requiredSkills\", \"requiredSkills\" ], \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ], \"requiredItems\" : [ \"requiredItems\", \"requiredItems\" ] }, \"description\" : \"Посетить местный рынок и посмотреть товары\", \"id\" : \"explore_market\", \"label\" : \"Исследовать рынок\", \"enabled\" : true }, { \"actionType\" : \"exploration\", \"disabledReason\" : \"Требуется уровень 5\", \"requirements\" : { \"minLevel\" : 0, \"requiredSkills\" : [ \"requiredSkills\", \"requiredSkills\" ], \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ], \"requiredItems\" : [ \"requiredItems\", \"requiredItems\" ] }, \"description\" : \"Посетить местный рынок и посмотреть товары\", \"id\" : \"explore_market\", \"label\" : \"Исследовать рынок\", \"enabled\" : true } ] }";
+                    String exampleString = "{ \"actions\" : [ { \"actionType\" : \"exploration\", \"disabledReason\" : \"РўСЂРµР±СѓРµС‚СЃСЏ СѓСЂРѕРІРµРЅСЊ 5\", \"requirements\" : { \"minLevel\" : 0, \"requiredSkills\" : [ \"requiredSkills\", \"requiredSkills\" ], \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ], \"requiredItems\" : [ \"requiredItems\", \"requiredItems\" ] }, \"description\" : \"РџРѕСЃРµС‚РёС‚СЊ РјРµСЃС‚РЅС‹Р№ СЂС‹РЅРѕРє Рё РїРѕСЃРјРѕС‚СЂРµС‚СЊ С‚РѕРІР°СЂС‹\", \"id\" : \"explore_market\", \"label\" : \"РСЃСЃР»РµРґРѕРІР°С‚СЊ СЂС‹РЅРѕРє\", \"enabled\" : true }, { \"actionType\" : \"exploration\", \"disabledReason\" : \"РўСЂРµР±СѓРµС‚СЃСЏ СѓСЂРѕРІРµРЅСЊ 5\", \"requirements\" : { \"minLevel\" : 0, \"requiredSkills\" : [ \"requiredSkills\", \"requiredSkills\" ], \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ], \"requiredItems\" : [ \"requiredItems\", \"requiredItems\" ] }, \"description\" : \"РџРѕСЃРµС‚РёС‚СЊ РјРµСЃС‚РЅС‹Р№ СЂС‹РЅРѕРє Рё РїРѕСЃРјРѕС‚СЂРµС‚СЊ С‚РѕРІР°СЂС‹\", \"id\" : \"explore_market\", \"label\" : \"РСЃСЃР»РµРґРѕРІР°С‚СЊ СЂС‹РЅРѕРє\", \"enabled\" : true } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -278,48 +278,48 @@ public interface GameplayLocationsApi {
 
     String PATH_GET_LOCATION_DETAILS = "/locations/{locationId}";
     /**
-     * GET /locations/{locationId} : Детальная информация о локации
-     * Возвращает детальную информацию о конкретной локации, включая атмосферное описание, точки интереса и доступных NPC.  **Бизнес-логика:** - Проверяет доступность локации для персонажа - Возвращает полное описание и атмосферу - Включает список NPC и точек интереса  **Источник:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Раздел 1.2) 
+     * GET /locations/{locationId} : Р”РµС‚Р°Р»СЊРЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р»РѕРєР°С†РёРё
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ РґРµС‚Р°Р»СЊРЅСѓСЋ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РєРѕРЅРєСЂРµС‚РЅРѕР№ Р»РѕРєР°С†РёРё, РІРєР»СЋС‡Р°СЏ Р°С‚РјРѕСЃС„РµСЂРЅРѕРµ РѕРїРёСЃР°РЅРёРµ, С‚РѕС‡РєРё РёРЅС‚РµСЂРµСЃР° Рё РґРѕСЃС‚СѓРїРЅС‹С… NPC.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - РџСЂРѕРІРµСЂСЏРµС‚ РґРѕСЃС‚СѓРїРЅРѕСЃС‚СЊ Р»РѕРєР°С†РёРё РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р° - Р’РѕР·РІСЂР°С‰Р°РµС‚ РїРѕР»РЅРѕРµ РѕРїРёСЃР°РЅРёРµ Рё Р°С‚РјРѕСЃС„РµСЂСѓ - Р’РєР»СЋС‡Р°РµС‚ СЃРїРёСЃРѕРє NPC Рё С‚РѕС‡РµРє РёРЅС‚РµСЂРµСЃР°  **РСЃС‚РѕС‡РЅРёРє:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Р Р°Р·РґРµР» 1.2) 
      *
-     * @param locationId ID локации (required)
-     * @param characterId ID персонажа (required)
-     * @return Детальная информация о локации (status code 200)
-     *         or У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно.  (status code 403)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     * @param locationId ID Р»РѕРєР°С†РёРё (required)
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р° (required)
+     * @return Р”РµС‚Р°Р»СЊРЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р»РѕРєР°С†РёРё (status code 200)
+     *         or РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ.  (status code 403)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
      */
     @Operation(
         operationId = "getLocationDetails",
-        summary = "Детальная информация о локации",
-        description = "Возвращает детальную информацию о конкретной локации, включая атмосферное описание, точки интереса и доступных NPC.  **Бизнес-логика:** - Проверяет доступность локации для персонажа - Возвращает полное описание и атмосферу - Включает список NPC и точек интереса  **Источник:** `.BRAIN/05-technical/ui-main-game.md` (Раздел 1.2) ",
+        summary = "Р”РµС‚Р°Р»СЊРЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р»РѕРєР°С†РёРё",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ РґРµС‚Р°Р»СЊРЅСѓСЋ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РєРѕРЅРєСЂРµС‚РЅРѕР№ Р»РѕРєР°С†РёРё, РІРєР»СЋС‡Р°СЏ Р°С‚РјРѕСЃС„РµСЂРЅРѕРµ РѕРїРёСЃР°РЅРёРµ, С‚РѕС‡РєРё РёРЅС‚РµСЂРµСЃР° Рё РґРѕСЃС‚СѓРїРЅС‹С… NPC.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - РџСЂРѕРІРµСЂСЏРµС‚ РґРѕСЃС‚СѓРїРЅРѕСЃС‚СЊ Р»РѕРєР°С†РёРё РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р° - Р’РѕР·РІСЂР°С‰Р°РµС‚ РїРѕР»РЅРѕРµ РѕРїРёСЃР°РЅРёРµ Рё Р°С‚РјРѕСЃС„РµСЂСѓ - Р’РєР»СЋС‡Р°РµС‚ СЃРїРёСЃРѕРє NPC Рё С‚РѕС‡РµРє РёРЅС‚РµСЂРµСЃР°  **РСЃС‚РѕС‡РЅРёРє:** `.BRAIN/05-technical/ui-main-game.md` (Р Р°Р·РґРµР» 1.2) ",
         tags = { "Locations" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Детальная информация о локации", content = {
+            @ApiResponse(responseCode = "200", description = "Р”РµС‚Р°Р»СЊРЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р»РѕРєР°С†РёРё", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = LocationDetails.class))
             }),
-            @ApiResponse(responseCode = "403", description = "У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно. ", content = {
+            @ApiResponse(responseCode = "403", description = "РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"Недостаточно прав для выполнения операции\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
@@ -335,28 +335,28 @@ public interface GameplayLocationsApi {
         produces = { "application/json" }
     )
     default ResponseEntity<LocationDetails> getLocationDetails(
-        @NotNull @Parameter(name = "locationId", description = "ID локации", required = true, in = ParameterIn.PATH) @PathVariable("locationId") String locationId,
-        @NotNull @Parameter(name = "characterId", description = "ID персонажа", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "characterId", required = true) UUID characterId
+        @NotNull @Parameter(name = "locationId", description = "ID Р»РѕРєР°С†РёРё", required = true, in = ParameterIn.PATH) @PathVariable("locationId") String locationId,
+        @NotNull @Parameter(name = "characterId", description = "ID РїРµСЂСЃРѕРЅР°Р¶Р°", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "characterId", required = true) UUID characterId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"atmosphere\" : \"Небоскребы упираются в облака, неоновые огни...\", \"availableActions\" : [ { \"actionType\" : \"exploration\", \"disabledReason\" : \"Требуется уровень 5\", \"requirements\" : { \"minLevel\" : 0, \"requiredSkills\" : [ \"requiredSkills\", \"requiredSkills\" ], \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ], \"requiredItems\" : [ \"requiredItems\", \"requiredItems\" ] }, \"description\" : \"Посетить местный рынок и посмотреть товары\", \"id\" : \"explore_market\", \"label\" : \"Исследовать рынок\", \"enabled\" : true }, { \"actionType\" : \"exploration\", \"disabledReason\" : \"Требуется уровень 5\", \"requirements\" : { \"minLevel\" : 0, \"requiredSkills\" : [ \"requiredSkills\", \"requiredSkills\" ], \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ], \"requiredItems\" : [ \"requiredItems\", \"requiredItems\" ] }, \"description\" : \"Посетить местный рынок и посмотреть товары\", \"id\" : \"explore_market\", \"label\" : \"Исследовать рынок\", \"enabled\" : true } ], \"accessible\" : true, \"city\" : \"Night City\", \"dangerLevel\" : \"low\", \"connectedLocations\" : [ \"watson_kabuki\", \"westbrook_japantown\" ], \"description\" : \"Сердце Night City, центр корпоративной власти\", \"type\" : \"corporate\", \"minLevel\" : 1, \"district\" : \"Downtown\", \"name\" : \"City Center\", \"pointsOfInterest\" : [ { \"id\" : \"arasaka_tower\", \"name\" : \"Башня Arasaka\", \"description\" : \"Впечатляющий небоскреб корпорации Arasaka\" } ], \"availableNPCs\" : [ \"npc_id_1\", \"npc_id_2\" ], \"id\" : \"downtown_city_center\", \"region\" : \"night_city\", \"events\" : [ { \"name\" : \"name\", \"description\" : \"description\", \"id\" : \"id\" }, { \"name\" : \"name\", \"description\" : \"description\", \"id\" : \"id\" } ] }";
+                    String exampleString = "{ \"atmosphere\" : \"РќРµР±РѕСЃРєСЂРµР±С‹ СѓРїРёСЂР°СЋС‚СЃСЏ РІ РѕР±Р»Р°РєР°, РЅРµРѕРЅРѕРІС‹Рµ РѕРіРЅРё...\", \"availableActions\" : [ { \"actionType\" : \"exploration\", \"disabledReason\" : \"РўСЂРµР±СѓРµС‚СЃСЏ СѓСЂРѕРІРµРЅСЊ 5\", \"requirements\" : { \"minLevel\" : 0, \"requiredSkills\" : [ \"requiredSkills\", \"requiredSkills\" ], \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ], \"requiredItems\" : [ \"requiredItems\", \"requiredItems\" ] }, \"description\" : \"РџРѕСЃРµС‚РёС‚СЊ РјРµСЃС‚РЅС‹Р№ СЂС‹РЅРѕРє Рё РїРѕСЃРјРѕС‚СЂРµС‚СЊ С‚РѕРІР°СЂС‹\", \"id\" : \"explore_market\", \"label\" : \"РСЃСЃР»РµРґРѕРІР°С‚СЊ СЂС‹РЅРѕРє\", \"enabled\" : true }, { \"actionType\" : \"exploration\", \"disabledReason\" : \"РўСЂРµР±СѓРµС‚СЃСЏ СѓСЂРѕРІРµРЅСЊ 5\", \"requirements\" : { \"minLevel\" : 0, \"requiredSkills\" : [ \"requiredSkills\", \"requiredSkills\" ], \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ], \"requiredItems\" : [ \"requiredItems\", \"requiredItems\" ] }, \"description\" : \"РџРѕСЃРµС‚РёС‚СЊ РјРµСЃС‚РЅС‹Р№ СЂС‹РЅРѕРє Рё РїРѕСЃРјРѕС‚СЂРµС‚СЊ С‚РѕРІР°СЂС‹\", \"id\" : \"explore_market\", \"label\" : \"РСЃСЃР»РµРґРѕРІР°С‚СЊ СЂС‹РЅРѕРє\", \"enabled\" : true } ], \"accessible\" : true, \"city\" : \"Night City\", \"dangerLevel\" : \"low\", \"connectedLocations\" : [ \"watson_kabuki\", \"westbrook_japantown\" ], \"description\" : \"РЎРµСЂРґС†Рµ Night City, С†РµРЅС‚СЂ РєРѕСЂРїРѕСЂР°С‚РёРІРЅРѕР№ РІР»Р°СЃС‚Рё\", \"type\" : \"corporate\", \"minLevel\" : 1, \"district\" : \"Downtown\", \"name\" : \"City Center\", \"pointsOfInterest\" : [ { \"id\" : \"arasaka_tower\", \"name\" : \"Р‘Р°С€РЅСЏ Arasaka\", \"description\" : \"Р’РїРµС‡Р°С‚Р»СЏСЋС‰РёР№ РЅРµР±РѕСЃРєСЂРµР± РєРѕСЂРїРѕСЂР°С†РёРё Arasaka\" } ], \"availableNPCs\" : [ \"npc_id_1\", \"npc_id_2\" ], \"id\" : \"downtown_city_center\", \"region\" : \"night_city\", \"events\" : [ { \"name\" : \"name\", \"description\" : \"description\", \"id\" : \"id\" }, { \"name\" : \"name\", \"description\" : \"description\", \"id\" : \"id\" } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -369,40 +369,40 @@ public interface GameplayLocationsApi {
 
     String PATH_GET_LOCATIONS = "/locations";
     /**
-     * GET /locations : Список всех доступных локаций
-     * Возвращает список всех доступных локаций с возможностью фильтрации.  **Бизнес-логика:** - Возвращаются только локации, доступные для персонажа (по уровню и квестам) - Можно фильтровать по региону и уровню опасности - Содержит краткую информацию о каждой локации  **Источник:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Раздел 4.1) 
+     * GET /locations : РЎРїРёСЃРѕРє РІСЃРµС… РґРѕСЃС‚СѓРїРЅС‹С… Р»РѕРєР°С†РёР№
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РІСЃРµС… РґРѕСЃС‚СѓРїРЅС‹С… Р»РѕРєР°С†РёР№ СЃ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊСЋ С„РёР»СЊС‚СЂР°С†РёРё.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - Р’РѕР·РІСЂР°С‰Р°СЋС‚СЃСЏ С‚РѕР»СЊРєРѕ Р»РѕРєР°С†РёРё, РґРѕСЃС‚СѓРїРЅС‹Рµ РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р° (РїРѕ СѓСЂРѕРІРЅСЋ Рё РєРІРµСЃС‚Р°Рј) - РњРѕР¶РЅРѕ С„РёР»СЊС‚СЂРѕРІР°С‚СЊ РїРѕ СЂРµРіРёРѕРЅСѓ Рё СѓСЂРѕРІРЅСЋ РѕРїР°СЃРЅРѕСЃС‚Рё - РЎРѕРґРµСЂР¶РёС‚ РєСЂР°С‚РєСѓСЋ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РєР°Р¶РґРѕР№ Р»РѕРєР°С†РёРё  **РСЃС‚РѕС‡РЅРёРє:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Р Р°Р·РґРµР» 4.1) 
      *
-     * @param characterId ID персонажа (для проверки доступности локаций) (required)
-     * @param region Фильтр по региону (optional)
-     * @param dangerLevel Фильтр по уровню опасности (optional)
-     * @param minLevel Фильтр по минимальному уровню персонажа (optional)
-     * @return Список локаций (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р° (РґР»СЏ РїСЂРѕРІРµСЂРєРё РґРѕСЃС‚СѓРїРЅРѕСЃС‚Рё Р»РѕРєР°С†РёР№) (required)
+     * @param region Р¤РёР»СЊС‚СЂ РїРѕ СЂРµРіРёРѕРЅСѓ (optional)
+     * @param dangerLevel Р¤РёР»СЊС‚СЂ РїРѕ СѓСЂРѕРІРЅСЋ РѕРїР°СЃРЅРѕСЃС‚Рё (optional)
+     * @param minLevel Р¤РёР»СЊС‚СЂ РїРѕ РјРёРЅРёРјР°Р»СЊРЅРѕРјСѓ СѓСЂРѕРІРЅСЋ РїРµСЂСЃРѕРЅР°Р¶Р° (optional)
+     * @return РЎРїРёСЃРѕРє Р»РѕРєР°С†РёР№ (status code 200)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getLocations",
-        summary = "Список всех доступных локаций",
-        description = "Возвращает список всех доступных локаций с возможностью фильтрации.  **Бизнес-логика:** - Возвращаются только локации, доступные для персонажа (по уровню и квестам) - Можно фильтровать по региону и уровню опасности - Содержит краткую информацию о каждой локации  **Источник:** `.BRAIN/05-technical/ui-main-game.md` (Раздел 4.1) ",
+        summary = "РЎРїРёСЃРѕРє РІСЃРµС… РґРѕСЃС‚СѓРїРЅС‹С… Р»РѕРєР°С†РёР№",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РІСЃРµС… РґРѕСЃС‚СѓРїРЅС‹С… Р»РѕРєР°С†РёР№ СЃ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊСЋ С„РёР»СЊС‚СЂР°С†РёРё.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - Р’РѕР·РІСЂР°С‰Р°СЋС‚СЃСЏ С‚РѕР»СЊРєРѕ Р»РѕРєР°С†РёРё, РґРѕСЃС‚СѓРїРЅС‹Рµ РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р° (РїРѕ СѓСЂРѕРІРЅСЋ Рё РєРІРµСЃС‚Р°Рј) - РњРѕР¶РЅРѕ С„РёР»СЊС‚СЂРѕРІР°С‚СЊ РїРѕ СЂРµРіРёРѕРЅСѓ Рё СѓСЂРѕРІРЅСЋ РѕРїР°СЃРЅРѕСЃС‚Рё - РЎРѕРґРµСЂР¶РёС‚ РєСЂР°С‚РєСѓСЋ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РєР°Р¶РґРѕР№ Р»РѕРєР°С†РёРё  **РСЃС‚РѕС‡РЅРёРє:** `.BRAIN/05-technical/ui-main-game.md` (Р Р°Р·РґРµР» 4.1) ",
         tags = { "Locations" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Список локаций", content = {
+            @ApiResponse(responseCode = "200", description = "РЎРїРёСЃРѕРє Р»РѕРєР°С†РёР№", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GetLocations200Response.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -418,25 +418,25 @@ public interface GameplayLocationsApi {
         produces = { "application/json" }
     )
     default ResponseEntity<GetLocations200Response> getLocations(
-        @NotNull @Parameter(name = "characterId", description = "ID персонажа (для проверки доступности локаций)", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "characterId", required = true) UUID characterId,
-        @Parameter(name = "region", description = "Фильтр по региону", in = ParameterIn.QUERY) @Valid @RequestParam(value = "region", required = false) @Nullable String region,
-        @Parameter(name = "dangerLevel", description = "Фильтр по уровню опасности", in = ParameterIn.QUERY) @Valid @RequestParam(value = "dangerLevel", required = false) @Nullable String dangerLevel,
-        @Min(value = 1) @Parameter(name = "minLevel", description = "Фильтр по минимальному уровню персонажа", in = ParameterIn.QUERY) @Valid @RequestParam(value = "minLevel", required = false) @Nullable Integer minLevel
+        @NotNull @Parameter(name = "characterId", description = "ID РїРµСЂСЃРѕРЅР°Р¶Р° (РґР»СЏ РїСЂРѕРІРµСЂРєРё РґРѕСЃС‚СѓРїРЅРѕСЃС‚Рё Р»РѕРєР°С†РёР№)", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "characterId", required = true) UUID characterId,
+        @Parameter(name = "region", description = "Р¤РёР»СЊС‚СЂ РїРѕ СЂРµРіРёРѕРЅСѓ", in = ParameterIn.QUERY) @Valid @RequestParam(value = "region", required = false) @Nullable String region,
+        @Parameter(name = "dangerLevel", description = "Р¤РёР»СЊС‚СЂ РїРѕ СѓСЂРѕРІРЅСЋ РѕРїР°СЃРЅРѕСЃС‚Рё", in = ParameterIn.QUERY) @Valid @RequestParam(value = "dangerLevel", required = false) @Nullable String dangerLevel,
+        @Min(value = 1) @Parameter(name = "minLevel", description = "Р¤РёР»СЊС‚СЂ РїРѕ РјРёРЅРёРјР°Р»СЊРЅРѕРјСѓ СѓСЂРѕРІРЅСЋ РїРµСЂСЃРѕРЅР°Р¶Р°", in = ParameterIn.QUERY) @Valid @RequestParam(value = "minLevel", required = false) @Nullable Integer minLevel
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"total\" : 15, \"locations\" : [ { \"minLevel\" : 1, \"accessible\" : true, \"city\" : \"Night City\", \"district\" : \"Downtown\", \"dangerLevel\" : \"low\", \"name\" : \"City Center\", \"description\" : \"Сердце Night City, центр корпоративной власти\", \"id\" : \"downtown_city_center\", \"region\" : \"night_city\", \"type\" : \"corporate\" }, { \"minLevel\" : 1, \"accessible\" : true, \"city\" : \"Night City\", \"district\" : \"Downtown\", \"dangerLevel\" : \"low\", \"name\" : \"City Center\", \"description\" : \"Сердце Night City, центр корпоративной власти\", \"id\" : \"downtown_city_center\", \"region\" : \"night_city\", \"type\" : \"corporate\" } ] }";
+                    String exampleString = "{ \"total\" : 15, \"locations\" : [ { \"minLevel\" : 1, \"accessible\" : true, \"city\" : \"Night City\", \"district\" : \"Downtown\", \"dangerLevel\" : \"low\", \"name\" : \"City Center\", \"description\" : \"РЎРµСЂРґС†Рµ Night City, С†РµРЅС‚СЂ РєРѕСЂРїРѕСЂР°С‚РёРІРЅРѕР№ РІР»Р°СЃС‚Рё\", \"id\" : \"downtown_city_center\", \"region\" : \"night_city\", \"type\" : \"corporate\" }, { \"minLevel\" : 1, \"accessible\" : true, \"city\" : \"Night City\", \"district\" : \"Downtown\", \"dangerLevel\" : \"low\", \"name\" : \"City Center\", \"description\" : \"РЎРµСЂРґС†Рµ Night City, С†РµРЅС‚СЂ РєРѕСЂРїРѕСЂР°С‚РёРІРЅРѕР№ РІР»Р°СЃС‚Рё\", \"id\" : \"downtown_city_center\", \"region\" : \"night_city\", \"type\" : \"corporate\" } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -449,57 +449,57 @@ public interface GameplayLocationsApi {
 
     String PATH_TRAVEL_TO_LOCATION = "/locations/travel";
     /**
-     * POST /locations/travel : Перемещение в другую локацию
-     * Перемещает персонажа в другую локацию. Проверяет доступность, расходует энергию и время.  **Бизнес-логика:** - Проверяет доступность целевой локации (уровень, квесты, связанность) - Проверяет наличие энергии у персонажа - Расходует энергию и время на перемещение - Может генерировать случайные события во время перемещения - Fast travel мгновенное, если локация открыта  **Источник:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Раздел 4.2) 
+     * POST /locations/travel : РџРµСЂРµРјРµС‰РµРЅРёРµ РІ РґСЂСѓРіСѓСЋ Р»РѕРєР°С†РёСЋ
+     * РџРµСЂРµРјРµС‰Р°РµС‚ РїРµСЂСЃРѕРЅР°Р¶Р° РІ РґСЂСѓРіСѓСЋ Р»РѕРєР°С†РёСЋ. РџСЂРѕРІРµСЂСЏРµС‚ РґРѕСЃС‚СѓРїРЅРѕСЃС‚СЊ, СЂР°СЃС…РѕРґСѓРµС‚ СЌРЅРµСЂРіРёСЋ Рё РІСЂРµРјСЏ.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - РџСЂРѕРІРµСЂСЏРµС‚ РґРѕСЃС‚СѓРїРЅРѕСЃС‚СЊ С†РµР»РµРІРѕР№ Р»РѕРєР°С†РёРё (СѓСЂРѕРІРµРЅСЊ, РєРІРµСЃС‚С‹, СЃРІСЏР·Р°РЅРЅРѕСЃС‚СЊ) - РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ СЌРЅРµСЂРіРёРё Сѓ РїРµСЂСЃРѕРЅР°Р¶Р° - Р Р°СЃС…РѕРґСѓРµС‚ СЌРЅРµСЂРіРёСЋ Рё РІСЂРµРјСЏ РЅР° РїРµСЂРµРјРµС‰РµРЅРёРµ - РњРѕР¶РµС‚ РіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ СЃР»СѓС‡Р°Р№РЅС‹Рµ СЃРѕР±С‹С‚РёСЏ РІРѕ РІСЂРµРјСЏ РїРµСЂРµРјРµС‰РµРЅРёСЏ - Fast travel РјРіРЅРѕРІРµРЅРЅРѕРµ, РµСЃР»Рё Р»РѕРєР°С†РёСЏ РѕС‚РєСЂС‹С‚Р°  **РСЃС‚РѕС‡РЅРёРє:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Р Р°Р·РґРµР» 4.2) 
      *
      * @param travelRequest  (required)
-     * @return Успешное перемещение (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно.  (status code 403)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     * @return РЈСЃРїРµС€РЅРѕРµ РїРµСЂРµРјРµС‰РµРЅРёРµ (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ.  (status code 403)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
      */
     @Operation(
         operationId = "travelToLocation",
-        summary = "Перемещение в другую локацию",
-        description = "Перемещает персонажа в другую локацию. Проверяет доступность, расходует энергию и время.  **Бизнес-логика:** - Проверяет доступность целевой локации (уровень, квесты, связанность) - Проверяет наличие энергии у персонажа - Расходует энергию и время на перемещение - Может генерировать случайные события во время перемещения - Fast travel мгновенное, если локация открыта  **Источник:** `.BRAIN/05-technical/ui-main-game.md` (Раздел 4.2) ",
+        summary = "РџРµСЂРµРјРµС‰РµРЅРёРµ РІ РґСЂСѓРіСѓСЋ Р»РѕРєР°С†РёСЋ",
+        description = "РџРµСЂРµРјРµС‰Р°РµС‚ РїРµСЂСЃРѕРЅР°Р¶Р° РІ РґСЂСѓРіСѓСЋ Р»РѕРєР°С†РёСЋ. РџСЂРѕРІРµСЂСЏРµС‚ РґРѕСЃС‚СѓРїРЅРѕСЃС‚СЊ, СЂР°СЃС…РѕРґСѓРµС‚ СЌРЅРµСЂРіРёСЋ Рё РІСЂРµРјСЏ.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - РџСЂРѕРІРµСЂСЏРµС‚ РґРѕСЃС‚СѓРїРЅРѕСЃС‚СЊ С†РµР»РµРІРѕР№ Р»РѕРєР°С†РёРё (СѓСЂРѕРІРµРЅСЊ, РєРІРµСЃС‚С‹, СЃРІСЏР·Р°РЅРЅРѕСЃС‚СЊ) - РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ СЌРЅРµСЂРіРёРё Сѓ РїРµСЂСЃРѕРЅР°Р¶Р° - Р Р°СЃС…РѕРґСѓРµС‚ СЌРЅРµСЂРіРёСЋ Рё РІСЂРµРјСЏ РЅР° РїРµСЂРµРјРµС‰РµРЅРёРµ - РњРѕР¶РµС‚ РіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ СЃР»СѓС‡Р°Р№РЅС‹Рµ СЃРѕР±С‹С‚РёСЏ РІРѕ РІСЂРµРјСЏ РїРµСЂРµРјРµС‰РµРЅРёСЏ - Fast travel РјРіРЅРѕРІРµРЅРЅРѕРµ, РµСЃР»Рё Р»РѕРєР°С†РёСЏ РѕС‚РєСЂС‹С‚Р°  **РСЃС‚РѕС‡РЅРёРє:** `.BRAIN/05-technical/ui-main-game.md` (Р Р°Р·РґРµР» 4.2) ",
         tags = { "Locations", "Travel" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Успешное перемещение", content = {
+            @ApiResponse(responseCode = "200", description = "РЈСЃРїРµС€РЅРѕРµ РїРµСЂРµРјРµС‰РµРЅРёРµ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = TravelResponse.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "403", description = "У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно. ", content = {
+            @ApiResponse(responseCode = "403", description = "РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"Недостаточно прав для выполнения операции\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
@@ -521,27 +521,27 @@ public interface GameplayLocationsApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"timeSpent\" : 15, \"success\" : true, \"energySpent\" : 10, \"message\" : \"Вы прибыли в Watson - Kabuki\", \"newLocation\" : { \"minLevel\" : 1, \"accessible\" : true, \"city\" : \"Night City\", \"district\" : \"Downtown\", \"dangerLevel\" : \"low\", \"name\" : \"City Center\", \"description\" : \"Сердце Night City, центр корпоративной власти\", \"id\" : \"downtown_city_center\", \"region\" : \"night_city\", \"type\" : \"corporate\" }, \"events\" : [ { \"description\" : \"description\", \"id\" : \"id\", \"type\" : \"type\" }, { \"description\" : \"description\", \"id\" : \"id\", \"type\" : \"type\" } ] }";
+                    String exampleString = "{ \"timeSpent\" : 15, \"success\" : true, \"energySpent\" : 10, \"message\" : \"Р’С‹ РїСЂРёР±С‹Р»Рё РІ Watson - Kabuki\", \"newLocation\" : { \"minLevel\" : 1, \"accessible\" : true, \"city\" : \"Night City\", \"district\" : \"Downtown\", \"dangerLevel\" : \"low\", \"name\" : \"City Center\", \"description\" : \"РЎРµСЂРґС†Рµ Night City, С†РµРЅС‚СЂ РєРѕСЂРїРѕСЂР°С‚РёРІРЅРѕР№ РІР»Р°СЃС‚Рё\", \"id\" : \"downtown_city_center\", \"region\" : \"night_city\", \"type\" : \"corporate\" }, \"events\" : [ { \"description\" : \"description\", \"id\" : \"id\", \"type\" : \"type\" }, { \"description\" : \"description\", \"id\" : \"id\", \"type\" : \"type\" } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

@@ -8,27 +8,27 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * QuestObjectiveRepository - репозиторий для работы с целями квестов.
+ * QuestObjectiveRepository - СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ С†РµР»СЏРјРё РєРІРµСЃС‚РѕРІ.
  * 
- * Источник: API-SWAGGER/api/v1/quests/quests.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/quests/quests.yaml
  */
 @Repository
 public interface QuestObjectiveRepository extends JpaRepository<QuestObjectiveEntity, String> {
 
     /**
-     * Найти все цели квеста.
+     * РќР°Р№С‚Рё РІСЃРµ С†РµР»Рё РєРІРµСЃС‚Р°.
      */
     @Query("SELECT o FROM QuestObjectiveEntity o WHERE o.questId = :questId ORDER BY o.orderIndex")
     List<QuestObjectiveEntity> findByQuestIdOrderByOrderIndex(String questId);
 
     /**
-     * Найти обязательные цели квеста.
+     * РќР°Р№С‚Рё РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ С†РµР»Рё РєРІРµСЃС‚Р°.
      */
     @Query("SELECT o FROM QuestObjectiveEntity o WHERE o.questId = :questId AND o.optional = false ORDER BY o.orderIndex")
     List<QuestObjectiveEntity> findRequiredByQuestId(String questId);
 
     /**
-     * Найти опциональные цели квеста.
+     * РќР°Р№С‚Рё РѕРїС†РёРѕРЅР°Р»СЊРЅС‹Рµ С†РµР»Рё РєРІРµСЃС‚Р°.
      */
     @Query("SELECT o FROM QuestObjectiveEntity o WHERE o.questId = :questId AND o.optional = true ORDER BY o.orderIndex")
     List<QuestObjectiveEntity> findOptionalByQuestId(String questId);

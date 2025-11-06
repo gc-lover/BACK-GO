@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 /**
- * REST Controller для управления инвентарем.
+ * REST Controller РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РёРЅРІРµРЅС‚Р°СЂРµРј.
  * 
- * Реализует контракт {@link InventoryInventoryApi}, сгенерированный из OpenAPI.
- * Источник: API-SWAGGER/api/v1/inventory/inventory.yaml
+ * Р РµР°Р»РёР·СѓРµС‚ РєРѕРЅС‚СЂР°РєС‚ {@link InventoryInventoryApi}, СЃРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅС‹Р№ РёР· OpenAPI.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/inventory/inventory.yaml
  */
 @Slf4j
 @RestController

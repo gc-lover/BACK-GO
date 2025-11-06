@@ -65,11 +65,11 @@ public class InventoryResponse {
   }
 
   /**
-   * Предметы в инвентаре
+   * РџСЂРµРґРјРµС‚С‹ РІ РёРЅРІРµРЅС‚Р°СЂРµ
    * @return items
    */
   @NotNull @Valid 
-  @Schema(name = "items", description = "Предметы в инвентаре", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "items", description = "РџСЂРµРґРјРµС‚С‹ РІ РёРЅРІРµРЅС‚Р°СЂРµ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("items")
   public List<@Valid InventoryItem> getItems() {
     return items;
@@ -85,11 +85,11 @@ public class InventoryResponse {
   }
 
   /**
-   * Текущий вес инвентаря (кг)
+   * РўРµРєСѓС‰РёР№ РІРµСЃ РёРЅРІРµРЅС‚Р°СЂСЏ (РєРі)
    * @return currentWeight
    */
   @NotNull 
-  @Schema(name = "currentWeight", example = "45.5", description = "Текущий вес инвентаря (кг)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "currentWeight", example = "45.5", description = "РўРµРєСѓС‰РёР№ РІРµСЃ РёРЅРІРµРЅС‚Р°СЂСЏ (РєРі)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("currentWeight")
   public Float getCurrentWeight() {
     return currentWeight;
@@ -105,11 +105,11 @@ public class InventoryResponse {
   }
 
   /**
-   * Максимальный вес инвентаря (кг)
+   * РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ РІРµСЃ РёРЅРІРµРЅС‚Р°СЂСЏ (РєРі)
    * @return maxWeight
    */
   @NotNull 
-  @Schema(name = "maxWeight", example = "100.0", description = "Максимальный вес инвентаря (кг)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "maxWeight", example = "100.0", description = "РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ РІРµСЃ РёРЅРІРµРЅС‚Р°СЂСЏ (РєРі)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("maxWeight")
   public Float getMaxWeight() {
     return maxWeight;
@@ -133,11 +133,11 @@ public class InventoryResponse {
   }
 
   /**
-   * Количество предметов по категориям
+   * РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРµРґРјРµС‚РѕРІ РїРѕ РєР°С‚РµРіРѕСЂРёСЏРј
    * @return categories
    */
   
-  @Schema(name = "categories", example = "{\"weapons\":3,\"armor\":5,\"consumables\":10}", description = "Количество предметов по категориям", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "categories", example = "{\"weapons\":3,\"armor\":5,\"consumables\":10}", description = "РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРµРґРјРµС‚РѕРІ РїРѕ РєР°С‚РµРіРѕСЂРёСЏРј", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("categories")
   public Map<String, Integer> getCategories() {
     return categories;

@@ -5,44 +5,44 @@ import com.necpgame.backjava.model.*;
 import java.util.UUID;
 
 /**
- * QuestsService - сервис для управления квестовой системой.
+ * QuestsService - СЃРµСЂРІРёСЃ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РєРІРµСЃС‚РѕРІРѕР№ СЃРёСЃС‚РµРјРѕР№.
  * 
- * Сгенерировано из: API-SWAGGER/api/v1/quests/quests.yaml
+ * РЎРіРµРЅРµСЂРёСЂРѕРІР°РЅРѕ РёР·: API-SWAGGER/api/v1/quests/quests.yaml
  */
 public interface QuestsService {
 
     /**
-     * Получить список доступных квестов.
+     * РџРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РєРІРµСЃС‚РѕРІ.
      */
     GetAvailableQuests200Response getAvailableQuests(UUID characterId, String type);
 
     /**
-     * Получить активные квесты персонажа.
+     * РџРѕР»СѓС‡РёС‚СЊ Р°РєС‚РёРІРЅС‹Рµ РєРІРµСЃС‚С‹ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     GetActiveQuests200Response getActiveQuests(UUID characterId);
 
     /**
-     * Получить детали квеста.
+     * РџРѕР»СѓС‡РёС‚СЊ РґРµС‚Р°Р»Рё РєРІРµСЃС‚Р°.
      */
     Quest getQuestDetails(String questId, UUID characterId);
 
     /**
-     * Принять квест.
+     * РџСЂРёРЅСЏС‚СЊ РєРІРµСЃС‚.
      */
     AcceptQuest200Response acceptQuest(String questId, AcceptQuestRequest request);
 
     /**
-     * Завершить квест.
+     * Р—Р°РІРµСЂС€РёС‚СЊ РєРІРµСЃС‚.
      */
     CompleteQuest200Response completeQuest(String questId, CompleteQuestRequest request);
 
     /**
-     * Отказаться от квеста.
+     * РћС‚РєР°Р·Р°С‚СЊСЃСЏ РѕС‚ РєРІРµСЃС‚Р°.
      */
     AbandonQuest200Response abandonQuest(String questId, AbandonQuestRequest request);
 
     /**
-     * Получить цели квеста.
+     * РџРѕР»СѓС‡РёС‚СЊ С†РµР»Рё РєРІРµСЃС‚Р°.
      */
     GetQuestObjectives200Response getQuestObjectives(String questId, UUID characterId);
 }

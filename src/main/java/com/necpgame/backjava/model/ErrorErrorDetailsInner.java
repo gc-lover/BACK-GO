@@ -8,20 +8,20 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import java.util.*;
-import jakarta.annotation.Generated;
+import javax.annotation.Generated;
 
 /**
  * ErrorErrorDetailsInner
  */
 
 @JsonTypeName("Error_error_details_inner")
-
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T22:14:20.180301500+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class ErrorErrorDetailsInner {
 
   private @Nullable String field;
@@ -131,4 +131,5 @@ public class ErrorErrorDetailsInner {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
 

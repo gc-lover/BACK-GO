@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 /**
- * REST Controller для работы со случайными событиями.
+ * REST Controller РґР»СЏ СЂР°Р±РѕС‚С‹ СЃРѕ СЃР»СѓС‡Р°Р№РЅС‹РјРё СЃРѕР±С‹С‚РёСЏРјРё.
  * 
- * Реализует контракт {@link EventsApi}, сгенерированный из OpenAPI спецификации.
- * Источник: API-SWAGGER/api/v1/events/random-events.yaml
+ * Р РµР°Р»РёР·СѓРµС‚ РєРѕРЅС‚СЂР°РєС‚ {@link EventsApi}, СЃРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅС‹Р№ РёР· OpenAPI СЃРїРµС†РёС„РёРєР°С†РёРё.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/events/random-events.yaml
  */
 @Slf4j
 @RestController

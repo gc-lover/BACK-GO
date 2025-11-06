@@ -17,15 +17,15 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Запрос на применение профилактики
+ * Р—Р°РїСЂРѕСЃ РЅР° РїСЂРёРјРµРЅРµРЅРёРµ РїСЂРѕС„РёР»Р°РєС‚РёРєРё
  */
 
-@Schema(name = "ApplyPreventionRequest", description = "Запрос на применение профилактики")
+@Schema(name = "ApplyPreventionRequest", description = "Р—Р°РїСЂРѕСЃ РЅР° РїСЂРёРјРµРЅРµРЅРёРµ РїСЂРѕС„РёР»Р°РєС‚РёРєРё")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class ApplyPreventionRequest {
 
   /**
-   * Метод профилактики
+   * РњРµС‚РѕРґ РїСЂРѕС„РёР»Р°РєС‚РёРєРё
    */
   public enum MethodEnum {
     MAINTENANCE("maintenance"),
@@ -85,11 +85,11 @@ public class ApplyPreventionRequest {
   }
 
   /**
-   * Метод профилактики
+   * РњРµС‚РѕРґ РїСЂРѕС„РёР»Р°РєС‚РёРєРё
    * @return method
    */
   @NotNull 
-  @Schema(name = "method", description = "Метод профилактики", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "method", description = "РњРµС‚РѕРґ РїСЂРѕС„РёР»Р°РєС‚РёРєРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("method")
   public MethodEnum getMethod() {
     return method;
@@ -105,12 +105,12 @@ public class ApplyPreventionRequest {
   }
 
   /**
-   * Длительность профилактики в секундах
+   * Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ РїСЂРѕС„РёР»Р°РєС‚РёРєРё РІ СЃРµРєСѓРЅРґР°С…
    * minimum: 0
    * @return duration
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "duration", description = "Длительность профилактики в секундах", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "duration", description = "Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ РїСЂРѕС„РёР»Р°РєС‚РёРєРё РІ СЃРµРєСѓРЅРґР°С…", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("duration")
   public Float getDuration() {
     return duration;

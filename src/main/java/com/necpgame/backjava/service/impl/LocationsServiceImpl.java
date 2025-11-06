@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.UUID;
 
 /**
- * Реализация сервиса для работы с игровыми локациями.
+ * Р РµР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІРёСЃР° РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РёРіСЂРѕРІС‹РјРё Р»РѕРєР°С†РёСЏРјРё.
  * 
- * Источник: API-SWAGGER/api/v1/locations/locations.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/locations/locations.yaml
  */
 @Slf4j
 @Service
@@ -29,7 +29,7 @@ public class LocationsServiceImpl implements LocationsService {
         log.info("Getting locations for character: {} (region: {}, dangerLevel: {}, minLevel: {})", 
                  characterId, region, dangerLevel, minLevel);
         
-        // TODO: Полная реализация (загрузить доступные локации, учесть требования и фильтры)
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (Р·Р°РіСЂСѓР·РёС‚СЊ РґРѕСЃС‚СѓРїРЅС‹Рµ Р»РѕРєР°С†РёРё, СѓС‡РµСЃС‚СЊ С‚СЂРµР±РѕРІР°РЅРёСЏ Рё С„РёР»СЊС‚СЂС‹)
         return null;
     }
     
@@ -38,7 +38,7 @@ public class LocationsServiceImpl implements LocationsService {
     public LocationDetails getLocationDetails(String locationId, UUID characterId) {
         log.info("Getting location details: {} for character: {}", locationId, characterId);
         
-        // TODO: Полная реализация (загрузить детали локации)
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (Р·Р°РіСЂСѓР·РёС‚СЊ РґРµС‚Р°Р»Рё Р»РѕРєР°С†РёРё)
         return null;
     }
     
@@ -47,7 +47,7 @@ public class LocationsServiceImpl implements LocationsService {
     public LocationDetails getCurrentLocation(UUID characterId) {
         log.info("Getting current location for character: {}", characterId);
         
-        // TODO: Полная реализация (загрузить текущую локацию персонажа)
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (Р·Р°РіСЂСѓР·РёС‚СЊ С‚РµРєСѓС‰СѓСЋ Р»РѕРєР°С†РёСЋ РїРµСЂСЃРѕРЅР°Р¶Р°)
         return null;
     }
     
@@ -56,7 +56,7 @@ public class LocationsServiceImpl implements LocationsService {
     public TravelResponse travelToLocation(TravelRequest request) {
         log.info("Traveling character {} to location: {}", request.getCharacterId(), request.getTargetLocationId());
         
-        // TODO: Полная реализация (переместить персонажа, проверить доступность)
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (РїРµСЂРµРјРµСЃС‚РёС‚СЊ РїРµСЂСЃРѕРЅР°Р¶Р°, РїСЂРѕРІРµСЂРёС‚СЊ РґРѕСЃС‚СѓРїРЅРѕСЃС‚СЊ)
         return null;
     }
     
@@ -65,7 +65,7 @@ public class LocationsServiceImpl implements LocationsService {
     public GetLocationActions200Response getLocationActions(String locationId, UUID characterId) {
         log.info("Getting location actions: {} for character: {}", locationId, characterId);
         
-        // TODO: Полная реализация (загрузить доступные действия в локации)
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (Р·Р°РіСЂСѓР·РёС‚СЊ РґРѕСЃС‚СѓРїРЅС‹Рµ РґРµР№СЃС‚РІРёСЏ РІ Р»РѕРєР°С†РёРё)
         return null;
     }
     
@@ -74,7 +74,7 @@ public class LocationsServiceImpl implements LocationsService {
     public GetConnectedLocations200Response getConnectedLocations(String locationId, UUID characterId) {
         log.info("Getting connected locations for: {} (character: {})", locationId, characterId);
         
-        // TODO: Полная реализация (загрузить список соседних локаций)
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (Р·Р°РіСЂСѓР·РёС‚СЊ СЃРїРёСЃРѕРє СЃРѕСЃРµРґРЅРёС… Р»РѕРєР°С†РёР№)
         return null;
     }
 }

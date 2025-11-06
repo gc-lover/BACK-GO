@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 /**
- * Конфигурация Jackson ObjectMapper
- * Регистрирует JsonNullableModule для поддержки JsonNullable в OpenAPI моделях
+ * РљРѕРЅС„РёРіСѓСЂР°С†РёСЏ Jackson ObjectMapper
+ * Р РµРіРёСЃС‚СЂРёСЂСѓРµС‚ JsonNullableModule РґР»СЏ РїРѕРґРґРµСЂР¶РєРё JsonNullable РІ OpenAPI РјРѕРґРµР»СЏС…
  */
 @Configuration
 public class ObjectMapperConfig {

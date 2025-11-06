@@ -18,17 +18,17 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Запрос на детоксикацию
+ * Р—Р°РїСЂРѕСЃ РЅР° РґРµС‚РѕРєСЃРёРєР°С†РёСЋ
  */
 
-@Schema(name = "DetoxificationRequest", description = "Запрос на детоксикацию")
+@Schema(name = "DetoxificationRequest", description = "Р—Р°РїСЂРѕСЃ РЅР° РґРµС‚РѕРєСЃРёРєР°С†РёСЋ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class DetoxificationRequest {
 
   private UUID npcId;
 
   /**
-   * Уровень детоксикации
+   * РЈСЂРѕРІРµРЅСЊ РґРµС‚РѕРєСЃРёРєР°С†РёРё
    */
   public enum LevelEnum {
     BASIC("basic"),
@@ -84,11 +84,11 @@ public class DetoxificationRequest {
   }
 
   /**
-   * Идентификатор NPC для детоксикации
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ NPC РґР»СЏ РґРµС‚РѕРєСЃРёРєР°С†РёРё
    * @return npcId
    */
   @NotNull @Valid 
-  @Schema(name = "npc_id", description = "Идентификатор NPC для детоксикации", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "npc_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ NPC РґР»СЏ РґРµС‚РѕРєСЃРёРєР°С†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("npc_id")
   public UUID getNpcId() {
     return npcId;
@@ -104,11 +104,11 @@ public class DetoxificationRequest {
   }
 
   /**
-   * Уровень детоксикации
+   * РЈСЂРѕРІРµРЅСЊ РґРµС‚РѕРєСЃРёРєР°С†РёРё
    * @return level
    */
   @NotNull 
-  @Schema(name = "level", description = "Уровень детоксикации", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "level", description = "РЈСЂРѕРІРµРЅСЊ РґРµС‚РѕРєСЃРёРєР°С†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("level")
   public LevelEnum getLevel() {
     return level;

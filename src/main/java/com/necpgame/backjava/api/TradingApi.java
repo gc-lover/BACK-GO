@@ -51,17 +51,17 @@ public interface TradingApi {
 
     String PATH_BUY_ITEM = "/trading/buy";
     /**
-     * POST /trading/buy : Купить предмет
+     * POST /trading/buy : РљСѓРїРёС‚СЊ РїСЂРµРґРјРµС‚
      *
      * @param buyItemRequest  (optional)
-     * @return Покупка завершена (status code 200)
+     * @return РџРѕРєСѓРїРєР° Р·Р°РІРµСЂС€РµРЅР° (status code 200)
      */
     @Operation(
         operationId = "buyItem",
-        summary = "Купить предмет",
+        summary = "РљСѓРїРёС‚СЊ РїСЂРµРґРјРµС‚",
         tags = { "Trading" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Покупка завершена", content = {
+            @ApiResponse(responseCode = "200", description = "РџРѕРєСѓРїРєР° Р·Р°РІРµСЂС€РµРЅР°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = BuyItem200Response.class))
             })
         },
@@ -94,19 +94,19 @@ public interface TradingApi {
 
     String PATH_GET_ITEM_PRICE = "/trading/prices/{itemId}";
     /**
-     * GET /trading/prices/{itemId} : Цена предмета у торговца
+     * GET /trading/prices/{itemId} : Р¦РµРЅР° РїСЂРµРґРјРµС‚Р° Сѓ С‚РѕСЂРіРѕРІС†Р°
      *
      * @param itemId  (required)
      * @param vendorId  (required)
      * @param characterId  (required)
-     * @return Цены предмета (status code 200)
+     * @return Р¦РµРЅС‹ РїСЂРµРґРјРµС‚Р° (status code 200)
      */
     @Operation(
         operationId = "getItemPrice",
-        summary = "Цена предмета у торговца",
+        summary = "Р¦РµРЅР° РїСЂРµРґРјРµС‚Р° Сѓ С‚РѕСЂРіРѕРІС†Р°",
         tags = { "Trading" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Цены предмета", content = {
+            @ApiResponse(responseCode = "200", description = "Р¦РµРЅС‹ РїСЂРµРґРјРµС‚Р°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GetItemPrice200Response.class))
             })
         },
@@ -140,18 +140,18 @@ public interface TradingApi {
 
     String PATH_GET_VENDOR_INVENTORY = "/trading/vendors/{vendorId}/inventory";
     /**
-     * GET /trading/vendors/{vendorId}/inventory : Ассортимент торговца
+     * GET /trading/vendors/{vendorId}/inventory : РђСЃСЃРѕСЂС‚РёРјРµРЅС‚ С‚РѕСЂРіРѕРІС†Р°
      *
      * @param vendorId  (required)
      * @param characterId  (required)
-     * @return Ассортимент торговца (status code 200)
+     * @return РђСЃСЃРѕСЂС‚РёРјРµРЅС‚ С‚РѕСЂРіРѕРІС†Р° (status code 200)
      */
     @Operation(
         operationId = "getVendorInventory",
-        summary = "Ассортимент торговца",
+        summary = "РђСЃСЃРѕСЂС‚РёРјРµРЅС‚ С‚РѕСЂРіРѕРІС†Р°",
         tags = { "Trading" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Ассортимент торговца", content = {
+            @ApiResponse(responseCode = "200", description = "РђСЃСЃРѕСЂС‚РёРјРµРЅС‚ С‚РѕСЂРіРѕРІС†Р°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = VendorInventory.class))
             })
         },
@@ -184,18 +184,18 @@ public interface TradingApi {
 
     String PATH_GET_VENDORS = "/trading/vendors";
     /**
-     * GET /trading/vendors : Список торговцев
+     * GET /trading/vendors : РЎРїРёСЃРѕРє С‚РѕСЂРіРѕРІС†РµРІ
      *
      * @param characterId  (required)
      * @param locationId  (optional)
-     * @return Список торговцев (status code 200)
+     * @return РЎРїРёСЃРѕРє С‚РѕСЂРіРѕРІС†РµРІ (status code 200)
      */
     @Operation(
         operationId = "getVendors",
-        summary = "Список торговцев",
+        summary = "РЎРїРёСЃРѕРє С‚РѕСЂРіРѕРІС†РµРІ",
         tags = { "Trading" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Список торговцев", content = {
+            @ApiResponse(responseCode = "200", description = "РЎРїРёСЃРѕРє С‚РѕСЂРіРѕРІС†РµРІ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GetVendors200Response.class))
             })
         },
@@ -228,17 +228,17 @@ public interface TradingApi {
 
     String PATH_SELL_ITEM = "/trading/sell";
     /**
-     * POST /trading/sell : Продать предмет
+     * POST /trading/sell : РџСЂРѕРґР°С‚СЊ РїСЂРµРґРјРµС‚
      *
      * @param buyItemRequest  (optional)
-     * @return Продажа завершена (status code 200)
+     * @return РџСЂРѕРґР°Р¶Р° Р·Р°РІРµСЂС€РµРЅР° (status code 200)
      */
     @Operation(
         operationId = "sellItem",
-        summary = "Продать предмет",
+        summary = "РџСЂРѕРґР°С‚СЊ РїСЂРµРґРјРµС‚",
         tags = { "Trading" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Продажа завершена", content = {
+            @ApiResponse(responseCode = "200", description = "РџСЂРѕРґР°Р¶Р° Р·Р°РІРµСЂС€РµРЅР°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = SellItem200Response.class))
             })
         },

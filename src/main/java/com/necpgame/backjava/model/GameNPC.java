@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * GameNPC - NPC в игре
+ * GameNPC - NPC РІ РёРіСЂРµ
  */
-@Schema(description = "NPC в игре")
+@Schema(description = "NPC РІ РёРіСЂРµ")
 public class GameNPC {
 
     @JsonProperty("id")
@@ -36,7 +36,7 @@ public class GameNPC {
     private List<String> availableQuests = new ArrayList<>();
 
     /**
-     * Тип NPC
+     * РўРёРї NPC
      */
     public enum TypeEnum {
         TRADER("trader"),
@@ -60,7 +60,7 @@ public class GameNPC {
         }
     }
 
-    @Schema(description = "Уникальный идентификатор NPC", required = true)
+    @Schema(description = "РЈРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ NPC", required = true)
     @NotNull
     public String getId() {
         return id;
@@ -70,7 +70,7 @@ public class GameNPC {
         this.id = id;
     }
 
-    @Schema(description = "Имя NPC", required = true)
+    @Schema(description = "РРјСЏ NPC", required = true)
     @NotNull
     @Size(min = 1, max = 100)
     public String getName() {
@@ -81,7 +81,7 @@ public class GameNPC {
         this.name = name;
     }
 
-    @Schema(description = "Описание NPC")
+    @Schema(description = "РћРїРёСЃР°РЅРёРµ NPC")
     @Size(max = 500)
     public String getDescription() {
         return description;
@@ -91,7 +91,7 @@ public class GameNPC {
         this.description = description;
     }
 
-    @Schema(description = "Тип NPC", required = true)
+    @Schema(description = "РўРёРї NPC", required = true)
     @NotNull
     public TypeEnum getType() {
         return type;
@@ -101,7 +101,7 @@ public class GameNPC {
         this.type = type;
     }
 
-    @Schema(description = "Фракция NPC (если есть)")
+    @Schema(description = "Р¤СЂР°РєС†РёСЏ NPC (РµСЃР»Рё РµСЃС‚СЊ)")
     public String getFaction() {
         return faction;
     }
@@ -110,7 +110,7 @@ public class GameNPC {
         this.faction = faction;
     }
 
-    @Schema(description = "Приветствие NPC при первом взаимодействии", required = true)
+    @Schema(description = "РџСЂРёРІРµС‚СЃС‚РІРёРµ NPC РїСЂРё РїРµСЂРІРѕРј РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРё", required = true)
     @NotNull
     @Size(min = 10, max = 500)
     public String getGreeting() {
@@ -121,7 +121,7 @@ public class GameNPC {
         this.greeting = greeting;
     }
 
-    @Schema(description = "Список ID доступных квестов от этого NPC")
+    @Schema(description = "РЎРїРёСЃРѕРє ID РґРѕСЃС‚СѓРїРЅС‹С… РєРІРµСЃС‚РѕРІ РѕС‚ СЌС‚РѕРіРѕ NPC")
     public List<String> getAvailableQuests() {
         return availableQuests;
     }

@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.OffsetDateTime;
 
 /**
- * Реализация сервиса аутентификации
+ * Р РµР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІРёСЃР° Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёРё
  */
 @Slf4j
 @Service
@@ -32,26 +32,26 @@ public class AuthServiceImpl implements AuthService {
     private final JwtUtil jwtUtil;
     
     /**
-     * Регистрация нового аккаунта
+     * Р РµРіРёСЃС‚СЂР°С†РёСЏ РЅРѕРІРѕРіРѕ Р°РєРєР°СѓРЅС‚Р°
      */
     @Override
     @Transactional
     public Register201Response register(RegisterRequest request) {
         log.info("Registering new account: {}", request.getEmail());
         
-        // Проверка уникальности email
+        // РџСЂРѕРІРµСЂРєР° СѓРЅРёРєР°Р»СЊРЅРѕСЃС‚Рё email
         if (accountRepository.existsByEmail(request.getEmail())) {
             throw new BusinessException(ErrorCode.RESOURCE_ALREADY_EXISTS, 
                 "Account with this email already exists");
         }
         
-        // Проверка уникальности username
+        // РџСЂРѕРІРµСЂРєР° СѓРЅРёРєР°Р»СЊРЅРѕСЃС‚Рё username
         if (accountRepository.existsByUsername(request.getUsername())) {
             throw new BusinessException(ErrorCode.RESOURCE_ALREADY_EXISTS, 
                 "Account with this username already exists");
         }
         
-        // Создание нового аккаунта
+        // РЎРѕР·РґР°РЅРёРµ РЅРѕРІРѕРіРѕ Р°РєРєР°СѓРЅС‚Р°
         AccountEntity account = new AccountEntity();
         account.setEmail(request.getEmail());
         account.setUsername(request.getUsername());
@@ -60,10 +60,10 @@ public class AuthServiceImpl implements AuthService {
         account = accountRepository.save(account);
         log.info("Account created successfully: {}", account.getId());
         
-        // Генерация JWT токена
+        // Р“РµРЅРµСЂР°С†РёСЏ JWT С‚РѕРєРµРЅР°
         String token = jwtUtil.generateToken(account.getId(), account.getEmail());
         
-        // Формирование ответа
+        // Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ РѕС‚РІРµС‚Р°
         Register201Response response = new Register201Response();
         response.setAccountId(account.getId());
         response.setMessage("Account created successfully");
@@ -72,29 +72,29 @@ public class AuthServiceImpl implements AuthService {
     }
     
     /**
-     * Вход в систему
+     * Р’С…РѕРґ РІ СЃРёСЃС‚РµРјСѓ
      */
     @Override
     @Transactional(readOnly = true)
     public LoginResponse login(LoginRequest request) {
         log.info("Login attempt for: {}", request.getLogin());
         
-        // Поиск аккаунта по email или username
+        // РџРѕРёСЃРє Р°РєРєР°СѓРЅС‚Р° РїРѕ email РёР»Рё username
         AccountEntity account = accountRepository.findByEmail(request.getLogin())
             .or(() -> accountRepository.findByUsername(request.getLogin()))
             .orElseThrow(() -> new AuthException(ErrorCode.INVALID_CREDENTIALS));
         
-        // Проверка пароля
+        // РџСЂРѕРІРµСЂРєР° РїР°СЂРѕР»СЏ
         if (!passwordEncoder.matches(request.getPassword(), account.getPasswordHash())) {
             throw new AuthException(ErrorCode.INVALID_CREDENTIALS);
         }
         
         log.info("Login successful for account: {}", account.getId());
         
-        // Генерация JWT токена
+        // Р“РµРЅРµСЂР°С†РёСЏ JWT С‚РѕРєРµРЅР°
         String token = jwtUtil.generateToken(account.getId(), account.getEmail());
         
-        // Формирование ответа
+        // Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ РѕС‚РІРµС‚Р°
         LoginResponse response = new LoginResponse();
         response.setAccountId(account.getId());
         response.setToken(token);

@@ -78,7 +78,7 @@ public class UseItem200Response {
    * @return message
    */
   @NotNull 
-  @Schema(name = "message", example = "Предмет успешно использован", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "message", example = "РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("message")
   public String getMessage() {
     return message;
@@ -102,11 +102,11 @@ public class UseItem200Response {
   }
 
   /**
-   * Примененные эффекты от предмета
+   * РџСЂРёРјРµРЅРµРЅРЅС‹Рµ СЌС„С„РµРєС‚С‹ РѕС‚ РїСЂРµРґРјРµС‚Р°
    * @return effects
    */
   @NotNull @Valid 
-  @Schema(name = "effects", example = "[{\"type\":\"heal\",\"value\":50,\"description\":\"Восстановлено 50 HP\"}]", description = "Примененные эффекты от предмета", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "effects", example = "[{\"type\":\"heal\",\"value\":50,\"description\":\"Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРѕ 50 HP\"}]", description = "РџСЂРёРјРµРЅРµРЅРЅС‹Рµ СЌС„С„РµРєС‚С‹ РѕС‚ РїСЂРµРґРјРµС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("effects")
   public List<@Valid UseItem200ResponseEffectsInner> getEffects() {
     return effects;

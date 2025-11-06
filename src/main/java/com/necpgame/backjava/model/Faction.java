@@ -32,7 +32,7 @@ public class Faction {
   private String name;
 
   /**
-   * Тип фракции
+   * РўРёРї С„СЂР°РєС†РёРё
    */
   public enum TypeEnum {
     CORPORATION("corporation"),
@@ -133,11 +133,11 @@ public class Faction {
   }
 
   /**
-   * Уникальный идентификатор фракции
+   * РЈРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С„СЂР°РєС†РёРё
    * @return id
    */
   @NotNull @Valid 
-  @Schema(name = "id", example = "550e8400-e29b-41d4-a716-446655440000", description = "Уникальный идентификатор фракции", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "id", example = "550e8400-e29b-41d4-a716-446655440000", description = "РЈРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С„СЂР°РєС†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("id")
   public UUID getId() {
     return id;
@@ -153,11 +153,11 @@ public class Faction {
   }
 
   /**
-   * Название фракции
+   * РќР°Р·РІР°РЅРёРµ С„СЂР°РєС†РёРё
    * @return name
    */
   @NotNull 
-  @Schema(name = "name", example = "Arasaka", description = "Название фракции", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "name", example = "Arasaka", description = "РќР°Р·РІР°РЅРёРµ С„СЂР°РєС†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -173,11 +173,11 @@ public class Faction {
   }
 
   /**
-   * Тип фракции
+   * РўРёРї С„СЂР°РєС†РёРё
    * @return type
    */
   @NotNull 
-  @Schema(name = "type", example = "corporation", description = "Тип фракции", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "type", example = "corporation", description = "РўРёРї С„СЂР°РєС†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("type")
   public TypeEnum getType() {
     return type;
@@ -193,11 +193,11 @@ public class Faction {
   }
 
   /**
-   * Описание фракции
+   * РћРїРёСЃР°РЅРёРµ С„СЂР°РєС†РёРё
    * @return description
    */
   @NotNull 
-  @Schema(name = "description", example = "Корпорация, технологии, власть", description = "Описание фракции", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "description", example = "РљРѕСЂРїРѕСЂР°С†РёСЏ, С‚РµС…РЅРѕР»РѕРіРёРё, РІР»Р°СЃС‚СЊ", description = "РћРїРёСЃР°РЅРёРµ С„СЂР°РєС†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {
     return description;
@@ -221,11 +221,11 @@ public class Faction {
   }
 
   /**
-   * Список доступных происхождений для старта
+   * РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёР№ РґР»СЏ СЃС‚Р°СЂС‚Р°
    * @return availableForOrigins
    */
   @NotNull 
-  @Schema(name = "available_for_origins", example = "[\"corpo\",\"street_kid\"]", description = "Список доступных происхождений для старта", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "available_for_origins", example = "[\"corpo\",\"street_kid\"]", description = "РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёР№ РґР»СЏ СЃС‚Р°СЂС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("available_for_origins")
   public List<AvailableForOriginsEnum> getAvailableForOrigins() {
     return availableForOrigins;

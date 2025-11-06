@@ -20,8 +20,8 @@ import org.springframework.validation.annotation.Validated;
 public interface CharactersService {
 
     /**
-     * POST /characters : Создание нового персонажа
-     * Создает нового персонажа для текущего аккаунта. Проверяет лимит персонажей и доступность фракции/города.
+     * POST /characters : РЎРѕР·РґР°РЅРёРµ РЅРѕРІРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°
+     * РЎРѕР·РґР°РµС‚ РЅРѕРІРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р° РґР»СЏ С‚РµРєСѓС‰РµРіРѕ Р°РєРєР°СѓРЅС‚Р°. РџСЂРѕРІРµСЂСЏРµС‚ Р»РёРјРёС‚ РїРµСЂСЃРѕРЅР°Р¶РµР№ Рё РґРѕСЃС‚СѓРїРЅРѕСЃС‚СЊ С„СЂР°РєС†РёРё/РіРѕСЂРѕРґР°.
      *
      * @param createCharacterRequest  (required)
      * @return CreateCharacter201Response
@@ -29,33 +29,33 @@ public interface CharactersService {
     CreateCharacter201Response createCharacter(CreateCharacterRequest createCharacterRequest);
 
     /**
-     * DELETE /characters/{character_id} : Удаление персонажа
-     * Удаляет персонажа текущего аккаунта. Необратимое удаление всех данных.
+     * DELETE /characters/{character_id} : РЈРґР°Р»РµРЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°
+     * РЈРґР°Р»СЏРµС‚ РїРµСЂСЃРѕРЅР°Р¶Р° С‚РµРєСѓС‰РµРіРѕ Р°РєРєР°СѓРЅС‚Р°. РќРµРѕР±СЂР°С‚РёРјРѕРµ СѓРґР°Р»РµРЅРёРµ РІСЃРµС… РґР°РЅРЅС‹С….
      *
-     * @param characterId Идентификатор персонажа для удаления (required)
+     * @param characterId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїРµСЂСЃРѕРЅР°Р¶Р° РґР»СЏ СѓРґР°Р»РµРЅРёСЏ (required)
      * @return DeleteCharacter200Response
      */
     DeleteCharacter200Response deleteCharacter(UUID characterId);
 
     /**
-     * GET /characters/classes : Список доступных классов
-     * Получает список всех доступных классов персонажей с описаниями.
+     * GET /characters/classes : РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РєР»Р°СЃСЃРѕРІ
+     * РџРѕР»СѓС‡Р°РµС‚ СЃРїРёСЃРѕРє РІСЃРµС… РґРѕСЃС‚СѓРїРЅС‹С… РєР»Р°СЃСЃРѕРІ РїРµСЂСЃРѕРЅР°Р¶РµР№ СЃ РѕРїРёСЃР°РЅРёСЏРјРё.
      *
      * @return GetCharacterClasses200Response
      */
     GetCharacterClasses200Response getCharacterClasses();
 
     /**
-     * GET /characters/origins : Список доступных происхождений
-     * Получает список всех доступных происхождений с описаниями и доступными фракциями.
+     * GET /characters/origins : РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёР№
+     * РџРѕР»СѓС‡Р°РµС‚ СЃРїРёСЃРѕРє РІСЃРµС… РґРѕСЃС‚СѓРїРЅС‹С… РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёР№ СЃ РѕРїРёСЃР°РЅРёСЏРјРё Рё РґРѕСЃС‚СѓРїРЅС‹РјРё С„СЂР°РєС†РёСЏРјРё.
      *
      * @return GetCharacterOrigins200Response
      */
     GetCharacterOrigins200Response getCharacterOrigins();
 
     /**
-     * GET /characters : Список персонажей игрока
-     * Получает список всех персонажей текущего аккаунта с краткой информацией.
+     * GET /characters : РЎРїРёСЃРѕРє РїРµСЂСЃРѕРЅР°Р¶РµР№ РёРіСЂРѕРєР°
+     * РџРѕР»СѓС‡Р°РµС‚ СЃРїРёСЃРѕРє РІСЃРµС… РїРµСЂСЃРѕРЅР°Р¶РµР№ С‚РµРєСѓС‰РµРіРѕ Р°РєРєР°СѓРЅС‚Р° СЃ РєСЂР°С‚РєРѕР№ РёРЅС„РѕСЂРјР°С†РёРµР№.
      *
      * @return ListCharacters200Response
      */

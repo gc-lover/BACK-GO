@@ -60,11 +60,11 @@ public class TravelResponse {
   }
 
   /**
-   * Успешно ли перемещение
+   * РЈСЃРїРµС€РЅРѕ Р»Рё РїРµСЂРµРјРµС‰РµРЅРёРµ
    * @return success
    */
   @NotNull 
-  @Schema(name = "success", example = "true", description = "Успешно ли перемещение", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "success", example = "true", description = "РЈСЃРїРµС€РЅРѕ Р»Рё РїРµСЂРµРјРµС‰РµРЅРёРµ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("success")
   public Boolean getSuccess() {
     return success;
@@ -100,11 +100,11 @@ public class TravelResponse {
   }
 
   /**
-   * Затраченное время в минутах (0 для fast_travel)
+   * Р—Р°С‚СЂР°С‡РµРЅРЅРѕРµ РІСЂРµРјСЏ РІ РјРёРЅСѓС‚Р°С… (0 РґР»СЏ fast_travel)
    * @return timeSpent
    */
   @NotNull 
-  @Schema(name = "timeSpent", example = "15", description = "Затраченное время в минутах (0 для fast_travel)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "timeSpent", example = "15", description = "Р—Р°С‚СЂР°С‡РµРЅРЅРѕРµ РІСЂРµРјСЏ РІ РјРёРЅСѓС‚Р°С… (0 РґР»СЏ fast_travel)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("timeSpent")
   public Integer getTimeSpent() {
     return timeSpent;
@@ -120,11 +120,11 @@ public class TravelResponse {
   }
 
   /**
-   * Затраченная энергия (0 для fast_travel)
+   * Р—Р°С‚СЂР°С‡РµРЅРЅР°СЏ СЌРЅРµСЂРіРёСЏ (0 РґР»СЏ fast_travel)
    * @return energySpent
    */
   
-  @Schema(name = "energySpent", example = "10", description = "Затраченная энергия (0 для fast_travel)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "energySpent", example = "10", description = "Р—Р°С‚СЂР°С‡РµРЅРЅР°СЏ СЌРЅРµСЂРіРёСЏ (0 РґР»СЏ fast_travel)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("energySpent")
   public @Nullable Integer getEnergySpent() {
     return energySpent;
@@ -140,11 +140,11 @@ public class TravelResponse {
   }
 
   /**
-   * Сообщение о перемещении
+   * РЎРѕРѕР±С‰РµРЅРёРµ Рѕ РїРµСЂРµРјРµС‰РµРЅРёРё
    * @return message
    */
   @NotNull 
-  @Schema(name = "message", example = "Вы прибыли в Watson - Kabuki", description = "Сообщение о перемещении", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "message", example = "Р’С‹ РїСЂРёР±С‹Р»Рё РІ Watson - Kabuki", description = "РЎРѕРѕР±С‰РµРЅРёРµ Рѕ РїРµСЂРµРјРµС‰РµРЅРёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("message")
   public String getMessage() {
     return message;
@@ -168,11 +168,11 @@ public class TravelResponse {
   }
 
   /**
-   * События, произошедшие во время перемещения (опционально)
+   * РЎРѕР±С‹С‚РёСЏ, РїСЂРѕРёР·РѕС€РµРґС€РёРµ РІРѕ РІСЂРµРјСЏ РїРµСЂРµРјРµС‰РµРЅРёСЏ (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ)
    * @return events
    */
   @Valid 
-  @Schema(name = "events", description = "События, произошедшие во время перемещения (опционально)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "events", description = "РЎРѕР±С‹С‚РёСЏ, РїСЂРѕРёР·РѕС€РµРґС€РёРµ РІРѕ РІСЂРµРјСЏ РїРµСЂРµРјРµС‰РµРЅРёСЏ (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("events")
   public List<@Valid TravelResponseEventsInner> getEvents() {
     return events;

@@ -16,10 +16,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Результат социальной поддержки. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Социальные механики 
+ * Р РµР·СѓР»СЊС‚Р°С‚ СЃРѕС†РёР°Р»СЊРЅРѕР№ РїРѕРґРґРµСЂР¶РєРё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РЎРѕС†РёР°Р»СЊРЅС‹Рµ РјРµС…Р°РЅРёРєРё 
  */
 
-@Schema(name = "SocialSupportResult", description = "Результат социальной поддержки. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Социальные механики ")
+@Schema(name = "SocialSupportResult", description = "Р РµР·СѓР»СЊС‚Р°С‚ СЃРѕС†РёР°Р»СЊРЅРѕР№ РїРѕРґРґРµСЂР¶РєРё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РЎРѕС†РёР°Р»СЊРЅС‹Рµ РјРµС…Р°РЅРёРєРё ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class SocialSupportResult {
 
@@ -48,12 +48,12 @@ public class SocialSupportResult {
   }
 
   /**
-   * Снижение стресса
+   * РЎРЅРёР¶РµРЅРёРµ СЃС‚СЂРµСЃСЃР°
    * minimum: 0
    * @return stressReduction
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "stress_reduction", description = "Снижение стресса", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "stress_reduction", description = "РЎРЅРёР¶РµРЅРёРµ СЃС‚СЂРµСЃСЃР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("stress_reduction")
   public Float getStressReduction() {
     return stressReduction;
@@ -69,12 +69,12 @@ public class SocialSupportResult {
   }
 
   /**
-   * Модификатор прогрессии (отрицательное значение = замедление)
+   * РњРѕРґРёС„РёРєР°С‚РѕСЂ РїСЂРѕРіСЂРµСЃСЃРёРё (РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ = Р·Р°РјРµРґР»РµРЅРёРµ)
    * maximum: 0
    * @return progressionModifier
    */
   @NotNull @DecimalMax(value = "0") 
-  @Schema(name = "progression_modifier", description = "Модификатор прогрессии (отрицательное значение = замедление)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "progression_modifier", description = "РњРѕРґРёС„РёРєР°С‚РѕСЂ РїСЂРѕРіСЂРµСЃСЃРёРё (РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ = Р·Р°РјРµРґР»РµРЅРёРµ)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("progression_modifier")
   public Float getProgressionModifier() {
     return progressionModifier;
@@ -90,12 +90,12 @@ public class SocialSupportResult {
   }
 
   /**
-   * Длительность эффекта в секундах
+   * Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ СЌС„С„РµРєС‚Р° РІ СЃРµРєСѓРЅРґР°С…
    * minimum: 0
    * @return duration
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "duration", description = "Длительность эффекта в секундах", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "duration", description = "Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ СЌС„С„РµРєС‚Р° РІ СЃРµРєСѓРЅРґР°С…", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("duration")
   public Float getDuration() {
     return duration;

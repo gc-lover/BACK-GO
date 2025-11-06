@@ -62,11 +62,11 @@ public class ListCharacters200Response {
   }
 
   /**
-   * Список персонажей
+   * РЎРїРёСЃРѕРє РїРµСЂСЃРѕРЅР°Р¶РµР№
    * @return characters
    */
   @NotNull @Valid 
-  @Schema(name = "characters", description = "Список персонажей", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "characters", description = "РЎРїРёСЃРѕРє РїРµСЂСЃРѕРЅР°Р¶РµР№", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("characters")
   public List<@Valid GameCharacterSummary> getCharacters() {
     return characters;
@@ -82,11 +82,11 @@ public class ListCharacters200Response {
   }
 
   /**
-   * Максимальное количество персонажей на аккаунт
+   * РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂСЃРѕРЅР°Р¶РµР№ РЅР° Р°РєРєР°СѓРЅС‚
    * @return maxCharacters
    */
   @NotNull 
-  @Schema(name = "max_characters", example = "5", description = "Максимальное количество персонажей на аккаунт", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "max_characters", example = "5", description = "РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂСЃРѕРЅР°Р¶РµР№ РЅР° Р°РєРєР°СѓРЅС‚", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("max_characters")
   public Integer getMaxCharacters() {
     return maxCharacters;
@@ -102,11 +102,11 @@ public class ListCharacters200Response {
   }
 
   /**
-   * Текущее количество персонажей
+   * РўРµРєСѓС‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂСЃРѕРЅР°Р¶РµР№
    * @return currentCount
    */
   @NotNull 
-  @Schema(name = "current_count", example = "2", description = "Текущее количество персонажей", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "current_count", example = "2", description = "РўРµРєСѓС‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂСЃРѕРЅР°Р¶РµР№", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("current_count")
   public Integer getCurrentCount() {
     return currentCount;

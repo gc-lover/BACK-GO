@@ -47,11 +47,11 @@ public class UseItemRequest {
   }
 
   /**
-   * ID персонажа
+   * ID РїРµСЂСЃРѕРЅР°Р¶Р°
    * @return characterId
    */
   @NotNull @Valid 
-  @Schema(name = "characterId", example = "550e8400-e29b-41d4-a716-446655440000", description = "ID персонажа", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "characterId", example = "550e8400-e29b-41d4-a716-446655440000", description = "ID РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("characterId")
   public UUID getCharacterId() {
     return characterId;
@@ -67,11 +67,11 @@ public class UseItemRequest {
   }
 
   /**
-   * ID предмета для использования
+   * ID РїСЂРµРґРјРµС‚Р° РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ
    * @return itemId
    */
   @NotNull 
-  @Schema(name = "itemId", example = "item_health_pack", description = "ID предмета для использования", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "itemId", example = "item_health_pack", description = "ID РїСЂРµРґРјРµС‚Р° РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("itemId")
   public String getItemId() {
     return itemId;
@@ -87,12 +87,12 @@ public class UseItemRequest {
   }
 
   /**
-   * Количество предметов для использования
+   * РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРµРґРјРµС‚РѕРІ РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ
    * minimum: 1
    * @return quantity
    */
   @Min(value = 1) 
-  @Schema(name = "quantity", example = "1", description = "Количество предметов для использования", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "quantity", example = "1", description = "РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРµРґРјРµС‚РѕРІ РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("quantity")
   public Integer getQuantity() {
     return quantity;

@@ -9,21 +9,21 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Repository для управления диалогами NPC.
+ * Repository РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РґРёР°Р»РѕРіР°РјРё NPC.
  * 
- * Источник: API-SWAGGER/api/v1/npcs/npcs.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/npcs/npcs.yaml
  */
 @Repository
 public interface NPCDialogueRepository extends JpaRepository<NPCDialogueEntity, String> {
     
     /**
-     * Найти все диалоги NPC.
+     * РќР°Р№С‚Рё РІСЃРµ РґРёР°Р»РѕРіРё NPC.
      */
     @Query("SELECT d FROM NPCDialogueEntity d WHERE d.npc.id = :npcId")
     List<NPCDialogueEntity> findByNpcId(String npcId);
     
     /**
-     * Найти начальный диалог NPC.
+     * РќР°Р№С‚Рё РЅР°С‡Р°Р»СЊРЅС‹Р№ РґРёР°Р»РѕРі NPC.
      */
     @Query("SELECT d FROM NPCDialogueEntity d WHERE d.npc.id = :npcId AND d.isInitial = true")
     Optional<NPCDialogueEntity> findInitialDialogueByNpcId(String npcId);

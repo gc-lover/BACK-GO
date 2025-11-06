@@ -27,7 +27,7 @@ import jakarta.annotation.Generated;
 public class EquipmentSlot {
 
   /**
-   * Тип слота экипировки
+   * РўРёРї СЃР»РѕС‚Р° СЌРєРёРїРёСЂРѕРІРєРё
    */
   public enum SlotTypeEnum {
     HEAD("head"),
@@ -105,11 +105,11 @@ public class EquipmentSlot {
   }
 
   /**
-   * Тип слота экипировки
+   * РўРёРї СЃР»РѕС‚Р° СЌРєРёРїРёСЂРѕРІРєРё
    * @return slotType
    */
   @NotNull 
-  @Schema(name = "slotType", example = "weapon_primary", description = "Тип слота экипировки", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "slotType", example = "weapon_primary", description = "РўРёРї СЃР»РѕС‚Р° СЌРєРёРїРёСЂРѕРІРєРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("slotType")
   public SlotTypeEnum getSlotType() {
     return slotType;
@@ -125,11 +125,11 @@ public class EquipmentSlot {
   }
 
   /**
-   * Название слота для отображения
+   * РќР°Р·РІР°РЅРёРµ СЃР»РѕС‚Р° РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ
    * @return slotName
    */
   @NotNull 
-  @Schema(name = "slotName", example = "Основное оружие", description = "Название слота для отображения", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "slotName", example = "РћСЃРЅРѕРІРЅРѕРµ РѕСЂСѓР¶РёРµ", description = "РќР°Р·РІР°РЅРёРµ СЃР»РѕС‚Р° РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("slotName")
   public String getSlotName() {
     return slotName;
@@ -145,11 +145,11 @@ public class EquipmentSlot {
   }
 
   /**
-   * Пустой ли слот
+   * РџСѓСЃС‚РѕР№ Р»Рё СЃР»РѕС‚
    * @return isEmpty
    */
   @NotNull 
-  @Schema(name = "isEmpty", example = "false", description = "Пустой ли слот", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "isEmpty", example = "false", description = "РџСѓСЃС‚РѕР№ Р»Рё СЃР»РѕС‚", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("isEmpty")
   public Boolean getIsEmpty() {
     return isEmpty;
@@ -193,11 +193,11 @@ public class EquipmentSlot {
   }
 
   /**
-   * Бонусы от экипированного предмета
+   * Р‘РѕРЅСѓСЃС‹ РѕС‚ СЌРєРёРїРёСЂРѕРІР°РЅРЅРѕРіРѕ РїСЂРµРґРјРµС‚Р°
    * @return bonuses
    */
   
-  @Schema(name = "bonuses", example = "{\"damage\":25,\"accuracy\":10}", description = "Бонусы от экипированного предмета", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "bonuses", example = "{\"damage\":25,\"accuracy\":10}", description = "Р‘РѕРЅСѓСЃС‹ РѕС‚ СЌРєРёРїРёСЂРѕРІР°РЅРЅРѕРіРѕ РїСЂРµРґРјРµС‚Р°", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("bonuses")
   public Map<String, Integer> getBonuses() {
     return bonuses;

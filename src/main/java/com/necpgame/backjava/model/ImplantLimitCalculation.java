@@ -18,10 +18,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Расчет лимита имплантов с учетом всех факторов. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Лимит имплантов 
+ * Р Р°СЃС‡РµС‚ Р»РёРјРёС‚Р° РёРјРїР»Р°РЅС‚РѕРІ СЃ СѓС‡РµС‚РѕРј РІСЃРµС… С„Р°РєС‚РѕСЂРѕРІ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Р›РёРјРёС‚ РёРјРїР»Р°РЅС‚РѕРІ 
  */
 
-@Schema(name = "ImplantLimitCalculation", description = "Расчет лимита имплантов с учетом всех факторов. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Лимит имплантов ")
+@Schema(name = "ImplantLimitCalculation", description = "Р Р°СЃС‡РµС‚ Р»РёРјРёС‚Р° РёРјРїР»Р°РЅС‚РѕРІ СЃ СѓС‡РµС‚РѕРј РІСЃРµС… С„Р°РєС‚РѕСЂРѕРІ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Р›РёРјРёС‚ РёРјРїР»Р°РЅС‚РѕРІ ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class ImplantLimitCalculation {
 
@@ -53,12 +53,12 @@ public class ImplantLimitCalculation {
   }
 
   /**
-   * Базовый лимит
+   * Р‘Р°Р·РѕРІС‹Р№ Р»РёРјРёС‚
    * minimum: 0
    * @return base
    */
   @NotNull @Min(value = 0) 
-  @Schema(name = "base", description = "Базовый лимит", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "base", description = "Р‘Р°Р·РѕРІС‹Р№ Р»РёРјРёС‚", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("base")
   public Integer getBase() {
     return base;
@@ -114,12 +114,12 @@ public class ImplantLimitCalculation {
   }
 
   /**
-   * Итоговый лимит
+   * РС‚РѕРіРѕРІС‹Р№ Р»РёРјРёС‚
    * minimum: 0
    * @return total
    */
   @NotNull @Min(value = 0) 
-  @Schema(name = "total", description = "Итоговый лимит", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "total", description = "РС‚РѕРіРѕРІС‹Р№ Р»РёРјРёС‚", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("total")
   public Integer getTotal() {
     return total;
@@ -135,11 +135,11 @@ public class ImplantLimitCalculation {
   }
 
   /**
-   * Описание расчета
+   * РћРїРёСЃР°РЅРёРµ СЂР°СЃС‡РµС‚Р°
    * @return breakdown
    */
   
-  @Schema(name = "breakdown", description = "Описание расчета", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "breakdown", description = "РћРїРёСЃР°РЅРёРµ СЂР°СЃС‡РµС‚Р°", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("breakdown")
   public @Nullable String getBreakdown() {
     return breakdown;

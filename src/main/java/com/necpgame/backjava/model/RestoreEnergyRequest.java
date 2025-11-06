@@ -17,17 +17,17 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Запрос на восстановление энергии
+ * Р—Р°РїСЂРѕСЃ РЅР° РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ СЌРЅРµСЂРіРёРё
  */
 
-@Schema(name = "RestoreEnergyRequest", description = "Запрос на восстановление энергии")
+@Schema(name = "RestoreEnergyRequest", description = "Р—Р°РїСЂРѕСЃ РЅР° РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ СЌРЅРµСЂРіРёРё")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class RestoreEnergyRequest {
 
   private Float amount;
 
   /**
-   * Метод восстановления энергии
+   * РњРµС‚РѕРґ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ СЌРЅРµСЂРіРёРё
    */
   public enum MethodEnum {
     NATURAL("natural"),
@@ -85,12 +85,12 @@ public class RestoreEnergyRequest {
   }
 
   /**
-   * Количество энергии для восстановления
+   * РљРѕР»РёС‡РµСЃС‚РІРѕ СЌРЅРµСЂРіРёРё РґР»СЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ
    * minimum: 0
    * @return amount
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "amount", description = "Количество энергии для восстановления", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "amount", description = "РљРѕР»РёС‡РµСЃС‚РІРѕ СЌРЅРµСЂРіРёРё РґР»СЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("amount")
   public Float getAmount() {
     return amount;
@@ -106,11 +106,11 @@ public class RestoreEnergyRequest {
   }
 
   /**
-   * Метод восстановления энергии
+   * РњРµС‚РѕРґ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ СЌРЅРµСЂРіРёРё
    * @return method
    */
   @NotNull 
-  @Schema(name = "method", description = "Метод восстановления энергии", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "method", description = "РњРµС‚РѕРґ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ СЌРЅРµСЂРіРёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("method")
   public MethodEnum getMethod() {
     return method;

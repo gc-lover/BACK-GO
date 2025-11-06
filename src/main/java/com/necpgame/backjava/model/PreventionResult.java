@@ -16,10 +16,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Результат профилактики. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Профилактика 
+ * Р РµР·СѓР»СЊС‚Р°С‚ РїСЂРѕС„РёР»Р°РєС‚РёРєРё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РџСЂРѕС„РёР»Р°РєС‚РёРєР° 
  */
 
-@Schema(name = "PreventionResult", description = "Результат профилактики. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Профилактика ")
+@Schema(name = "PreventionResult", description = "Р РµР·СѓР»СЊС‚Р°С‚ РїСЂРѕС„РёР»Р°РєС‚РёРєРё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РџСЂРѕС„РёР»Р°РєС‚РёРєР° ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class PreventionResult {
 
@@ -51,13 +51,13 @@ public class PreventionResult {
   }
 
   /**
-   * Эффективность профилактики (0-100%)
+   * Р­С„С„РµРєС‚РёРІРЅРѕСЃС‚СЊ РїСЂРѕС„РёР»Р°РєС‚РёРєРё (0-100%)
    * minimum: 0
    * maximum: 100
    * @return effectiveness
    */
   @NotNull @DecimalMin(value = "0") @DecimalMax(value = "100") 
-  @Schema(name = "effectiveness", description = "Эффективность профилактики (0-100%)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "effectiveness", description = "Р­С„С„РµРєС‚РёРІРЅРѕСЃС‚СЊ РїСЂРѕС„РёР»Р°РєС‚РёРєРё (0-100%)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("effectiveness")
   public Float getEffectiveness() {
     return effectiveness;
@@ -73,12 +73,12 @@ public class PreventionResult {
   }
 
   /**
-   * Длительность эффекта в секундах
+   * Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ СЌС„С„РµРєС‚Р° РІ СЃРµРєСѓРЅРґР°С…
    * minimum: 0
    * @return duration
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "duration", description = "Длительность эффекта в секундах", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "duration", description = "Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ СЌС„С„РµРєС‚Р° РІ СЃРµРєСѓРЅРґР°С…", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("duration")
   public Float getDuration() {
     return duration;
@@ -94,12 +94,12 @@ public class PreventionResult {
   }
 
   /**
-   * Стоимость профилактики
+   * РЎС‚РѕРёРјРѕСЃС‚СЊ РїСЂРѕС„РёР»Р°РєС‚РёРєРё
    * minimum: 0
    * @return cost
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "cost", description = "Стоимость профилактики", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "cost", description = "РЎС‚РѕРёРјРѕСЃС‚СЊ РїСЂРѕС„РёР»Р°РєС‚РёРєРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("cost")
   public Float getCost() {
     return cost;
@@ -115,12 +115,12 @@ public class PreventionResult {
   }
 
   /**
-   * Модификатор прогрессии (отрицательное значение = замедление)
+   * РњРѕРґРёС„РёРєР°С‚РѕСЂ РїСЂРѕРіСЂРµСЃСЃРёРё (РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ = Р·Р°РјРµРґР»РµРЅРёРµ)
    * maximum: 0
    * @return progressionModifier
    */
   @NotNull @DecimalMax(value = "0") 
-  @Schema(name = "progression_modifier", description = "Модификатор прогрессии (отрицательное значение = замедление)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "progression_modifier", description = "РњРѕРґРёС„РёРєР°С‚РѕСЂ РїСЂРѕРіСЂРµСЃСЃРёРё (РѕС‚СЂРёС†Р°С‚РµР»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ = Р·Р°РјРµРґР»РµРЅРёРµ)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("progression_modifier")
   public Float getProgressionModifier() {
     return progressionModifier;

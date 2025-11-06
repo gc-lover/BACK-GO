@@ -9,39 +9,39 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * InventoryItemRepository - репозиторий для работы с предметами.
+ * InventoryItemRepository - СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РїСЂРµРґРјРµС‚Р°РјРё.
  * 
- * Источник: API-SWAGGER/api/v1/inventory/inventory.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/inventory/inventory.yaml
  */
 @Repository
 public interface InventoryItemRepository extends JpaRepository<InventoryItemEntity, String> {
 
     /**
-     * Найти предметы по категории.
+     * РќР°Р№С‚Рё РїСЂРµРґРјРµС‚С‹ РїРѕ РєР°С‚РµРіРѕСЂРёРё.
      */
     @Query("SELECT i FROM InventoryItemEntity i WHERE i.category = :category")
     List<InventoryItemEntity> findByCategory(InventoryItemEntity.ItemCategory category);
 
     /**
-     * Найти экипируемые предметы по типу слота.
+     * РќР°Р№С‚Рё СЌРєРёРїРёСЂСѓРµРјС‹Рµ РїСЂРµРґРјРµС‚С‹ РїРѕ С‚РёРїСѓ СЃР»РѕС‚Р°.
      */
     @Query("SELECT i FROM InventoryItemEntity i WHERE i.equippable = true AND i.slotType = :slotType")
     List<InventoryItemEntity> findEquippableBySlotType(String slotType);
 
     /**
-     * Найти используемые предметы.
+     * РќР°Р№С‚Рё РёСЃРїРѕР»СЊР·СѓРµРјС‹Рµ РїСЂРµРґРјРµС‚С‹.
      */
     @Query("SELECT i FROM InventoryItemEntity i WHERE i.usable = true")
     List<InventoryItemEntity> findUsableItems();
 
     /**
-     * Найти квестовые предметы.
+     * РќР°Р№С‚Рё РєРІРµСЃС‚РѕРІС‹Рµ РїСЂРµРґРјРµС‚С‹.
      */
     @Query("SELECT i FROM InventoryItemEntity i WHERE i.questItem = true")
     List<InventoryItemEntity> findQuestItems();
 
     /**
-     * Найти предметы по редкости.
+     * РќР°Р№С‚Рё РїСЂРµРґРјРµС‚С‹ РїРѕ СЂРµРґРєРѕСЃС‚Рё.
      */
     @Query("SELECT i FROM InventoryItemEntity i WHERE i.rarity = :rarity")
     List<InventoryItemEntity> findByRarity(InventoryItemEntity.ItemRarity rarity);

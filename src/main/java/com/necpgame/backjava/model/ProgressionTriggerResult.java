@@ -21,10 +21,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Результат триггера прогрессии. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Триггеры прогрессии 
+ * Р РµР·СѓР»СЊС‚Р°С‚ С‚СЂРёРіРіРµСЂР° РїСЂРѕРіСЂРµСЃСЃРёРё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РўСЂРёРіРіРµСЂС‹ РїСЂРѕРіСЂРµСЃСЃРёРё 
  */
 
-@Schema(name = "ProgressionTriggerResult", description = "Результат триггера прогрессии. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Триггеры прогрессии ")
+@Schema(name = "ProgressionTriggerResult", description = "Р РµР·СѓР»СЊС‚Р°С‚ С‚СЂРёРіРіРµСЂР° РїСЂРѕРіСЂРµСЃСЃРёРё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РўСЂРёРіРіРµСЂС‹ РїСЂРѕРіСЂРµСЃСЃРёРё ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class ProgressionTriggerResult {
 
@@ -53,12 +53,12 @@ public class ProgressionTriggerResult {
   }
 
   /**
-   * Примененная потеря человечности
+   * РџСЂРёРјРµРЅРµРЅРЅР°СЏ РїРѕС‚РµСЂСЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё
    * minimum: 0
    * @return lossApplied
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "loss_applied", description = "Примененная потеря человечности", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "loss_applied", description = "РџСЂРёРјРµРЅРµРЅРЅР°СЏ РїРѕС‚РµСЂСЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("loss_applied")
   public Float getLossApplied() {
     return lossApplied;
@@ -102,11 +102,11 @@ public class ProgressionTriggerResult {
   }
 
   /**
-   * Идентификаторы сработавших симптомов
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂС‹ СЃСЂР°Р±РѕС‚Р°РІС€РёС… СЃРёРјРїС‚РѕРјРѕРІ
    * @return symptomsTriggered
    */
   @Valid 
-  @Schema(name = "symptoms_triggered", description = "Идентификаторы сработавших симптомов", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "symptoms_triggered", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂС‹ СЃСЂР°Р±РѕС‚Р°РІС€РёС… СЃРёРјРїС‚РѕРјРѕРІ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("symptoms_triggered")
   public List<UUID> getSymptomsTriggered() {
     return symptomsTriggered;

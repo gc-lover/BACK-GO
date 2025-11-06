@@ -23,10 +23,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Симптом киберпсихоза. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Симптомы по стадиям 
+ * РЎРёРјРїС‚РѕРј РєРёР±РµСЂРїСЃРёС…РѕР·Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РЎРёРјРїС‚РѕРјС‹ РїРѕ СЃС‚Р°РґРёСЏРј 
  */
 
-@Schema(name = "Symptom", description = "Симптом киберпсихоза. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Симптомы по стадиям ")
+@Schema(name = "Symptom", description = "РЎРёРјРїС‚РѕРј РєРёР±РµСЂРїСЃРёС…РѕР·Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РЎРёРјРїС‚РѕРјС‹ РїРѕ СЃС‚Р°РґРёСЏРј ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class Symptom {
 
@@ -37,7 +37,7 @@ public class Symptom {
   private String description;
 
   /**
-   * Серьезность симптома
+   * РЎРµСЂСЊРµР·РЅРѕСЃС‚СЊ СЃРёРјРїС‚РѕРјР°
    */
   public enum SeverityEnum {
     LOW("low"),
@@ -103,11 +103,11 @@ public class Symptom {
   }
 
   /**
-   * Идентификатор симптома
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃРёРјРїС‚РѕРјР°
    * @return symptomId
    */
   @NotNull @Valid 
-  @Schema(name = "symptom_id", description = "Идентификатор симптома", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "symptom_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃРёРјРїС‚РѕРјР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("symptom_id")
   public UUID getSymptomId() {
     return symptomId;
@@ -123,11 +123,11 @@ public class Symptom {
   }
 
   /**
-   * Название симптома
+   * РќР°Р·РІР°РЅРёРµ СЃРёРјРїС‚РѕРјР°
    * @return name
    */
   @NotNull 
-  @Schema(name = "name", description = "Название симптома", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "name", description = "РќР°Р·РІР°РЅРёРµ СЃРёРјРїС‚РѕРјР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -143,11 +143,11 @@ public class Symptom {
   }
 
   /**
-   * Описание симптома
+   * РћРїРёСЃР°РЅРёРµ СЃРёРјРїС‚РѕРјР°
    * @return description
    */
   @NotNull 
-  @Schema(name = "description", description = "Описание симптома", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "description", description = "РћРїРёСЃР°РЅРёРµ СЃРёРјРїС‚РѕРјР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {
     return description;
@@ -163,11 +163,11 @@ public class Symptom {
   }
 
   /**
-   * Серьезность симптома
+   * РЎРµСЂСЊРµР·РЅРѕСЃС‚СЊ СЃРёРјРїС‚РѕРјР°
    * @return severity
    */
   @NotNull 
-  @Schema(name = "severity", description = "Серьезность симптома", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "severity", description = "РЎРµСЂСЊРµР·РЅРѕСЃС‚СЊ СЃРёРјРїС‚РѕРјР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("severity")
   public SeverityEnum getSeverity() {
     return severity;
@@ -191,11 +191,11 @@ public class Symptom {
   }
 
   /**
-   * Эффекты симптома (штрафы к характеристикам, визуальные эффекты)
+   * Р­С„С„РµРєС‚С‹ СЃРёРјРїС‚РѕРјР° (С€С‚СЂР°С„С‹ Рє С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєР°Рј, РІРёР·СѓР°Р»СЊРЅС‹Рµ СЌС„С„РµРєС‚С‹)
    * @return effects
    */
   @NotNull 
-  @Schema(name = "effects", description = "Эффекты симптома (штрафы к характеристикам, визуальные эффекты)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "effects", description = "Р­С„С„РµРєС‚С‹ СЃРёРјРїС‚РѕРјР° (С€С‚СЂР°С„С‹ Рє С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєР°Рј, РІРёР·СѓР°Р»СЊРЅС‹Рµ СЌС„С„РµРєС‚С‹)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("effects")
   public Map<String, Object> getEffects() {
     return effects;
@@ -211,12 +211,12 @@ public class Symptom {
   }
 
   /**
-   * Длительность симптома в секундах (если временный)
+   * Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ СЃРёРјРїС‚РѕРјР° РІ СЃРµРєСѓРЅРґР°С… (РµСЃР»Рё РІСЂРµРјРµРЅРЅС‹Р№)
    * minimum: 0
    * @return duration
    */
   @DecimalMin(value = "0") 
-  @Schema(name = "duration", description = "Длительность симптома в секундах (если временный)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "duration", description = "Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ СЃРёРјРїС‚РѕРјР° РІ СЃРµРєСѓРЅРґР°С… (РµСЃР»Рё РІСЂРµРјРµРЅРЅС‹Р№)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("duration")
   public JsonNullable<@DecimalMin(value = "0") Float> getDuration() {
     return duration;

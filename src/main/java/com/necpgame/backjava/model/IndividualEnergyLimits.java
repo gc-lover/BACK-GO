@@ -22,10 +22,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Индивидуальные энергетические ограничения импланта. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Энергетический лимит 
+ * РРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Рµ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРёРµ РѕРіСЂР°РЅРёС‡РµРЅРёСЏ РёРјРїР»Р°РЅС‚Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Р­РЅРµСЂРіРµС‚РёС‡РµСЃРєРёР№ Р»РёРјРёС‚ 
  */
 
-@Schema(name = "IndividualEnergyLimits", description = "Индивидуальные энергетические ограничения импланта. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Энергетический лимит ")
+@Schema(name = "IndividualEnergyLimits", description = "РРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Рµ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРёРµ РѕРіСЂР°РЅРёС‡РµРЅРёСЏ РёРјРїР»Р°РЅС‚Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Р­РЅРµСЂРіРµС‚РёС‡РµСЃРєРёР№ Р»РёРјРёС‚ ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class IndividualEnergyLimits {
 
@@ -60,11 +60,11 @@ public class IndividualEnergyLimits {
   }
 
   /**
-   * Идентификатор импланта
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРјРїР»Р°РЅС‚Р°
    * @return implantId
    */
   @NotNull @Valid 
-  @Schema(name = "implant_id", description = "Идентификатор импланта", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "implant_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРјРїР»Р°РЅС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("implant_id")
   public UUID getImplantId() {
     return implantId;
@@ -80,12 +80,12 @@ public class IndividualEnergyLimits {
   }
 
   /**
-   * Индивидуальный лимит энергии
+   * РРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Р№ Р»РёРјРёС‚ СЌРЅРµСЂРіРёРё
    * minimum: 0
    * @return individualLimit
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "individual_limit", description = "Индивидуальный лимит энергии", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "individual_limit", description = "РРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Р№ Р»РёРјРёС‚ СЌРЅРµСЂРіРёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("individual_limit")
   public Float getIndividualLimit() {
     return individualLimit;
@@ -101,12 +101,12 @@ public class IndividualEnergyLimits {
   }
 
   /**
-   * Текущее использование энергии
+   * РўРµРєСѓС‰РµРµ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ СЌРЅРµСЂРіРёРё
    * minimum: 0
    * @return currentUsage
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "current_usage", description = "Текущее использование энергии", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "current_usage", description = "РўРµРєСѓС‰РµРµ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ СЌРЅРµСЂРіРёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("current_usage")
   public Float getCurrentUsage() {
     return currentUsage;
@@ -122,11 +122,11 @@ public class IndividualEnergyLimits {
   }
 
   /**
-   * Можно ли превысить индивидуальный лимит
+   * РњРѕР¶РЅРѕ Р»Рё РїСЂРµРІС‹СЃРёС‚СЊ РёРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Р№ Р»РёРјРёС‚
    * @return canExceed
    */
   @NotNull 
-  @Schema(name = "can_exceed", description = "Можно ли превысить индивидуальный лимит", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "can_exceed", description = "РњРѕР¶РЅРѕ Р»Рё РїСЂРµРІС‹СЃРёС‚СЊ РёРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Р№ Р»РёРјРёС‚", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("can_exceed")
   public Boolean getCanExceed() {
     return canExceed;
@@ -150,11 +150,11 @@ public class IndividualEnergyLimits {
   }
 
   /**
-   * Штрафы при превышении лимита
+   * РЁС‚СЂР°С„С‹ РїСЂРё РїСЂРµРІС‹С€РµРЅРёРё Р»РёРјРёС‚Р°
    * @return penaltyOnExceed
    */
   
-  @Schema(name = "penalty_on_exceed", description = "Штрафы при превышении лимита", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "penalty_on_exceed", description = "РЁС‚СЂР°С„С‹ РїСЂРё РїСЂРµРІС‹С€РµРЅРёРё Р»РёРјРёС‚Р°", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("penalty_on_exceed")
   public JsonNullable<Map<String, Object>> getPenaltyOnExceed() {
     return penaltyOnExceed;

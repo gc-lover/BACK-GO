@@ -52,18 +52,18 @@ public interface CombatApi {
 
     String PATH_FLEE_COMBAT = "/combat/{combatId}/flee";
     /**
-     * POST /combat/{combatId}/flee : Сбежать из боя
+     * POST /combat/{combatId}/flee : РЎР±РµР¶Р°С‚СЊ РёР· Р±РѕСЏ
      *
      * @param combatId  (required)
      * @param fleeCombatRequest  (optional)
-     * @return Результат побега (status code 200)
+     * @return Р РµР·СѓР»СЊС‚Р°С‚ РїРѕР±РµРіР° (status code 200)
      */
     @Operation(
         operationId = "fleeCombat",
-        summary = "Сбежать из боя",
+        summary = "РЎР±РµР¶Р°С‚СЊ РёР· Р±РѕСЏ",
         tags = { "Combat" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Результат побега", content = {
+            @ApiResponse(responseCode = "200", description = "Р РµР·СѓР»СЊС‚Р°С‚ РїРѕР±РµРіР°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = FleeCombat200Response.class))
             })
         },
@@ -97,18 +97,18 @@ public interface CombatApi {
 
     String PATH_GET_AVAILABLE_ACTIONS = "/combat/{combatId}/available-actions";
     /**
-     * GET /combat/{combatId}/available-actions : Доступные действия
+     * GET /combat/{combatId}/available-actions : Р”РѕСЃС‚СѓРїРЅС‹Рµ РґРµР№СЃС‚РІРёСЏ
      *
      * @param combatId  (required)
      * @param characterId  (required)
-     * @return Доступные действия (status code 200)
+     * @return Р”РѕСЃС‚СѓРїРЅС‹Рµ РґРµР№СЃС‚РІРёСЏ (status code 200)
      */
     @Operation(
         operationId = "getAvailableActions",
-        summary = "Доступные действия",
+        summary = "Р”РѕСЃС‚СѓРїРЅС‹Рµ РґРµР№СЃС‚РІРёСЏ",
         tags = { "Combat" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Доступные действия", content = {
+            @ApiResponse(responseCode = "200", description = "Р”РѕСЃС‚СѓРїРЅС‹Рµ РґРµР№СЃС‚РІРёСЏ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GetAvailableActions200Response.class))
             })
         },
@@ -141,17 +141,17 @@ public interface CombatApi {
 
     String PATH_GET_COMBAT_RESULT = "/combat/{combatId}/result";
     /**
-     * GET /combat/{combatId}/result : Результат боя
+     * GET /combat/{combatId}/result : Р РµР·СѓР»СЊС‚Р°С‚ Р±РѕСЏ
      *
      * @param combatId  (required)
-     * @return Результат боя (status code 200)
+     * @return Р РµР·СѓР»СЊС‚Р°С‚ Р±РѕСЏ (status code 200)
      */
     @Operation(
         operationId = "getCombatResult",
-        summary = "Результат боя",
+        summary = "Р РµР·СѓР»СЊС‚Р°С‚ Р±РѕСЏ",
         tags = { "Combat" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Результат боя", content = {
+            @ApiResponse(responseCode = "200", description = "Р РµР·СѓР»СЊС‚Р°С‚ Р±РѕСЏ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = CombatResult.class))
             })
         },
@@ -183,17 +183,17 @@ public interface CombatApi {
 
     String PATH_GET_COMBAT_STATE = "/combat/{combatId}";
     /**
-     * GET /combat/{combatId} : Состояние боя
+     * GET /combat/{combatId} : РЎРѕСЃС‚РѕСЏРЅРёРµ Р±РѕСЏ
      *
      * @param combatId  (required)
-     * @return Состояние боя (status code 200)
+     * @return РЎРѕСЃС‚РѕСЏРЅРёРµ Р±РѕСЏ (status code 200)
      */
     @Operation(
         operationId = "getCombatState",
-        summary = "Состояние боя",
+        summary = "РЎРѕСЃС‚РѕСЏРЅРёРµ Р±РѕСЏ",
         tags = { "Combat" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Состояние боя", content = {
+            @ApiResponse(responseCode = "200", description = "РЎРѕСЃС‚РѕСЏРЅРёРµ Р±РѕСЏ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = CombatState.class))
             })
         },
@@ -225,17 +225,17 @@ public interface CombatApi {
 
     String PATH_INITIATE_COMBAT = "/combat/initiate";
     /**
-     * POST /combat/initiate : Начать бой
+     * POST /combat/initiate : РќР°С‡Р°С‚СЊ Р±РѕР№
      *
      * @param initiateCombatRequest  (optional)
-     * @return Бой начат (status code 200)
+     * @return Р‘РѕР№ РЅР°С‡Р°С‚ (status code 200)
      */
     @Operation(
         operationId = "initiateCombat",
-        summary = "Начать бой",
+        summary = "РќР°С‡Р°С‚СЊ Р±РѕР№",
         tags = { "Combat" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Бой начат", content = {
+            @ApiResponse(responseCode = "200", description = "Р‘РѕР№ РЅР°С‡Р°С‚", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = CombatState.class))
             })
         },
@@ -268,18 +268,18 @@ public interface CombatApi {
 
     String PATH_PERFORM_COMBAT_ACTION = "/combat/{combatId}/action";
     /**
-     * POST /combat/{combatId}/action : Выполнить действие в бою
+     * POST /combat/{combatId}/action : Р’С‹РїРѕР»РЅРёС‚СЊ РґРµР№СЃС‚РІРёРµ РІ Р±РѕСЋ
      *
      * @param combatId  (required)
      * @param performCombatActionRequest  (optional)
-     * @return Действие выполнено (status code 200)
+     * @return Р”РµР№СЃС‚РІРёРµ РІС‹РїРѕР»РЅРµРЅРѕ (status code 200)
      */
     @Operation(
         operationId = "performCombatAction",
-        summary = "Выполнить действие в бою",
+        summary = "Р’С‹РїРѕР»РЅРёС‚СЊ РґРµР№СЃС‚РІРёРµ РІ Р±РѕСЋ",
         tags = { "Combat" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Действие выполнено", content = {
+            @ApiResponse(responseCode = "200", description = "Р”РµР№СЃС‚РІРёРµ РІС‹РїРѕР»РЅРµРЅРѕ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = CombatState.class))
             })
         },

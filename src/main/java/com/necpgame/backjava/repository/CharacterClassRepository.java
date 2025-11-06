@@ -9,18 +9,18 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Repository для работы с классами персонажей (справочник)
+ * Repository РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РєР»Р°СЃСЃР°РјРё РїРµСЂСЃРѕРЅР°Р¶РµР№ (СЃРїСЂР°РІРѕС‡РЅРёРє)
  */
 @Repository
 public interface CharacterClassRepository extends JpaRepository<CharacterClassEntity, String> {
     
     /**
-     * Найти класс по коду
+     * РќР°Р№С‚Рё РєР»Р°СЃСЃ РїРѕ РєРѕРґСѓ
      */
     Optional<CharacterClassEntity> findByClassCode(String classCode);
     
     /**
-     * Получить все классы с подклассами
+     * РџРѕР»СѓС‡РёС‚СЊ РІСЃРµ РєР»Р°СЃСЃС‹ СЃ РїРѕРґРєР»Р°СЃСЃР°РјРё
      */
     @Query("SELECT DISTINCT c FROM CharacterClassEntity c LEFT JOIN FETCH c.subclasses")
     List<CharacterClassEntity> findAllWithSubclasses();

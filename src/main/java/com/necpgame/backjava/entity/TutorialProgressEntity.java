@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * TutorialProgressEntity - прогресс туториала.
+ * TutorialProgressEntity - РїСЂРѕРіСЂРµСЃСЃ С‚СѓС‚РѕСЂРёР°Р»Р°.
  * 
- * Отслеживает прогресс прохождения туториала для каждого персонажа.
+ * РћС‚СЃР»РµР¶РёРІР°РµС‚ РїСЂРѕРіСЂРµСЃСЃ РїСЂРѕС…РѕР¶РґРµРЅРёСЏ С‚СѓС‚РѕСЂРёР°Р»Р° РґР»СЏ РєР°Р¶РґРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°.
  */
 @Entity
 @Table(name = "tutorial_progress", indexes = {

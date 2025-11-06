@@ -10,27 +10,27 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * VendorInventoryRepository - репозиторий для работы с инвентарем торговца.
+ * VendorInventoryRepository - СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РёРЅРІРµРЅС‚Р°СЂРµРј С‚РѕСЂРіРѕРІС†Р°.
  * 
- * Источник: API-SWAGGER/api/v1/trading/trading.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/trading/trading.yaml
  */
 @Repository
 public interface VendorInventoryRepository extends JpaRepository<VendorInventoryEntity, UUID> {
 
     /**
-     * Найти весь инвентарь торговца.
+     * РќР°Р№С‚Рё РІРµСЃСЊ РёРЅРІРµРЅС‚Р°СЂСЊ С‚РѕСЂРіРѕРІС†Р°.
      */
     @Query("SELECT vi FROM VendorInventoryEntity vi WHERE vi.vendorId = :vendorId AND vi.available = true ORDER BY vi.item.name")
     List<VendorInventoryEntity> findByVendorId(String vendorId);
 
     /**
-     * Найти конкретный предмет у торговца.
+     * РќР°Р№С‚Рё РєРѕРЅРєСЂРµС‚РЅС‹Р№ РїСЂРµРґРјРµС‚ Сѓ С‚РѕСЂРіРѕРІС†Р°.
      */
     @Query("SELECT vi FROM VendorInventoryEntity vi WHERE vi.vendorId = :vendorId AND vi.itemId = :itemId")
     Optional<VendorInventoryEntity> findByVendorIdAndItemId(String vendorId, String itemId);
 
     /**
-     * Проверить есть ли предмет у торговца.
+     * РџСЂРѕРІРµСЂРёС‚СЊ РµСЃС‚СЊ Р»Рё РїСЂРµРґРјРµС‚ Сѓ С‚РѕСЂРіРѕРІС†Р°.
      */
     @Query("SELECT COUNT(vi) > 0 FROM VendorInventoryEntity vi WHERE vi.vendorId = :vendorId AND vi.itemId = :itemId AND vi.available = true")
     boolean existsByVendorIdAndItemId(String vendorId, String itemId);

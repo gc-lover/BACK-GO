@@ -10,9 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.UUID;
 
 /**
- * Реализация сервиса для управления инвентарем.
+ * Р РµР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІРёСЃР° РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РёРЅРІРµРЅС‚Р°СЂРµРј.
  * 
- * Источник: API-SWAGGER/api/v1/inventory/inventory.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/inventory/inventory.yaml
  */
 @Slf4j
 @Service
@@ -23,42 +23,42 @@ public class InventoryServiceImpl implements InventoryService {
     @Transactional(readOnly = true)
     public InventoryResponse getInventory(UUID characterId, ItemCategory category) {
         log.info("Getting inventory for character: {}, category: {}", characterId, category);
-        return null; // TODO: Полная реализация
+        return null; // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
     }
     
     @Override
     @Transactional(readOnly = true)
     public GetEquipment200Response getEquipment(UUID characterId) {
         log.info("Getting equipment for character: {}", characterId);
-        return null; // TODO: Полная реализация
+        return null; // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
     }
     
     @Override
     @Transactional
     public EquipItem200Response equipItem(EquipRequest request) {
         log.info("Equipping item for character: {}", request.getCharacterId());
-        return null; // TODO: Полная реализация
+        return null; // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
     }
     
     @Override
     @Transactional
     public UnequipItem200Response unequipItem(UnequipItemRequest request) {
         log.info("Unequipping item for character: {}", request.getCharacterId());
-        return null; // TODO: Полная реализация
+        return null; // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
     }
     
     @Override
     @Transactional
     public UseItem200Response useItem(UseItemRequest request) {
         log.info("Using item for character: {}", request.getCharacterId());
-        return null; // TODO: Полная реализация
+        return null; // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
     }
     
     @Override
     @Transactional
     public DropItem200Response dropItem(UUID characterId, String itemId, Integer quantity) {
         log.info("Dropping item: {} for character: {}", itemId, characterId);
-        return null; // TODO: Полная реализация
+        return null; // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
     }
 }
 

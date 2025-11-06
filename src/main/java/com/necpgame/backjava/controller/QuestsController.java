@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 /**
- * REST Controller для работы с квестами.
+ * REST Controller РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РєРІРµСЃС‚Р°РјРё.
  * 
- * Реализует контракт {@link QuestsQuestsApi}, сгенерированный из OpenAPI.
- * Источник: API-SWAGGER/api/v1/quests/quests.yaml
+ * Р РµР°Р»РёР·СѓРµС‚ РєРѕРЅС‚СЂР°РєС‚ {@link QuestsQuestsApi}, СЃРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅС‹Р№ РёР· OpenAPI.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/quests/quests.yaml
  */
 @Slf4j
 @RestController
@@ -41,7 +41,7 @@ public class QuestsController implements QuestsApi {
         return ResponseEntity.ok(service.getQuestDetails(questId, characterId));
     }
     
-    // TODO: Временно закомментировано - несоответствие API интерфейсу
+    // TODO: Р’СЂРµРјРµРЅРЅРѕ Р·Р°РєРѕРјРјРµРЅС‚РёСЂРѕРІР°РЅРѕ - РЅРµСЃРѕРѕС‚РІРµС‚СЃС‚РІРёРµ API РёРЅС‚РµСЂС„РµР№СЃСѓ
     // @Override
     // public ResponseEntity<AcceptQuest200Response> acceptQuest(String questId, AcceptQuestRequest acceptQuestRequest) {
     //     log.info("POST /quests/{}/accept", questId);

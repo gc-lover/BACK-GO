@@ -51,47 +51,47 @@ public interface CharactersApi {
 
     String PATH_CREATE_CHARACTER = "/characters";
     /**
-     * POST /characters : Создание нового персонажа
-     * Создает нового персонажа для текущего аккаунта. Проверяет лимит персонажей и доступность фракции/города.
+     * POST /characters : РЎРѕР·РґР°РЅРёРµ РЅРѕРІРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°
+     * РЎРѕР·РґР°РµС‚ РЅРѕРІРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р° РґР»СЏ С‚РµРєСѓС‰РµРіРѕ Р°РєРєР°СѓРЅС‚Р°. РџСЂРѕРІРµСЂСЏРµС‚ Р»РёРјРёС‚ РїРµСЂСЃРѕРЅР°Р¶РµР№ Рё РґРѕСЃС‚СѓРїРЅРѕСЃС‚СЊ С„СЂР°РєС†РёРё/РіРѕСЂРѕРґР°.
      *
      * @param createCharacterRequest  (required)
-     * @return Персонаж успешно создан (status code 201)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно.  (status code 403)
-     *         or Конфликт с текущим состоянием ресурса или ограничениями системы. Например, превышение лимитов или нарушение бизнес-правил.  (status code 409)
+     * @return РџРµСЂСЃРѕРЅР°Р¶ СѓСЃРїРµС€РЅРѕ СЃРѕР·РґР°РЅ (status code 201)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ.  (status code 403)
+     *         or РљРѕРЅС„Р»РёРєС‚ СЃ С‚РµРєСѓС‰РёРј СЃРѕСЃС‚РѕСЏРЅРёРµРј СЂРµСЃСѓСЂСЃР° РёР»Рё РѕРіСЂР°РЅРёС‡РµРЅРёСЏРјРё СЃРёСЃС‚РµРјС‹. РќР°РїСЂРёРјРµСЂ, РїСЂРµРІС‹С€РµРЅРёРµ Р»РёРјРёС‚РѕРІ РёР»Рё РЅР°СЂСѓС€РµРЅРёРµ Р±РёР·РЅРµСЃ-РїСЂР°РІРёР».  (status code 409)
      */
     @Operation(
         operationId = "createCharacter",
-        summary = "Создание нового персонажа",
-        description = "Создает нового персонажа для текущего аккаунта. Проверяет лимит персонажей и доступность фракции/города.",
+        summary = "РЎРѕР·РґР°РЅРёРµ РЅРѕРІРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°",
+        description = "РЎРѕР·РґР°РµС‚ РЅРѕРІРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р° РґР»СЏ С‚РµРєСѓС‰РµРіРѕ Р°РєРєР°СѓРЅС‚Р°. РџСЂРѕРІРµСЂСЏРµС‚ Р»РёРјРёС‚ РїРµСЂСЃРѕРЅР°Р¶РµР№ Рё РґРѕСЃС‚СѓРїРЅРѕСЃС‚СЊ С„СЂР°РєС†РёРё/РіРѕСЂРѕРґР°.",
         tags = { "Characters", "Character Creation" },
         responses = {
-            @ApiResponse(responseCode = "201", description = "Персонаж успешно создан", content = {
+            @ApiResponse(responseCode = "201", description = "РџРµСЂСЃРѕРЅР°Р¶ СѓСЃРїРµС€РЅРѕ СЃРѕР·РґР°РЅ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = CreateCharacter201Response.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "403", description = "У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно. ", content = {
+            @ApiResponse(responseCode = "403", description = "РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"Недостаточно прав для выполнения операции\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "409", description = "Конфликт с текущим состоянием ресурса или ограничениями системы. Например, превышение лимитов или нарушение бизнес-правил. ", content = {
+            @ApiResponse(responseCode = "409", description = "РљРѕРЅС„Р»РёРєС‚ СЃ С‚РµРєСѓС‰РёРј СЃРѕСЃС‚РѕСЏРЅРёРµРј СЂРµСЃСѓСЂСЃР° РёР»Рё РѕРіСЂР°РЅРёС‡РµРЅРёСЏРјРё СЃРёСЃС‚РµРјС‹. РќР°РїСЂРёРјРµСЂ, РїСЂРµРІС‹С€РµРЅРёРµ Р»РёРјРёС‚РѕРІ РёР»Рё РЅР°СЂСѓС€РµРЅРёРµ Р±РёР·РЅРµСЃ-РїСЂР°РІРёР». ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"LIMIT_EXCEEDED\",\"message\":\"Превышен лимит NPC для владельца\",\"details\":[{\"field\":\"maxNPCs\",\"message\":\"Достигнут максимальный лимит NPC (10)\",\"code\":\"LIMIT_EXCEEDED\"}]}}"
+                        value = "{\"error\":{\"code\":\"LIMIT_EXCEEDED\",\"message\":\"РџСЂРµРІС‹С€РµРЅ Р»РёРјРёС‚ NPC РґР»СЏ РІР»Р°РґРµР»СЊС†Р°\",\"details\":[{\"field\":\"maxNPCs\",\"message\":\"Р”РѕСЃС‚РёРіРЅСѓС‚ РјР°РєСЃРёРјР°Р»СЊРЅС‹Р№ Р»РёРјРёС‚ NPC (10)\",\"code\":\"LIMIT_EXCEEDED\"}]}}"
                     )
                 })
 
@@ -118,17 +118,17 @@ public interface CharactersApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -141,47 +141,47 @@ public interface CharactersApi {
 
     String PATH_DELETE_CHARACTER = "/characters/{character_id}";
     /**
-     * DELETE /characters/{character_id} : Удаление персонажа
-     * Удаляет персонажа текущего аккаунта. Необратимое удаление всех данных.
+     * DELETE /characters/{character_id} : РЈРґР°Р»РµРЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°
+     * РЈРґР°Р»СЏРµС‚ РїРµСЂСЃРѕРЅР°Р¶Р° С‚РµРєСѓС‰РµРіРѕ Р°РєРєР°СѓРЅС‚Р°. РќРµРѕР±СЂР°С‚РёРјРѕРµ СѓРґР°Р»РµРЅРёРµ РІСЃРµС… РґР°РЅРЅС‹С….
      *
-     * @param characterId Идентификатор персонажа для удаления (required)
-     * @return Персонаж успешно удален (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно.  (status code 403)
-     *         or Запрошенный ресурс не найден.  (status code 404)
+     * @param characterId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїРµСЂСЃРѕРЅР°Р¶Р° РґР»СЏ СѓРґР°Р»РµРЅРёСЏ (required)
+     * @return РџРµСЂСЃРѕРЅР°Р¶ СѓСЃРїРµС€РЅРѕ СѓРґР°Р»РµРЅ (status code 200)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ.  (status code 403)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
      */
     @Operation(
         operationId = "deleteCharacter",
-        summary = "Удаление персонажа",
-        description = "Удаляет персонажа текущего аккаунта. Необратимое удаление всех данных.",
+        summary = "РЈРґР°Р»РµРЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°",
+        description = "РЈРґР°Р»СЏРµС‚ РїРµСЂСЃРѕРЅР°Р¶Р° С‚РµРєСѓС‰РµРіРѕ Р°РєРєР°СѓРЅС‚Р°. РќРµРѕР±СЂР°С‚РёРјРѕРµ СѓРґР°Р»РµРЅРёРµ РІСЃРµС… РґР°РЅРЅС‹С….",
         tags = { "Characters" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Персонаж успешно удален", content = {
+            @ApiResponse(responseCode = "200", description = "РџРµСЂСЃРѕРЅР°Р¶ СѓСЃРїРµС€РЅРѕ СѓРґР°Р»РµРЅ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = DeleteCharacter200Response.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "403", description = "У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно. ", content = {
+            @ApiResponse(responseCode = "403", description = "РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"Недостаточно прав для выполнения операции\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
@@ -197,7 +197,7 @@ public interface CharactersApi {
         produces = { "application/json" }
     )
     default ResponseEntity<DeleteCharacter200Response> deleteCharacter(
-        @NotNull @Parameter(name = "character_id", description = "Идентификатор персонажа для удаления", required = true, in = ParameterIn.PATH) @PathVariable("character_id") UUID characterId
+        @NotNull @Parameter(name = "character_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїРµСЂСЃРѕРЅР°Р¶Р° РґР»СЏ СѓРґР°Р»РµРЅРёСЏ", required = true, in = ParameterIn.PATH) @PathVariable("character_id") UUID characterId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -207,17 +207,17 @@ public interface CharactersApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -230,26 +230,26 @@ public interface CharactersApi {
 
     String PATH_GET_CHARACTER_CLASSES = "/characters/classes";
     /**
-     * GET /characters/classes : Список доступных классов
-     * Получает список всех доступных классов персонажей с описаниями.
+     * GET /characters/classes : РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РєР»Р°СЃСЃРѕРІ
+     * РџРѕР»СѓС‡Р°РµС‚ СЃРїРёСЃРѕРє РІСЃРµС… РґРѕСЃС‚СѓРїРЅС‹С… РєР»Р°СЃСЃРѕРІ РїРµСЂСЃРѕРЅР°Р¶РµР№ СЃ РѕРїРёСЃР°РЅРёСЏРјРё.
      *
-     * @return Список классов (status code 200)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @return РЎРїРёСЃРѕРє РєР»Р°СЃСЃРѕРІ (status code 200)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getCharacterClasses",
-        summary = "Список доступных классов",
-        description = "Получает список всех доступных классов персонажей с описаниями.",
+        summary = "РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РєР»Р°СЃСЃРѕРІ",
+        description = "РџРѕР»СѓС‡Р°РµС‚ СЃРїРёСЃРѕРє РІСЃРµС… РґРѕСЃС‚СѓРїРЅС‹С… РєР»Р°СЃСЃРѕРІ РїРµСЂСЃРѕРЅР°Р¶РµР№ СЃ РѕРїРёСЃР°РЅРёСЏРјРё.",
         tags = { "Characters", "Reference Data" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Список классов", content = {
+            @ApiResponse(responseCode = "200", description = "РЎРїРёСЃРѕРє РєР»Р°СЃСЃРѕРІ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GetCharacterClasses200Response.class))
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -267,12 +267,12 @@ public interface CharactersApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"classes\" : [ { \"name\" : \"Solo\", \"description\" : \"Боевой класс, специализация на боевых навыках\", \"id\" : \"solo\", \"subclasses\" : [ { \"name\" : \"Assassin\", \"description\" : \"Специализация на скрытности и убийствах\", \"id\" : \"solo_assassin\" }, { \"name\" : \"Assassin\", \"description\" : \"Специализация на скрытности и убийствах\", \"id\" : \"solo_assassin\" } ] }, { \"name\" : \"Solo\", \"description\" : \"Боевой класс, специализация на боевых навыках\", \"id\" : \"solo\", \"subclasses\" : [ { \"name\" : \"Assassin\", \"description\" : \"Специализация на скрытности и убийствах\", \"id\" : \"solo_assassin\" }, { \"name\" : \"Assassin\", \"description\" : \"Специализация на скрытности и убийствах\", \"id\" : \"solo_assassin\" } ] } ] }";
+                    String exampleString = "{ \"classes\" : [ { \"name\" : \"Solo\", \"description\" : \"Р‘РѕРµРІРѕР№ РєР»Р°СЃСЃ, СЃРїРµС†РёР°Р»РёР·Р°С†РёСЏ РЅР° Р±РѕРµРІС‹С… РЅР°РІС‹РєР°С…\", \"id\" : \"solo\", \"subclasses\" : [ { \"name\" : \"Assassin\", \"description\" : \"РЎРїРµС†РёР°Р»РёР·Р°С†РёСЏ РЅР° СЃРєСЂС‹С‚РЅРѕСЃС‚Рё Рё СѓР±РёР№СЃС‚РІР°С…\", \"id\" : \"solo_assassin\" }, { \"name\" : \"Assassin\", \"description\" : \"РЎРїРµС†РёР°Р»РёР·Р°С†РёСЏ РЅР° СЃРєСЂС‹С‚РЅРѕСЃС‚Рё Рё СѓР±РёР№СЃС‚РІР°С…\", \"id\" : \"solo_assassin\" } ] }, { \"name\" : \"Solo\", \"description\" : \"Р‘РѕРµРІРѕР№ РєР»Р°СЃСЃ, СЃРїРµС†РёР°Р»РёР·Р°С†РёСЏ РЅР° Р±РѕРµРІС‹С… РЅР°РІС‹РєР°С…\", \"id\" : \"solo\", \"subclasses\" : [ { \"name\" : \"Assassin\", \"description\" : \"РЎРїРµС†РёР°Р»РёР·Р°С†РёСЏ РЅР° СЃРєСЂС‹С‚РЅРѕСЃС‚Рё Рё СѓР±РёР№СЃС‚РІР°С…\", \"id\" : \"solo_assassin\" }, { \"name\" : \"Assassin\", \"description\" : \"РЎРїРµС†РёР°Р»РёР·Р°С†РёСЏ РЅР° СЃРєСЂС‹С‚РЅРѕСЃС‚Рё Рё СѓР±РёР№СЃС‚РІР°С…\", \"id\" : \"solo_assassin\" } ] } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -285,26 +285,26 @@ public interface CharactersApi {
 
     String PATH_GET_CHARACTER_ORIGINS = "/characters/origins";
     /**
-     * GET /characters/origins : Список доступных происхождений
-     * Получает список всех доступных происхождений с описаниями и доступными фракциями.
+     * GET /characters/origins : РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёР№
+     * РџРѕР»СѓС‡Р°РµС‚ СЃРїРёСЃРѕРє РІСЃРµС… РґРѕСЃС‚СѓРїРЅС‹С… РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёР№ СЃ РѕРїРёСЃР°РЅРёСЏРјРё Рё РґРѕСЃС‚СѓРїРЅС‹РјРё С„СЂР°РєС†РёСЏРјРё.
      *
-     * @return Список происхождений (status code 200)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @return РЎРїРёСЃРѕРє РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёР№ (status code 200)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getCharacterOrigins",
-        summary = "Список доступных происхождений",
-        description = "Получает список всех доступных происхождений с описаниями и доступными фракциями.",
+        summary = "РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёР№",
+        description = "РџРѕР»СѓС‡Р°РµС‚ СЃРїРёСЃРѕРє РІСЃРµС… РґРѕСЃС‚СѓРїРЅС‹С… РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёР№ СЃ РѕРїРёСЃР°РЅРёСЏРјРё Рё РґРѕСЃС‚СѓРїРЅС‹РјРё С„СЂР°РєС†РёСЏРјРё.",
         tags = { "Characters", "Reference Data" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Список происхождений", content = {
+            @ApiResponse(responseCode = "200", description = "РЎРїРёСЃРѕРє РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёР№", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GetCharacterOrigins200Response.class))
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -322,12 +322,12 @@ public interface CharactersApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"origins\" : [ { \"starting_skills\" : [ \"street_combat\", \"survival\" ], \"name\" : \"Уличный бродяга\", \"description\" : \"Вырос на улицах, выживание любой ценой\", \"starting_resources\" : { \"currency\" : 1000, \"items\" : [ \"basic_pistol\", \"street_clothes\" ] }, \"id\" : \"street_kid\", \"available_factions\" : [ \"550e8400-e29b-41d4-a716-446655440000\" ] }, { \"starting_skills\" : [ \"street_combat\", \"survival\" ], \"name\" : \"Уличный бродяга\", \"description\" : \"Вырос на улицах, выживание любой ценой\", \"starting_resources\" : { \"currency\" : 1000, \"items\" : [ \"basic_pistol\", \"street_clothes\" ] }, \"id\" : \"street_kid\", \"available_factions\" : [ \"550e8400-e29b-41d4-a716-446655440000\" ] } ] }";
+                    String exampleString = "{ \"origins\" : [ { \"starting_skills\" : [ \"street_combat\", \"survival\" ], \"name\" : \"РЈР»РёС‡РЅС‹Р№ Р±СЂРѕРґСЏРіР°\", \"description\" : \"Р’С‹СЂРѕСЃ РЅР° СѓР»РёС†Р°С…, РІС‹Р¶РёРІР°РЅРёРµ Р»СЋР±РѕР№ С†РµРЅРѕР№\", \"starting_resources\" : { \"currency\" : 1000, \"items\" : [ \"basic_pistol\", \"street_clothes\" ] }, \"id\" : \"street_kid\", \"available_factions\" : [ \"550e8400-e29b-41d4-a716-446655440000\" ] }, { \"starting_skills\" : [ \"street_combat\", \"survival\" ], \"name\" : \"РЈР»РёС‡РЅС‹Р№ Р±СЂРѕРґСЏРіР°\", \"description\" : \"Р’С‹СЂРѕСЃ РЅР° СѓР»РёС†Р°С…, РІС‹Р¶РёРІР°РЅРёРµ Р»СЋР±РѕР№ С†РµРЅРѕР№\", \"starting_resources\" : { \"currency\" : 1000, \"items\" : [ \"basic_pistol\", \"street_clothes\" ] }, \"id\" : \"street_kid\", \"available_factions\" : [ \"550e8400-e29b-41d4-a716-446655440000\" ] } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -340,36 +340,36 @@ public interface CharactersApi {
 
     String PATH_LIST_CHARACTERS = "/characters";
     /**
-     * GET /characters : Список персонажей игрока
-     * Получает список всех персонажей текущего аккаунта с краткой информацией.
+     * GET /characters : РЎРїРёСЃРѕРє РїРµСЂСЃРѕРЅР°Р¶РµР№ РёРіСЂРѕРєР°
+     * РџРѕР»СѓС‡Р°РµС‚ СЃРїРёСЃРѕРє РІСЃРµС… РїРµСЂСЃРѕРЅР°Р¶РµР№ С‚РµРєСѓС‰РµРіРѕ Р°РєРєР°СѓРЅС‚Р° СЃ РєСЂР°С‚РєРѕР№ РёРЅС„РѕСЂРјР°С†РёРµР№.
      *
-     * @return Список персонажей (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно.  (status code 403)
+     * @return РЎРїРёСЃРѕРє РїРµСЂСЃРѕРЅР°Р¶РµР№ (status code 200)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ.  (status code 403)
      */
     @Operation(
         operationId = "listCharacters",
-        summary = "Список персонажей игрока",
-        description = "Получает список всех персонажей текущего аккаунта с краткой информацией.",
+        summary = "РЎРїРёСЃРѕРє РїРµСЂСЃРѕРЅР°Р¶РµР№ РёРіСЂРѕРєР°",
+        description = "РџРѕР»СѓС‡Р°РµС‚ СЃРїРёСЃРѕРє РІСЃРµС… РїРµСЂСЃРѕРЅР°Р¶РµР№ С‚РµРєСѓС‰РµРіРѕ Р°РєРєР°СѓРЅС‚Р° СЃ РєСЂР°С‚РєРѕР№ РёРЅС„РѕСЂРјР°С†РёРµР№.",
         tags = { "Characters" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Список персонажей", content = {
+            @ApiResponse(responseCode = "200", description = "РЎРїРёСЃРѕРє РїРµСЂСЃРѕРЅР°Р¶РµР№", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ListCharacters200Response.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "403", description = "У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно. ", content = {
+            @ApiResponse(responseCode = "403", description = "РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"Недостаточно прав для выполнения операции\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё\",\"details\":[]}}"
                     )
                 })
 
@@ -395,12 +395,12 @@ public interface CharactersApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

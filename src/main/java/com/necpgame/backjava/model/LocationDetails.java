@@ -41,7 +41,7 @@ public class LocationDetails {
   private String district;
 
   /**
-   * Регион
+   * Р РµРіРёРѕРЅ
    */
   public enum RegionEnum {
     NIGHT_CITY("night_city"),
@@ -80,7 +80,7 @@ public class LocationDetails {
   private RegionEnum region;
 
   /**
-   * Уровень опасности локации
+   * РЈСЂРѕРІРµРЅСЊ РѕРїР°СЃРЅРѕСЃС‚Рё Р»РѕРєР°С†РёРё
    */
   public enum DangerLevelEnum {
     LOW("low"),
@@ -123,7 +123,7 @@ public class LocationDetails {
   private Integer minLevel;
 
   /**
-   * Тип локации
+   * РўРёРї Р»РѕРєР°С†РёРё
    */
   public enum TypeEnum {
     CORPORATE("corporate"),
@@ -213,11 +213,11 @@ public class LocationDetails {
   }
 
   /**
-   * Уникальный идентификатор локации
+   * РЈРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ Р»РѕРєР°С†РёРё
    * @return id
    */
   @NotNull 
-  @Schema(name = "id", example = "downtown_city_center", description = "Уникальный идентификатор локации", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "id", example = "downtown_city_center", description = "РЈРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ Р»РѕРєР°С†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("id")
   public String getId() {
     return id;
@@ -233,11 +233,11 @@ public class LocationDetails {
   }
 
   /**
-   * Название локации
+   * РќР°Р·РІР°РЅРёРµ Р»РѕРєР°С†РёРё
    * @return name
    */
   @NotNull 
-  @Schema(name = "name", example = "City Center", description = "Название локации", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "name", example = "City Center", description = "РќР°Р·РІР°РЅРёРµ Р»РѕРєР°С†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -253,11 +253,11 @@ public class LocationDetails {
   }
 
   /**
-   * Краткое описание локации
+   * РљСЂР°С‚РєРѕРµ РѕРїРёСЃР°РЅРёРµ Р»РѕРєР°С†РёРё
    * @return description
    */
   @NotNull 
-  @Schema(name = "description", example = "Сердце Night City, центр корпоративной власти", description = "Краткое описание локации", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "description", example = "РЎРµСЂРґС†Рµ Night City, С†РµРЅС‚СЂ РєРѕСЂРїРѕСЂР°С‚РёРІРЅРѕР№ РІР»Р°СЃС‚Рё", description = "РљСЂР°С‚РєРѕРµ РѕРїРёСЃР°РЅРёРµ Р»РѕРєР°С†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {
     return description;
@@ -273,11 +273,11 @@ public class LocationDetails {
   }
 
   /**
-   * Город
+   * Р“РѕСЂРѕРґ
    * @return city
    */
   @NotNull 
-  @Schema(name = "city", example = "Night City", description = "Город", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "city", example = "Night City", description = "Р“РѕСЂРѕРґ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("city")
   public String getCity() {
     return city;
@@ -293,11 +293,11 @@ public class LocationDetails {
   }
 
   /**
-   * Район города
+   * Р Р°Р№РѕРЅ РіРѕСЂРѕРґР°
    * @return district
    */
   @NotNull 
-  @Schema(name = "district", example = "Downtown", description = "Район города", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "district", example = "Downtown", description = "Р Р°Р№РѕРЅ РіРѕСЂРѕРґР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("district")
   public String getDistrict() {
     return district;
@@ -313,11 +313,11 @@ public class LocationDetails {
   }
 
   /**
-   * Регион
+   * Р РµРіРёРѕРЅ
    * @return region
    */
   @NotNull 
-  @Schema(name = "region", example = "night_city", description = "Регион", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "region", example = "night_city", description = "Р РµРіРёРѕРЅ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("region")
   public RegionEnum getRegion() {
     return region;
@@ -333,11 +333,11 @@ public class LocationDetails {
   }
 
   /**
-   * Уровень опасности локации
+   * РЈСЂРѕРІРµРЅСЊ РѕРїР°СЃРЅРѕСЃС‚Рё Р»РѕРєР°С†РёРё
    * @return dangerLevel
    */
   @NotNull 
-  @Schema(name = "dangerLevel", example = "low", description = "Уровень опасности локации", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "dangerLevel", example = "low", description = "РЈСЂРѕРІРµРЅСЊ РѕРїР°СЃРЅРѕСЃС‚Рё Р»РѕРєР°С†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("dangerLevel")
   public DangerLevelEnum getDangerLevel() {
     return dangerLevel;
@@ -353,12 +353,12 @@ public class LocationDetails {
   }
 
   /**
-   * Минимальный уровень персонажа для доступа
+   * РњРёРЅРёРјР°Р»СЊРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ РїРµСЂСЃРѕРЅР°Р¶Р° РґР»СЏ РґРѕСЃС‚СѓРїР°
    * minimum: 1
    * @return minLevel
    */
   @NotNull @Min(value = 1) 
-  @Schema(name = "minLevel", example = "1", description = "Минимальный уровень персонажа для доступа", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "minLevel", example = "1", description = "РњРёРЅРёРјР°Р»СЊРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ РїРµСЂСЃРѕРЅР°Р¶Р° РґР»СЏ РґРѕСЃС‚СѓРїР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("minLevel")
   public Integer getMinLevel() {
     return minLevel;
@@ -374,11 +374,11 @@ public class LocationDetails {
   }
 
   /**
-   * Тип локации
+   * РўРёРї Р»РѕРєР°С†РёРё
    * @return type
    */
   @NotNull 
-  @Schema(name = "type", example = "corporate", description = "Тип локации", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "type", example = "corporate", description = "РўРёРї Р»РѕРєР°С†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("type")
   public TypeEnum getType() {
     return type;
@@ -394,11 +394,11 @@ public class LocationDetails {
   }
 
   /**
-   * Доступна ли локация для персонажа
+   * Р”РѕСЃС‚СѓРїРЅР° Р»Рё Р»РѕРєР°С†РёСЏ РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°
    * @return accessible
    */
   
-  @Schema(name = "accessible", example = "true", description = "Доступна ли локация для персонажа", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "accessible", example = "true", description = "Р”РѕСЃС‚СѓРїРЅР° Р»Рё Р»РѕРєР°С†РёСЏ РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("accessible")
   public @Nullable Boolean getAccessible() {
     return accessible;
@@ -414,11 +414,11 @@ public class LocationDetails {
   }
 
   /**
-   * Атмосферное описание локации
+   * РђС‚РјРѕСЃС„РµСЂРЅРѕРµ РѕРїРёСЃР°РЅРёРµ Р»РѕРєР°С†РёРё
    * @return atmosphere
    */
   @NotNull 
-  @Schema(name = "atmosphere", example = "Небоскребы упираются в облака, неоновые огни...", description = "Атмосферное описание локации", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "atmosphere", example = "РќРµР±РѕСЃРєСЂРµР±С‹ СѓРїРёСЂР°СЋС‚СЃСЏ РІ РѕР±Р»Р°РєР°, РЅРµРѕРЅРѕРІС‹Рµ РѕРіРЅРё...", description = "РђС‚РјРѕСЃС„РµСЂРЅРѕРµ РѕРїРёСЃР°РЅРёРµ Р»РѕРєР°С†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("atmosphere")
   public String getAtmosphere() {
     return atmosphere;
@@ -442,11 +442,11 @@ public class LocationDetails {
   }
 
   /**
-   * Точки интереса в локации
+   * РўРѕС‡РєРё РёРЅС‚РµСЂРµСЃР° РІ Р»РѕРєР°С†РёРё
    * @return pointsOfInterest
    */
   @Valid 
-  @Schema(name = "pointsOfInterest", example = "[{\"id\":\"arasaka_tower\",\"name\":\"Башня Arasaka\",\"description\":\"Впечатляющий небоскреб корпорации Arasaka\"}]", description = "Точки интереса в локации", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "pointsOfInterest", example = "[{\"id\":\"arasaka_tower\",\"name\":\"Р‘Р°С€РЅСЏ Arasaka\",\"description\":\"Р’РїРµС‡Р°С‚Р»СЏСЋС‰РёР№ РЅРµР±РѕСЃРєСЂРµР± РєРѕСЂРїРѕСЂР°С†РёРё Arasaka\"}]", description = "РўРѕС‡РєРё РёРЅС‚РµСЂРµСЃР° РІ Р»РѕРєР°С†РёРё", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("pointsOfInterest")
   public List<@Valid LocationDetailsAllOfPointsOfInterest> getPointsOfInterest() {
     return pointsOfInterest;
@@ -470,11 +470,11 @@ public class LocationDetails {
   }
 
   /**
-   * Доступные действия в локации
+   * Р”РѕСЃС‚СѓРїРЅС‹Рµ РґРµР№СЃС‚РІРёСЏ РІ Р»РѕРєР°С†РёРё
    * @return availableActions
    */
   @NotNull @Valid 
-  @Schema(name = "availableActions", description = "Доступные действия в локации", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "availableActions", description = "Р”РѕСЃС‚СѓРїРЅС‹Рµ РґРµР№СЃС‚РІРёСЏ РІ Р»РѕРєР°С†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("availableActions")
   public List<@Valid LocationAction> getAvailableActions() {
     return availableActions;
@@ -498,11 +498,11 @@ public class LocationDetails {
   }
 
   /**
-   * Доступные NPC в локации
+   * Р”РѕСЃС‚СѓРїРЅС‹Рµ NPC РІ Р»РѕРєР°С†РёРё
    * @return availableNPCs
    */
   @Valid 
-  @Schema(name = "availableNPCs", example = "[\"npc_id_1\",\"npc_id_2\"]", description = "Доступные NPC в локации", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "availableNPCs", example = "[\"npc_id_1\",\"npc_id_2\"]", description = "Р”РѕСЃС‚СѓРїРЅС‹Рµ NPC РІ Р»РѕРєР°С†РёРё", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("availableNPCs")
   public List<UUID> getAvailableNPCs() {
     return availableNPCs;
@@ -526,11 +526,11 @@ public class LocationDetails {
   }
 
   /**
-   * Связанные локации (ID)
+   * РЎРІСЏР·Р°РЅРЅС‹Рµ Р»РѕРєР°С†РёРё (ID)
    * @return connectedLocations
    */
   
-  @Schema(name = "connectedLocations", example = "[\"watson_kabuki\",\"westbrook_japantown\"]", description = "Связанные локации (ID)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "connectedLocations", example = "[\"watson_kabuki\",\"westbrook_japantown\"]", description = "РЎРІСЏР·Р°РЅРЅС‹Рµ Р»РѕРєР°С†РёРё (ID)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("connectedLocations")
   public List<String> getConnectedLocations() {
     return connectedLocations;
@@ -554,11 +554,11 @@ public class LocationDetails {
   }
 
   /**
-   * Текущие события в локации (опционально)
+   * РўРµРєСѓС‰РёРµ СЃРѕР±С‹С‚РёСЏ РІ Р»РѕРєР°С†РёРё (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ)
    * @return events
    */
   @Valid 
-  @Schema(name = "events", description = "Текущие события в локации (опционально)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "events", description = "РўРµРєСѓС‰РёРµ СЃРѕР±С‹С‚РёСЏ РІ Р»РѕРєР°С†РёРё (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("events")
   public List<@Valid LocationDetailsAllOfEvents> getEvents() {
     return events;

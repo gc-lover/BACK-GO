@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * JPA Entity для установленных имплантов персонажа.
+ * JPA Entity РґР»СЏ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹С… РёРјРїР»Р°РЅС‚РѕРІ РїРµСЂСЃРѕРЅР°Р¶Р°.
  * 
- * Связанная таблица: character_implants
- * Источник: API-SWAGGER/api/v1/gameplay/combat/implants-limits.yaml
+ * РЎРІСЏР·Р°РЅРЅР°СЏ С‚Р°Р±Р»РёС†Р°: character_implants
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/gameplay/combat/implants-limits.yaml
  */
 @Data
 @NoArgsConstructor
@@ -49,7 +49,7 @@ public class CharacterImplantEntity {
     private Boolean isActive = true;
     
     /**
-     * Качество установки (влияет на характеристики): poor, normal, excellent
+     * РљР°С‡РµСЃС‚РІРѕ СѓСЃС‚Р°РЅРѕРІРєРё (РІР»РёСЏРµС‚ РЅР° С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё): poor, normal, excellent
      */
     @Column(name = "quality", nullable = false, length = 50)
     @Enumerated(EnumType.STRING)

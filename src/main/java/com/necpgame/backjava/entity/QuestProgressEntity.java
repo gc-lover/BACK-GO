@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * QuestProgressEntity - прогресс выполнения квеста.
+ * QuestProgressEntity - РїСЂРѕРіСЂРµСЃСЃ РІС‹РїРѕР»РЅРµРЅРёСЏ РєРІРµСЃС‚Р°.
  * 
- * Отслеживает прогресс выполнения квестов для каждого персонажа.
+ * РћС‚СЃР»РµР¶РёРІР°РµС‚ РїСЂРѕРіСЂРµСЃСЃ РІС‹РїРѕР»РЅРµРЅРёСЏ РєРІРµСЃС‚РѕРІ РґР»СЏ РєР°Р¶РґРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°.
  */
 @Entity
 @Table(name = "quest_progress", indexes = {
@@ -64,7 +64,7 @@ public class QuestProgressEntity {
     private CharacterEntity character;
 
     /**
-     * Статус квеста
+     * РЎС‚Р°С‚СѓСЃ РєРІРµСЃС‚Р°
      */
     public enum QuestStatus {
         ACTIVE,

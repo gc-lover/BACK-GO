@@ -8,18 +8,18 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Repository для работы с подклассами персонажей (справочник)
+ * Repository РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РїРѕРґРєР»Р°СЃСЃР°РјРё РїРµСЂСЃРѕРЅР°Р¶РµР№ (СЃРїСЂР°РІРѕС‡РЅРёРє)
  */
 @Repository
 public interface CharacterSubclassRepository extends JpaRepository<CharacterSubclassEntity, String> {
     
     /**
-     * Найти подкласс по коду
+     * РќР°Р№С‚Рё РїРѕРґРєР»Р°СЃСЃ РїРѕ РєРѕРґСѓ
      */
     Optional<CharacterSubclassEntity> findBySubclassCode(String subclassCode);
     
     /**
-     * Найти все подклассы для класса
+     * РќР°Р№С‚Рё РІСЃРµ РїРѕРґРєР»Р°СЃСЃС‹ РґР»СЏ РєР»Р°СЃСЃР°
      */
     List<CharacterSubclassEntity> findAllByCharacterClass_ClassCode(String classCode);
 }

@@ -29,7 +29,7 @@ public class UnequipItemRequest {
   private UUID characterId;
 
   /**
-   * Тип слота экипировки
+   * РўРёРї СЃР»РѕС‚Р° СЌРєРёРїРёСЂРѕРІРєРё
    */
   public enum SlotTypeEnum {
     HEAD("head"),
@@ -97,11 +97,11 @@ public class UnequipItemRequest {
   }
 
   /**
-   * ID персонажа
+   * ID РїРµСЂСЃРѕРЅР°Р¶Р°
    * @return characterId
    */
   @NotNull @Valid 
-  @Schema(name = "characterId", description = "ID персонажа", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "characterId", description = "ID РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("characterId")
   public UUID getCharacterId() {
     return characterId;
@@ -117,11 +117,11 @@ public class UnequipItemRequest {
   }
 
   /**
-   * Тип слота экипировки
+   * РўРёРї СЃР»РѕС‚Р° СЌРєРёРїРёСЂРѕРІРєРё
    * @return slotType
    */
   @NotNull 
-  @Schema(name = "slotType", description = "Тип слота экипировки", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "slotType", description = "РўРёРї СЃР»РѕС‚Р° СЌРєРёРїРёСЂРѕРІРєРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("slotType")
   public SlotTypeEnum getSlotType() {
     return slotType;

@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 /**
- * GameInitialStateController - REST контроллер для начального состояния игры.
+ * GameInitialStateController - REST РєРѕРЅС‚СЂРѕР»Р»РµСЂ РґР»СЏ РЅР°С‡Р°Р»СЊРЅРѕРіРѕ СЃРѕСЃС‚РѕСЏРЅРёСЏ РёРіСЂС‹.
  * 
- * Реализует API интерфейс GameInitialStateApi.
- * Все Spring MVC аннотации определены в интерфейсе.
+ * Р РµР°Р»РёР·СѓРµС‚ API РёРЅС‚РµСЂС„РµР№СЃ GameInitialStateApi.
+ * Р’СЃРµ Spring MVC Р°РЅРЅРѕС‚Р°С†РёРё РѕРїСЂРµРґРµР»РµРЅС‹ РІ РёРЅС‚РµСЂС„РµР№СЃРµ.
  */
 @RestController
 @RequiredArgsConstructor

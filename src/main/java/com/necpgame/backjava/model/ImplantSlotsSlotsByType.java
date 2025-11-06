@@ -21,10 +21,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Слоты по типам имплантов
+ * РЎР»РѕС‚С‹ РїРѕ С‚РёРїР°Рј РёРјРїР»Р°РЅС‚РѕРІ
  */
 
-@Schema(name = "ImplantSlots_slots_by_type", description = "Слоты по типам имплантов")
+@Schema(name = "ImplantSlots_slots_by_type", description = "РЎР»РѕС‚С‹ РїРѕ С‚РёРїР°Рј РёРјРїР»Р°РЅС‚РѕРІ")
 @JsonTypeName("ImplantSlots_slots_by_type")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class ImplantSlotsSlotsByType {

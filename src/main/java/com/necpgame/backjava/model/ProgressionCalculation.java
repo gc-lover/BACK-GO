@@ -19,10 +19,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Расчет прогрессии киберпсихоза. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Прогрессия 
+ * Р Р°СЃС‡РµС‚ РїСЂРѕРіСЂРµСЃСЃРёРё РєРёР±РµСЂРїСЃРёС…РѕР·Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РџСЂРѕРіСЂРµСЃСЃРёСЏ 
  */
 
-@Schema(name = "ProgressionCalculation", description = "Расчет прогрессии киберпсихоза. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Прогрессия ")
+@Schema(name = "ProgressionCalculation", description = "Р Р°СЃС‡РµС‚ РїСЂРѕРіСЂРµСЃСЃРёРё РєРёР±РµСЂРїСЃРёС…РѕР·Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РџСЂРѕРіСЂРµСЃСЃРёСЏ ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class ProgressionCalculation {
 
@@ -54,11 +54,11 @@ public class ProgressionCalculation {
   }
 
   /**
-   * Базовая скорость прогрессии
+   * Р‘Р°Р·РѕРІР°СЏ СЃРєРѕСЂРѕСЃС‚СЊ РїСЂРѕРіСЂРµСЃСЃРёРё
    * @return baseRate
    */
   @NotNull 
-  @Schema(name = "base_rate", description = "Базовая скорость прогрессии", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "base_rate", description = "Р‘Р°Р·РѕРІР°СЏ СЃРєРѕСЂРѕСЃС‚СЊ РїСЂРѕРіСЂРµСЃСЃРёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("base_rate")
   public Float getBaseRate() {
     return baseRate;
@@ -82,11 +82,11 @@ public class ProgressionCalculation {
   }
 
   /**
-   * Факторы прогрессии с их влиянием
+   * Р¤Р°РєС‚РѕСЂС‹ РїСЂРѕРіСЂРµСЃСЃРёРё СЃ РёС… РІР»РёСЏРЅРёРµРј
    * @return factors
    */
   
-  @Schema(name = "factors", description = "Факторы прогрессии с их влиянием", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "factors", description = "Р¤Р°РєС‚РѕСЂС‹ РїСЂРѕРіСЂРµСЃСЃРёРё СЃ РёС… РІР»РёСЏРЅРёРµРј", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("factors")
   public List<Object> getFactors() {
     return factors;
@@ -102,11 +102,11 @@ public class ProgressionCalculation {
   }
 
   /**
-   * Итоговая скорость прогрессии
+   * РС‚РѕРіРѕРІР°СЏ СЃРєРѕСЂРѕСЃС‚СЊ РїСЂРѕРіСЂРµСЃСЃРёРё
    * @return totalRate
    */
   @NotNull 
-  @Schema(name = "total_rate", description = "Итоговая скорость прогрессии", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "total_rate", description = "РС‚РѕРіРѕРІР°СЏ СЃРєРѕСЂРѕСЃС‚СЊ РїСЂРѕРіСЂРµСЃСЃРёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("total_rate")
   public Float getTotalRate() {
     return totalRate;
@@ -122,11 +122,11 @@ public class ProgressionCalculation {
   }
 
   /**
-   * Предсказанная потеря человечности за период
+   * РџСЂРµРґСЃРєР°Р·Р°РЅРЅР°СЏ РїРѕС‚РµСЂСЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё Р·Р° РїРµСЂРёРѕРґ
    * @return predictedLoss
    */
   @NotNull 
-  @Schema(name = "predicted_loss", description = "Предсказанная потеря человечности за период", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "predicted_loss", description = "РџСЂРµРґСЃРєР°Р·Р°РЅРЅР°СЏ РїРѕС‚РµСЂСЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё Р·Р° РїРµСЂРёРѕРґ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("predicted_loss")
   public Float getPredictedLoss() {
     return predictedLoss;

@@ -22,15 +22,15 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Опция лечения. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Лечение 
+ * РћРїС†РёСЏ Р»РµС‡РµРЅРёСЏ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Р›РµС‡РµРЅРёРµ 
  */
 
-@Schema(name = "TreatmentOption", description = "Опция лечения. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Лечение ")
+@Schema(name = "TreatmentOption", description = "РћРїС†РёСЏ Р»РµС‡РµРЅРёСЏ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Р›РµС‡РµРЅРёРµ ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class TreatmentOption {
 
   /**
-   * Тип лечения
+   * РўРёРї Р»РµС‡РµРЅРёСЏ
    */
   public enum TypeEnum {
     THERAPY("therapy"),
@@ -104,11 +104,11 @@ public class TreatmentOption {
   }
 
   /**
-   * Тип лечения
+   * РўРёРї Р»РµС‡РµРЅРёСЏ
    * @return type
    */
   @NotNull 
-  @Schema(name = "type", description = "Тип лечения", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "type", description = "РўРёРї Р»РµС‡РµРЅРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("type")
   public TypeEnum getType() {
     return type;
@@ -124,11 +124,11 @@ public class TreatmentOption {
   }
 
   /**
-   * Название метода лечения
+   * РќР°Р·РІР°РЅРёРµ РјРµС‚РѕРґР° Р»РµС‡РµРЅРёСЏ
    * @return name
    */
   @NotNull 
-  @Schema(name = "name", description = "Название метода лечения", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "name", description = "РќР°Р·РІР°РЅРёРµ РјРµС‚РѕРґР° Р»РµС‡РµРЅРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -144,11 +144,11 @@ public class TreatmentOption {
   }
 
   /**
-   * Описание метода лечения
+   * РћРїРёСЃР°РЅРёРµ РјРµС‚РѕРґР° Р»РµС‡РµРЅРёСЏ
    * @return description
    */
   @NotNull 
-  @Schema(name = "description", description = "Описание метода лечения", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "description", description = "РћРїРёСЃР°РЅРёРµ РјРµС‚РѕРґР° Р»РµС‡РµРЅРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {
     return description;
@@ -164,12 +164,12 @@ public class TreatmentOption {
   }
 
   /**
-   * Стоимость лечения
+   * РЎС‚РѕРёРјРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ
    * minimum: 0
    * @return cost
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "cost", description = "Стоимость лечения", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "cost", description = "РЎС‚РѕРёРјРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("cost")
   public Float getCost() {
     return cost;
@@ -185,13 +185,13 @@ public class TreatmentOption {
   }
 
   /**
-   * Эффективность лечения (0-100%)
+   * Р­С„С„РµРєС‚РёРІРЅРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ (0-100%)
    * minimum: 0
    * maximum: 100
    * @return effectiveness
    */
   @NotNull @DecimalMin(value = "0") @DecimalMax(value = "100") 
-  @Schema(name = "effectiveness", description = "Эффективность лечения (0-100%)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "effectiveness", description = "Р­С„С„РµРєС‚РёРІРЅРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ (0-100%)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("effectiveness")
   public Float getEffectiveness() {
     return effectiveness;
@@ -207,12 +207,12 @@ public class TreatmentOption {
   }
 
   /**
-   * Кулдаун до следующего использования в секундах
+   * РљСѓР»РґР°СѓРЅ РґРѕ СЃР»РµРґСѓСЋС‰РµРіРѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РІ СЃРµРєСѓРЅРґР°С…
    * minimum: 0
    * @return cooldown
    */
   @DecimalMin(value = "0") 
-  @Schema(name = "cooldown", description = "Кулдаун до следующего использования в секундах", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "cooldown", description = "РљСѓР»РґР°СѓРЅ РґРѕ СЃР»РµРґСѓСЋС‰РµРіРѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РІ СЃРµРєСѓРЅРґР°С…", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("cooldown")
   public JsonNullable<@DecimalMin(value = "0") Float> getCooldown() {
     return cooldown;
@@ -236,11 +236,11 @@ public class TreatmentOption {
   }
 
   /**
-   * Требования для использования (NPC, репутация и т.д.)
+   * РўСЂРµР±РѕРІР°РЅРёСЏ РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ (NPC, СЂРµРїСѓС‚Р°С†РёСЏ Рё С‚.Рґ.)
    * @return requirements
    */
   
-  @Schema(name = "requirements", description = "Требования для использования (NPC, репутация и т.д.)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "requirements", description = "РўСЂРµР±РѕРІР°РЅРёСЏ РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ (NPC, СЂРµРїСѓС‚Р°С†РёСЏ Рё С‚.Рґ.)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("requirements")
   public JsonNullable<Map<String, Object>> getRequirements() {
     return requirements;

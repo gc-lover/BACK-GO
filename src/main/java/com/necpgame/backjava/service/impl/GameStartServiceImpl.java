@@ -20,7 +20,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
- * GameStartServiceImpl - реализация сервиса запуска игры.
+ * GameStartServiceImpl - СЂРµР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІРёСЃР° Р·Р°РїСѓСЃРєР° РёРіСЂС‹.
  */
 @Service
 @RequiredArgsConstructor
@@ -45,27 +45,27 @@ public class GameStartServiceImpl implements GameStartService {
     public GameStartResponse startGame(GameStartRequest request) {
         log.info("Starting game for character: {}", request.getCharacterId());
 
-        // 1. Проверяем существование персонажа
+        // 1. РџСЂРѕРІРµСЂСЏРµРј СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°
         CharacterEntity character = characterRepository.findById(request.getCharacterId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND, 
                     "Character not found: " + request.getCharacterId()));
 
-        // 2. Проверяем, что персонаж принадлежит текущему пользователю
+        // 2. РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ РїРµСЂСЃРѕРЅР°Р¶ РїСЂРёРЅР°РґР»РµР¶РёС‚ С‚РµРєСѓС‰РµРјСѓ РїРѕР»СЊР·РѕРІР°С‚РµР»СЋ
         UUID currentAccountId = SecurityUtil.getCurrentAccountId();
         if (character.getAccount() == null || !character.getAccount().getId().equals(currentAccountId)) {
             throw new BusinessException(ErrorCode.ACCESS_DENIED, 
                 "Character does not belong to the current account");
         }
 
-        // 3. Деактивируем предыдущие сессии
+        // 3. Р”РµР°РєС‚РёРІРёСЂСѓРµРј РїСЂРµРґС‹РґСѓС‰РёРµ СЃРµСЃСЃРёРё
         gameSessionRepository.deactivateAllSessionsByCharacterId(character.getId());
 
-        // 4. Загружаем стартовую локацию
+        // 4. Р—Р°РіСЂСѓР¶Р°РµРј СЃС‚Р°СЂС‚РѕРІСѓСЋ Р»РѕРєР°С†РёСЋ
         LocationEntity location = locationRepository.findById(STARTING_LOCATION_ID)
                 .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND, 
                     "Starting location not found: " + STARTING_LOCATION_ID));
 
-        // 5. Создаем новую игровую сессию
+        // 5. РЎРѕР·РґР°РµРј РЅРѕРІСѓСЋ РёРіСЂРѕРІСѓСЋ СЃРµСЃСЃРёСЋ
         GameSessionEntity session = new GameSessionEntity();
         session.setAccountId(currentAccountId);
         session.setCharacterId(character.getId());
@@ -75,17 +75,17 @@ public class GameStartServiceImpl implements GameStartService {
         session.setIsActive(true);
         session = gameSessionRepository.save(session);
 
-        // 6. Создаем/обновляем прогресс туториала
+        // 6. РЎРѕР·РґР°РµРј/РѕР±РЅРѕРІР»СЏРµРј РїСЂРѕРіСЂРµСЃСЃ С‚СѓС‚РѕСЂРёР°Р»Р°
         if (!request.getSkipTutorial()) {
             createOrUpdateTutorialProgress(character.getId(), false);
         } else {
             createOrUpdateTutorialProgress(character.getId(), true);
         }
 
-        // 7. Обновляем состояние персонажа (если это первый старт)
+        // 7. РћР±РЅРѕРІР»СЏРµРј СЃРѕСЃС‚РѕСЏРЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р° (РµСЃР»Рё СЌС‚Рѕ РїРµСЂРІС‹Р№ СЃС‚Р°СЂС‚)
         updateCharacterInitialState(character);
 
-        // 8. Формируем ответ
+        // 8. Р¤РѕСЂРјРёСЂСѓРµРј РѕС‚РІРµС‚
         GameStartResponse response = new GameStartResponse();
         response.setGameSessionId(session.getId());
         response.setCharacterId(character.getId());
@@ -104,43 +104,43 @@ public class GameStartServiceImpl implements GameStartService {
     public WelcomeScreenResponse getWelcomeScreen(UUID characterId) {
         log.info("Getting welcome screen for character: {}", characterId);
 
-        // 1. Проверяем существование персонажа
+        // 1. РџСЂРѕРІРµСЂСЏРµРј СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°
         CharacterEntity character = characterRepository.findById(characterId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND, 
                     "Character not found: " + characterId));
 
-        // 2. Проверяем доступ
+        // 2. РџСЂРѕРІРµСЂСЏРµРј РґРѕСЃС‚СѓРї
         UUID currentAccountId = SecurityUtil.getCurrentAccountId();
         if (character.getAccount() == null || !character.getAccount().getId().equals(currentAccountId)) {
             throw new BusinessException(ErrorCode.ACCESS_DENIED, 
                 "Character does not belong to the current account");
         }
 
-        // 3. Формируем ответ
+        // 3. Р¤РѕСЂРјРёСЂСѓРµРј РѕС‚РІРµС‚
         WelcomeScreenResponse response = new WelcomeScreenResponse();
-        response.setMessage("Добро пожаловать в NECPGAME");
-        response.setSubtitle("Ночь в Night City только начинается...");
+        response.setMessage("Р”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ РІ NECPGAME");
+        response.setSubtitle("РќРѕС‡СЊ РІ Night City С‚РѕР»СЊРєРѕ РЅР°С‡РёРЅР°РµС‚СЃСЏ...");
         
-        // Информация о персонаже
+        // РРЅС„РѕСЂРјР°С†РёСЏ Рѕ РїРµСЂСЃРѕРЅР°Р¶Рµ
         WelcomeScreenResponse.WelcomeCharacterInfo charInfo = new WelcomeScreenResponse.WelcomeCharacterInfo();
         charInfo.setName(character.getName());
-        charInfo.setCharacterClass(character.getClassCode() != null ? "Соло" : "Неизвестно");
+        charInfo.setCharacterClass(character.getClassCode() != null ? "РЎРѕР»Рѕ" : "РќРµРёР·РІРµСЃС‚РЅРѕ");
         charInfo.setLevel(1);
         response.setCharacter(charInfo);
         
         response.setStartingLocation("Night City - Downtown");
         
-        // Кнопки
+        // РљРЅРѕРїРєРё
         List<WelcomeScreenResponse.WelcomeButton> buttons = new ArrayList<>();
         
         WelcomeScreenResponse.WelcomeButton startButton = new WelcomeScreenResponse.WelcomeButton();
         startButton.setId("start-game");
-        startButton.setLabel("Начать игру");
+        startButton.setLabel("РќР°С‡Р°С‚СЊ РёРіСЂСѓ");
         buttons.add(startButton);
         
         WelcomeScreenResponse.WelcomeButton skipButton = new WelcomeScreenResponse.WelcomeButton();
         skipButton.setId("skip-tutorial");
-        skipButton.setLabel("Пропустить туториал");
+        skipButton.setLabel("РџСЂРѕРїСѓСЃС‚РёС‚СЊ С‚СѓС‚РѕСЂРёР°Р»");
         buttons.add(skipButton);
         
         response.setButtons(buttons);
@@ -153,22 +153,22 @@ public class GameStartServiceImpl implements GameStartService {
     public GameReturnResponse returnToGame(GameReturnRequest request) {
         log.info("Returning to game for character: {}", request.getCharacterId());
 
-        // 1. Проверяем существование персонажа
+        // 1. РџСЂРѕРІРµСЂСЏРµРј СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°
         CharacterEntity character = characterRepository.findById(request.getCharacterId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND, 
                     "Character not found: " + request.getCharacterId()));
 
-        // 2. Проверяем доступ
+        // 2. РџСЂРѕРІРµСЂСЏРµРј РґРѕСЃС‚СѓРї
         UUID currentAccountId = SecurityUtil.getCurrentAccountId();
         if (character.getAccount() == null || !character.getAccount().getId().equals(currentAccountId)) {
             throw new BusinessException(ErrorCode.ACCESS_DENIED, 
                 "Character does not belong to the current account");
         }
 
-        // 3. Деактивируем предыдущие сессии
+        // 3. Р”РµР°РєС‚РёРІРёСЂСѓРµРј РїСЂРµРґС‹РґСѓС‰РёРµ СЃРµСЃСЃРёРё
         gameSessionRepository.deactivateAllSessionsByCharacterId(character.getId());
 
-        // 4. Определяем текущую локацию (из последней сессии или стартовая)
+        // 4. РћРїСЂРµРґРµР»СЏРµРј С‚РµРєСѓС‰СѓСЋ Р»РѕРєР°С†РёСЋ (РёР· РїРѕСЃР»РµРґРЅРµР№ СЃРµСЃСЃРёРё РёР»Рё СЃС‚Р°СЂС‚РѕРІР°СЏ)
         String currentLocationId = gameSessionRepository
                 .findByCharacterIdOrderByCreatedAtDesc(character.getId())
                 .stream()
@@ -181,7 +181,7 @@ public class GameStartServiceImpl implements GameStartService {
                         .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND, 
                             "Location not found")));
 
-        // 5. Создаем новую сессию
+        // 5. РЎРѕР·РґР°РµРј РЅРѕРІСѓСЋ СЃРµСЃСЃРёСЋ
         GameSessionEntity session = new GameSessionEntity();
         session.setAccountId(currentAccountId);
         session.setCharacterId(character.getId());
@@ -191,7 +191,7 @@ public class GameStartServiceImpl implements GameStartService {
         session.setIsActive(true);
         session = gameSessionRepository.save(session);
 
-        // 6. Загружаем активные квесты
+        // 6. Р—Р°РіСЂСѓР¶Р°РµРј Р°РєС‚РёРІРЅС‹Рµ РєРІРµСЃС‚С‹
         List<GameActiveQuest> activeQuests = questProgressRepository
                 .findActiveQuestsByCharacterId(character.getId())
                 .stream()
@@ -203,7 +203,7 @@ public class GameStartServiceImpl implements GameStartService {
                 })
                 .collect(Collectors.toList());
 
-        // 7. Формируем ответ
+        // 7. Р¤РѕСЂРјРёСЂСѓРµРј РѕС‚РІРµС‚
         GameReturnResponse response = new GameReturnResponse();
         response.setGameSessionId(session.getId());
         response.setCharacterId(character.getId());
@@ -235,8 +235,8 @@ public class GameStartServiceImpl implements GameStartService {
     }
 
     private void updateCharacterInitialState(CharacterEntity character) {
-        // Устанавливаем начальные характеристики, если они еще не установлены
-        // В реальном приложении можно добавить проверку на первый запуск
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РЅР°С‡Р°Р»СЊРЅС‹Рµ С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё, РµСЃР»Рё РѕРЅРё РµС‰Рµ РЅРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅС‹
+        // Р’ СЂРµР°Р»СЊРЅРѕРј РїСЂРёР»РѕР¶РµРЅРёРё РјРѕР¶РЅРѕ РґРѕР±Р°РІРёС‚СЊ РїСЂРѕРІРµСЂРєСѓ РЅР° РїРµСЂРІС‹Р№ Р·Р°РїСѓСЃРє
     }
 
     private GameCharacterState buildCharacterState(CharacterEntity character) {
@@ -267,8 +267,8 @@ public class GameStartServiceImpl implements GameStartService {
     }
 
     private String buildWelcomeMessage(CharacterEntity character, LocationEntity location) {
-        return String.format("Добро пожаловать в Night City, %s. Вы стоите в центре корпоративного района Downtown. " +
-                "Неоновые вывески мигают на стенах зданий. Ваше приключение начинается...", 
+        return String.format("Р”РѕР±СЂРѕ РїРѕР¶Р°Р»РѕРІР°С‚СЊ РІ Night City, %s. Р’С‹ СЃС‚РѕРёС‚Рµ РІ С†РµРЅС‚СЂРµ РєРѕСЂРїРѕСЂР°С‚РёРІРЅРѕРіРѕ СЂР°Р№РѕРЅР° Downtown. " +
+                "РќРµРѕРЅРѕРІС‹Рµ РІС‹РІРµСЃРєРё РјРёРіР°СЋС‚ РЅР° СЃС‚РµРЅР°С… Р·РґР°РЅРёР№. Р’Р°С€Рµ РїСЂРёРєР»СЋС‡РµРЅРёРµ РЅР°С‡РёРЅР°РµС‚СЃСЏ...", 
                 character.getName());
     }
 
@@ -282,7 +282,7 @@ public class GameStartServiceImpl implements GameStartService {
         dto.setDangerLevel(mapDangerLevel(entity.getDangerLevel()));
         dto.setMinLevel(entity.getMinLevel());
         dto.setType(mapLocationType(entity.getType()));
-        // Note: connectedLocations поле есть в LocationDetails, а не в GameLocation (cities)
+        // Note: connectedLocations РїРѕР»Рµ РµСЃС‚СЊ РІ LocationDetails, Р° РЅРµ РІ GameLocation (cities)
         return dto;
     }
 

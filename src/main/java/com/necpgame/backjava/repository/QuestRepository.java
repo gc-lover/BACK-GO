@@ -8,55 +8,55 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * QuestRepository - репозиторий для работы с квестами.
+ * QuestRepository - СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РєРІРµСЃС‚Р°РјРё.
  */
 @Repository
 public interface QuestRepository extends JpaRepository<QuestEntity, String> {
 
     /**
-     * Найти квест по ID.
+     * РќР°Р№С‚Рё РєРІРµСЃС‚ РїРѕ ID.
      *
-     * @param id ID квеста
-     * @return квест
+     * @param id ID РєРІРµСЃС‚Р°
+     * @return РєРІРµСЃС‚
      */
     Optional<QuestEntity> findById(String id);
 
     /**
-     * Найти все квесты определенного типа.
+     * РќР°Р№С‚Рё РІСЃРµ РєРІРµСЃС‚С‹ РѕРїСЂРµРґРµР»РµРЅРЅРѕРіРѕ С‚РёРїР°.
      *
-     * @param type тип квеста
-     * @return список квестов
+     * @param type С‚РёРї РєРІРµСЃС‚Р°
+     * @return СЃРїРёСЃРѕРє РєРІРµСЃС‚РѕРІ
      */
     List<QuestEntity> findByType(QuestEntity.QuestType type);
 
     /**
-     * Найти все квесты от NPC.
+     * РќР°Р№С‚Рё РІСЃРµ РєРІРµСЃС‚С‹ РѕС‚ NPC.
      *
      * @param giverNpcId ID NPC
-     * @return список квестов
+     * @return СЃРїРёСЃРѕРє РєРІРµСЃС‚РѕРІ
      */
     List<QuestEntity> findByGiverNpcId(String giverNpcId);
 
     /**
-     * Найти все квесты для уровня.
+     * РќР°Р№С‚Рё РІСЃРµ РєРІРµСЃС‚С‹ РґР»СЏ СѓСЂРѕРІРЅСЏ.
      *
-     * @param level уровень
-     * @return список квестов
+     * @param level СѓСЂРѕРІРµРЅСЊ
+     * @return СЃРїРёСЃРѕРє РєРІРµСЃС‚РѕРІ
      */
     List<QuestEntity> findByLevel(Integer level);
 
     /**
-     * Найти квесты подходящие для уровня.
+     * РќР°Р№С‚Рё РєРІРµСЃС‚С‹ РїРѕРґС…РѕРґСЏС‰РёРµ РґР»СЏ СѓСЂРѕРІРЅСЏ.
      *
-     * @param level уровень персонажа
-     * @return список квестов
+     * @param level СѓСЂРѕРІРµРЅСЊ РїРµСЂСЃРѕРЅР°Р¶Р°
+     * @return СЃРїРёСЃРѕРє РєРІРµСЃС‚РѕРІ
      */
     List<QuestEntity> findByLevelLessThanEqual(Integer level);
 
     /**
-     * Найти первый квест для новых игроков.
+     * РќР°Р№С‚Рё РїРµСЂРІС‹Р№ РєРІРµСЃС‚ РґР»СЏ РЅРѕРІС‹С… РёРіСЂРѕРєРѕРІ.
      *
-     * @return первый квест
+     * @return РїРµСЂРІС‹Р№ РєРІРµСЃС‚
      */
     default Optional<QuestEntity> findFirstQuest() {
         return findById("quest-delivery-001");

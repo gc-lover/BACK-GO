@@ -20,10 +20,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Запрос на расчет энергетического потребления
+ * Р—Р°РїСЂРѕСЃ РЅР° СЂР°СЃС‡РµС‚ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРіРѕ РїРѕС‚СЂРµР±Р»РµРЅРёСЏ
  */
 
-@Schema(name = "CalculateEnergyRequest", description = "Запрос на расчет энергетического потребления")
+@Schema(name = "CalculateEnergyRequest", description = "Р—Р°РїСЂРѕСЃ РЅР° СЂР°СЃС‡РµС‚ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРіРѕ РїРѕС‚СЂРµР±Р»РµРЅРёСЏ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class CalculateEnergyRequest {
 
@@ -55,11 +55,11 @@ public class CalculateEnergyRequest {
   }
 
   /**
-   * Идентификаторы имплантов для расчета
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂС‹ РёРјРїР»Р°РЅС‚РѕРІ РґР»СЏ СЂР°СЃС‡РµС‚Р°
    * @return implantIds
    */
   @NotNull @Valid 
-  @Schema(name = "implant_ids", description = "Идентификаторы имплантов для расчета", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "implant_ids", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂС‹ РёРјРїР»Р°РЅС‚РѕРІ РґР»СЏ СЂР°СЃС‡РµС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("implant_ids")
   public List<UUID> getImplantIds() {
     return implantIds;

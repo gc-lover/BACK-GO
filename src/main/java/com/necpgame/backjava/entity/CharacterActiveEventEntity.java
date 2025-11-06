@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * CharacterActiveEventEntity - активное событие персонажа.
+ * CharacterActiveEventEntity - Р°РєС‚РёРІРЅРѕРµ СЃРѕР±С‹С‚РёРµ РїРµСЂСЃРѕРЅР°Р¶Р°.
  * 
- * Хранит информацию о текущих активных событиях персонажа.
- * Источник: API-SWAGGER/api/v1/events/random-events.yaml
+ * РҐСЂР°РЅРёС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ С‚РµРєСѓС‰РёС… Р°РєС‚РёРІРЅС‹С… СЃРѕР±С‹С‚РёСЏС… РїРµСЂСЃРѕРЅР°Р¶Р°.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/events/random-events.yaml
  */
 @Entity
 @Table(name = "character_active_events", indexes = {
@@ -62,7 +62,7 @@ public class CharacterActiveEventEntity {
     private RandomEventEntity event;
 
     /**
-     * Статус события
+     * РЎС‚Р°С‚СѓСЃ СЃРѕР±С‹С‚РёСЏ
      */
     public enum EventStatus {
         ACTIVE,

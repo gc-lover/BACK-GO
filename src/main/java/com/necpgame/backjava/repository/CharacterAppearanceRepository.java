@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 /**
- * Repository для работы с внешностью персонажей
+ * Repository РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РІРЅРµС€РЅРѕСЃС‚СЊСЋ РїРµСЂСЃРѕРЅР°Р¶РµР№
  */
 @Repository
 public interface CharacterAppearanceRepository extends JpaRepository<CharacterAppearanceEntity, UUID> {
-    // Базовые CRUD операции от JpaRepository
+    // Р‘Р°Р·РѕРІС‹Рµ CRUD РѕРїРµСЂР°С†РёРё РѕС‚ JpaRepository
 }
 

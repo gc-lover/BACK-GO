@@ -20,10 +20,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Информация об энергетическом пуле игрока. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Энергетический лимит 
+ * РРЅС„РѕСЂРјР°С†РёСЏ РѕР± СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРј РїСѓР»Рµ РёРіСЂРѕРєР°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Р­РЅРµСЂРіРµС‚РёС‡РµСЃРєРёР№ Р»РёРјРёС‚ 
  */
 
-@Schema(name = "EnergyPoolInfo", description = "Информация об энергетическом пуле игрока. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Энергетический лимит ")
+@Schema(name = "EnergyPoolInfo", description = "РРЅС„РѕСЂРјР°С†РёСЏ РѕР± СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРј РїСѓР»Рµ РёРіСЂРѕРєР°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Р­РЅРµСЂРіРµС‚РёС‡РµСЃРєРёР№ Р»РёРјРёС‚ ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class EnergyPoolInfo {
 
@@ -63,12 +63,12 @@ public class EnergyPoolInfo {
   }
 
   /**
-   * Общий энергетический пул
+   * РћР±С‰РёР№ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРёР№ РїСѓР»
    * minimum: 0
    * @return totalPool
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "total_pool", description = "Общий энергетический пул", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "total_pool", description = "РћР±С‰РёР№ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРёР№ РїСѓР»", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("total_pool")
   public Float getTotalPool() {
     return totalPool;
@@ -84,12 +84,12 @@ public class EnergyPoolInfo {
   }
 
   /**
-   * Использовано энергии
+   * РСЃРїРѕР»СЊР·РѕРІР°РЅРѕ СЌРЅРµСЂРіРёРё
    * minimum: 0
    * @return used
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "used", description = "Использовано энергии", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "used", description = "РСЃРїРѕР»СЊР·РѕРІР°РЅРѕ СЌРЅРµСЂРіРёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("used")
   public Float getUsed() {
     return used;
@@ -105,12 +105,12 @@ public class EnergyPoolInfo {
   }
 
   /**
-   * Доступно энергии
+   * Р”РѕСЃС‚СѓРїРЅРѕ СЌРЅРµСЂРіРёРё
    * minimum: 0
    * @return available
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "available", description = "Доступно энергии", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "available", description = "Р”РѕСЃС‚СѓРїРЅРѕ СЌРЅРµСЂРіРёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("available")
   public Float getAvailable() {
     return available;
@@ -126,12 +126,12 @@ public class EnergyPoolInfo {
   }
 
   /**
-   * Скорость восстановления энергии в единицах/сек
+   * РЎРєРѕСЂРѕСЃС‚СЊ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ СЌРЅРµСЂРіРёРё РІ РµРґРёРЅРёС†Р°С…/СЃРµРє
    * minimum: 0
    * @return regenRate
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "regen_rate", description = "Скорость восстановления энергии в единицах/сек", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "regen_rate", description = "РЎРєРѕСЂРѕСЃС‚СЊ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ СЌРЅРµСЂРіРёРё РІ РµРґРёРЅРёС†Р°С…/СЃРµРє", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("regen_rate")
   public Float getRegenRate() {
     return regenRate;
@@ -147,12 +147,12 @@ public class EnergyPoolInfo {
   }
 
   /**
-   * Текущий уровень энергии
+   * РўРµРєСѓС‰РёР№ СѓСЂРѕРІРµРЅСЊ СЌРЅРµСЂРіРёРё
    * minimum: 0
    * @return currentLevel
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "current_level", description = "Текущий уровень энергии", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "current_level", description = "РўРµРєСѓС‰РёР№ СѓСЂРѕРІРµРЅСЊ СЌРЅРµСЂРіРёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("current_level")
   public Float getCurrentLevel() {
     return currentLevel;
@@ -168,12 +168,12 @@ public class EnergyPoolInfo {
   }
 
   /**
-   * Максимальный уровень энергии
+   * РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ СЌРЅРµСЂРіРёРё
    * minimum: 0
    * @return maxLevel
    */
   @DecimalMin(value = "0") 
-  @Schema(name = "max_level", description = "Максимальный уровень энергии", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "max_level", description = "РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ СЌРЅРµСЂРіРёРё", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("max_level")
   public @Nullable Float getMaxLevel() {
     return maxLevel;
@@ -197,11 +197,11 @@ public class EnergyPoolInfo {
   }
 
   /**
-   * Индивидуальные ограничения для сложных имплантов
+   * РРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Рµ РѕРіСЂР°РЅРёС‡РµРЅРёСЏ РґР»СЏ СЃР»РѕР¶РЅС‹С… РёРјРїР»Р°РЅС‚РѕРІ
    * @return individualLimits
    */
   @Valid 
-  @Schema(name = "individual_limits", description = "Индивидуальные ограничения для сложных имплантов", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "individual_limits", description = "РРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Рµ РѕРіСЂР°РЅРёС‡РµРЅРёСЏ РґР»СЏ СЃР»РѕР¶РЅС‹С… РёРјРїР»Р°РЅС‚РѕРІ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("individual_limits")
   public List<@Valid IndividualEnergyLimits> getIndividualLimits() {
     return individualLimits;

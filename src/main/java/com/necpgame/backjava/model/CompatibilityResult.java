@@ -21,10 +21,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Результат проверки совместимости импланта. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Совместимость 
+ * Р РµР·СѓР»СЊС‚Р°С‚ РїСЂРѕРІРµСЂРєРё СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё РёРјРїР»Р°РЅС‚Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; РЎРѕРІРјРµСЃС‚РёРјРѕСЃС‚СЊ 
  */
 
-@Schema(name = "CompatibilityResult", description = "Результат проверки совместимости импланта. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Совместимость ")
+@Schema(name = "CompatibilityResult", description = "Р РµР·СѓР»СЊС‚Р°С‚ РїСЂРѕРІРµСЂРєРё СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё РёРјРїР»Р°РЅС‚Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> РЎРѕРІРјРµСЃС‚РёРјРѕСЃС‚СЊ ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class CompatibilityResult {
 
@@ -53,11 +53,11 @@ public class CompatibilityResult {
   }
 
   /**
-   * Совместим ли имплант с установленными
+   * РЎРѕРІРјРµСЃС‚РёРј Р»Рё РёРјРїР»Р°РЅС‚ СЃ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹РјРё
    * @return isCompatible
    */
   @NotNull 
-  @Schema(name = "is_compatible", description = "Совместим ли имплант с установленными", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "is_compatible", description = "РЎРѕРІРјРµСЃС‚РёРј Р»Рё РёРјРїР»Р°РЅС‚ СЃ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹РјРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("is_compatible")
   public Boolean getIsCompatible() {
     return isCompatible;
@@ -81,11 +81,11 @@ public class CompatibilityResult {
   }
 
   /**
-   * Конфликты совместимости
+   * РљРѕРЅС„Р»РёРєС‚С‹ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё
    * @return conflicts
    */
   @Valid 
-  @Schema(name = "conflicts", description = "Конфликты совместимости", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "conflicts", description = "РљРѕРЅС„Р»РёРєС‚С‹ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("conflicts")
   public List<@Valid Conflict> getConflicts() {
     return conflicts;
@@ -109,11 +109,11 @@ public class CompatibilityResult {
   }
 
   /**
-   * Предупреждения о совместимости
+   * РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ Рѕ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё
    * @return warnings
    */
   @Valid 
-  @Schema(name = "warnings", description = "Предупреждения о совместимости", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "warnings", description = "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ Рѕ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("warnings")
   public List<@Valid Warning> getWarnings() {
     return warnings;

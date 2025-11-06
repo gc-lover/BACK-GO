@@ -5,39 +5,39 @@ import com.necpgame.backjava.model.*;
 import java.util.UUID;
 
 /**
- * InventoryService - сервис для управления инвентарем.
+ * InventoryService - СЃРµСЂРІРёСЃ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РёРЅРІРµРЅС‚Р°СЂРµРј.
  * 
- * Сгенерировано из: API-SWAGGER/api/v1/inventory/inventory.yaml
+ * РЎРіРµРЅРµСЂРёСЂРѕРІР°РЅРѕ РёР·: API-SWAGGER/api/v1/inventory/inventory.yaml
  */
 public interface InventoryService {
 
     /**
-     * Получить инвентарь персонажа.
+     * РџРѕР»СѓС‡РёС‚СЊ РёРЅРІРµРЅС‚Р°СЂСЊ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     InventoryResponse getInventory(UUID characterId, ItemCategory category);
 
     /**
-     * Получить экипировку персонажа.
+     * РџРѕР»СѓС‡РёС‚СЊ СЌРєРёРїРёСЂРѕРІРєСѓ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     GetEquipment200Response getEquipment(UUID characterId);
 
     /**
-     * Экипировать предмет.
+     * Р­РєРёРїРёСЂРѕРІР°С‚СЊ РїСЂРµРґРјРµС‚.
      */
     EquipItem200Response equipItem(EquipRequest request);
 
     /**
-     * Снять предмет.
+     * РЎРЅСЏС‚СЊ РїСЂРµРґРјРµС‚.
      */
     UnequipItem200Response unequipItem(UnequipItemRequest request);
 
     /**
-     * Использовать предмет.
+     * РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїСЂРµРґРјРµС‚.
      */
     UseItem200Response useItem(UseItemRequest request);
 
     /**
-     * Выбросить предмет.
+     * Р’С‹Р±СЂРѕСЃРёС‚СЊ РїСЂРµРґРјРµС‚.
      */
     DropItem200Response dropItem(UUID characterId, String itemId, Integer quantity);
 }

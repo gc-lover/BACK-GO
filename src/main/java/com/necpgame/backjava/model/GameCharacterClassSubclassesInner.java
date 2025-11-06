@@ -49,11 +49,11 @@ public class GameCharacterClassSubclassesInner {
   }
 
   /**
-   * Идентификатор подкласса
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїРѕРґРєР»Р°СЃСЃР°
    * @return id
    */
   @NotNull 
-  @Schema(name = "id", example = "solo_assassin", description = "Идентификатор подкласса", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "id", example = "solo_assassin", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїРѕРґРєР»Р°СЃСЃР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("id")
   public String getId() {
     return id;
@@ -69,11 +69,11 @@ public class GameCharacterClassSubclassesInner {
   }
 
   /**
-   * Название подкласса
+   * РќР°Р·РІР°РЅРёРµ РїРѕРґРєР»Р°СЃСЃР°
    * @return name
    */
   @NotNull 
-  @Schema(name = "name", example = "Assassin", description = "Название подкласса", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "name", example = "Assassin", description = "РќР°Р·РІР°РЅРёРµ РїРѕРґРєР»Р°СЃСЃР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -89,11 +89,11 @@ public class GameCharacterClassSubclassesInner {
   }
 
   /**
-   * Описание подкласса
+   * РћРїРёСЃР°РЅРёРµ РїРѕРґРєР»Р°СЃСЃР°
    * @return description
    */
   @NotNull 
-  @Schema(name = "description", example = "Специализация на скрытности и убийствах", description = "Описание подкласса", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "description", example = "РЎРїРµС†РёР°Р»РёР·Р°С†РёСЏ РЅР° СЃРєСЂС‹С‚РЅРѕСЃС‚Рё Рё СѓР±РёР№СЃС‚РІР°С…", description = "РћРїРёСЃР°РЅРёРµ РїРѕРґРєР»Р°СЃСЃР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {
     return description;

@@ -20,10 +20,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Информация об адаптации к симптомам. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Адаптация 
+ * РРЅС„РѕСЂРјР°С†РёСЏ РѕР± Р°РґР°РїС‚Р°С†РёРё Рє СЃРёРјРїС‚РѕРјР°Рј. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РђРґР°РїС‚Р°С†РёСЏ 
  */
 
-@Schema(name = "AdaptationInfo", description = "Информация об адаптации к симптомам. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Адаптация ")
+@Schema(name = "AdaptationInfo", description = "РРЅС„РѕСЂРјР°С†РёСЏ РѕР± Р°РґР°РїС‚Р°С†РёРё Рє СЃРёРјРїС‚РѕРјР°Рј. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РђРґР°РїС‚Р°С†РёСЏ ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class AdaptationInfo {
 
@@ -61,11 +61,11 @@ public class AdaptationInfo {
   }
 
   /**
-   * Идентификаторы адаптированных симптомов
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂС‹ Р°РґР°РїС‚РёСЂРѕРІР°РЅРЅС‹С… СЃРёРјРїС‚РѕРјРѕРІ
    * @return adaptedSymptoms
    */
   @NotNull @Valid 
-  @Schema(name = "adapted_symptoms", description = "Идентификаторы адаптированных симптомов", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "adapted_symptoms", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂС‹ Р°РґР°РїС‚РёСЂРѕРІР°РЅРЅС‹С… СЃРёРјРїС‚РѕРјРѕРІ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("adapted_symptoms")
   public List<UUID> getAdaptedSymptoms() {
     return adaptedSymptoms;
@@ -81,13 +81,13 @@ public class AdaptationInfo {
   }
 
   /**
-   * Уровень адаптации (0-100%)
+   * РЈСЂРѕРІРµРЅСЊ Р°РґР°РїС‚Р°С†РёРё (0-100%)
    * minimum: 0
    * maximum: 100
    * @return adaptationLevel
    */
   @NotNull @DecimalMin(value = "0") @DecimalMax(value = "100") 
-  @Schema(name = "adaptation_level", description = "Уровень адаптации (0-100%)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "adaptation_level", description = "РЈСЂРѕРІРµРЅСЊ Р°РґР°РїС‚Р°С†РёРё (0-100%)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("adaptation_level")
   public Float getAdaptationLevel() {
     return adaptationLevel;
@@ -103,13 +103,13 @@ public class AdaptationInfo {
   }
 
   /**
-   * Снижение влияния симптомов (0-100%)
+   * РЎРЅРёР¶РµРЅРёРµ РІР»РёСЏРЅРёСЏ СЃРёРјРїС‚РѕРјРѕРІ (0-100%)
    * minimum: 0
    * maximum: 100
    * @return effectsReduction
    */
   @NotNull @DecimalMin(value = "0") @DecimalMax(value = "100") 
-  @Schema(name = "effects_reduction", description = "Снижение влияния симптомов (0-100%)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "effects_reduction", description = "РЎРЅРёР¶РµРЅРёРµ РІР»РёСЏРЅРёСЏ СЃРёРјРїС‚РѕРјРѕРІ (0-100%)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("effects_reduction")
   public Float getEffectsReduction() {
     return effectsReduction;

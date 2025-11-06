@@ -56,11 +56,11 @@ public class GetFactions200Response {
   }
 
   /**
-   * Список доступных фракций
+   * РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… С„СЂР°РєС†РёР№
    * @return factions
    */
   @NotNull @Valid 
-  @Schema(name = "factions", description = "Список доступных фракций", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "factions", description = "РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… С„СЂР°РєС†РёР№", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("factions")
   public List<@Valid Faction> getFactions() {
     return factions;

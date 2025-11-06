@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.UUID;
 
 /**
- * Реализация сервиса для работы с боевой системой.
+ * Р РµР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІРёСЃР° РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р±РѕРµРІРѕР№ СЃРёСЃС‚РµРјРѕР№.
  * 
- * Источник: API-SWAGGER/api/v1/combat/combat.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/combat/combat.yaml
  */
 @Slf4j
 @Service
@@ -29,7 +29,7 @@ public class CombatServiceImpl implements CombatService {
     public CombatState initiateCombat(InitiateCombatRequest request) {
         log.info("Initiating combat for character: {} vs target: {}", request.getCharacterId(), request.getTargetId());
         
-        // TODO: Полная реализация (создать сессию, добавить участников, определить инициативу)
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (СЃРѕР·РґР°С‚СЊ СЃРµСЃСЃРёСЋ, РґРѕР±Р°РІРёС‚СЊ СѓС‡Р°СЃС‚РЅРёРєРѕРІ, РѕРїСЂРµРґРµР»РёС‚СЊ РёРЅРёС†РёР°С‚РёРІСѓ)
         return null;
     }
     
@@ -38,7 +38,7 @@ public class CombatServiceImpl implements CombatService {
     public CombatState getCombatState(UUID combatId) {
         log.info("Getting combat state: {}", combatId);
         
-        // TODO: Полная реализация (загрузить состояние из БД, собрать DTO)
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (Р·Р°РіСЂСѓР·РёС‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ РёР· Р‘Р”, СЃРѕР±СЂР°С‚СЊ DTO)
         return null;
     }
     
@@ -47,7 +47,7 @@ public class CombatServiceImpl implements CombatService {
     public CombatState performCombatAction(UUID combatId, PerformCombatActionRequest request) {
         log.info("Performing combat action in combat: {}", combatId);
         
-        // TODO: Полная реализация (выполнить действие, обновить состояние, добавить в лог)
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (РІС‹РїРѕР»РЅРёС‚СЊ РґРµР№СЃС‚РІРёРµ, РѕР±РЅРѕРІРёС‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ, РґРѕР±Р°РІРёС‚СЊ РІ Р»РѕРі)
         return null;
     }
     
@@ -56,7 +56,7 @@ public class CombatServiceImpl implements CombatService {
     public GetAvailableActions200Response getAvailableActions(UUID combatId, UUID characterId) {
         log.info("Getting available actions for character: {} in combat: {}", characterId, combatId);
         
-        // TODO: Полная реализация (определить доступные действия на основе состояния)
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (РѕРїСЂРµРґРµР»РёС‚СЊ РґРѕСЃС‚СѓРїРЅС‹Рµ РґРµР№СЃС‚РІРёСЏ РЅР° РѕСЃРЅРѕРІРµ СЃРѕСЃС‚РѕСЏРЅРёСЏ)
         return null;
     }
     
@@ -65,7 +65,7 @@ public class CombatServiceImpl implements CombatService {
     public FleeCombat200Response fleeCombat(UUID combatId, FleeCombatRequest request) {
         log.info("Attempting to flee from combat: {}", combatId);
         
-        // TODO: Полная реализация (проверка возможности побега, завершение боя)
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (РїСЂРѕРІРµСЂРєР° РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё РїРѕР±РµРіР°, Р·Р°РІРµСЂС€РµРЅРёРµ Р±РѕСЏ)
         return null;
     }
     
@@ -74,7 +74,7 @@ public class CombatServiceImpl implements CombatService {
     public CombatResult getCombatResult(UUID combatId) {
         log.info("Getting combat result: {}", combatId);
         
-        // TODO: Полная реализация (загрузить результат завершенного боя)
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (Р·Р°РіСЂСѓР·РёС‚СЊ СЂРµР·СѓР»СЊС‚Р°С‚ Р·Р°РІРµСЂС€РµРЅРЅРѕРіРѕ Р±РѕСЏ)
         return null;
     }
 }

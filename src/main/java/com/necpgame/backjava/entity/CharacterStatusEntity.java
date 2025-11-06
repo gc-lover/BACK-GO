@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * CharacterStatusEntity - текущий статус персонажа (здоровье, энергия, человечность, опыт).
+ * CharacterStatusEntity - С‚РµРєСѓС‰РёР№ СЃС‚Р°С‚СѓСЃ РїРµСЂСЃРѕРЅР°Р¶Р° (Р·РґРѕСЂРѕРІСЊРµ, СЌРЅРµСЂРіРёСЏ, С‡РµР»РѕРІРµС‡РЅРѕСЃС‚СЊ, РѕРїС‹С‚).
  * 
- * Источник: API-SWAGGER/api/v1/characters/status.yaml (CharacterStatus schema)
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/characters/status.yaml (CharacterStatus schema)
  */
 @Entity
 @Table(name = "character_status", indexes = {

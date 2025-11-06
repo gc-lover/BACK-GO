@@ -58,11 +58,11 @@ public class ConnectedLocation {
   }
 
   /**
-   * ID локации
+   * ID Р»РѕРєР°С†РёРё
    * @return id
    */
   @NotNull 
-  @Schema(name = "id", example = "watson_kabuki", description = "ID локации", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "id", example = "watson_kabuki", description = "ID Р»РѕРєР°С†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("id")
   public String getId() {
     return id;
@@ -78,11 +78,11 @@ public class ConnectedLocation {
   }
 
   /**
-   * Название локации
+   * РќР°Р·РІР°РЅРёРµ Р»РѕРєР°С†РёРё
    * @return name
    */
   @NotNull 
-  @Schema(name = "name", example = "Watson - Kabuki", description = "Название локации", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "name", example = "Watson - Kabuki", description = "РќР°Р·РІР°РЅРёРµ Р»РѕРєР°С†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -98,11 +98,11 @@ public class ConnectedLocation {
   }
 
   /**
-   * Расстояние до локации
+   * Р Р°СЃСЃС‚РѕСЏРЅРёРµ РґРѕ Р»РѕРєР°С†РёРё
    * @return distance
    */
   @NotNull 
-  @Schema(name = "distance", example = "2.5 km", description = "Расстояние до локации", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "distance", example = "2.5 km", description = "Р Р°СЃСЃС‚РѕСЏРЅРёРµ РґРѕ Р»РѕРєР°С†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("distance")
   public String getDistance() {
     return distance;
@@ -118,11 +118,11 @@ public class ConnectedLocation {
   }
 
   /**
-   * Время пути пешком в минутах
+   * Р’СЂРµРјСЏ РїСѓС‚Рё РїРµС€РєРѕРј РІ РјРёРЅСѓС‚Р°С…
    * @return travelTime
    */
   @NotNull 
-  @Schema(name = "travelTime", example = "30", description = "Время пути пешком в минутах", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "travelTime", example = "30", description = "Р’СЂРµРјСЏ РїСѓС‚Рё РїРµС€РєРѕРј РІ РјРёРЅСѓС‚Р°С…", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("travelTime")
   public Integer getTravelTime() {
     return travelTime;
@@ -138,11 +138,11 @@ public class ConnectedLocation {
   }
 
   /**
-   * Доступна ли локация для персонажа
+   * Р”РѕСЃС‚СѓРїРЅР° Р»Рё Р»РѕРєР°С†РёСЏ РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°
    * @return accessible
    */
   @NotNull 
-  @Schema(name = "accessible", example = "true", description = "Доступна ли локация для персонажа", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "accessible", example = "true", description = "Р”РѕСЃС‚СѓРїРЅР° Р»Рё Р»РѕРєР°С†РёСЏ РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("accessible")
   public Boolean getAccessible() {
     return accessible;
@@ -178,11 +178,11 @@ public class ConnectedLocation {
   }
 
   /**
-   * Доступно ли быстрое перемещение
+   * Р”РѕСЃС‚СѓРїРЅРѕ Р»Рё Р±С‹СЃС‚СЂРѕРµ РїРµСЂРµРјРµС‰РµРЅРёРµ
    * @return fastTravelAvailable
    */
   
-  @Schema(name = "fastTravelAvailable", example = "false", description = "Доступно ли быстрое перемещение", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "fastTravelAvailable", example = "false", description = "Р”РѕСЃС‚СѓРїРЅРѕ Р»Рё Р±С‹СЃС‚СЂРѕРµ РїРµСЂРµРјРµС‰РµРЅРёРµ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("fastTravelAvailable")
   public @Nullable Boolean getFastTravelAvailable() {
     return fastTravelAvailable;

@@ -49,17 +49,17 @@ public interface EventsApi {
 
     String PATH_GET_ACTIVE_EVENTS = "/events/active";
     /**
-     * GET /events/active : Активные события
+     * GET /events/active : РђРєС‚РёРІРЅС‹Рµ СЃРѕР±С‹С‚РёСЏ
      *
      * @param characterId  (required)
-     * @return Список активных событий (status code 200)
+     * @return РЎРїРёСЃРѕРє Р°РєС‚РёРІРЅС‹С… СЃРѕР±С‹С‚РёР№ (status code 200)
      */
     @Operation(
         operationId = "getActiveEvents",
-        summary = "Активные события",
+        summary = "РђРєС‚РёРІРЅС‹Рµ СЃРѕР±С‹С‚РёСЏ",
         tags = { "Events" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Список активных событий", content = {
+            @ApiResponse(responseCode = "200", description = "РЎРїРёСЃРѕРє Р°РєС‚РёРІРЅС‹С… СЃРѕР±С‹С‚РёР№", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GetActiveEvents200Response.class))
             })
         },
@@ -91,19 +91,19 @@ public interface EventsApi {
 
     String PATH_GET_RANDOM_EVENT = "/events/random";
     /**
-     * GET /events/random : Получить случайное событие
+     * GET /events/random : РџРѕР»СѓС‡РёС‚СЊ СЃР»СѓС‡Р°Р№РЅРѕРµ СЃРѕР±С‹С‚РёРµ
      *
      * @param characterId  (required)
      * @param locationId  (optional)
      * @param context  (optional)
-     * @return Случайное событие (status code 200)
+     * @return РЎР»СѓС‡Р°Р№РЅРѕРµ СЃРѕР±С‹С‚РёРµ (status code 200)
      */
     @Operation(
         operationId = "getRandomEvent",
-        summary = "Получить случайное событие",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ СЃР»СѓС‡Р°Р№РЅРѕРµ СЃРѕР±С‹С‚РёРµ",
         tags = { "Events" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Случайное событие", content = {
+            @ApiResponse(responseCode = "200", description = "РЎР»СѓС‡Р°Р№РЅРѕРµ СЃРѕР±С‹С‚РёРµ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = RandomEvent.class))
             })
         },
@@ -137,18 +137,18 @@ public interface EventsApi {
 
     String PATH_RESPOND_TO_EVENT = "/events/{eventId}/respond";
     /**
-     * POST /events/{eventId}/respond : Ответить на событие
+     * POST /events/{eventId}/respond : РћС‚РІРµС‚РёС‚СЊ РЅР° СЃРѕР±С‹С‚РёРµ
      *
      * @param eventId  (required)
      * @param respondToEventRequest  (optional)
-     * @return Результат выбора (status code 200)
+     * @return Р РµР·СѓР»СЊС‚Р°С‚ РІС‹Р±РѕСЂР° (status code 200)
      */
     @Operation(
         operationId = "respondToEvent",
-        summary = "Ответить на событие",
+        summary = "РћС‚РІРµС‚РёС‚СЊ РЅР° СЃРѕР±С‹С‚РёРµ",
         tags = { "Events" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Результат выбора", content = {
+            @ApiResponse(responseCode = "200", description = "Р РµР·СѓР»СЊС‚Р°С‚ РІС‹Р±РѕСЂР°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = EventResult.class))
             })
         },

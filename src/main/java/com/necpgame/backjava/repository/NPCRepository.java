@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * NPCRepository - репозиторий для работы с NPC.
+ * NPCRepository - СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ NPC.
  */
 @Repository
 public interface NPCRepository extends JpaRepository<NPCEntity, String> {
 
     /**
-     * Найти NPC по ID.
+     * РќР°Р№С‚Рё NPC РїРѕ ID.
      *
      * @param id ID NPC
      * @return NPC
@@ -22,34 +22,34 @@ public interface NPCRepository extends JpaRepository<NPCEntity, String> {
     Optional<NPCEntity> findById(String id);
 
     /**
-     * Найти всех NPC в локации.
+     * РќР°Р№С‚Рё РІСЃРµС… NPC РІ Р»РѕРєР°С†РёРё.
      *
-     * @param locationId ID локации
-     * @return список NPC
+     * @param locationId ID Р»РѕРєР°С†РёРё
+     * @return СЃРїРёСЃРѕРє NPC
      */
     List<NPCEntity> findByLocationId(String locationId);
 
     /**
-     * Найти всех NPC определенного типа.
+     * РќР°Р№С‚Рё РІСЃРµС… NPC РѕРїСЂРµРґРµР»РµРЅРЅРѕРіРѕ С‚РёРїР°.
      *
-     * @param type тип NPC
-     * @return список NPC
+     * @param type С‚РёРї NPC
+     * @return СЃРїРёСЃРѕРє NPC
      */
     List<NPCEntity> findByType(NPCEntity.NPCType type);
 
     /**
-     * Найти всех NPC фракции.
+     * РќР°Р№С‚Рё РІСЃРµС… NPC С„СЂР°РєС†РёРё.
      *
-     * @param faction фракция
-     * @return список NPC
+     * @param faction С„СЂР°РєС†РёСЏ
+     * @return СЃРїРёСЃРѕРє NPC
      */
     List<NPCEntity> findByFaction(String faction);
 
     /**
-     * Найти всех квестодателей в локации.
+     * РќР°Р№С‚Рё РІСЃРµС… РєРІРµСЃС‚РѕРґР°С‚РµР»РµР№ РІ Р»РѕРєР°С†РёРё.
      *
-     * @param locationId ID локации
-     * @return список квестодателей
+     * @param locationId ID Р»РѕРєР°С†РёРё
+     * @return СЃРїРёСЃРѕРє РєРІРµСЃС‚РѕРґР°С‚РµР»РµР№
      */
     default List<NPCEntity> findQuestGiversInLocation(String locationId) {
         return findByLocationId(locationId).stream()

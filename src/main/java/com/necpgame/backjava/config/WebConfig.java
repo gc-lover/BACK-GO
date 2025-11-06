@@ -5,8 +5,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * Конфигурация Web MVC
- * Настройка CORS для фронтенда
+ * РљРѕРЅС„РёРіСѓСЂР°С†РёСЏ Web MVC
+ * РќР°СЃС‚СЂРѕР№РєР° CORS РґР»СЏ С„СЂРѕРЅС‚РµРЅРґР°
  */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -16,9 +16,9 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
             .allowedOrigins(
                 "http://localhost:3000",      // React dev server
-                "http://localhost:3001",      // Vite dev server (альтернативный порт)
+                "http://localhost:3001",      // Vite dev server (Р°Р»СЊС‚РµСЂРЅР°С‚РёРІРЅС‹Р№ РїРѕСЂС‚)
                 "http://localhost:5173",      // Vite dev server
-                "http://localhost:5174",      // Vite dev server (альтернативный порт)
+                "http://localhost:5174",      // Vite dev server (Р°Р»СЊС‚РµСЂРЅР°С‚РёРІРЅС‹Р№ РїРѕСЂС‚)
                 "http://127.0.0.1:3000",      // React dev server (127.0.0.1)
                 "http://127.0.0.1:3001",      // Vite dev server (127.0.0.1)
                 "http://127.0.0.1:5173",      // Vite dev server (127.0.0.1)
@@ -27,7 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
             .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
             .allowedHeaders("*")
             .allowCredentials(true)
-            .maxAge(3600);  // Кеш preflight запросов на 1 час
+            .maxAge(3600);  // РљРµС€ preflight Р·Р°РїСЂРѕСЃРѕРІ РЅР° 1 С‡Р°СЃ
     }
 }
 

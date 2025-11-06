@@ -56,59 +56,59 @@ public interface InventoryApi {
 
     String PATH_DROP_ITEM = "/inventory/drop";
     /**
-     * DELETE /inventory/drop : Выбросить предмет
-     * Удаляет предмет из инвентаря персонажа (выбрасывает).  **Бизнес-логика:** - Проверяет наличие предмета в инвентаре - Проверяет, что предмет не экипирован - Проверяет, что предмет не квестовый (нельзя выбросить) - Удаляет предмет (или уменьшает количество, если stackable)  **Источник:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Раздел 3.1) 
+     * DELETE /inventory/drop : Р’С‹Р±СЂРѕСЃРёС‚СЊ РїСЂРµРґРјРµС‚
+     * РЈРґР°Р»СЏРµС‚ РїСЂРµРґРјРµС‚ РёР· РёРЅРІРµРЅС‚Р°СЂСЏ РїРµСЂСЃРѕРЅР°Р¶Р° (РІС‹Р±СЂР°СЃС‹РІР°РµС‚).  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РїСЂРµРґРјРµС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂРµ - РџСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ РїСЂРµРґРјРµС‚ РЅРµ СЌРєРёРїРёСЂРѕРІР°РЅ - РџСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ РїСЂРµРґРјРµС‚ РЅРµ РєРІРµСЃС‚РѕРІС‹Р№ (РЅРµР»СЊР·СЏ РІС‹Р±СЂРѕСЃРёС‚СЊ) - РЈРґР°Р»СЏРµС‚ РїСЂРµРґРјРµС‚ (РёР»Рё СѓРјРµРЅСЊС€Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ, РµСЃР»Рё stackable)  **РСЃС‚РѕС‡РЅРёРє:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Р Р°Р·РґРµР» 3.1) 
      *
-     * @param characterId ID персонажа (required)
-     * @param itemId ID предмета для выбрасывания (required)
-     * @param quantity Количество предметов для выбрасывания (для stackable) (optional, default to 1)
-     * @return Предмет успешно выброшен (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно.  (status code 403)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р° (required)
+     * @param itemId ID РїСЂРµРґРјРµС‚Р° РґР»СЏ РІС‹Р±СЂР°СЃС‹РІР°РЅРёСЏ (required)
+     * @param quantity РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРµРґРјРµС‚РѕРІ РґР»СЏ РІС‹Р±СЂР°СЃС‹РІР°РЅРёСЏ (РґР»СЏ stackable) (optional, default to 1)
+     * @return РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ РІС‹Р±СЂРѕС€РµРЅ (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ.  (status code 403)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
      */
     @Operation(
         operationId = "dropItem",
-        summary = "Выбросить предмет",
-        description = "Удаляет предмет из инвентаря персонажа (выбрасывает).  **Бизнес-логика:** - Проверяет наличие предмета в инвентаре - Проверяет, что предмет не экипирован - Проверяет, что предмет не квестовый (нельзя выбросить) - Удаляет предмет (или уменьшает количество, если stackable)  **Источник:** `.BRAIN/05-technical/ui-main-game.md` (Раздел 3.1) ",
+        summary = "Р’С‹Р±СЂРѕСЃРёС‚СЊ РїСЂРµРґРјРµС‚",
+        description = "РЈРґР°Р»СЏРµС‚ РїСЂРµРґРјРµС‚ РёР· РёРЅРІРµРЅС‚Р°СЂСЏ РїРµСЂСЃРѕРЅР°Р¶Р° (РІС‹Р±СЂР°СЃС‹РІР°РµС‚).  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РїСЂРµРґРјРµС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂРµ - РџСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ РїСЂРµРґРјРµС‚ РЅРµ СЌРєРёРїРёСЂРѕРІР°РЅ - РџСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ РїСЂРµРґРјРµС‚ РЅРµ РєРІРµСЃС‚РѕРІС‹Р№ (РЅРµР»СЊР·СЏ РІС‹Р±СЂРѕСЃРёС‚СЊ) - РЈРґР°Р»СЏРµС‚ РїСЂРµРґРјРµС‚ (РёР»Рё СѓРјРµРЅСЊС€Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ, РµСЃР»Рё stackable)  **РСЃС‚РѕС‡РЅРёРє:** `.BRAIN/05-technical/ui-main-game.md` (Р Р°Р·РґРµР» 3.1) ",
         tags = { "Inventory" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Предмет успешно выброшен", content = {
+            @ApiResponse(responseCode = "200", description = "РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ РІС‹Р±СЂРѕС€РµРЅ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = DropItem200Response.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "403", description = "У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно. ", content = {
+            @ApiResponse(responseCode = "403", description = "РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"Недостаточно прав для выполнения операции\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
@@ -124,34 +124,34 @@ public interface InventoryApi {
         produces = { "application/json" }
     )
     default ResponseEntity<DropItem200Response> dropItem(
-        @NotNull @Parameter(name = "characterId", description = "ID персонажа", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "characterId", required = true) UUID characterId,
-        @NotNull @Parameter(name = "itemId", description = "ID предмета для выбрасывания", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "itemId", required = true) String itemId,
-        @Min(value = 1) @Parameter(name = "quantity", description = "Количество предметов для выбрасывания (для stackable)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer quantity
+        @NotNull @Parameter(name = "characterId", description = "ID РїРµСЂСЃРѕРЅР°Р¶Р°", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "characterId", required = true) UUID characterId,
+        @NotNull @Parameter(name = "itemId", description = "ID РїСЂРµРґРјРµС‚Р° РґР»СЏ РІС‹Р±СЂР°СЃС‹РІР°РЅРёСЏ", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "itemId", required = true) String itemId,
+        @Min(value = 1) @Parameter(name = "quantity", description = "РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРµРґРјРµС‚РѕРІ РґР»СЏ РІС‹Р±СЂР°СЃС‹РІР°РЅРёСЏ (РґР»СЏ stackable)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer quantity
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"success\" : true, \"message\" : \"Предмет успешно выброшен\" }";
+                    String exampleString = "{ \"success\" : true, \"message\" : \"РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ РІС‹Р±СЂРѕС€РµРЅ\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -164,57 +164,57 @@ public interface InventoryApi {
 
     String PATH_EQUIP_ITEM = "/inventory/equip";
     /**
-     * POST /inventory/equip : Экипировать предмет
-     * Экипирует предмет из инвентаря в соответствующий слот экипировки.  **Бизнес-логика:** - Проверяет наличие предмета в инвентаре - Проверяет требования для экипировки (уровень, характеристики) - Если слот занят - автоматически снимает текущий предмет - Применяет бонусы от нового предмета  **Источник:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Раздел 3.1) 
+     * POST /inventory/equip : Р­РєРёРїРёСЂРѕРІР°С‚СЊ РїСЂРµРґРјРµС‚
+     * Р­РєРёРїРёСЂСѓРµС‚ РїСЂРµРґРјРµС‚ РёР· РёРЅРІРµРЅС‚Р°СЂСЏ РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёР№ СЃР»РѕС‚ СЌРєРёРїРёСЂРѕРІРєРё.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РїСЂРµРґРјРµС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂРµ - РџСЂРѕРІРµСЂСЏРµС‚ С‚СЂРµР±РѕРІР°РЅРёСЏ РґР»СЏ СЌРєРёРїРёСЂРѕРІРєРё (СѓСЂРѕРІРµРЅСЊ, С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё) - Р•СЃР»Рё СЃР»РѕС‚ Р·Р°РЅСЏС‚ - Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё СЃРЅРёРјР°РµС‚ С‚РµРєСѓС‰РёР№ РїСЂРµРґРјРµС‚ - РџСЂРёРјРµРЅСЏРµС‚ Р±РѕРЅСѓСЃС‹ РѕС‚ РЅРѕРІРѕРіРѕ РїСЂРµРґРјРµС‚Р°  **РСЃС‚РѕС‡РЅРёРє:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Р Р°Р·РґРµР» 3.1) 
      *
      * @param equipRequest  (required)
-     * @return Предмет успешно экипирован (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно.  (status code 403)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     * @return РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ СЌРєРёРїРёСЂРѕРІР°РЅ (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ.  (status code 403)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
      */
     @Operation(
         operationId = "equipItem",
-        summary = "Экипировать предмет",
-        description = "Экипирует предмет из инвентаря в соответствующий слот экипировки.  **Бизнес-логика:** - Проверяет наличие предмета в инвентаре - Проверяет требования для экипировки (уровень, характеристики) - Если слот занят - автоматически снимает текущий предмет - Применяет бонусы от нового предмета  **Источник:** `.BRAIN/05-technical/ui-main-game.md` (Раздел 3.1) ",
+        summary = "Р­РєРёРїРёСЂРѕРІР°С‚СЊ РїСЂРµРґРјРµС‚",
+        description = "Р­РєРёРїРёСЂСѓРµС‚ РїСЂРµРґРјРµС‚ РёР· РёРЅРІРµРЅС‚Р°СЂСЏ РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёР№ СЃР»РѕС‚ СЌРєРёРїРёСЂРѕРІРєРё.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РїСЂРµРґРјРµС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂРµ - РџСЂРѕРІРµСЂСЏРµС‚ С‚СЂРµР±РѕРІР°РЅРёСЏ РґР»СЏ СЌРєРёРїРёСЂРѕРІРєРё (СѓСЂРѕРІРµРЅСЊ, С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё) - Р•СЃР»Рё СЃР»РѕС‚ Р·Р°РЅСЏС‚ - Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё СЃРЅРёРјР°РµС‚ С‚РµРєСѓС‰РёР№ РїСЂРµРґРјРµС‚ - РџСЂРёРјРµРЅСЏРµС‚ Р±РѕРЅСѓСЃС‹ РѕС‚ РЅРѕРІРѕРіРѕ РїСЂРµРґРјРµС‚Р°  **РСЃС‚РѕС‡РЅРёРє:** `.BRAIN/05-technical/ui-main-game.md` (Р Р°Р·РґРµР» 3.1) ",
         tags = { "Inventory", "Equipment" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Предмет успешно экипирован", content = {
+            @ApiResponse(responseCode = "200", description = "РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ СЌРєРёРїРёСЂРѕРІР°РЅ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = EquipItem200Response.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "403", description = "У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно. ", content = {
+            @ApiResponse(responseCode = "403", description = "РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"Недостаточно прав для выполнения операции\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
@@ -236,27 +236,27 @@ public interface InventoryApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"success\" : true, \"equipment\" : { \"slotName\" : \"Основное оружие\", \"item\" : { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"Стандартный пистолет калибра 10мм\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" }, \"slotType\" : \"weapon_primary\", \"isEmpty\" : false, \"bonuses\" : { \"damage\" : 25, \"accuracy\" : 10 } }, \"unequippedItem\" : { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"Стандартный пистолет калибра 10мм\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" }, \"message\" : \"Предмет успешно экипирован\" }";
+                    String exampleString = "{ \"success\" : true, \"equipment\" : { \"slotName\" : \"РћСЃРЅРѕРІРЅРѕРµ РѕСЂСѓР¶РёРµ\", \"item\" : { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРёСЃС‚РѕР»РµС‚ РєР°Р»РёР±СЂР° 10РјРј\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" }, \"slotType\" : \"weapon_primary\", \"isEmpty\" : false, \"bonuses\" : { \"damage\" : 25, \"accuracy\" : 10 } }, \"unequippedItem\" : { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРёСЃС‚РѕР»РµС‚ РєР°Р»РёР±СЂР° 10РјРј\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" }, \"message\" : \"РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ СЌРєРёРїРёСЂРѕРІР°РЅ\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -269,37 +269,37 @@ public interface InventoryApi {
 
     String PATH_GET_EQUIPMENT = "/inventory/equipment";
     /**
-     * GET /inventory/equipment : Получить экипировку персонажа
-     * Возвращает текущую экипировку персонажа (все слоты с предметами).  **Бизнес-логика:** - Возвращает все слоты экипировки - Показывает какие слоты заняты и какие свободны - Возвращает бонусы от экипированных предметов  **Источник:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Раздел 3.1) 
+     * GET /inventory/equipment : РџРѕР»СѓС‡РёС‚СЊ СЌРєРёРїРёСЂРѕРІРєСѓ РїРµСЂСЃРѕРЅР°Р¶Р°
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰СѓСЋ СЌРєРёРїРёСЂРѕРІРєСѓ РїРµСЂСЃРѕРЅР°Р¶Р° (РІСЃРµ СЃР»РѕС‚С‹ СЃ РїСЂРµРґРјРµС‚Р°РјРё).  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - Р’РѕР·РІСЂР°С‰Р°РµС‚ РІСЃРµ СЃР»РѕС‚С‹ СЌРєРёРїРёСЂРѕРІРєРё - РџРѕРєР°Р·С‹РІР°РµС‚ РєР°РєРёРµ СЃР»РѕС‚С‹ Р·Р°РЅСЏС‚С‹ Рё РєР°РєРёРµ СЃРІРѕР±РѕРґРЅС‹ - Р’РѕР·РІСЂР°С‰Р°РµС‚ Р±РѕРЅСѓСЃС‹ РѕС‚ СЌРєРёРїРёСЂРѕРІР°РЅРЅС‹С… РїСЂРµРґРјРµС‚РѕРІ  **РСЃС‚РѕС‡РЅРёРє:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Р Р°Р·РґРµР» 3.1) 
      *
-     * @param characterId ID персонажа (required)
-     * @return Экипировка персонажа (status code 200)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р° (required)
+     * @return Р­РєРёРїРёСЂРѕРІРєР° РїРµСЂСЃРѕРЅР°Р¶Р° (status code 200)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
      */
     @Operation(
         operationId = "getEquipment",
-        summary = "Получить экипировку персонажа",
-        description = "Возвращает текущую экипировку персонажа (все слоты с предметами).  **Бизнес-логика:** - Возвращает все слоты экипировки - Показывает какие слоты заняты и какие свободны - Возвращает бонусы от экипированных предметов  **Источник:** `.BRAIN/05-technical/ui-main-game.md` (Раздел 3.1) ",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ СЌРєРёРїРёСЂРѕРІРєСѓ РїРµСЂСЃРѕРЅР°Р¶Р°",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰СѓСЋ СЌРєРёРїРёСЂРѕРІРєСѓ РїРµСЂСЃРѕРЅР°Р¶Р° (РІСЃРµ СЃР»РѕС‚С‹ СЃ РїСЂРµРґРјРµС‚Р°РјРё).  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - Р’РѕР·РІСЂР°С‰Р°РµС‚ РІСЃРµ СЃР»РѕС‚С‹ СЌРєРёРїРёСЂРѕРІРєРё - РџРѕРєР°Р·С‹РІР°РµС‚ РєР°РєРёРµ СЃР»РѕС‚С‹ Р·Р°РЅСЏС‚С‹ Рё РєР°РєРёРµ СЃРІРѕР±РѕРґРЅС‹ - Р’РѕР·РІСЂР°С‰Р°РµС‚ Р±РѕРЅСѓСЃС‹ РѕС‚ СЌРєРёРїРёСЂРѕРІР°РЅРЅС‹С… РїСЂРµРґРјРµС‚РѕРІ  **РСЃС‚РѕС‡РЅРёРє:** `.BRAIN/05-technical/ui-main-game.md` (Р Р°Р·РґРµР» 3.1) ",
         tags = { "Inventory", "Equipment" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Экипировка персонажа", content = {
+            @ApiResponse(responseCode = "200", description = "Р­РєРёРїРёСЂРѕРІРєР° РїРµСЂСЃРѕРЅР°Р¶Р°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GetEquipment200Response.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
@@ -315,22 +315,22 @@ public interface InventoryApi {
         produces = { "application/json" }
     )
     default ResponseEntity<GetEquipment200Response> getEquipment(
-        @NotNull @Parameter(name = "characterId", description = "ID персонажа", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "characterId", required = true) UUID characterId
+        @NotNull @Parameter(name = "characterId", description = "ID РїРµСЂСЃРѕРЅР°Р¶Р°", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "characterId", required = true) UUID characterId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"slots\" : [ { \"slotName\" : \"Основное оружие\", \"item\" : { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"Стандартный пистолет калибра 10мм\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" }, \"slotType\" : \"weapon_primary\", \"isEmpty\" : false, \"bonuses\" : { \"damage\" : 25, \"accuracy\" : 10 } }, { \"slotName\" : \"Основное оружие\", \"item\" : { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"Стандартный пистолет калибра 10мм\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" }, \"slotType\" : \"weapon_primary\", \"isEmpty\" : false, \"bonuses\" : { \"damage\" : 25, \"accuracy\" : 10 } } ], \"totalBonuses\" : { \"health\" : 50, \"armor\" : 25, \"damage\" : 15 } }";
+                    String exampleString = "{ \"slots\" : [ { \"slotName\" : \"РћСЃРЅРѕРІРЅРѕРµ РѕСЂСѓР¶РёРµ\", \"item\" : { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРёСЃС‚РѕР»РµС‚ РєР°Р»РёР±СЂР° 10РјРј\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" }, \"slotType\" : \"weapon_primary\", \"isEmpty\" : false, \"bonuses\" : { \"damage\" : 25, \"accuracy\" : 10 } }, { \"slotName\" : \"РћСЃРЅРѕРІРЅРѕРµ РѕСЂСѓР¶РёРµ\", \"item\" : { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРёСЃС‚РѕР»РµС‚ РєР°Р»РёР±СЂР° 10РјРј\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" }, \"slotType\" : \"weapon_primary\", \"isEmpty\" : false, \"bonuses\" : { \"damage\" : 25, \"accuracy\" : 10 } } ], \"totalBonuses\" : { \"health\" : 50, \"armor\" : 25, \"damage\" : 15 } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -343,38 +343,38 @@ public interface InventoryApi {
 
     String PATH_GET_INVENTORY = "/inventory";
     /**
-     * GET /inventory : Получить инвентарь персонажа
-     * Возвращает инвентарь персонажа со всеми предметами, весом и лимитом.  **Бизнес-логика:** - Возвращает все предметы в инвентаре - Группирует предметы по категориям - Складывает stackable предметы - Показывает текущий вес и лимит  **Источник:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Раздел 3.1) 
+     * GET /inventory : РџРѕР»СѓС‡РёС‚СЊ РёРЅРІРµРЅС‚Р°СЂСЊ РїРµСЂСЃРѕРЅР°Р¶Р°
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРЅРІРµРЅС‚Р°СЂСЊ РїРµСЂСЃРѕРЅР°Р¶Р° СЃРѕ РІСЃРµРјРё РїСЂРµРґРјРµС‚Р°РјРё, РІРµСЃРѕРј Рё Р»РёРјРёС‚РѕРј.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - Р’РѕР·РІСЂР°С‰Р°РµС‚ РІСЃРµ РїСЂРµРґРјРµС‚С‹ РІ РёРЅРІРµРЅС‚Р°СЂРµ - Р“СЂСѓРїРїРёСЂСѓРµС‚ РїСЂРµРґРјРµС‚С‹ РїРѕ РєР°С‚РµРіРѕСЂРёСЏРј - РЎРєР»Р°РґС‹РІР°РµС‚ stackable РїСЂРµРґРјРµС‚С‹ - РџРѕРєР°Р·С‹РІР°РµС‚ С‚РµРєСѓС‰РёР№ РІРµСЃ Рё Р»РёРјРёС‚  **РСЃС‚РѕС‡РЅРёРє:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Р Р°Р·РґРµР» 3.1) 
      *
-     * @param characterId ID персонажа (required)
-     * @param category Фильтр по категории предметов (optional)
-     * @return Инвентарь персонажа (status code 200)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р° (required)
+     * @param category Р¤РёР»СЊС‚СЂ РїРѕ РєР°С‚РµРіРѕСЂРёРё РїСЂРµРґРјРµС‚РѕРІ (optional)
+     * @return РРЅРІРµРЅС‚Р°СЂСЊ РїРµСЂСЃРѕРЅР°Р¶Р° (status code 200)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
      */
     @Operation(
         operationId = "getInventory",
-        summary = "Получить инвентарь персонажа",
-        description = "Возвращает инвентарь персонажа со всеми предметами, весом и лимитом.  **Бизнес-логика:** - Возвращает все предметы в инвентаре - Группирует предметы по категориям - Складывает stackable предметы - Показывает текущий вес и лимит  **Источник:** `.BRAIN/05-technical/ui-main-game.md` (Раздел 3.1) ",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ РёРЅРІРµРЅС‚Р°СЂСЊ РїРµСЂСЃРѕРЅР°Р¶Р°",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРЅРІРµРЅС‚Р°СЂСЊ РїРµСЂСЃРѕРЅР°Р¶Р° СЃРѕ РІСЃРµРјРё РїСЂРµРґРјРµС‚Р°РјРё, РІРµСЃРѕРј Рё Р»РёРјРёС‚РѕРј.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - Р’РѕР·РІСЂР°С‰Р°РµС‚ РІСЃРµ РїСЂРµРґРјРµС‚С‹ РІ РёРЅРІРµРЅС‚Р°СЂРµ - Р“СЂСѓРїРїРёСЂСѓРµС‚ РїСЂРµРґРјРµС‚С‹ РїРѕ РєР°С‚РµРіРѕСЂРёСЏРј - РЎРєР»Р°РґС‹РІР°РµС‚ stackable РїСЂРµРґРјРµС‚С‹ - РџРѕРєР°Р·С‹РІР°РµС‚ С‚РµРєСѓС‰РёР№ РІРµСЃ Рё Р»РёРјРёС‚  **РСЃС‚РѕС‡РЅРёРє:** `.BRAIN/05-technical/ui-main-game.md` (Р Р°Р·РґРµР» 3.1) ",
         tags = { "Inventory" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Инвентарь персонажа", content = {
+            @ApiResponse(responseCode = "200", description = "РРЅРІРµРЅС‚Р°СЂСЊ РїРµСЂСЃРѕРЅР°Р¶Р°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryResponse.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
@@ -390,23 +390,23 @@ public interface InventoryApi {
         produces = { "application/json" }
     )
     default ResponseEntity<InventoryResponse> getInventory(
-        @NotNull @Parameter(name = "characterId", description = "ID персонажа", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "characterId", required = true) UUID characterId,
-        @Parameter(name = "category", description = "Фильтр по категории предметов", in = ParameterIn.QUERY) @Valid @RequestParam(value = "category", required = false) @Nullable ItemCategory category
+        @NotNull @Parameter(name = "characterId", description = "ID РїРµСЂСЃРѕРЅР°Р¶Р°", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "characterId", required = true) UUID characterId,
+        @Parameter(name = "category", description = "Р¤РёР»СЊС‚СЂ РїРѕ РєР°С‚РµРіРѕСЂРёРё РїСЂРµРґРјРµС‚РѕРІ", in = ParameterIn.QUERY) @Valid @RequestParam(value = "category", required = false) @Nullable ItemCategory category
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"currentWeight\" : 45.5, \"maxWeight\" : 100.0, \"categories\" : { \"weapons\" : 3, \"armor\" : 5, \"consumables\" : 10 }, \"items\" : [ { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"Стандартный пистолет калибра 10мм\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" }, { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"Стандартный пистолет калибра 10мм\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" } ] }";
+                    String exampleString = "{ \"currentWeight\" : 45.5, \"maxWeight\" : 100.0, \"categories\" : { \"weapons\" : 3, \"armor\" : 5, \"consumables\" : 10 }, \"items\" : [ { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРёСЃС‚РѕР»РµС‚ РєР°Р»РёР±СЂР° 10РјРј\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" }, { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРёСЃС‚РѕР»РµС‚ РєР°Р»РёР±СЂР° 10РјРј\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -419,57 +419,57 @@ public interface InventoryApi {
 
     String PATH_UNEQUIP_ITEM = "/inventory/unequip";
     /**
-     * POST /inventory/unequip : Снять экипированный предмет
-     * Снимает предмет из слота экипировки и помещает в инвентарь.  **Бизнес-логика:** - Проверяет, что слот занят - Проверяет наличие места в инвентаре (вес) - Снимает бонусы от предмета - Помещает предмет в инвентарь  **Источник:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Раздел 3.1) 
+     * POST /inventory/unequip : РЎРЅСЏС‚СЊ СЌРєРёРїРёСЂРѕРІР°РЅРЅС‹Р№ РїСЂРµРґРјРµС‚
+     * РЎРЅРёРјР°РµС‚ РїСЂРµРґРјРµС‚ РёР· СЃР»РѕС‚Р° СЌРєРёРїРёСЂРѕРІРєРё Рё РїРѕРјРµС‰Р°РµС‚ РІ РёРЅРІРµРЅС‚Р°СЂСЊ.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - РџСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ СЃР»РѕС‚ Р·Р°РЅСЏС‚ - РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РјРµСЃС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂРµ (РІРµСЃ) - РЎРЅРёРјР°РµС‚ Р±РѕРЅСѓСЃС‹ РѕС‚ РїСЂРµРґРјРµС‚Р° - РџРѕРјРµС‰Р°РµС‚ РїСЂРµРґРјРµС‚ РІ РёРЅРІРµРЅС‚Р°СЂСЊ  **РСЃС‚РѕС‡РЅРёРє:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Р Р°Р·РґРµР» 3.1) 
      *
      * @param unequipItemRequest  (required)
-     * @return Предмет успешно снят (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно.  (status code 403)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     * @return РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ СЃРЅСЏС‚ (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ.  (status code 403)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
      */
     @Operation(
         operationId = "unequipItem",
-        summary = "Снять экипированный предмет",
-        description = "Снимает предмет из слота экипировки и помещает в инвентарь.  **Бизнес-логика:** - Проверяет, что слот занят - Проверяет наличие места в инвентаре (вес) - Снимает бонусы от предмета - Помещает предмет в инвентарь  **Источник:** `.BRAIN/05-technical/ui-main-game.md` (Раздел 3.1) ",
+        summary = "РЎРЅСЏС‚СЊ СЌРєРёРїРёСЂРѕРІР°РЅРЅС‹Р№ РїСЂРµРґРјРµС‚",
+        description = "РЎРЅРёРјР°РµС‚ РїСЂРµРґРјРµС‚ РёР· СЃР»РѕС‚Р° СЌРєРёРїРёСЂРѕРІРєРё Рё РїРѕРјРµС‰Р°РµС‚ РІ РёРЅРІРµРЅС‚Р°СЂСЊ.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - РџСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ СЃР»РѕС‚ Р·Р°РЅСЏС‚ - РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РјРµСЃС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂРµ (РІРµСЃ) - РЎРЅРёРјР°РµС‚ Р±РѕРЅСѓСЃС‹ РѕС‚ РїСЂРµРґРјРµС‚Р° - РџРѕРјРµС‰Р°РµС‚ РїСЂРµРґРјРµС‚ РІ РёРЅРІРµРЅС‚Р°СЂСЊ  **РСЃС‚РѕС‡РЅРёРє:** `.BRAIN/05-technical/ui-main-game.md` (Р Р°Р·РґРµР» 3.1) ",
         tags = { "Inventory", "Equipment" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Предмет успешно снят", content = {
+            @ApiResponse(responseCode = "200", description = "РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ СЃРЅСЏС‚", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = UnequipItem200Response.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "403", description = "У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно. ", content = {
+            @ApiResponse(responseCode = "403", description = "РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"Недостаточно прав для выполнения операции\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
@@ -491,27 +491,27 @@ public interface InventoryApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"item\" : { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"Стандартный пистолет калибра 10мм\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" }, \"success\" : true, \"message\" : \"Предмет успешно снят\" }";
+                    String exampleString = "{ \"item\" : { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРёСЃС‚РѕР»РµС‚ РєР°Р»РёР±СЂР° 10РјРј\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" }, \"success\" : true, \"message\" : \"РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ СЃРЅСЏС‚\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -524,57 +524,57 @@ public interface InventoryApi {
 
     String PATH_USE_ITEM = "/inventory/use";
     /**
-     * POST /inventory/use : Использовать предмет
-     * Использует предмет из инвентаря (медикаменты, расходники).  **Бизнес-логика:** - Проверяет наличие предмета в инвентаре - Проверяет, что предмет можно использовать - Применяет эффекты от предмета - Уменьшает количество на 1 (или удаляет, если был последний)  **Источник:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Раздел 3.1) 
+     * POST /inventory/use : РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїСЂРµРґРјРµС‚
+     * РСЃРїРѕР»СЊР·СѓРµС‚ РїСЂРµРґРјРµС‚ РёР· РёРЅРІРµРЅС‚Р°СЂСЏ (РјРµРґРёРєР°РјРµРЅС‚С‹, СЂР°СЃС…РѕРґРЅРёРєРё).  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РїСЂРµРґРјРµС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂРµ - РџСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ РїСЂРµРґРјРµС‚ РјРѕР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ - РџСЂРёРјРµРЅСЏРµС‚ СЌС„С„РµРєС‚С‹ РѕС‚ РїСЂРµРґРјРµС‚Р° - РЈРјРµРЅСЊС€Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ РЅР° 1 (РёР»Рё СѓРґР°Р»СЏРµС‚, РµСЃР»Рё Р±С‹Р» РїРѕСЃР»РµРґРЅРёР№)  **РСЃС‚РѕС‡РЅРёРє:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Р Р°Р·РґРµР» 3.1) 
      *
      * @param useItemRequest  (required)
-     * @return Предмет успешно использован (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно.  (status code 403)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     * @return РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅ (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ.  (status code 403)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
      */
     @Operation(
         operationId = "useItem",
-        summary = "Использовать предмет",
-        description = "Использует предмет из инвентаря (медикаменты, расходники).  **Бизнес-логика:** - Проверяет наличие предмета в инвентаре - Проверяет, что предмет можно использовать - Применяет эффекты от предмета - Уменьшает количество на 1 (или удаляет, если был последний)  **Источник:** `.BRAIN/05-technical/ui-main-game.md` (Раздел 3.1) ",
+        summary = "РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїСЂРµРґРјРµС‚",
+        description = "РСЃРїРѕР»СЊР·СѓРµС‚ РїСЂРµРґРјРµС‚ РёР· РёРЅРІРµРЅС‚Р°СЂСЏ (РјРµРґРёРєР°РјРµРЅС‚С‹, СЂР°СЃС…РѕРґРЅРёРєРё).  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РїСЂРµРґРјРµС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂРµ - РџСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ РїСЂРµРґРјРµС‚ РјРѕР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ - РџСЂРёРјРµРЅСЏРµС‚ СЌС„С„РµРєС‚С‹ РѕС‚ РїСЂРµРґРјРµС‚Р° - РЈРјРµРЅСЊС€Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ РЅР° 1 (РёР»Рё СѓРґР°Р»СЏРµС‚, РµСЃР»Рё Р±С‹Р» РїРѕСЃР»РµРґРЅРёР№)  **РСЃС‚РѕС‡РЅРёРє:** `.BRAIN/05-technical/ui-main-game.md` (Р Р°Р·РґРµР» 3.1) ",
         tags = { "Inventory" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Предмет успешно использован", content = {
+            @ApiResponse(responseCode = "200", description = "РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = UseItem200Response.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "403", description = "У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно. ", content = {
+            @ApiResponse(responseCode = "403", description = "РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"Недостаточно прав для выполнения операции\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
@@ -596,27 +596,27 @@ public interface InventoryApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"effects\" : [ { \"type\" : \"heal\", \"value\" : 50, \"description\" : \"Восстановлено 50 HP\" } ], \"success\" : true, \"message\" : \"Предмет успешно использован\" }";
+                    String exampleString = "{ \"effects\" : [ { \"type\" : \"heal\", \"value\" : 50, \"description\" : \"Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРѕ 50 HP\" } ], \"success\" : true, \"message\" : \"РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅ\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

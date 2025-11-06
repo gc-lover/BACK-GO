@@ -37,7 +37,7 @@ public class GameCharacter {
   private String name;
 
   /**
-   * Класс персонажа
+   * РљР»Р°СЃСЃ РїРµСЂСЃРѕРЅР°Р¶Р°
    */
   public enum PropertyClassEnum {
     SOLO("Solo"),
@@ -98,7 +98,7 @@ public class GameCharacter {
   private JsonNullable<String> subclass = JsonNullable.<String>undefined();
 
   /**
-   * Пол персонажа
+   * РџРѕР» РїРµСЂСЃРѕРЅР°Р¶Р°
    */
   public enum GenderEnum {
     MALE("male"),
@@ -137,7 +137,7 @@ public class GameCharacter {
   private GenderEnum gender;
 
   /**
-   * Происхождение персонажа
+   * РџСЂРѕРёСЃС…РѕР¶РґРµРЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°
    */
   public enum OriginEnum {
     STREET_KID("street_kid"),
@@ -220,11 +220,11 @@ public class GameCharacter {
   }
 
   /**
-   * Уникальный идентификатор персонажа
+   * РЈРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїРµСЂСЃРѕРЅР°Р¶Р°
    * @return id
    */
   @NotNull @Valid 
-  @Schema(name = "id", example = "550e8400-e29b-41d4-a716-446655440000", description = "Уникальный идентификатор персонажа", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "id", example = "550e8400-e29b-41d4-a716-446655440000", description = "РЈРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("id")
   public UUID getId() {
     return id;
@@ -240,11 +240,11 @@ public class GameCharacter {
   }
 
   /**
-   * Идентификатор аккаунта владельца
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ Р°РєРєР°СѓРЅС‚Р° РІР»Р°РґРµР»СЊС†Р°
    * @return accountId
    */
   @NotNull @Valid 
-  @Schema(name = "account_id", example = "550e8400-e29b-41d4-a716-446655440001", description = "Идентификатор аккаунта владельца", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "account_id", example = "550e8400-e29b-41d4-a716-446655440001", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ Р°РєРєР°СѓРЅС‚Р° РІР»Р°РґРµР»СЊС†Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("account_id")
   public UUID getAccountId() {
     return accountId;
@@ -260,11 +260,11 @@ public class GameCharacter {
   }
 
   /**
-   * Имя персонажа
+   * РРјСЏ РїРµСЂСЃРѕРЅР°Р¶Р°
    * @return name
    */
   @NotNull 
-  @Schema(name = "name", example = "John Doe", description = "Имя персонажа", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "name", example = "John Doe", description = "РРјСЏ РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -280,11 +280,11 @@ public class GameCharacter {
   }
 
   /**
-   * Класс персонажа
+   * РљР»Р°СЃСЃ РїРµСЂСЃРѕРЅР°Р¶Р°
    * @return propertyClass
    */
   @NotNull 
-  @Schema(name = "class", example = "Solo", description = "Класс персонажа", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "class", example = "Solo", description = "РљР»Р°СЃСЃ РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("class")
   public PropertyClassEnum getPropertyClass() {
     return propertyClass;
@@ -300,11 +300,11 @@ public class GameCharacter {
   }
 
   /**
-   * Подкласс персонажа
+   * РџРѕРґРєР»Р°СЃСЃ РїРµСЂСЃРѕРЅР°Р¶Р°
    * @return subclass
    */
   
-  @Schema(name = "subclass", description = "Подкласс персонажа", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "subclass", description = "РџРѕРґРєР»Р°СЃСЃ РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("subclass")
   public JsonNullable<String> getSubclass() {
     return subclass;
@@ -320,11 +320,11 @@ public class GameCharacter {
   }
 
   /**
-   * Пол персонажа
+   * РџРѕР» РїРµСЂСЃРѕРЅР°Р¶Р°
    * @return gender
    */
   @NotNull 
-  @Schema(name = "gender", example = "male", description = "Пол персонажа", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "gender", example = "male", description = "РџРѕР» РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("gender")
   public GenderEnum getGender() {
     return gender;
@@ -340,11 +340,11 @@ public class GameCharacter {
   }
 
   /**
-   * Происхождение персонажа
+   * РџСЂРѕРёСЃС…РѕР¶РґРµРЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°
    * @return origin
    */
   @NotNull 
-  @Schema(name = "origin", example = "street_kid", description = "Происхождение персонажа", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "origin", example = "street_kid", description = "РџСЂРѕРёСЃС…РѕР¶РґРµРЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("origin")
   public OriginEnum getOrigin() {
     return origin;
@@ -360,11 +360,11 @@ public class GameCharacter {
   }
 
   /**
-   * Идентификатор фракции
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С„СЂР°РєС†РёРё
    * @return factionId
    */
   @Valid 
-  @Schema(name = "faction_id", description = "Идентификатор фракции", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "faction_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С„СЂР°РєС†РёРё", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("faction_id")
   public JsonNullable<UUID> getFactionId() {
     return factionId;
@@ -380,11 +380,11 @@ public class GameCharacter {
   }
 
   /**
-   * Название фракции
+   * РќР°Р·РІР°РЅРёРµ С„СЂР°РєС†РёРё
    * @return factionName
    */
   
-  @Schema(name = "faction_name", description = "Название фракции", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "faction_name", description = "РќР°Р·РІР°РЅРёРµ С„СЂР°РєС†РёРё", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("faction_name")
   public JsonNullable<String> getFactionName() {
     return factionName;
@@ -400,11 +400,11 @@ public class GameCharacter {
   }
 
   /**
-   * Идентификатор стартового города
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃС‚Р°СЂС‚РѕРІРѕРіРѕ РіРѕСЂРѕРґР°
    * @return cityId
    */
   @NotNull @Valid 
-  @Schema(name = "city_id", example = "550e8400-e29b-41d4-a716-446655440000", description = "Идентификатор стартового города", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "city_id", example = "550e8400-e29b-41d4-a716-446655440000", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃС‚Р°СЂС‚РѕРІРѕРіРѕ РіРѕСЂРѕРґР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("city_id")
   public UUID getCityId() {
     return cityId;
@@ -420,11 +420,11 @@ public class GameCharacter {
   }
 
   /**
-   * Название стартового города
+   * РќР°Р·РІР°РЅРёРµ СЃС‚Р°СЂС‚РѕРІРѕРіРѕ РіРѕСЂРѕРґР°
    * @return cityName
    */
   @NotNull 
-  @Schema(name = "city_name", example = "Night City", description = "Название стартового города", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "city_name", example = "Night City", description = "РќР°Р·РІР°РЅРёРµ СЃС‚Р°СЂС‚РѕРІРѕРіРѕ РіРѕСЂРѕРґР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("city_name")
   public String getCityName() {
     return cityName;
@@ -460,12 +460,12 @@ public class GameCharacter {
   }
 
   /**
-   * Уровень персонажа
+   * РЈСЂРѕРІРµРЅСЊ РїРµСЂСЃРѕРЅР°Р¶Р°
    * minimum: 1
    * @return level
    */
   @NotNull @Min(value = 1) 
-  @Schema(name = "level", example = "1", description = "Уровень персонажа", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "level", example = "1", description = "РЈСЂРѕРІРµРЅСЊ РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("level")
   public Integer getLevel() {
     return level;
@@ -481,11 +481,11 @@ public class GameCharacter {
   }
 
   /**
-   * Дата создания персонажа
+   * Р”Р°С‚Р° СЃРѕР·РґР°РЅРёСЏ РїРµСЂСЃРѕРЅР°Р¶Р°
    * @return createdAt
    */
   @NotNull @Valid 
-  @Schema(name = "created_at", example = "2025-01-27T12:00Z", description = "Дата создания персонажа", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "created_at", example = "2025-01-27T12:00Z", description = "Р”Р°С‚Р° СЃРѕР·РґР°РЅРёСЏ РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("created_at")
   public OffsetDateTime getCreatedAt() {
     return createdAt;
@@ -501,11 +501,11 @@ public class GameCharacter {
   }
 
   /**
-   * Дата последнего входа в игру
+   * Р”Р°С‚Р° РїРѕСЃР»РµРґРЅРµРіРѕ РІС…РѕРґР° РІ РёРіСЂСѓ
    * @return lastLogin
    */
   @Valid 
-  @Schema(name = "last_login", example = "2025-01-27T12:00Z", description = "Дата последнего входа в игру", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "last_login", example = "2025-01-27T12:00Z", description = "Р”Р°С‚Р° РїРѕСЃР»РµРґРЅРµРіРѕ РІС…РѕРґР° РІ РёРіСЂСѓ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("last_login")
   public JsonNullable<OffsetDateTime> getLastLogin() {
     return lastLogin;

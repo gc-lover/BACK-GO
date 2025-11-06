@@ -17,10 +17,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Информация о человечности игрока. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Система человечности 
+ * РРЅС„РѕСЂРјР°С†РёСЏ Рѕ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РёРіСЂРѕРєР°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РЎРёСЃС‚РµРјР° С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё 
  */
 
-@Schema(name = "HumanityInfo", description = "Информация о человечности игрока. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Система человечности ")
+@Schema(name = "HumanityInfo", description = "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РёРіСЂРѕРєР°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РЎРёСЃС‚РµРјР° С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class HumanityInfo {
 
@@ -31,7 +31,7 @@ public class HumanityInfo {
   private Float lossPercentage;
 
   /**
-   * Текущая стадия киберпсихоза
+   * РўРµРєСѓС‰Р°СЏ СЃС‚Р°РґРёСЏ РєРёР±РµСЂРїСЃРёС…РѕР·Р°
    */
   public enum StageEnum {
     EARLY("early"),
@@ -91,13 +91,13 @@ public class HumanityInfo {
   }
 
   /**
-   * Текущий уровень человечности (0-100)
+   * РўРµРєСѓС‰РёР№ СѓСЂРѕРІРµРЅСЊ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё (0-100)
    * minimum: 0
    * maximum: 100
    * @return current
    */
   @NotNull @DecimalMin(value = "0") @DecimalMax(value = "100") 
-  @Schema(name = "current", description = "Текущий уровень человечности (0-100)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "current", description = "РўРµРєСѓС‰РёР№ СѓСЂРѕРІРµРЅСЊ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё (0-100)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("current")
   public Float getCurrent() {
     return current;
@@ -113,13 +113,13 @@ public class HumanityInfo {
   }
 
   /**
-   * Максимальный уровень человечности (может снижаться при накоплении стресса)
+   * РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё (РјРѕР¶РµС‚ СЃРЅРёР¶Р°С‚СЊСЃСЏ РїСЂРё РЅР°РєРѕРїР»РµРЅРёРё СЃС‚СЂРµСЃСЃР°)
    * minimum: 0
    * maximum: 100
    * @return max
    */
   @NotNull @DecimalMin(value = "0") @DecimalMax(value = "100") 
-  @Schema(name = "max", description = "Максимальный уровень человечности (может снижаться при накоплении стресса)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "max", description = "РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё (РјРѕР¶РµС‚ СЃРЅРёР¶Р°С‚СЊСЃСЏ РїСЂРё РЅР°РєРѕРїР»РµРЅРёРё СЃС‚СЂРµСЃСЃР°)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("max")
   public Float getMax() {
     return max;
@@ -135,13 +135,13 @@ public class HumanityInfo {
   }
 
   /**
-   * Процент потери человечности (0-100%)
+   * РџСЂРѕС†РµРЅС‚ РїРѕС‚РµСЂРё С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё (0-100%)
    * minimum: 0
    * maximum: 100
    * @return lossPercentage
    */
   @NotNull @DecimalMin(value = "0") @DecimalMax(value = "100") 
-  @Schema(name = "loss_percentage", description = "Процент потери человечности (0-100%)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "loss_percentage", description = "РџСЂРѕС†РµРЅС‚ РїРѕС‚РµСЂРё С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё (0-100%)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("loss_percentage")
   public Float getLossPercentage() {
     return lossPercentage;
@@ -157,11 +157,11 @@ public class HumanityInfo {
   }
 
   /**
-   * Текущая стадия киберпсихоза
+   * РўРµРєСѓС‰Р°СЏ СЃС‚Р°РґРёСЏ РєРёР±РµСЂРїСЃРёС…РѕР·Р°
    * @return stage
    */
   @NotNull 
-  @Schema(name = "stage", description = "Текущая стадия киберпсихоза", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "stage", description = "РўРµРєСѓС‰Р°СЏ СЃС‚Р°РґРёСЏ РєРёР±РµСЂРїСЃРёС…РѕР·Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("stage")
   public StageEnum getStage() {
     return stage;

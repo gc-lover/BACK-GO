@@ -20,10 +20,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Запрос на применение потери человечности
+ * Р—Р°РїСЂРѕСЃ РЅР° РїСЂРёРјРµРЅРµРЅРёРµ РїРѕС‚РµСЂРё С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё
  */
 
-@Schema(name = "ApplyLossRequest", description = "Запрос на применение потери человечности")
+@Schema(name = "ApplyLossRequest", description = "Р—Р°РїСЂРѕСЃ РЅР° РїСЂРёРјРµРЅРµРЅРёРµ РїРѕС‚РµСЂРё С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class ApplyLossRequest {
 
@@ -51,12 +51,12 @@ public class ApplyLossRequest {
   }
 
   /**
-   * Количество потерянной человечности
+   * РљРѕР»РёС‡РµСЃС‚РІРѕ РїРѕС‚РµСЂСЏРЅРЅРѕР№ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё
    * minimum: 0
    * @return lossAmount
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "loss_amount", description = "Количество потерянной человечности", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "loss_amount", description = "РљРѕР»РёС‡РµСЃС‚РІРѕ РїРѕС‚РµСЂСЏРЅРЅРѕР№ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("loss_amount")
   public Float getLossAmount() {
     return lossAmount;
@@ -72,11 +72,11 @@ public class ApplyLossRequest {
   }
 
   /**
-   * Причина потери (implant_install, progression, trigger)
+   * РџСЂРёС‡РёРЅР° РїРѕС‚РµСЂРё (implant_install, progression, trigger)
    * @return reason
    */
   @NotNull 
-  @Schema(name = "reason", description = "Причина потери (implant_install, progression, trigger)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "reason", description = "РџСЂРёС‡РёРЅР° РїРѕС‚РµСЂРё (implant_install, progression, trigger)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("reason")
   public String getReason() {
     return reason;
@@ -92,11 +92,11 @@ public class ApplyLossRequest {
   }
 
   /**
-   * Идентификатор импланта (если причина = implant_install)
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРјРїР»Р°РЅС‚Р° (РµСЃР»Рё РїСЂРёС‡РёРЅР° = implant_install)
    * @return implantId
    */
   @Valid 
-  @Schema(name = "implant_id", description = "Идентификатор импланта (если причина = implant_install)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "implant_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРјРїР»Р°РЅС‚Р° (РµСЃР»Рё РїСЂРёС‡РёРЅР° = implant_install)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("implant_id")
   public JsonNullable<UUID> getImplantId() {
     return implantId;

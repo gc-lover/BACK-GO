@@ -8,27 +8,27 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * VendorRepository - репозиторий для работы с торговцами.
+ * VendorRepository - СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ С‚РѕСЂРіРѕРІС†Р°РјРё.
  * 
- * Источник: API-SWAGGER/api/v1/trading/trading.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/trading/trading.yaml
  */
 @Repository
 public interface VendorRepository extends JpaRepository<VendorEntity, String> {
 
     /**
-     * Найти торговцев в локации.
+     * РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†РµРІ РІ Р»РѕРєР°С†РёРё.
      */
     @Query("SELECT v FROM VendorEntity v WHERE v.locationId = :locationId AND v.available = true ORDER BY v.name")
     List<VendorEntity> findByLocationId(String locationId);
 
     /**
-     * Найти торговцев по типу.
+     * РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†РµРІ РїРѕ С‚РёРїСѓ.
      */
     @Query("SELECT v FROM VendorEntity v WHERE v.vendorType = :type AND v.available = true ORDER BY v.name")
     List<VendorEntity> findByType(String type);
 
     /**
-     * Найти доступных торговцев.
+     * РќР°Р№С‚Рё РґРѕСЃС‚СѓРїРЅС‹С… С‚РѕСЂРіРѕРІС†РµРІ.
      */
     @Query("SELECT v FROM VendorEntity v WHERE v.available = true ORDER BY v.name")
     List<VendorEntity> findAllAvailable();

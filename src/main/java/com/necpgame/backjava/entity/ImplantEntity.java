@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * JPA Entity для имплантов (справочник).
+ * JPA Entity РґР»СЏ РёРјРїР»Р°РЅС‚РѕРІ (СЃРїСЂР°РІРѕС‡РЅРёРє).
  * 
- * Связанная таблица: implants
- * Источник: API-SWAGGER/api/v1/gameplay/combat/implants-limits.yaml
+ * РЎРІСЏР·Р°РЅРЅР°СЏ С‚Р°Р±Р»РёС†Р°: implants
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/gameplay/combat/implants-limits.yaml
  */
 @Data
 @NoArgsConstructor
@@ -41,14 +41,14 @@ public class ImplantEntity {
     private String description;
     
     /**
-     * Тип импланта: weapon, armor, utility, medical, neural, cyberware
+     * РўРёРї РёРјРїР»Р°РЅС‚Р°: weapon, armor, utility, medical, neural, cyberware
      */
     @Column(name = "type", nullable = false, length = 50)
     @Enumerated(EnumType.STRING)
     private ImplantType type;
     
     /**
-     * Тип слота: neural, skeletal, optical, circulatory, dermal, internal
+     * РўРёРї СЃР»РѕС‚Р°: neural, skeletal, optical, circulatory, dermal, internal
      */
     @Column(name = "slot_type", nullable = false, length = 50)
     @Enumerated(EnumType.STRING)
@@ -61,7 +61,7 @@ public class ImplantEntity {
     private Integer humanityCost = 0;
     
     /**
-     * Редкость: common, uncommon, rare, epic, legendary
+     * Р РµРґРєРѕСЃС‚СЊ: common, uncommon, rare, epic, legendary
      */
     @Column(name = "rarity", nullable = false, length = 50)
     @Enumerated(EnumType.STRING)

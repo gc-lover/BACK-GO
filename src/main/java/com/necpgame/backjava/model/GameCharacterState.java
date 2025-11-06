@@ -7,9 +7,9 @@ import jakarta.validation.constraints.*;
 import java.util.Objects;
 
 /**
- * GameCharacterState - состояние персонажа в игре
+ * GameCharacterState - СЃРѕСЃС‚РѕСЏРЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р° РІ РёРіСЂРµ
  */
-@Schema(description = "Состояние персонажа в игре")
+@Schema(description = "РЎРѕСЃС‚РѕСЏРЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р° РІ РёРіСЂРµ")
 public class GameCharacterState {
 
     @JsonProperty("health")
@@ -30,7 +30,7 @@ public class GameCharacterState {
     @JsonProperty("experience")
     private Integer experience;
 
-    @Schema(description = "Здоровье персонажа", example = "100", required = true)
+    @Schema(description = "Р—РґРѕСЂРѕРІСЊРµ РїРµСЂСЃРѕРЅР°Р¶Р°", example = "100", required = true)
     @NotNull
     @Min(0)
     @Max(100)
@@ -42,7 +42,7 @@ public class GameCharacterState {
         this.health = health;
     }
 
-    @Schema(description = "Энергия персонажа", example = "100", required = true)
+    @Schema(description = "Р­РЅРµСЂРіРёСЏ РїРµСЂСЃРѕРЅР°Р¶Р°", example = "100", required = true)
     @NotNull
     @Min(0)
     @Max(100)
@@ -54,7 +54,7 @@ public class GameCharacterState {
         this.energy = energy;
     }
 
-    @Schema(description = "Человечность персонажа", example = "100", required = true)
+    @Schema(description = "Р§РµР»РѕРІРµС‡РЅРѕСЃС‚СЊ РїРµСЂСЃРѕРЅР°Р¶Р°", example = "100", required = true)
     @NotNull
     @Min(0)
     @Max(100)
@@ -66,7 +66,7 @@ public class GameCharacterState {
         this.humanity = humanity;
     }
 
-    @Schema(description = "Деньги (eddies)", example = "500", required = true)
+    @Schema(description = "Р”РµРЅСЊРіРё (eddies)", example = "500", required = true)
     @NotNull
     @Min(0)
     public Integer getMoney() {
@@ -77,7 +77,7 @@ public class GameCharacterState {
         this.money = money;
     }
 
-    @Schema(description = "Уровень персонажа", example = "1", required = true)
+    @Schema(description = "РЈСЂРѕРІРµРЅСЊ РїРµСЂСЃРѕРЅР°Р¶Р°", example = "1", required = true)
     @NotNull
     @Min(1)
     public Integer getLevel() {
@@ -88,7 +88,7 @@ public class GameCharacterState {
         this.level = level;
     }
 
-    @Schema(description = "Опыт персонажа", example = "0")
+    @Schema(description = "РћРїС‹С‚ РїРµСЂСЃРѕРЅР°Р¶Р°", example = "0")
     @Min(0)
     public Integer getExperience() {
         return experience;

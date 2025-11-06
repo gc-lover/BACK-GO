@@ -10,9 +10,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 /**
- * QuestEntity - квест в игре.
+ * QuestEntity - РєРІРµСЃС‚ РІ РёРіСЂРµ.
  * 
- * Хранит информацию о квестах (основные, побочные, контракты).
+ * РҐСЂР°РЅРёС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РєРІРµСЃС‚Р°С… (РѕСЃРЅРѕРІРЅС‹Рµ, РїРѕР±РѕС‡РЅС‹Рµ, РєРѕРЅС‚СЂР°РєС‚С‹).
  */
 @Entity
 @Table(name = "quests", indexes = {
@@ -69,7 +69,7 @@ public class QuestEntity {
     private LocalDateTime updatedAt;
 
     /**
-     * Тип квеста
+     * РўРёРї РєРІРµСЃС‚Р°
      */
     public enum QuestType {
         MAIN,

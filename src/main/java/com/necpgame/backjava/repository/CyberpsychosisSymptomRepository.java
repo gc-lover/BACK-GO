@@ -8,30 +8,30 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Repository для управления симптомами киберпсихоза (справочник).
+ * Repository РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ СЃРёРјРїС‚РѕРјР°РјРё РєРёР±РµСЂРїСЃРёС…РѕР·Р° (СЃРїСЂР°РІРѕС‡РЅРёРє).
  * 
- * Источник: API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
  */
 @Repository
 public interface CyberpsychosisSymptomRepository extends JpaRepository<CyberpsychosisSymptomEntity, String> {
     
     /**
-     * Найти симптомы по стадии.
+     * РќР°Р№С‚Рё СЃРёРјРїС‚РѕРјС‹ РїРѕ СЃС‚Р°РґРёРё.
      */
     List<CyberpsychosisSymptomEntity> findByStage(CyberpsychosisSymptomEntity.Stage stage);
     
     /**
-     * Найти симптомы по серьезности.
+     * РќР°Р№С‚Рё СЃРёРјРїС‚РѕРјС‹ РїРѕ СЃРµСЂСЊРµР·РЅРѕСЃС‚Рё.
      */
     List<CyberpsychosisSymptomEntity> findBySeverity(CyberpsychosisSymptomEntity.Severity severity);
     
     /**
-     * Найти симптомы по категории.
+     * РќР°Р№С‚Рё СЃРёРјРїС‚РѕРјС‹ РїРѕ РєР°С‚РµРіРѕСЂРёРё.
      */
     List<CyberpsychosisSymptomEntity> findByCategory(CyberpsychosisSymptomEntity.Category category);
     
     /**
-     * Найти симптомы для стадии и серьезности.
+     * РќР°Р№С‚Рё СЃРёРјРїС‚РѕРјС‹ РґР»СЏ СЃС‚Р°РґРёРё Рё СЃРµСЂСЊРµР·РЅРѕСЃС‚Рё.
      */
     @Query("SELECT s FROM CyberpsychosisSymptomEntity s WHERE s.stage = :stage AND s.severity = :severity")
     List<CyberpsychosisSymptomEntity> findByStageAndSeverity(

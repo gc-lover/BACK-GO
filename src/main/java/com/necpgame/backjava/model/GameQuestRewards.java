@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * GameQuestRewards - награды за квест
+ * GameQuestRewards - РЅР°РіСЂР°РґС‹ Р·Р° РєРІРµСЃС‚
  */
-@Schema(description = "Награды за квест")
+@Schema(description = "РќР°РіСЂР°РґС‹ Р·Р° РєРІРµСЃС‚")
 public class GameQuestRewards {
 
     @JsonProperty("experience")
@@ -27,7 +27,7 @@ public class GameQuestRewards {
     @JsonProperty("reputation")
     private ReputationChange reputation;
 
-    @Schema(description = "Опыт за выполнение квеста")
+    @Schema(description = "РћРїС‹С‚ Р·Р° РІС‹РїРѕР»РЅРµРЅРёРµ РєРІРµСЃС‚Р°")
     @Min(0)
     public Integer getExperience() {
         return experience;
@@ -37,7 +37,7 @@ public class GameQuestRewards {
         this.experience = experience;
     }
 
-    @Schema(description = "Деньги (eddies) за выполнение квеста")
+    @Schema(description = "Р”РµРЅСЊРіРё (eddies) Р·Р° РІС‹РїРѕР»РЅРµРЅРёРµ РєРІРµСЃС‚Р°")
     @Min(0)
     public Integer getMoney() {
         return money;
@@ -47,7 +47,7 @@ public class GameQuestRewards {
         this.money = money;
     }
 
-    @Schema(description = "Список ID предметов в награду")
+    @Schema(description = "РЎРїРёСЃРѕРє ID РїСЂРµРґРјРµС‚РѕРІ РІ РЅР°РіСЂР°РґСѓ")
     public List<String> getItems() {
         return items;
     }
@@ -56,7 +56,7 @@ public class GameQuestRewards {
         this.items = items;
     }
 
-    @Schema(description = "Изменение репутации")
+    @Schema(description = "РР·РјРµРЅРµРЅРёРµ СЂРµРїСѓС‚Р°С†РёРё")
     @Valid
     public ReputationChange getReputation() {
         return reputation;
@@ -67,9 +67,9 @@ public class GameQuestRewards {
     }
 
     /**
-     * Изменение репутации с фракцией
+     * РР·РјРµРЅРµРЅРёРµ СЂРµРїСѓС‚Р°С†РёРё СЃ С„СЂР°РєС†РёРµР№
      */
-    @Schema(description = "Изменение репутации")
+    @Schema(description = "РР·РјРµРЅРµРЅРёРµ СЂРµРїСѓС‚Р°С†РёРё")
     public static class ReputationChange {
         @JsonProperty("faction")
         private String faction;
@@ -77,7 +77,7 @@ public class GameQuestRewards {
         @JsonProperty("amount")
         private Integer amount;
 
-        @Schema(description = "Фракция, с которой изменяется репутация")
+        @Schema(description = "Р¤СЂР°РєС†РёСЏ, СЃ РєРѕС‚РѕСЂРѕР№ РёР·РјРµРЅСЏРµС‚СЃСЏ СЂРµРїСѓС‚Р°С†РёСЏ")
         public String getFaction() {
             return faction;
         }
@@ -86,7 +86,7 @@ public class GameQuestRewards {
             this.faction = faction;
         }
 
-        @Schema(description = "Изменение репутации (может быть отрицательным)")
+        @Schema(description = "РР·РјРµРЅРµРЅРёРµ СЂРµРїСѓС‚Р°С†РёРё (РјРѕР¶РµС‚ Р±С‹С‚СЊ РѕС‚СЂРёС†Р°С‚РµР»СЊРЅС‹Рј)")
         public Integer getAmount() {
             return amount;
         }

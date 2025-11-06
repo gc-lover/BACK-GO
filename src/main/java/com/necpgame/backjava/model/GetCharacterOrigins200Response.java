@@ -56,11 +56,11 @@ public class GetCharacterOrigins200Response {
   }
 
   /**
-   * Список доступных происхождений
+   * РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёР№
    * @return origins
    */
   @NotNull @Valid 
-  @Schema(name = "origins", description = "Список доступных происхождений", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "origins", description = "РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёР№", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("origins")
   public List<@Valid GameCharacterOrigin> getOrigins() {
     return origins;

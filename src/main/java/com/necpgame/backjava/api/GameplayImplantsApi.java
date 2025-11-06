@@ -61,58 +61,58 @@ public interface GameplayImplantsApi {
 
     String PATH_CALCULATE_ENERGY_CONSUMPTION = "/gameplay/combat/implants/{player_id}/energy/calculate";
     /**
-     * POST /gameplay/combat/implants/{player_id}/energy/calculate : Рассчитать энергетическое потребление имплантов
-     * Рассчитывает энергетическое потребление имплантов и проверяет, можно ли установить импланты с учетом энергетического лимита. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Энергетический лимит 
+     * POST /gameplay/combat/implants/{player_id}/energy/calculate : Р Р°СЃСЃС‡РёС‚Р°С‚СЊ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРµ РїРѕС‚СЂРµР±Р»РµРЅРёРµ РёРјРїР»Р°РЅС‚РѕРІ
+     * Р Р°СЃСЃС‡РёС‚С‹РІР°РµС‚ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРµ РїРѕС‚СЂРµР±Р»РµРЅРёРµ РёРјРїР»Р°РЅС‚РѕРІ Рё РїСЂРѕРІРµСЂСЏРµС‚, РјРѕР¶РЅРѕ Р»Рё СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РёРјРїР»Р°РЅС‚С‹ СЃ СѓС‡РµС‚РѕРј СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРіРѕ Р»РёРјРёС‚Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Р­РЅРµСЂРіРµС‚РёС‡РµСЃРєРёР№ Р»РёРјРёС‚ 
      *
-     * @param playerId Идентификатор игрока (required)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
      * @param calculateEnergyRequest  (required)
-     * @return Расчет энергетического потребления (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @return Р Р°СЃС‡РµС‚ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРіРѕ РїРѕС‚СЂРµР±Р»РµРЅРёСЏ (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "calculateEnergyConsumption",
-        summary = "Рассчитать энергетическое потребление имплантов",
-        description = "Рассчитывает энергетическое потребление имплантов и проверяет, можно ли установить импланты с учетом энергетического лимита. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Энергетический лимит ",
+        summary = "Р Р°СЃСЃС‡РёС‚Р°С‚СЊ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРµ РїРѕС‚СЂРµР±Р»РµРЅРёРµ РёРјРїР»Р°РЅС‚РѕРІ",
+        description = "Р Р°СЃСЃС‡РёС‚С‹РІР°РµС‚ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРµ РїРѕС‚СЂРµР±Р»РµРЅРёРµ РёРјРїР»Р°РЅС‚РѕРІ Рё РїСЂРѕРІРµСЂСЏРµС‚, РјРѕР¶РЅРѕ Р»Рё СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РёРјРїР»Р°РЅС‚С‹ СЃ СѓС‡РµС‚РѕРј СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРіРѕ Р»РёРјРёС‚Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Р­РЅРµСЂРіРµС‚РёС‡РµСЃРєРёР№ Р»РёРјРёС‚ ",
         tags = { "Combat", "Implants", "Energy" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Расчет энергетического потребления", content = {
+            @ApiResponse(responseCode = "200", description = "Р Р°СЃС‡РµС‚ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРіРѕ РїРѕС‚СЂРµР±Р»РµРЅРёСЏ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = EnergyCalculation.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -129,7 +129,7 @@ public interface GameplayImplantsApi {
         consumes = { "application/json" }
     )
     default ResponseEntity<EnergyCalculation> calculateEnergyConsumption(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
         @Parameter(name = "CalculateEnergyRequest", description = "", required = true) @Valid @RequestBody CalculateEnergyRequest calculateEnergyRequest
     ) {
         getRequest().ifPresent(request -> {
@@ -168,58 +168,58 @@ public interface GameplayImplantsApi {
 
     String PATH_CALCULATE_IMPLANT_LIMIT = "/gameplay/combat/implants/{player_id}/limit/calculate";
     /**
-     * POST /gameplay/combat/implants/{player_id}/limit/calculate : Рассчитать лимит имплантов с учетом всех факторов
-     * Рассчитывает лимит имплантов с учетом базового лимита, бонусов от класса/прокачки и штрафов от человечности. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Лимит имплантов 
+     * POST /gameplay/combat/implants/{player_id}/limit/calculate : Р Р°СЃСЃС‡РёС‚Р°С‚СЊ Р»РёРјРёС‚ РёРјРїР»Р°РЅС‚РѕРІ СЃ СѓС‡РµС‚РѕРј РІСЃРµС… С„Р°РєС‚РѕСЂРѕРІ
+     * Р Р°СЃСЃС‡РёС‚С‹РІР°РµС‚ Р»РёРјРёС‚ РёРјРїР»Р°РЅС‚РѕРІ СЃ СѓС‡РµС‚РѕРј Р±Р°Р·РѕРІРѕРіРѕ Р»РёРјРёС‚Р°, Р±РѕРЅСѓСЃРѕРІ РѕС‚ РєР»Р°СЃСЃР°/РїСЂРѕРєР°С‡РєРё Рё С€С‚СЂР°С„РѕРІ РѕС‚ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Р›РёРјРёС‚ РёРјРїР»Р°РЅС‚РѕРІ 
      *
-     * @param playerId Идентификатор игрока (required)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
      * @param calculateLimitRequest  (required)
-     * @return Расчет лимита имплантов (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @return Р Р°СЃС‡РµС‚ Р»РёРјРёС‚Р° РёРјРїР»Р°РЅС‚РѕРІ (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "calculateImplantLimit",
-        summary = "Рассчитать лимит имплантов с учетом всех факторов",
-        description = "Рассчитывает лимит имплантов с учетом базового лимита, бонусов от класса/прокачки и штрафов от человечности. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Лимит имплантов ",
+        summary = "Р Р°СЃСЃС‡РёС‚Р°С‚СЊ Р»РёРјРёС‚ РёРјРїР»Р°РЅС‚РѕРІ СЃ СѓС‡РµС‚РѕРј РІСЃРµС… С„Р°РєС‚РѕСЂРѕРІ",
+        description = "Р Р°СЃСЃС‡РёС‚С‹РІР°РµС‚ Р»РёРјРёС‚ РёРјРїР»Р°РЅС‚РѕРІ СЃ СѓС‡РµС‚РѕРј Р±Р°Р·РѕРІРѕРіРѕ Р»РёРјРёС‚Р°, Р±РѕРЅСѓСЃРѕРІ РѕС‚ РєР»Р°СЃСЃР°/РїСЂРѕРєР°С‡РєРё Рё С€С‚СЂР°С„РѕРІ РѕС‚ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Р›РёРјРёС‚ РёРјРїР»Р°РЅС‚РѕРІ ",
         tags = { "Combat", "Implants", "Limits" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Расчет лимита имплантов", content = {
+            @ApiResponse(responseCode = "200", description = "Р Р°СЃС‡РµС‚ Р»РёРјРёС‚Р° РёРјРїР»Р°РЅС‚РѕРІ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ImplantLimitCalculation.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -236,7 +236,7 @@ public interface GameplayImplantsApi {
         consumes = { "application/json" }
     )
     default ResponseEntity<ImplantLimitCalculation> calculateImplantLimit(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
         @Parameter(name = "CalculateLimitRequest", description = "", required = true) @Valid @RequestBody CalculateLimitRequest calculateLimitRequest
     ) {
         getRequest().ifPresent(request -> {
@@ -275,58 +275,58 @@ public interface GameplayImplantsApi {
 
     String PATH_CHECK_COMPATIBILITY = "/gameplay/combat/implants/{player_id}/compatibility";
     /**
-     * POST /gameplay/combat/implants/{player_id}/compatibility : Проверить совместимость импланта с установленными
-     * Проверяет совместимость импланта с уже установленными имплантами игрока. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Совместимость 
+     * POST /gameplay/combat/implants/{player_id}/compatibility : РџСЂРѕРІРµСЂРёС‚СЊ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚СЊ РёРјРїР»Р°РЅС‚Р° СЃ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹РјРё
+     * РџСЂРѕРІРµСЂСЏРµС‚ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚СЊ РёРјРїР»Р°РЅС‚Р° СЃ СѓР¶Рµ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹РјРё РёРјРїР»Р°РЅС‚Р°РјРё РёРіСЂРѕРєР°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; РЎРѕРІРјРµСЃС‚РёРјРѕСЃС‚СЊ 
      *
-     * @param playerId Идентификатор игрока (required)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
      * @param compatibilityCheckRequest  (required)
-     * @return Результат проверки совместимости (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @return Р РµР·СѓР»СЊС‚Р°С‚ РїСЂРѕРІРµСЂРєРё СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "checkCompatibility",
-        summary = "Проверить совместимость импланта с установленными",
-        description = "Проверяет совместимость импланта с уже установленными имплантами игрока. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Совместимость ",
+        summary = "РџСЂРѕРІРµСЂРёС‚СЊ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚СЊ РёРјРїР»Р°РЅС‚Р° СЃ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹РјРё",
+        description = "РџСЂРѕРІРµСЂСЏРµС‚ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚СЊ РёРјРїР»Р°РЅС‚Р° СЃ СѓР¶Рµ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹РјРё РёРјРїР»Р°РЅС‚Р°РјРё РёРіСЂРѕРєР°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> РЎРѕРІРјРµСЃС‚РёРјРѕСЃС‚СЊ ",
         tags = { "Combat", "Implants", "Compatibility" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Результат проверки совместимости", content = {
+            @ApiResponse(responseCode = "200", description = "Р РµР·СѓР»СЊС‚Р°С‚ РїСЂРѕРІРµСЂРєРё СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = CompatibilityResult.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -343,7 +343,7 @@ public interface GameplayImplantsApi {
         consumes = { "application/json" }
     )
     default ResponseEntity<CompatibilityResult> checkCompatibility(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
         @Parameter(name = "CompatibilityCheckRequest", description = "", required = true) @Valid @RequestBody CompatibilityCheckRequest compatibilityCheckRequest
     ) {
         getRequest().ifPresent(request -> {
@@ -382,47 +382,47 @@ public interface GameplayImplantsApi {
 
     String PATH_GET_ENERGY_POOL = "/gameplay/combat/implants/{player_id}/energy";
     /**
-     * GET /gameplay/combat/implants/{player_id}/energy : Получить информацию об энергетическом пуле
-     * Получает информацию об энергетическом пуле игрока, включая общий пул, использованную и доступную энергию, скорость восстановления. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Энергетический лимит 
+     * GET /gameplay/combat/implants/{player_id}/energy : РџРѕР»СѓС‡РёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРј РїСѓР»Рµ
+     * РџРѕР»СѓС‡Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРј РїСѓР»Рµ РёРіСЂРѕРєР°, РІРєР»СЋС‡Р°СЏ РѕР±С‰РёР№ РїСѓР», РёСЃРїРѕР»СЊР·РѕРІР°РЅРЅСѓСЋ Рё РґРѕСЃС‚СѓРїРЅСѓСЋ СЌРЅРµСЂРіРёСЋ, СЃРєРѕСЂРѕСЃС‚СЊ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Р­РЅРµСЂРіРµС‚РёС‡РµСЃРєРёР№ Р»РёРјРёС‚ 
      *
-     * @param playerId Идентификатор игрока (required)
-     * @return Информация об энергетическом пуле (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
+     * @return РРЅС„РѕСЂРјР°С†РёСЏ РѕР± СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРј РїСѓР»Рµ (status code 200)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getEnergyPool",
-        summary = "Получить информацию об энергетическом пуле",
-        description = "Получает информацию об энергетическом пуле игрока, включая общий пул, использованную и доступную энергию, скорость восстановления. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Энергетический лимит ",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРј РїСѓР»Рµ",
+        description = "РџРѕР»СѓС‡Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРј РїСѓР»Рµ РёРіСЂРѕРєР°, РІРєР»СЋС‡Р°СЏ РѕР±С‰РёР№ РїСѓР», РёСЃРїРѕР»СЊР·РѕРІР°РЅРЅСѓСЋ Рё РґРѕСЃС‚СѓРїРЅСѓСЋ СЌРЅРµСЂРіРёСЋ, СЃРєРѕСЂРѕСЃС‚СЊ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Р­РЅРµСЂРіРµС‚РёС‡РµСЃРєРёР№ Р»РёРјРёС‚ ",
         tags = { "Combat", "Implants", "Energy" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Информация об энергетическом пуле", content = {
+            @ApiResponse(responseCode = "200", description = "РРЅС„РѕСЂРјР°С†РёСЏ РѕР± СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРј РїСѓР»Рµ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = EnergyPoolInfo.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -438,7 +438,7 @@ public interface GameplayImplantsApi {
         produces = { "application/json" }
     )
     default ResponseEntity<EnergyPoolInfo> getEnergyPool(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -471,47 +471,47 @@ public interface GameplayImplantsApi {
 
     String PATH_GET_IMPLANT_LIMIT = "/gameplay/combat/implants/{player_id}/limit";
     /**
-     * GET /gameplay/combat/implants/{player_id}/limit : Получить текущий лимит имплантов
-     * Получает текущий лимит имплантов игрока с детализацией бонусов и штрафов.
+     * GET /gameplay/combat/implants/{player_id}/limit : РџРѕР»СѓС‡РёС‚СЊ С‚РµРєСѓС‰РёР№ Р»РёРјРёС‚ РёРјРїР»Р°РЅС‚РѕРІ
+     * РџРѕР»СѓС‡Р°РµС‚ С‚РµРєСѓС‰РёР№ Р»РёРјРёС‚ РёРјРїР»Р°РЅС‚РѕРІ РёРіСЂРѕРєР° СЃ РґРµС‚Р°Р»РёР·Р°С†РёРµР№ Р±РѕРЅСѓСЃРѕРІ Рё С€С‚СЂР°С„РѕРІ.
      *
-     * @param playerId Идентификатор игрока (required)
-     * @return Информация о лимите имплантов (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
+     * @return РРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р»РёРјРёС‚Рµ РёРјРїР»Р°РЅС‚РѕРІ (status code 200)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getImplantLimit",
-        summary = "Получить текущий лимит имплантов",
-        description = "Получает текущий лимит имплантов игрока с детализацией бонусов и штрафов.",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ С‚РµРєСѓС‰РёР№ Р»РёРјРёС‚ РёРјРїР»Р°РЅС‚РѕРІ",
+        description = "РџРѕР»СѓС‡Р°РµС‚ С‚РµРєСѓС‰РёР№ Р»РёРјРёС‚ РёРјРїР»Р°РЅС‚РѕРІ РёРіСЂРѕРєР° СЃ РґРµС‚Р°Р»РёР·Р°С†РёРµР№ Р±РѕРЅСѓСЃРѕРІ Рё С€С‚СЂР°С„РѕРІ.",
         tags = { "Combat", "Implants", "Limits" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Информация о лимите имплантов", content = {
+            @ApiResponse(responseCode = "200", description = "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р»РёРјРёС‚Рµ РёРјРїР»Р°РЅС‚РѕРІ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ImplantLimitInfo.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -527,7 +527,7 @@ public interface GameplayImplantsApi {
         produces = { "application/json" }
     )
     default ResponseEntity<ImplantLimitInfo> getImplantLimit(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -560,47 +560,47 @@ public interface GameplayImplantsApi {
 
     String PATH_GET_IMPLANT_LIMITS = "/gameplay/combat/implants/{player_id}/limits";
     /**
-     * GET /gameplay/combat/implants/{player_id}/limits : Получить лимиты имплантов игрока
-     * Получает информацию о лимитах имплантов игрока, включая базовый лимит, бонусы от класса и прокачки, штрафы от человечности, и текущее использование. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Лимит имплантов 
+     * GET /gameplay/combat/implants/{player_id}/limits : РџРѕР»СѓС‡РёС‚СЊ Р»РёРјРёС‚С‹ РёРјРїР»Р°РЅС‚РѕРІ РёРіСЂРѕРєР°
+     * РџРѕР»СѓС‡Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ Р»РёРјРёС‚Р°С… РёРјРїР»Р°РЅС‚РѕРІ РёРіСЂРѕРєР°, РІРєР»СЋС‡Р°СЏ Р±Р°Р·РѕРІС‹Р№ Р»РёРјРёС‚, Р±РѕРЅСѓСЃС‹ РѕС‚ РєР»Р°СЃСЃР° Рё РїСЂРѕРєР°С‡РєРё, С€С‚СЂР°С„С‹ РѕС‚ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё, Рё С‚РµРєСѓС‰РµРµ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Р›РёРјРёС‚ РёРјРїР»Р°РЅС‚РѕРІ 
      *
-     * @param playerId Идентификатор игрока (required)
-     * @return Информация о лимитах имплантов (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
+     * @return РРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р»РёРјРёС‚Р°С… РёРјРїР»Р°РЅС‚РѕРІ (status code 200)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getImplantLimits",
-        summary = "Получить лимиты имплантов игрока",
-        description = "Получает информацию о лимитах имплантов игрока, включая базовый лимит, бонусы от класса и прокачки, штрафы от человечности, и текущее использование. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Лимит имплантов ",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ Р»РёРјРёС‚С‹ РёРјРїР»Р°РЅС‚РѕРІ РёРіСЂРѕРєР°",
+        description = "РџРѕР»СѓС‡Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ Р»РёРјРёС‚Р°С… РёРјРїР»Р°РЅС‚РѕРІ РёРіСЂРѕРєР°, РІРєР»СЋС‡Р°СЏ Р±Р°Р·РѕРІС‹Р№ Р»РёРјРёС‚, Р±РѕРЅСѓСЃС‹ РѕС‚ РєР»Р°СЃСЃР° Рё РїСЂРѕРєР°С‡РєРё, С€С‚СЂР°С„С‹ РѕС‚ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё, Рё С‚РµРєСѓС‰РµРµ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Р›РёРјРёС‚ РёРјРїР»Р°РЅС‚РѕРІ ",
         tags = { "Combat", "Implants", "Limits" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Информация о лимитах имплантов", content = {
+            @ApiResponse(responseCode = "200", description = "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р»РёРјРёС‚Р°С… РёРјРїР»Р°РЅС‚РѕРІ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ImplantLimits.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -616,7 +616,7 @@ public interface GameplayImplantsApi {
         produces = { "application/json" }
     )
     default ResponseEntity<ImplantLimits> getImplantLimits(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -649,58 +649,58 @@ public interface GameplayImplantsApi {
 
     String PATH_GET_IMPLANT_SLOTS = "/gameplay/combat/implants/{player_id}/slots";
     /**
-     * GET /gameplay/combat/implants/{player_id}/slots : Получить доступные слоты имплантов игрока
-     * Возвращает информацию о доступных слотах имплантов игрока по типам. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Ограничения имплантов 
+     * GET /gameplay/combat/implants/{player_id}/slots : РџРѕР»СѓС‡РёС‚СЊ РґРѕСЃС‚СѓРїРЅС‹Рµ СЃР»РѕС‚С‹ РёРјРїР»Р°РЅС‚РѕРІ РёРіСЂРѕРєР°
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РґРѕСЃС‚СѓРїРЅС‹С… СЃР»РѕС‚Р°С… РёРјРїР»Р°РЅС‚РѕРІ РёРіСЂРѕРєР° РїРѕ С‚РёРїР°Рј. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; РћРіСЂР°РЅРёС‡РµРЅРёСЏ РёРјРїР»Р°РЅС‚РѕРІ 
      *
-     * @param playerId Идентификатор игрока (required)
-     * @param type Тип импланта (опционально, для фильтрации) (optional)
-     * @return Информация о слотах имплантов (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
+     * @param type РўРёРї РёРјРїР»Р°РЅС‚Р° (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ, РґР»СЏ С„РёР»СЊС‚СЂР°С†РёРё) (optional)
+     * @return РРЅС„РѕСЂРјР°С†РёСЏ Рѕ СЃР»РѕС‚Р°С… РёРјРїР»Р°РЅС‚РѕРІ (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getImplantSlots",
-        summary = "Получить доступные слоты имплантов игрока",
-        description = "Возвращает информацию о доступных слотах имплантов игрока по типам. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Ограничения имплантов ",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ РґРѕСЃС‚СѓРїРЅС‹Рµ СЃР»РѕС‚С‹ РёРјРїР»Р°РЅС‚РѕРІ РёРіСЂРѕРєР°",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РґРѕСЃС‚СѓРїРЅС‹С… СЃР»РѕС‚Р°С… РёРјРїР»Р°РЅС‚РѕРІ РёРіСЂРѕРєР° РїРѕ С‚РёРїР°Рј. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> РћРіСЂР°РЅРёС‡РµРЅРёСЏ РёРјРїР»Р°РЅС‚РѕРІ ",
         tags = { "Combat", "Implants", "Limits" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Информация о слотах имплантов", content = {
+            @ApiResponse(responseCode = "200", description = "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ СЃР»РѕС‚Р°С… РёРјРїР»Р°РЅС‚РѕРІ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ImplantSlots.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -716,8 +716,8 @@ public interface GameplayImplantsApi {
         produces = { "application/json" }
     )
     default ResponseEntity<ImplantSlots> getImplantSlots(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
-        @Parameter(name = "type", description = "Тип импланта (опционально, для фильтрации)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "type", required = false) @Nullable String type
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
+        @Parameter(name = "type", description = "РўРёРї РёРјРїР»Р°РЅС‚Р° (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ, РґР»СЏ С„РёР»СЊС‚СЂР°С†РёРё)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "type", required = false) @Nullable String type
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -755,47 +755,47 @@ public interface GameplayImplantsApi {
 
     String PATH_GET_INDIVIDUAL_ENERGY_LIMITS = "/gameplay/combat/implants/{player_id}/energy/limits";
     /**
-     * GET /gameplay/combat/implants/{player_id}/energy/limits : Получить индивидуальные энергетические ограничения имплантов
-     * Получает индивидуальные энергетические ограничения для каждого установленного импланта. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Энергетический лимит 
+     * GET /gameplay/combat/implants/{player_id}/energy/limits : РџРѕР»СѓС‡РёС‚СЊ РёРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Рµ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРёРµ РѕРіСЂР°РЅРёС‡РµРЅРёСЏ РёРјРїР»Р°РЅС‚РѕРІ
+     * РџРѕР»СѓС‡Р°РµС‚ РёРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Рµ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРёРµ РѕРіСЂР°РЅРёС‡РµРЅРёСЏ РґР»СЏ РєР°Р¶РґРѕРіРѕ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅРѕРіРѕ РёРјРїР»Р°РЅС‚Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Р­РЅРµСЂРіРµС‚РёС‡РµСЃРєРёР№ Р»РёРјРёС‚ 
      *
-     * @param playerId Идентификатор игрока (required)
-     * @return Индивидуальные энергетические ограничения (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
+     * @return РРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Рµ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРёРµ РѕРіСЂР°РЅРёС‡РµРЅРёСЏ (status code 200)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getIndividualEnergyLimits",
-        summary = "Получить индивидуальные энергетические ограничения имплантов",
-        description = "Получает индивидуальные энергетические ограничения для каждого установленного импланта. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Энергетический лимит ",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ РёРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Рµ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРёРµ РѕРіСЂР°РЅРёС‡РµРЅРёСЏ РёРјРїР»Р°РЅС‚РѕРІ",
+        description = "РџРѕР»СѓС‡Р°РµС‚ РёРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Рµ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРёРµ РѕРіСЂР°РЅРёС‡РµРЅРёСЏ РґР»СЏ РєР°Р¶РґРѕРіРѕ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅРѕРіРѕ РёРјРїР»Р°РЅС‚Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Р­РЅРµСЂРіРµС‚РёС‡РµСЃРєРёР№ Р»РёРјРёС‚ ",
         tags = { "Combat", "Implants", "Energy" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Индивидуальные энергетические ограничения", content = {
+            @ApiResponse(responseCode = "200", description = "РРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Рµ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРёРµ РѕРіСЂР°РЅРёС‡РµРЅРёСЏ", content = {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = IndividualEnergyLimits.class)))
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -811,7 +811,7 @@ public interface GameplayImplantsApi {
         produces = { "application/json" }
     )
     default ResponseEntity<List<IndividualEnergyLimits>> getIndividualEnergyLimits(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -844,68 +844,68 @@ public interface GameplayImplantsApi {
 
     String PATH_RESTORE_ENERGY = "/gameplay/combat/implants/{player_id}/energy/restore";
     /**
-     * POST /gameplay/combat/implants/{player_id}/energy/restore : Восстановить энергию
-     * Восстанавливает энергию игрока (если есть механизм восстановления).
+     * POST /gameplay/combat/implants/{player_id}/energy/restore : Р’РѕСЃСЃС‚Р°РЅРѕРІРёС‚СЊ СЌРЅРµСЂРіРёСЋ
+     * Р’РѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЌРЅРµСЂРіРёСЋ РёРіСЂРѕРєР° (РµСЃР»Рё РµСЃС‚СЊ РјРµС…Р°РЅРёР·Рј РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ).
      *
-     * @param playerId Идентификатор игрока (required)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
      * @param restoreEnergyRequest  (required)
-     * @return Результат восстановления энергии (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Запрос синтаксически корректен, но семантически неверен. Например, некорректное состояние ресурса для операции.  (status code 422)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @return Р РµР·СѓР»СЊС‚Р°С‚ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ СЌРЅРµСЂРіРёРё (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р—Р°РїСЂРѕСЃ СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєРё РєРѕСЂСЂРµРєС‚РµРЅ, РЅРѕ СЃРµРјР°РЅС‚РёС‡РµСЃРєРё РЅРµРІРµСЂРµРЅ. РќР°РїСЂРёРјРµСЂ, РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЂРµСЃСѓСЂСЃР° РґР»СЏ РѕРїРµСЂР°С†РёРё.  (status code 422)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "restoreEnergy",
-        summary = "Восстановить энергию",
-        description = "Восстанавливает энергию игрока (если есть механизм восстановления).",
+        summary = "Р’РѕСЃСЃС‚Р°РЅРѕРІРёС‚СЊ СЌРЅРµСЂРіРёСЋ",
+        description = "Р’РѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЌРЅРµСЂРіРёСЋ РёРіСЂРѕРєР° (РµСЃР»Рё РµСЃС‚СЊ РјРµС…Р°РЅРёР·Рј РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ).",
         tags = { "Combat", "Implants", "Energy" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Результат восстановления энергии", content = {
+            @ApiResponse(responseCode = "200", description = "Р РµР·СѓР»СЊС‚Р°С‚ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ СЌРЅРµСЂРіРёРё", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = EnergyRestoreResult.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "422", description = "Запрос синтаксически корректен, но семантически неверен. Например, некорректное состояние ресурса для операции. ", content = {
+            @ApiResponse(responseCode = "422", description = "Р—Р°РїСЂРѕСЃ СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєРё РєРѕСЂСЂРµРєС‚РµРЅ, РЅРѕ СЃРµРјР°РЅС‚РёС‡РµСЃРєРё РЅРµРІРµСЂРµРЅ. РќР°РїСЂРёРјРµСЂ, РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЂРµСЃСѓСЂСЃР° РґР»СЏ РѕРїРµСЂР°С†РёРё. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INVALID_STATE\",\"message\":\"Операция невозможна в текущем состоянии ресурса\",\"details\":[{\"field\":\"status\",\"message\":\"Нельзя отменить выполненный сценарий\",\"code\":\"INVALID_STATE\"}]}}"
+                        value = "{\"error\":{\"code\":\"INVALID_STATE\",\"message\":\"РћРїРµСЂР°С†РёСЏ РЅРµРІРѕР·РјРѕР¶РЅР° РІ С‚РµРєСѓС‰РµРј СЃРѕСЃС‚РѕСЏРЅРёРё СЂРµСЃСѓСЂСЃР°\",\"details\":[{\"field\":\"status\",\"message\":\"РќРµР»СЊР·СЏ РѕС‚РјРµРЅРёС‚СЊ РІС‹РїРѕР»РЅРµРЅРЅС‹Р№ СЃС†РµРЅР°СЂРёР№\",\"code\":\"INVALID_STATE\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -922,7 +922,7 @@ public interface GameplayImplantsApi {
         consumes = { "application/json" }
     )
     default ResponseEntity<EnergyRestoreResult> restoreEnergy(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
         @Parameter(name = "RestoreEnergyRequest", description = "", required = true) @Valid @RequestBody RestoreEnergyRequest restoreEnergyRequest
     ) {
         getRequest().ifPresent(request -> {
@@ -966,58 +966,58 @@ public interface GameplayImplantsApi {
 
     String PATH_VALIDATE_INSTALL = "/gameplay/combat/implants/{player_id}/validate-install";
     /**
-     * POST /gameplay/combat/implants/{player_id}/validate-install : Валидировать возможность установки импланта
-     * Валидирует возможность установки импланта с проверкой всех ограничений: слоты, совместимость, лимит имплантов, энергетический лимит. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Ограничения имплантов 
+     * POST /gameplay/combat/implants/{player_id}/validate-install : Р’Р°Р»РёРґРёСЂРѕРІР°С‚СЊ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ СѓСЃС‚Р°РЅРѕРІРєРё РёРјРїР»Р°РЅС‚Р°
+     * Р’Р°Р»РёРґРёСЂСѓРµС‚ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ СѓСЃС‚Р°РЅРѕРІРєРё РёРјРїР»Р°РЅС‚Р° СЃ РїСЂРѕРІРµСЂРєРѕР№ РІСЃРµС… РѕРіСЂР°РЅРёС‡РµРЅРёР№: СЃР»РѕС‚С‹, СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚СЊ, Р»РёРјРёС‚ РёРјРїР»Р°РЅС‚РѕРІ, СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРёР№ Р»РёРјРёС‚. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; РћРіСЂР°РЅРёС‡РµРЅРёСЏ РёРјРїР»Р°РЅС‚РѕРІ 
      *
-     * @param playerId Идентификатор игрока (required)
+     * @param playerId РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР° (required)
      * @param validateInstallRequest  (required)
-     * @return Результат валидации установки (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @return Р РµР·СѓР»СЊС‚Р°С‚ РІР°Р»РёРґР°С†РёРё СѓСЃС‚Р°РЅРѕРІРєРё (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "validateInstall",
-        summary = "Валидировать возможность установки импланта",
-        description = "Валидирует возможность установки импланта с проверкой всех ограничений: слоты, совместимость, лимит имплантов, энергетический лимит. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Ограничения имплантов ",
+        summary = "Р’Р°Р»РёРґРёСЂРѕРІР°С‚СЊ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ СѓСЃС‚Р°РЅРѕРІРєРё РёРјРїР»Р°РЅС‚Р°",
+        description = "Р’Р°Р»РёРґРёСЂСѓРµС‚ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ СѓСЃС‚Р°РЅРѕРІРєРё РёРјРїР»Р°РЅС‚Р° СЃ РїСЂРѕРІРµСЂРєРѕР№ РІСЃРµС… РѕРіСЂР°РЅРёС‡РµРЅРёР№: СЃР»РѕС‚С‹, СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚СЊ, Р»РёРјРёС‚ РёРјРїР»Р°РЅС‚РѕРІ, СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРёР№ Р»РёРјРёС‚. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> РћРіСЂР°РЅРёС‡РµРЅРёСЏ РёРјРїР»Р°РЅС‚РѕРІ ",
         tags = { "Combat", "Implants", "Validation" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Результат валидации установки", content = {
+            @ApiResponse(responseCode = "200", description = "Р РµР·СѓР»СЊС‚Р°С‚ РІР°Р»РёРґР°С†РёРё СѓСЃС‚Р°РЅРѕРІРєРё", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ValidationResult.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -1034,7 +1034,7 @@ public interface GameplayImplantsApi {
         consumes = { "application/json" }
     )
     default ResponseEntity<ValidationResult> validateInstall(
-        @NotNull @Parameter(name = "player_id", description = "Идентификатор игрока", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
+        @NotNull @Parameter(name = "player_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРіСЂРѕРєР°", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
         @Parameter(name = "ValidateInstallRequest", description = "", required = true) @Valid @RequestBody ValidateInstallRequest validateInstallRequest
     ) {
         getRequest().ifPresent(request -> {

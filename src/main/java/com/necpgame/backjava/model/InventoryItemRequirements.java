@@ -17,10 +17,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Требования для использования/экипировки
+ * РўСЂРµР±РѕРІР°РЅРёСЏ РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ/СЌРєРёРїРёСЂРѕРІРєРё
  */
 
-@Schema(name = "InventoryItem_requirements", description = "Требования для использования/экипировки")
+@Schema(name = "InventoryItem_requirements", description = "РўСЂРµР±РѕРІР°РЅРёСЏ РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ/СЌРєРёРїРёСЂРѕРІРєРё")
 @JsonTypeName("InventoryItem_requirements")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:50:45.778329200+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class InventoryItemRequirements {

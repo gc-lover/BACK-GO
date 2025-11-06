@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 /**
- * REST Controller для работы с NPC и диалогами.
+ * REST Controller РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ NPC Рё РґРёР°Р»РѕРіР°РјРё.
  * 
- * Реализует контракт {@link NpcsApi}, сгенерированный из OpenAPI спецификации.
- * Источник: API-SWAGGER/api/v1/npcs/npcs.yaml
+ * Р РµР°Р»РёР·СѓРµС‚ РєРѕРЅС‚СЂР°РєС‚ {@link NpcsApi}, СЃРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅС‹Р№ РёР· OpenAPI СЃРїРµС†РёС„РёРєР°С†РёРё.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/npcs/npcs.yaml
  */
 @Slf4j
 @RestController

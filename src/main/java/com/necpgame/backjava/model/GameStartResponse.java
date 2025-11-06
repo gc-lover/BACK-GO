@@ -11,9 +11,9 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * GameStartResponse - ответ при начале игры
+ * GameStartResponse - РѕС‚РІРµС‚ РїСЂРё РЅР°С‡Р°Р»Рµ РёРіСЂС‹
  */
-@Schema(description = "Ответ при начале игры")
+@Schema(description = "РћС‚РІРµС‚ РїСЂРё РЅР°С‡Р°Р»Рµ РёРіСЂС‹")
 public class GameStartResponse {
 
     @JsonProperty("gameSessionId")
@@ -37,7 +37,7 @@ public class GameStartResponse {
     @JsonProperty("tutorialEnabled")
     private Boolean tutorialEnabled;
 
-    @Schema(description = "ID игровой сессии", required = true)
+    @Schema(description = "ID РёРіСЂРѕРІРѕР№ СЃРµСЃСЃРёРё", required = true)
     @NotNull
     public UUID getGameSessionId() {
         return gameSessionId;
@@ -47,7 +47,7 @@ public class GameStartResponse {
         this.gameSessionId = gameSessionId;
     }
 
-    @Schema(description = "ID персонажа", required = true)
+    @Schema(description = "ID РїРµСЂСЃРѕРЅР°Р¶Р°", required = true)
     @NotNull
     public UUID getCharacterId() {
         return characterId;
@@ -57,7 +57,7 @@ public class GameStartResponse {
         this.characterId = characterId;
     }
 
-    @Schema(description = "Текущая локация", required = true)
+    @Schema(description = "РўРµРєСѓС‰Р°СЏ Р»РѕРєР°С†РёСЏ", required = true)
     @NotNull
     @Valid
     public GameLocation getCurrentLocation() {
@@ -68,7 +68,7 @@ public class GameStartResponse {
         this.currentLocation = currentLocation;
     }
 
-    @Schema(description = "Состояние персонажа", required = true)
+    @Schema(description = "РЎРѕСЃС‚РѕСЏРЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°", required = true)
     @NotNull
     @Valid
     public GameCharacterState getCharacterState() {
@@ -79,7 +79,7 @@ public class GameStartResponse {
         this.characterState = characterState;
     }
 
-    @Schema(description = "Стартовое снаряжение", required = true)
+    @Schema(description = "РЎС‚Р°СЂС‚РѕРІРѕРµ СЃРЅР°СЂСЏР¶РµРЅРёРµ", required = true)
     @NotNull
     @Valid
     public List<GameStartingItem> getStartingEquipment() {
@@ -90,7 +90,7 @@ public class GameStartResponse {
         this.startingEquipment = startingEquipment;
     }
 
-    @Schema(description = "Приветственное сообщение", required = true)
+    @Schema(description = "РџСЂРёРІРµС‚СЃС‚РІРµРЅРЅРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ", required = true)
     @NotNull
     @Size(min = 10, max = 1000)
     public String getWelcomeMessage() {
@@ -101,7 +101,7 @@ public class GameStartResponse {
         this.welcomeMessage = welcomeMessage;
     }
 
-    @Schema(description = "Включен ли туториал", required = true)
+    @Schema(description = "Р’РєР»СЋС‡РµРЅ Р»Рё С‚СѓС‚РѕСЂРёР°Р»", required = true)
     @NotNull
     public Boolean getTutorialEnabled() {
         return tutorialEnabled;

@@ -10,33 +10,33 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * CombatSessionRepository - репозиторий для работы с боевыми сессиями.
+ * CombatSessionRepository - СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р±РѕРµРІС‹РјРё СЃРµСЃСЃРёСЏРјРё.
  * 
- * Источник: API-SWAGGER/api/v1/combat/combat.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/combat/combat.yaml
  */
 @Repository
 public interface CombatSessionRepository extends JpaRepository<CombatSessionEntity, UUID> {
 
     /**
-     * Найти активную боевую сессию персонажа.
+     * РќР°Р№С‚Рё Р°РєС‚РёРІРЅСѓСЋ Р±РѕРµРІСѓСЋ СЃРµСЃСЃРёСЋ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT cs FROM CombatSessionEntity cs WHERE cs.characterId = :characterId AND cs.status = 'ACTIVE'")
     Optional<CombatSessionEntity> findActiveByCharacterId(UUID characterId);
 
     /**
-     * Проверить есть ли активный бой у персонажа.
+     * РџСЂРѕРІРµСЂРёС‚СЊ РµСЃС‚СЊ Р»Рё Р°РєС‚РёРІРЅС‹Р№ Р±РѕР№ Сѓ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT COUNT(cs) > 0 FROM CombatSessionEntity cs WHERE cs.characterId = :characterId AND cs.status = 'ACTIVE'")
     boolean hasActiveCombat(UUID characterId);
 
     /**
-     * Найти все бои персонажа.
+     * РќР°Р№С‚Рё РІСЃРµ Р±РѕРё РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT cs FROM CombatSessionEntity cs WHERE cs.characterId = :characterId ORDER BY cs.createdAt DESC")
     List<CombatSessionEntity> findByCharacterIdOrderByCreatedAtDesc(UUID characterId);
 
     /**
-     * Найти завершенные бои персонажа.
+     * РќР°Р№С‚Рё Р·Р°РІРµСЂС€РµРЅРЅС‹Рµ Р±РѕРё РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT cs FROM CombatSessionEntity cs WHERE cs.characterId = :characterId AND cs.status IN ('ENDED', 'FLED') ORDER BY cs.endedAt DESC")
     List<CombatSessionEntity> findCompletedByCharacterId(UUID characterId);

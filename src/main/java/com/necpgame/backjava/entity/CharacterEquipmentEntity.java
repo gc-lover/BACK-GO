@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * CharacterEquipmentEntity - экипированные предметы персонажа.
+ * CharacterEquipmentEntity - СЌРєРёРїРёСЂРѕРІР°РЅРЅС‹Рµ РїСЂРµРґРјРµС‚С‹ РїРµСЂСЃРѕРЅР°Р¶Р°.
  * 
- * Хранит информацию о экипированных предметах в слотах персонажа.
- * Источник: API-SWAGGER/api/v1/inventory/inventory.yaml (EquipmentSlot schema)
+ * РҐСЂР°РЅРёС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЌРєРёРїРёСЂРѕРІР°РЅРЅС‹С… РїСЂРµРґРјРµС‚Р°С… РІ СЃР»РѕС‚Р°С… РїРµСЂСЃРѕРЅР°Р¶Р°.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/inventory/inventory.yaml (EquipmentSlot schema)
  */
 @Entity
 @Table(name = "character_equipment", indexes = {
@@ -59,7 +59,7 @@ public class CharacterEquipmentEntity {
     private InventoryItemEntity item;
 
     /**
-     * Тип слота экипировки (из OpenAPI - EquipmentSlot.slotType enum)
+     * РўРёРї СЃР»РѕС‚Р° СЌРєРёРїРёСЂРѕРІРєРё (РёР· OpenAPI - EquipmentSlot.slotType enum)
      */
     public enum SlotType {
         HEAD,

@@ -47,38 +47,38 @@ public interface LocationsApi {
 
     String PATH_GET_CITIES = "/locations/cities";
     /**
-     * GET /locations/cities : Список доступных городов
-     * Получает список всех доступных городов. Может быть отфильтрован по фракции и региону.
+     * GET /locations/cities : РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РіРѕСЂРѕРґРѕРІ
+     * РџРѕР»СѓС‡Р°РµС‚ СЃРїРёСЃРѕРє РІСЃРµС… РґРѕСЃС‚СѓРїРЅС‹С… РіРѕСЂРѕРґРѕРІ. РњРѕР¶РµС‚ Р±С‹С‚СЊ РѕС‚С„РёР»СЊС‚СЂРѕРІР°РЅ РїРѕ С„СЂР°РєС†РёРё Рё СЂРµРіРёРѕРЅСѓ.
      *
-     * @param factionId Фильтр по фракции (опционально) (optional)
-     * @param region Фильтр по региону/серверу (опционально) (optional)
-     * @return Список городов (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса.  (status code 500)
+     * @param factionId Р¤РёР»СЊС‚СЂ РїРѕ С„СЂР°РєС†РёРё (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ) (optional)
+     * @param region Р¤РёР»СЊС‚СЂ РїРѕ СЂРµРіРёРѕРЅСѓ/СЃРµСЂРІРµСЂСѓ (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ) (optional)
+     * @return РЎРїРёСЃРѕРє РіРѕСЂРѕРґРѕРІ (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°.  (status code 500)
      */
     @Operation(
         operationId = "getCities",
-        summary = "Список доступных городов",
-        description = "Получает список всех доступных городов. Может быть отфильтрован по фракции и региону.",
+        summary = "РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РіРѕСЂРѕРґРѕРІ",
+        description = "РџРѕР»СѓС‡Р°РµС‚ СЃРїРёСЃРѕРє РІСЃРµС… РґРѕСЃС‚СѓРїРЅС‹С… РіРѕСЂРѕРґРѕРІ. РњРѕР¶РµС‚ Р±С‹С‚СЊ РѕС‚С„РёР»СЊС‚СЂРѕРІР°РЅ РїРѕ С„СЂР°РєС†РёРё Рё СЂРµРіРёРѕРЅСѓ.",
         tags = { "Reference Data", "Locations" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Список городов", content = {
+            @ApiResponse(responseCode = "200", description = "РЎРїРёСЃРѕРє РіРѕСЂРѕРґРѕРІ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GetCities200Response.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера. Непредвиденная ошибка при обработке запроса. ", content = {
+            @ApiResponse(responseCode = "500", description = "Р’РЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°. РќРµРїСЂРµРґРІРёРґРµРЅРЅР°СЏ РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"Произошла внутренняя ошибка сервера\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"INTERNAL_SERVER_ERROR\",\"message\":\"РџСЂРѕРёР·РѕС€Р»Р° РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РѕС€РёР±РєР° СЃРµСЂРІРµСЂР°\",\"details\":[]}}"
                     )
                 })
 
@@ -91,23 +91,23 @@ public interface LocationsApi {
         produces = { "application/json" }
     )
     default ResponseEntity<GetCities200Response> getCities(
-        @Parameter(name = "faction_id", description = "Фильтр по фракции (опционально)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "faction_id", required = false) @Nullable UUID factionId,
-        @Parameter(name = "region", description = "Фильтр по региону/серверу (опционально)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "region", required = false) @Nullable String region
+        @Parameter(name = "faction_id", description = "Р¤РёР»СЊС‚СЂ РїРѕ С„СЂР°РєС†РёРё (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "faction_id", required = false) @Nullable UUID factionId,
+        @Parameter(name = "region", description = "Р¤РёР»СЊС‚СЂ РїРѕ СЂРµРіРёРѕРЅСѓ/СЃРµСЂРІРµСЂСѓ (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "region", required = false) @Nullable String region
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"cities\" : [ { \"available_for_factions\" : [ \"550e8400-e29b-41d4-a716-446655440000\" ], \"name\" : \"Night City\", \"description\" : \"Главный город, множество возможностей\", \"id\" : \"550e8400-e29b-41d4-a716-446655440000\", \"region\" : \"EU\" }, { \"available_for_factions\" : [ \"550e8400-e29b-41d4-a716-446655440000\" ], \"name\" : \"Night City\", \"description\" : \"Главный город, множество возможностей\", \"id\" : \"550e8400-e29b-41d4-a716-446655440000\", \"region\" : \"EU\" } ] }";
+                    String exampleString = "{ \"cities\" : [ { \"available_for_factions\" : [ \"550e8400-e29b-41d4-a716-446655440000\" ], \"name\" : \"Night City\", \"description\" : \"Р“Р»Р°РІРЅС‹Р№ РіРѕСЂРѕРґ, РјРЅРѕР¶РµСЃС‚РІРѕ РІРѕР·РјРѕР¶РЅРѕСЃС‚РµР№\", \"id\" : \"550e8400-e29b-41d4-a716-446655440000\", \"region\" : \"EU\" }, { \"available_for_factions\" : [ \"550e8400-e29b-41d4-a716-446655440000\" ], \"name\" : \"Night City\", \"description\" : \"Р“Р»Р°РІРЅС‹Р№ РіРѕСЂРѕРґ, РјРЅРѕР¶РµСЃС‚РІРѕ РІРѕР·РјРѕР¶РЅРѕСЃС‚РµР№\", \"id\" : \"550e8400-e29b-41d4-a716-446655440000\", \"region\" : \"EU\" } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

@@ -16,22 +16,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 /**
- * Game Start API - контракт для запуска игры.
+ * Game Start API - РєРѕРЅС‚СЂР°РєС‚ РґР»СЏ Р·Р°РїСѓСЃРєР° РёРіСЂС‹.
  * 
- * Сгенерировано из: API-SWAGGER/api/v1/game/start.yaml
+ * РЎРіРµРЅРµСЂРёСЂРѕРІР°РЅРѕ РёР·: API-SWAGGER/api/v1/game/start.yaml
  * OpenAPI Generator version: 7.2.0
  * 
- * НЕ редактируйте этот файл вручную - он генерируется автоматически!
+ * РќР• СЂРµРґР°РєС‚РёСЂСѓР№С‚Рµ СЌС‚РѕС‚ С„Р°Р№Р» РІСЂСѓС‡РЅСѓСЋ - РѕРЅ РіРµРЅРµСЂРёСЂСѓРµС‚СЃСЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё!
  */
 @Validated
-@Tag(name = "Game Start", description = "Запуск игры и начальный контент")
+@Tag(name = "Game Start", description = "Р—Р°РїСѓСЃРє РёРіСЂС‹ Рё РЅР°С‡Р°Р»СЊРЅС‹Р№ РєРѕРЅС‚РµРЅС‚")
 public interface GameStartApi {
 
     /**
-     * POST /v1/game/start : Начать игру
+     * POST /v1/game/start : РќР°С‡Р°С‚СЊ РёРіСЂСѓ
      * 
      * @param body  (required)
-     * @return Игра началась успешно (status code 200)
+     * @return РРіСЂР° РЅР°С‡Р°Р»Р°СЃСЊ СѓСЃРїРµС€РЅРѕ (status code 200)
      *         or Bad Request (status code 400)
      *         or Not Found (status code 404)
      *         or Conflict (status code 409)
@@ -39,11 +39,11 @@ public interface GameStartApi {
      */
     @Operation(
         operationId = "startGame",
-        summary = "Начать игру",
-        description = "Начинает игру для созданного персонажа.",
+        summary = "РќР°С‡Р°С‚СЊ РёРіСЂСѓ",
+        description = "РќР°С‡РёРЅР°РµС‚ РёРіСЂСѓ РґР»СЏ СЃРѕР·РґР°РЅРЅРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°.",
         tags = { "Game Start" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Игра началась успешно", content = {
+            @ApiResponse(responseCode = "200", description = "РРіСЂР° РЅР°С‡Р°Р»Р°СЃСЊ СѓСЃРїРµС€РЅРѕ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GameStartResponse.class))
             }),
             @ApiResponse(responseCode = "400", description = "Bad Request", content = {
@@ -76,20 +76,20 @@ public interface GameStartApi {
     }
 
     /**
-     * GET /v1/game/welcome : Получить приветственный экран
+     * GET /v1/game/welcome : РџРѕР»СѓС‡РёС‚СЊ РїСЂРёРІРµС‚СЃС‚РІРµРЅРЅС‹Р№ СЌРєСЂР°РЅ
      * 
-     * @param characterId ID персонажа (required)
-     * @return Приветственный экран (status code 200)
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р° (required)
+     * @return РџСЂРёРІРµС‚СЃС‚РІРµРЅРЅС‹Р№ СЌРєСЂР°РЅ (status code 200)
      *         or Not Found (status code 404)
      *         or Internal Server Error (status code 500)
      */
     @Operation(
         operationId = "getWelcomeScreen",
-        summary = "Получить приветственный экран",
-        description = "Возвращает приветственный экран для персонажа.",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ РїСЂРёРІРµС‚СЃС‚РІРµРЅРЅС‹Р№ СЌРєСЂР°РЅ",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ РїСЂРёРІРµС‚СЃС‚РІРµРЅРЅС‹Р№ СЌРєСЂР°РЅ РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°.",
         tags = { "Game Start" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Приветственный экран", content = {
+            @ApiResponse(responseCode = "200", description = "РџСЂРёРІРµС‚СЃС‚РІРµРЅРЅС‹Р№ СЌРєСЂР°РЅ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = WelcomeScreenResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "Not Found", content = {
@@ -108,27 +108,27 @@ public interface GameStartApi {
         produces = { "application/json" }
     )
     default ResponseEntity<WelcomeScreenResponse> getWelcomeScreen(
-        @Parameter(name = "characterId", description = "ID персонажа", required = true)
+        @Parameter(name = "characterId", description = "ID РїРµСЂСЃРѕРЅР°Р¶Р°", required = true)
         @Valid @RequestParam(value = "characterId", required = true) UUID characterId
     ) {
         return ResponseEntity.ok().build();
     }
 
     /**
-     * POST /v1/game/return : Вернуться в игру
+     * POST /v1/game/return : Р’РµСЂРЅСѓС‚СЊСЃСЏ РІ РёРіСЂСѓ
      * 
      * @param body  (required)
-     * @return Возврат в игру (status code 200)
+     * @return Р’РѕР·РІСЂР°С‚ РІ РёРіСЂСѓ (status code 200)
      *         or Not Found (status code 404)
      *         or Internal Server Error (status code 500)
      */
     @Operation(
         operationId = "returnToGame",
-        summary = "Вернуться в игру",
-        description = "Возвращает игрока в игру при повторном входе.",
+        summary = "Р’РµСЂРЅСѓС‚СЊСЃСЏ РІ РёРіСЂСѓ",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРіСЂРѕРєР° РІ РёРіСЂСѓ РїСЂРё РїРѕРІС‚РѕСЂРЅРѕРј РІС…РѕРґРµ.",
         tags = { "Game Start" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Возврат в игру", content = {
+            @ApiResponse(responseCode = "200", description = "Р’РѕР·РІСЂР°С‚ РІ РёРіСЂСѓ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GameReturnResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "Not Found", content = {

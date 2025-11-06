@@ -7,9 +7,9 @@ import jakarta.validation.constraints.*;
 import java.util.Objects;
 
 /**
- * TutorialStep - шаг туториала
+ * TutorialStep - С€Р°Рі С‚СѓС‚РѕСЂРёР°Р»Р°
  */
-@Schema(description = "Шаг туториала")
+@Schema(description = "РЁР°Рі С‚СѓС‚РѕСЂРёР°Р»Р°")
 public class TutorialStep {
 
     @JsonProperty("id")
@@ -24,7 +24,7 @@ public class TutorialStep {
     @JsonProperty("hint")
     private String hint;
 
-    @Schema(description = "Уникальный идентификатор шага", required = true)
+    @Schema(description = "РЈРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С€Р°РіР°", required = true)
     @NotNull
     public String getId() {
         return id;
@@ -34,7 +34,7 @@ public class TutorialStep {
         this.id = id;
     }
 
-    @Schema(description = "Заголовок шага", required = true)
+    @Schema(description = "Р—Р°РіРѕР»РѕРІРѕРє С€Р°РіР°", required = true)
     @NotNull
     @Size(min = 1, max = 100)
     public String getTitle() {
@@ -45,7 +45,7 @@ public class TutorialStep {
         this.title = title;
     }
 
-    @Schema(description = "Описание шага", required = true)
+    @Schema(description = "РћРїРёСЃР°РЅРёРµ С€Р°РіР°", required = true)
     @NotNull
     @Size(min = 10, max = 500)
     public String getDescription() {
@@ -56,7 +56,7 @@ public class TutorialStep {
         this.description = description;
     }
 
-    @Schema(description = "Подсказка для игрока", required = true)
+    @Schema(description = "РџРѕРґСЃРєР°Р·РєР° РґР»СЏ РёРіСЂРѕРєР°", required = true)
     @NotNull
     @Size(min = 1, max = 200)
     public String getHint() {

@@ -21,15 +21,15 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Запрос на применение лечения
+ * Р—Р°РїСЂРѕСЃ РЅР° РїСЂРёРјРµРЅРµРЅРёРµ Р»РµС‡РµРЅРёСЏ
  */
 
-@Schema(name = "ApplyTreatmentRequest", description = "Запрос на применение лечения")
+@Schema(name = "ApplyTreatmentRequest", description = "Р—Р°РїСЂРѕСЃ РЅР° РїСЂРёРјРµРЅРµРЅРёРµ Р»РµС‡РµРЅРёСЏ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class ApplyTreatmentRequest {
 
   /**
-   * Тип лечения
+   * РўРёРї Р»РµС‡РµРЅРёСЏ
    */
   public enum TreatmentTypeEnum {
     THERAPY("therapy"),
@@ -88,11 +88,11 @@ public class ApplyTreatmentRequest {
   }
 
   /**
-   * Тип лечения
+   * РўРёРї Р»РµС‡РµРЅРёСЏ
    * @return treatmentType
    */
   @NotNull 
-  @Schema(name = "treatment_type", description = "Тип лечения", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "treatment_type", description = "РўРёРї Р»РµС‡РµРЅРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("treatment_type")
   public TreatmentTypeEnum getTreatmentType() {
     return treatmentType;
@@ -108,11 +108,11 @@ public class ApplyTreatmentRequest {
   }
 
   /**
-   * Идентификатор NPC для лечения
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ NPC РґР»СЏ Р»РµС‡РµРЅРёСЏ
    * @return npcId
    */
   @Valid 
-  @Schema(name = "npc_id", description = "Идентификатор NPC для лечения", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "npc_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ NPC РґР»СЏ Р»РµС‡РµРЅРёСЏ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("npc_id")
   public JsonNullable<UUID> getNpcId() {
     return npcId;

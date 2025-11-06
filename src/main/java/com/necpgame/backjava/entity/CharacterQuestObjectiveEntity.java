@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * CharacterQuestObjectiveEntity - прогресс выполнения целей квеста для персонажа.
+ * CharacterQuestObjectiveEntity - РїСЂРѕРіСЂРµСЃСЃ РІС‹РїРѕР»РЅРµРЅРёСЏ С†РµР»РµР№ РєРІРµСЃС‚Р° РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°.
  * 
- * Отслеживает текущий прогресс каждой цели квеста для каждого персонажа.
- * Источник: API-SWAGGER/api/v1/quests/quests.yaml (QuestObjective schema)
+ * РћС‚СЃР»РµР¶РёРІР°РµС‚ С‚РµРєСѓС‰РёР№ РїСЂРѕРіСЂРµСЃСЃ РєР°Р¶РґРѕР№ С†РµР»Рё РєРІРµСЃС‚Р° РґР»СЏ РєР°Р¶РґРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/quests/quests.yaml (QuestObjective schema)
  */
 @Entity
 @Table(name = "character_quest_objectives", indexes = {

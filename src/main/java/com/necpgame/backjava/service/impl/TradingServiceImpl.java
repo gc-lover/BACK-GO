@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.UUID;
 
 /**
- * Реализация сервиса для работы с торговлей.
+ * Р РµР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІРёСЃР° РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ С‚РѕСЂРіРѕРІР»РµР№.
  * 
- * Источник: API-SWAGGER/api/v1/trading/trading.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/trading/trading.yaml
  */
 @Slf4j
 @Service
@@ -29,7 +29,7 @@ public class TradingServiceImpl implements TradingService {
     public GetVendors200Response getVendors(UUID characterId, String locationId) {
         log.info("Getting vendors for character: {} (location: {})", characterId, locationId);
         
-        // TODO: Полная реализация (загрузить список торговцев с фильтрами)
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (Р·Р°РіСЂСѓР·РёС‚СЊ СЃРїРёСЃРѕРє С‚РѕСЂРіРѕРІС†РµРІ СЃ С„РёР»СЊС‚СЂР°РјРё)
         return null;
     }
     
@@ -38,7 +38,7 @@ public class TradingServiceImpl implements TradingService {
     public VendorInventory getVendorInventory(String vendorId, UUID characterId) {
         log.info("Getting vendor {} inventory for character: {}", vendorId, characterId);
         
-        // TODO: Полная реализация (загрузить ассортимент торговца)
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (Р·Р°РіСЂСѓР·РёС‚СЊ Р°СЃСЃРѕСЂС‚РёРјРµРЅС‚ С‚РѕСЂРіРѕРІС†Р°)
         return null;
     }
     
@@ -47,7 +47,7 @@ public class TradingServiceImpl implements TradingService {
     public BuyItem200Response buyItem(BuyItemRequest request) {
         log.info("Buying item {} from vendor {}", request.getItemId(), request.getVendorId());
         
-        // TODO: Полная реализация (купить предмет, списать деньги, добавить в инвентарь)
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (РєСѓРїРёС‚СЊ РїСЂРµРґРјРµС‚, СЃРїРёСЃР°С‚СЊ РґРµРЅСЊРіРё, РґРѕР±Р°РІРёС‚СЊ РІ РёРЅРІРµРЅС‚Р°СЂСЊ)
         return null;
     }
     
@@ -56,7 +56,7 @@ public class TradingServiceImpl implements TradingService {
     public SellItem200Response sellItem(BuyItemRequest request) {
         log.info("Selling item {} to vendor {}", request.getItemId(), request.getVendorId());
         
-        // TODO: Полная реализация (продать предмет, добавить деньги, убрать из инвентаря)
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (РїСЂРѕРґР°С‚СЊ РїСЂРµРґРјРµС‚, РґРѕР±Р°РІРёС‚СЊ РґРµРЅСЊРіРё, СѓР±СЂР°С‚СЊ РёР· РёРЅРІРµРЅС‚Р°СЂСЏ)
         return null;
     }
     
@@ -65,7 +65,7 @@ public class TradingServiceImpl implements TradingService {
     public GetItemPrice200Response getItemPrice(String itemId, String vendorId, UUID characterId) {
         log.info("Getting price for item {} at vendor {} for character: {}", itemId, vendorId, characterId);
         
-        // TODO: Полная реализация (рассчитать цену с учетом скидок и репутации)
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (СЂР°СЃСЃС‡РёС‚Р°С‚СЊ С†РµРЅСѓ СЃ СѓС‡РµС‚РѕРј СЃРєРёРґРѕРє Рё СЂРµРїСѓС‚Р°С†РёРё)
         return null;
     }
 }

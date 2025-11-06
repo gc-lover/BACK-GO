@@ -58,11 +58,11 @@ public class City {
   }
 
   /**
-   * Уникальный идентификатор города
+   * РЈРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РіРѕСЂРѕРґР°
    * @return id
    */
   @NotNull @Valid 
-  @Schema(name = "id", example = "550e8400-e29b-41d4-a716-446655440000", description = "Уникальный идентификатор города", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "id", example = "550e8400-e29b-41d4-a716-446655440000", description = "РЈРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РіРѕСЂРѕРґР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("id")
   public UUID getId() {
     return id;
@@ -78,11 +78,11 @@ public class City {
   }
 
   /**
-   * Название города
+   * РќР°Р·РІР°РЅРёРµ РіРѕСЂРѕРґР°
    * @return name
    */
   @NotNull 
-  @Schema(name = "name", example = "Night City", description = "Название города", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "name", example = "Night City", description = "РќР°Р·РІР°РЅРёРµ РіРѕСЂРѕРґР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -98,11 +98,11 @@ public class City {
   }
 
   /**
-   * Регион/сервер
+   * Р РµРіРёРѕРЅ/СЃРµСЂРІРµСЂ
    * @return region
    */
   @NotNull 
-  @Schema(name = "region", example = "EU", description = "Регион/сервер", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "region", example = "EU", description = "Р РµРіРёРѕРЅ/СЃРµСЂРІРµСЂ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("region")
   public String getRegion() {
     return region;
@@ -118,11 +118,11 @@ public class City {
   }
 
   /**
-   * Описание города
+   * РћРїРёСЃР°РЅРёРµ РіРѕСЂРѕРґР°
    * @return description
    */
   @NotNull 
-  @Schema(name = "description", example = "Главный город, множество возможностей", description = "Описание города", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "description", example = "Р“Р»Р°РІРЅС‹Р№ РіРѕСЂРѕРґ, РјРЅРѕР¶РµСЃС‚РІРѕ РІРѕР·РјРѕР¶РЅРѕСЃС‚РµР№", description = "РћРїРёСЃР°РЅРёРµ РіРѕСЂРѕРґР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {
     return description;
@@ -146,11 +146,11 @@ public class City {
   }
 
   /**
-   * Список доступных фракций для старта (UUID)
+   * РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… С„СЂР°РєС†РёР№ РґР»СЏ СЃС‚Р°СЂС‚Р° (UUID)
    * @return availableForFactions
    */
   @NotNull @Valid 
-  @Schema(name = "available_for_factions", example = "[\"550e8400-e29b-41d4-a716-446655440000\"]", description = "Список доступных фракций для старта (UUID)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "available_for_factions", example = "[\"550e8400-e29b-41d4-a716-446655440000\"]", description = "РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… С„СЂР°РєС†РёР№ РґР»СЏ СЃС‚Р°СЂС‚Р° (UUID)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("available_for_factions")
   public List<UUID> getAvailableForFactions() {
     return availableForFactions;

@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * JPA Entity для человечности персонажа.
+ * JPA Entity РґР»СЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РїРµСЂСЃРѕРЅР°Р¶Р°.
  * 
- * Связанная таблица: character_humanity
- * Источник: API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
+ * РЎРІСЏР·Р°РЅРЅР°СЏ С‚Р°Р±Р»РёС†Р°: character_humanity
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
  */
 @Data
 @NoArgsConstructor
@@ -49,7 +49,7 @@ public class CharacterHumanityEntity {
     private Float lossPercentage = 0.0f;
     
     /**
-     * Текущая стадия: early, middle, late, cyberpsychosis
+     * РўРµРєСѓС‰Р°СЏ СЃС‚Р°РґРёСЏ: early, middle, late, cyberpsychosis
      */
     @Column(name = "stage", nullable = false, length = 50)
     @Enumerated(EnumType.STRING)

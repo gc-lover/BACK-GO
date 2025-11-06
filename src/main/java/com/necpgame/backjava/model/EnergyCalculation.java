@@ -21,10 +21,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Расчет энергетического потребления имплантов. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Энергетический лимит 
+ * Р Р°СЃС‡РµС‚ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРіРѕ РїРѕС‚СЂРµР±Р»РµРЅРёСЏ РёРјРїР»Р°РЅС‚РѕРІ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Р­РЅРµСЂРіРµС‚РёС‡РµСЃРєРёР№ Р»РёРјРёС‚ 
  */
 
-@Schema(name = "EnergyCalculation", description = "Расчет энергетического потребления имплантов. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Энергетический лимит ")
+@Schema(name = "EnergyCalculation", description = "Р Р°СЃС‡РµС‚ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРіРѕ РїРѕС‚СЂРµР±Р»РµРЅРёСЏ РёРјРїР»Р°РЅС‚РѕРІ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Р­РЅРµСЂРіРµС‚РёС‡РµСЃРєРёР№ Р»РёРјРёС‚ ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class EnergyCalculation {
 
@@ -56,12 +56,12 @@ public class EnergyCalculation {
   }
 
   /**
-   * Общее потребление энергии
+   * РћР±С‰РµРµ РїРѕС‚СЂРµР±Р»РµРЅРёРµ СЌРЅРµСЂРіРёРё
    * minimum: 0
    * @return totalDrain
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "total_drain", description = "Общее потребление энергии", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "total_drain", description = "РћР±С‰РµРµ РїРѕС‚СЂРµР±Р»РµРЅРёРµ СЌРЅРµСЂРіРёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("total_drain")
   public Float getTotalDrain() {
     return totalDrain;
@@ -85,11 +85,11 @@ public class EnergyCalculation {
   }
 
   /**
-   * Индивидуальные ограничения имплантов
+   * РРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Рµ РѕРіСЂР°РЅРёС‡РµРЅРёСЏ РёРјРїР»Р°РЅС‚РѕРІ
    * @return individualLimits
    */
   @Valid 
-  @Schema(name = "individual_limits", description = "Индивидуальные ограничения имплантов", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "individual_limits", description = "РРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Рµ РѕРіСЂР°РЅРёС‡РµРЅРёСЏ РёРјРїР»Р°РЅС‚РѕРІ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("individual_limits")
   public List<@Valid IndividualLimit> getIndividualLimits() {
     return individualLimits;
@@ -105,11 +105,11 @@ public class EnergyCalculation {
   }
 
   /**
-   * Можно ли установить импланты с учетом энергетического лимита
+   * РњРѕР¶РЅРѕ Р»Рё СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РёРјРїР»Р°РЅС‚С‹ СЃ СѓС‡РµС‚РѕРј СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРіРѕ Р»РёРјРёС‚Р°
    * @return canInstall
    */
   @NotNull 
-  @Schema(name = "can_install", description = "Можно ли установить импланты с учетом энергетического лимита", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "can_install", description = "РњРѕР¶РЅРѕ Р»Рё СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РёРјРїР»Р°РЅС‚С‹ СЃ СѓС‡РµС‚РѕРј СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРіРѕ Р»РёРјРёС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("can_install")
   public Boolean getCanInstall() {
     return canInstall;
@@ -133,11 +133,11 @@ public class EnergyCalculation {
   }
 
   /**
-   * Предупреждения о энергетическом потреблении
+   * РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ Рѕ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРј РїРѕС‚СЂРµР±Р»РµРЅРёРё
    * @return warnings
    */
   @Valid 
-  @Schema(name = "warnings", description = "Предупреждения о энергетическом потреблении", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "warnings", description = "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ Рѕ СЌРЅРµСЂРіРµС‚РёС‡РµСЃРєРѕРј РїРѕС‚СЂРµР±Р»РµРЅРёРё", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("warnings")
   public List<@Valid Warning> getWarnings() {
     return warnings;

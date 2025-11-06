@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Entity для таблицы factions - фракции (справочник)
- * Соответствует Faction DTO из OpenAPI спецификации
+ * Entity РґР»СЏ С‚Р°Р±Р»РёС†С‹ factions - С„СЂР°РєС†РёРё (СЃРїСЂР°РІРѕС‡РЅРёРє)
+ * РЎРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ Faction DTO РёР· OpenAPI СЃРїРµС†РёС„РёРєР°С†РёРё
  */
 @Data
 @Entity
@@ -40,15 +40,15 @@ public class FactionEntity {
     @Column(name = "available_for_origins", columnDefinition = "TEXT")
     private String availableForOrigins; // JSON array: ["corpo", "street_kid"]
     
-    // Relationships - many-to-many с Origins (обратная сторона)
+    // Relationships - many-to-many СЃ Origins (РѕР±СЂР°С‚РЅР°СЏ СЃС‚РѕСЂРѕРЅР°)
     @ManyToMany(mappedBy = "availableFactions", fetch = FetchType.LAZY)
     private List<CharacterOriginEntity> origins = new ArrayList<>();
     
-    // Relationships - many-to-many с Cities
+    // Relationships - many-to-many СЃ Cities
     @ManyToMany(mappedBy = "availableFactions", fetch = FetchType.LAZY)
     private List<CityEntity> cities = new ArrayList<>();
     
-    // Enum для типа фракции
+    // Enum РґР»СЏ С‚РёРїР° С„СЂР°РєС†РёРё
     public enum FactionType {
         corporation,
         gang,

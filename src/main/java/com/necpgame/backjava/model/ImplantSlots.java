@@ -17,10 +17,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Слоты имплантов игрока по типам. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Ограничения имплантов 
+ * РЎР»РѕС‚С‹ РёРјРїР»Р°РЅС‚РѕРІ РёРіСЂРѕРєР° РїРѕ С‚РёРїР°Рј. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; РћРіСЂР°РЅРёС‡РµРЅРёСЏ РёРјРїР»Р°РЅС‚РѕРІ 
  */
 
-@Schema(name = "ImplantSlots", description = "Слоты имплантов игрока по типам. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Ограничения имплантов ")
+@Schema(name = "ImplantSlots", description = "РЎР»РѕС‚С‹ РёРјРїР»Р°РЅС‚РѕРІ РёРіСЂРѕРєР° РїРѕ С‚РёРїР°Рј. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> РћРіСЂР°РЅРёС‡РµРЅРёСЏ РёРјРїР»Р°РЅС‚РѕРІ ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class ImplantSlots {
 

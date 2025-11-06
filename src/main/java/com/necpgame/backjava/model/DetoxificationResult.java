@@ -16,10 +16,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Результат детоксикации. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Детоксикация 
+ * Р РµР·СѓР»СЊС‚Р°С‚ РґРµС‚РѕРєСЃРёРєР°С†РёРё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Р”РµС‚РѕРєСЃРёРєР°С†РёСЏ 
  */
 
-@Schema(name = "DetoxificationResult", description = "Результат детоксикации. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Детоксикация ")
+@Schema(name = "DetoxificationResult", description = "Р РµР·СѓР»СЊС‚Р°С‚ РґРµС‚РѕРєСЃРёРєР°С†РёРё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Р”РµС‚РѕРєСЃРёРєР°С†РёСЏ ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class DetoxificationResult {
 
@@ -51,12 +51,12 @@ public class DetoxificationResult {
   }
 
   /**
-   * Восстановленная человечность
+   * Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРЅР°СЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚СЊ
    * minimum: 0
    * @return humanityRestored
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "humanity_restored", description = "Восстановленная человечность", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "humanity_restored", description = "Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРЅР°СЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚СЊ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("humanity_restored")
   public Float getHumanityRestored() {
     return humanityRestored;
@@ -72,12 +72,12 @@ public class DetoxificationResult {
   }
 
   /**
-   * Стоимость детоксикации
+   * РЎС‚РѕРёРјРѕСЃС‚СЊ РґРµС‚РѕРєСЃРёРєР°С†РёРё
    * minimum: 0
    * @return cost
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "cost", description = "Стоимость детоксикации", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "cost", description = "РЎС‚РѕРёРјРѕСЃС‚СЊ РґРµС‚РѕРєСЃРёРєР°С†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("cost")
   public Float getCost() {
     return cost;
@@ -93,12 +93,12 @@ public class DetoxificationResult {
   }
 
   /**
-   * Длительность процедуры в секундах
+   * Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ РїСЂРѕС†РµРґСѓСЂС‹ РІ СЃРµРєСѓРЅРґР°С…
    * minimum: 0
    * @return duration
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "duration", description = "Длительность процедуры в секундах", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "duration", description = "Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ РїСЂРѕС†РµРґСѓСЂС‹ РІ СЃРµРєСѓРЅРґР°С…", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("duration")
   public Float getDuration() {
     return duration;
@@ -114,12 +114,12 @@ public class DetoxificationResult {
   }
 
   /**
-   * Кулдаун до следующей детоксикации в секундах
+   * РљСѓР»РґР°СѓРЅ РґРѕ СЃР»РµРґСѓСЋС‰РµР№ РґРµС‚РѕРєСЃРёРєР°С†РёРё РІ СЃРµРєСѓРЅРґР°С…
    * minimum: 0
    * @return cooldown
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "cooldown", description = "Кулдаун до следующей детоксикации в секундах", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "cooldown", description = "РљСѓР»РґР°СѓРЅ РґРѕ СЃР»РµРґСѓСЋС‰РµР№ РґРµС‚РѕРєСЃРёРєР°С†РёРё РІ СЃРµРєСѓРЅРґР°С…", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("cooldown")
   public Float getCooldown() {
     return cooldown;

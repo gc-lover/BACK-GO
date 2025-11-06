@@ -40,7 +40,7 @@ public class InventoryItem {
   private Boolean stackable;
 
   /**
-   * Редкость предмета
+   * Р РµРґРєРѕСЃС‚СЊ РїСЂРµРґРјРµС‚Р°
    */
   public enum RarityEnum {
     COMMON("common"),
@@ -115,11 +115,11 @@ public class InventoryItem {
   }
 
   /**
-   * ID предмета
+   * ID РїСЂРµРґРјРµС‚Р°
    * @return id
    */
   @NotNull 
-  @Schema(name = "id", example = "item_pistol_01", description = "ID предмета", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "id", example = "item_pistol_01", description = "ID РїСЂРµРґРјРµС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("id")
   public String getId() {
     return id;
@@ -135,11 +135,11 @@ public class InventoryItem {
   }
 
   /**
-   * Название предмета
+   * РќР°Р·РІР°РЅРёРµ РїСЂРµРґРјРµС‚Р°
    * @return name
    */
   @NotNull 
-  @Schema(name = "name", example = "M-10AF Lexington", description = "Название предмета", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "name", example = "M-10AF Lexington", description = "РќР°Р·РІР°РЅРёРµ РїСЂРµРґРјРµС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -155,11 +155,11 @@ public class InventoryItem {
   }
 
   /**
-   * Описание предмета
+   * РћРїРёСЃР°РЅРёРµ РїСЂРµРґРјРµС‚Р°
    * @return description
    */
   @NotNull 
-  @Schema(name = "description", example = "Стандартный пистолет калибра 10мм", description = "Описание предмета", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "description", example = "РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРёСЃС‚РѕР»РµС‚ РєР°Р»РёР±СЂР° 10РјРј", description = "РћРїРёСЃР°РЅРёРµ РїСЂРµРґРјРµС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {
     return description;
@@ -195,11 +195,11 @@ public class InventoryItem {
   }
 
   /**
-   * Вес одного предмета (кг)
+   * Р’РµСЃ РѕРґРЅРѕРіРѕ РїСЂРµРґРјРµС‚Р° (РєРі)
    * @return weight
    */
   @NotNull 
-  @Schema(name = "weight", example = "1.5", description = "Вес одного предмета (кг)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "weight", example = "1.5", description = "Р’РµСЃ РѕРґРЅРѕРіРѕ РїСЂРµРґРјРµС‚Р° (РєРі)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("weight")
   public Float getWeight() {
     return weight;
@@ -215,12 +215,12 @@ public class InventoryItem {
   }
 
   /**
-   * Количество предметов (для stackable)
+   * РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРµРґРјРµС‚РѕРІ (РґР»СЏ stackable)
    * minimum: 1
    * @return quantity
    */
   @NotNull @Min(value = 1) 
-  @Schema(name = "quantity", example = "1", description = "Количество предметов (для stackable)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "quantity", example = "1", description = "РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРµРґРјРµС‚РѕРІ (РґР»СЏ stackable)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("quantity")
   public Integer getQuantity() {
     return quantity;
@@ -236,11 +236,11 @@ public class InventoryItem {
   }
 
   /**
-   * Можно ли складывать предметы
+   * РњРѕР¶РЅРѕ Р»Рё СЃРєР»Р°РґС‹РІР°С‚СЊ РїСЂРµРґРјРµС‚С‹
    * @return stackable
    */
   @NotNull 
-  @Schema(name = "stackable", example = "false", description = "Можно ли складывать предметы", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "stackable", example = "false", description = "РњРѕР¶РЅРѕ Р»Рё СЃРєР»Р°РґС‹РІР°С‚СЊ РїСЂРµРґРјРµС‚С‹", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("stackable")
   public Boolean getStackable() {
     return stackable;
@@ -256,11 +256,11 @@ public class InventoryItem {
   }
 
   /**
-   * Редкость предмета
+   * Р РµРґРєРѕСЃС‚СЊ РїСЂРµРґРјРµС‚Р°
    * @return rarity
    */
   
-  @Schema(name = "rarity", example = "common", description = "Редкость предмета", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "rarity", example = "common", description = "Р РµРґРєРѕСЃС‚СЊ РїСЂРµРґРјРµС‚Р°", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("rarity")
   public @Nullable RarityEnum getRarity() {
     return rarity;
@@ -276,11 +276,11 @@ public class InventoryItem {
   }
 
   /**
-   * Стоимость предмета (eddies)
+   * РЎС‚РѕРёРјРѕСЃС‚СЊ РїСЂРµРґРјРµС‚Р° (eddies)
    * @return value
    */
   
-  @Schema(name = "value", example = "500", description = "Стоимость предмета (eddies)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "value", example = "500", description = "РЎС‚РѕРёРјРѕСЃС‚СЊ РїСЂРµРґРјРµС‚Р° (eddies)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("value")
   public @Nullable Integer getValue() {
     return value;
@@ -296,11 +296,11 @@ public class InventoryItem {
   }
 
   /**
-   * Можно ли экипировать предмет
+   * РњРѕР¶РЅРѕ Р»Рё СЌРєРёРїРёСЂРѕРІР°С‚СЊ РїСЂРµРґРјРµС‚
    * @return equippable
    */
   
-  @Schema(name = "equippable", example = "true", description = "Можно ли экипировать предмет", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "equippable", example = "true", description = "РњРѕР¶РЅРѕ Р»Рё СЌРєРёРїРёСЂРѕРІР°С‚СЊ РїСЂРµРґРјРµС‚", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("equippable")
   public @Nullable Boolean getEquippable() {
     return equippable;
@@ -316,11 +316,11 @@ public class InventoryItem {
   }
 
   /**
-   * Можно ли использовать предмет
+   * РњРѕР¶РЅРѕ Р»Рё РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїСЂРµРґРјРµС‚
    * @return usable
    */
   
-  @Schema(name = "usable", example = "false", description = "Можно ли использовать предмет", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "usable", example = "false", description = "РњРѕР¶РЅРѕ Р»Рё РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїСЂРµРґРјРµС‚", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("usable")
   public @Nullable Boolean getUsable() {
     return usable;
@@ -336,11 +336,11 @@ public class InventoryItem {
   }
 
   /**
-   * Является ли квестовым предметом
+   * РЇРІР»СЏРµС‚СЃСЏ Р»Рё РєРІРµСЃС‚РѕРІС‹Рј РїСЂРµРґРјРµС‚РѕРј
    * @return questItem
    */
   
-  @Schema(name = "questItem", example = "false", description = "Является ли квестовым предметом", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "questItem", example = "false", description = "РЇРІР»СЏРµС‚СЃСЏ Р»Рё РєРІРµСЃС‚РѕРІС‹Рј РїСЂРµРґРјРµС‚РѕРј", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("questItem")
   public @Nullable Boolean getQuestItem() {
     return questItem;

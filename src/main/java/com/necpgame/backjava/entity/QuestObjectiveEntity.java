@@ -10,10 +10,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 /**
- * QuestObjectiveEntity - цели квеста.
+ * QuestObjectiveEntity - С†РµР»Рё РєРІРµСЃС‚Р°.
  * 
- * Хранит информацию о целях (objectives) квестов.
- * Источник: API-SWAGGER/api/v1/quests/quests.yaml (QuestObjective schema)
+ * РҐСЂР°РЅРёС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ С†РµР»СЏС… (objectives) РєРІРµСЃС‚РѕРІ.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/quests/quests.yaml (QuestObjective schema)
  */
 @Entity
 @Table(name = "quest_objectives", indexes = {
@@ -62,14 +62,14 @@ public class QuestObjectiveEntity {
     private QuestEntity quest;
 
     /**
-     * Тип цели квеста (из OpenAPI)
+     * РўРёРї С†РµР»Рё РєРІРµСЃС‚Р° (РёР· OpenAPI)
      */
     public enum ObjectiveType {
-        LOCATION,   // Достичь локации
-        KILL,       // Убить врагов
-        COLLECT,    // Собрать предметы
-        TALK,       // Поговорить с NPC
-        INTERACT    // Взаимодействовать с объектом
+        LOCATION,   // Р”РѕСЃС‚РёС‡СЊ Р»РѕРєР°С†РёРё
+        KILL,       // РЈР±РёС‚СЊ РІСЂР°РіРѕРІ
+        COLLECT,    // РЎРѕР±СЂР°С‚СЊ РїСЂРµРґРјРµС‚С‹
+        TALK,       // РџРѕРіРѕРІРѕСЂРёС‚СЊ СЃ NPC
+        INTERACT    // Р’Р·Р°РёРјРѕРґРµР№СЃС‚РІРѕРІР°С‚СЊ СЃ РѕР±СЉРµРєС‚РѕРј
     }
 }
 

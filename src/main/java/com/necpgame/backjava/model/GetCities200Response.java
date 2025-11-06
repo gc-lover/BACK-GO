@@ -56,11 +56,11 @@ public class GetCities200Response {
   }
 
   /**
-   * Список доступных городов
+   * РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РіРѕСЂРѕРґРѕРІ
    * @return cities
    */
   @NotNull @Valid 
-  @Schema(name = "cities", description = "Список доступных городов", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "cities", description = "РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РіРѕСЂРѕРґРѕРІ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("cities")
   public List<@Valid City> getCities() {
     return cities;

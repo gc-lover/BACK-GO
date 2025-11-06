@@ -15,15 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Глобальный обработчик исключений
- * Преобразует доменные исключения в HTTP ответы с Error DTO из OpenAPI
+ * Р“Р»РѕР±Р°Р»СЊРЅС‹Р№ РѕР±СЂР°Р±РѕС‚С‡РёРє РёСЃРєР»СЋС‡РµРЅРёР№
+ * РџСЂРµРѕР±СЂР°Р·СѓРµС‚ РґРѕРјРµРЅРЅС‹Рµ РёСЃРєР»СЋС‡РµРЅРёСЏ РІ HTTP РѕС‚РІРµС‚С‹ СЃ Error DTO РёР· OpenAPI
  */
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     
     /**
-     * Обработка всех доменных исключений (ApiException и наследники)
+     * РћР±СЂР°Р±РѕС‚РєР° РІСЃРµС… РґРѕРјРµРЅРЅС‹С… РёСЃРєР»СЋС‡РµРЅРёР№ (ApiException Рё РЅР°СЃР»РµРґРЅРёРєРё)
      */
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<Error> handleApiException(ApiException ex) {
@@ -31,14 +31,14 @@ public class GlobalExceptionHandler {
         
         log.warn("API Exception: {} - {}", errorCode.getCode(), ex.getMessage());
         
-        // Создаём Error DTO из OpenAPI спецификации
+        // РЎРѕР·РґР°С‘Рј Error DTO РёР· OpenAPI СЃРїРµС†РёС„РёРєР°С†РёРё
         Error error = new Error();
         
         ErrorError errorDetails = new ErrorError();
         errorDetails.setCode(errorCode.getCode());
         errorDetails.setMessage(ex.getMessage());
         
-        // Добавляем детали для отладки
+        // Р”РѕР±Р°РІР»СЏРµРј РґРµС‚Р°Р»Рё РґР»СЏ РѕС‚Р»Р°РґРєРё
         List<ErrorErrorDetailsInner> details = new ArrayList<>();
         if (ex.getCause() != null) {
             ErrorErrorDetailsInner detail = new ErrorErrorDetailsInner();
@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
     }
     
     /**
-     * Обработка ошибок валидации (Bean Validation)
+     * РћР±СЂР°Р±РѕС‚РєР° РѕС€РёР±РѕРє РІР°Р»РёРґР°С†РёРё (Bean Validation)
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Error> handleValidationException(MethodArgumentNotValidException ex) {
@@ -66,7 +66,7 @@ public class GlobalExceptionHandler {
         errorDetails.setCode("VAL_001");
         errorDetails.setMessage("Validation failed");
         
-        // Собираем все ошибки валидации
+        // РЎРѕР±РёСЂР°РµРј РІСЃРµ РѕС€РёР±РєРё РІР°Р»РёРґР°С†РёРё
         List<ErrorErrorDetailsInner> details = new ArrayList<>();
         ex.getBindingResult().getFieldErrors().forEach(fieldError -> {
             ErrorErrorDetailsInner detail = new ErrorErrorDetailsInner();
@@ -86,7 +86,7 @@ public class GlobalExceptionHandler {
     }
     
     /**
-     * Обработка ошибок десериализации JSON
+     * РћР±СЂР°Р±РѕС‚РєР° РѕС€РёР±РѕРє РґРµСЃРµСЂРёР°Р»РёР·Р°С†РёРё JSON
      */
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Error> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
@@ -113,7 +113,7 @@ public class GlobalExceptionHandler {
     }
     
     /**
-     * Обработка непредвиденных исключений
+     * РћР±СЂР°Р±РѕС‚РєР° РЅРµРїСЂРµРґРІРёРґРµРЅРЅС‹С… РёСЃРєР»СЋС‡РµРЅРёР№
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Error> handleUnexpectedException(Exception ex) {
@@ -125,7 +125,7 @@ public class GlobalExceptionHandler {
         errorDetails.setCode("INTERNAL_ERROR");
         errorDetails.setMessage("Internal server error");
         
-        // Добавляем детали для отладки (в production можно отключить)
+        // Р”РѕР±Р°РІР»СЏРµРј РґРµС‚Р°Р»Рё РґР»СЏ РѕС‚Р»Р°РґРєРё (РІ production РјРѕР¶РЅРѕ РѕС‚РєР»СЋС‡РёС‚СЊ)
         List<ErrorErrorDetailsInner> details = new ArrayList<>();
         
         ErrorErrorDetailsInner exDetail = new ErrorErrorDetailsInner();
@@ -142,7 +142,7 @@ public class GlobalExceptionHandler {
             details.add(causeDetail);
         }
         
-        // Добавляем первые несколько строк stack trace
+        // Р”РѕР±Р°РІР»СЏРµРј РїРµСЂРІС‹Рµ РЅРµСЃРєРѕР»СЊРєРѕ СЃС‚СЂРѕРє stack trace
         StackTraceElement[] stackTrace = ex.getStackTrace();
         if (stackTrace.length > 0) {
             ErrorErrorDetailsInner stackDetail1 = new ErrorErrorDetailsInner();

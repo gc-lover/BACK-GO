@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Entity для таблицы character_origins - происхождения персонажей (справочник)
- * Соответствует CharacterOrigin DTO из OpenAPI спецификации
+ * Entity РґР»СЏ С‚Р°Р±Р»РёС†С‹ character_origins - РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёСЏ РїРµСЂСЃРѕРЅР°Р¶РµР№ (СЃРїСЂР°РІРѕС‡РЅРёРє)
+ * РЎРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ CharacterOrigin DTO РёР· OpenAPI СЃРїРµС†РёС„РёРєР°С†РёРё
  */
 @Data
 @Entity
@@ -26,7 +26,7 @@ public class CharacterOriginEntity {
     private String originCode; // street_kid, corpo, nomad
     
     @Column(name = "name", nullable = false, length = 100)
-    private String name; // Уличный бродяга, Корпорат, Кочевник
+    private String name; // РЈР»РёС‡РЅС‹Р№ Р±СЂРѕРґСЏРіР°, РљРѕСЂРїРѕСЂР°С‚, РљРѕС‡РµРІРЅРёРє
     
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
@@ -40,7 +40,7 @@ public class CharacterOriginEntity {
     @Column(name = "starting_items", columnDefinition = "TEXT")
     private String startingItems; // JSON array: ["basic_pistol", "street_clothes"]
     
-    // Relationships - many-to-many с Factions
+    // Relationships - many-to-many СЃ Factions
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "origin_available_factions",

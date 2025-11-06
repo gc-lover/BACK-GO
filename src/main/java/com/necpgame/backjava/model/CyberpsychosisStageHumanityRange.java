@@ -17,10 +17,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Диапазон потери человечности для стадии
+ * Р”РёР°РїР°Р·РѕРЅ РїРѕС‚РµСЂРё С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РґР»СЏ СЃС‚Р°РґРёРё
  */
 
-@Schema(name = "CyberpsychosisStage_humanity_range", description = "Диапазон потери человечности для стадии")
+@Schema(name = "CyberpsychosisStage_humanity_range", description = "Р”РёР°РїР°Р·РѕРЅ РїРѕС‚РµСЂРё С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РґР»СЏ СЃС‚Р°РґРёРё")
 @JsonTypeName("CyberpsychosisStage_humanity_range")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class CyberpsychosisStageHumanityRange {

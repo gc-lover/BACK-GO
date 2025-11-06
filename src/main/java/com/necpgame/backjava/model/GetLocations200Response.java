@@ -59,11 +59,11 @@ public class GetLocations200Response {
   }
 
   /**
-   * Список доступных локаций
+   * РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… Р»РѕРєР°С†РёР№
    * @return locations
    */
   @NotNull @Valid 
-  @Schema(name = "locations", description = "Список доступных локаций", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "locations", description = "РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… Р»РѕРєР°С†РёР№", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("locations")
   public List<@Valid GameLocation> getLocations() {
     return locations;
@@ -79,11 +79,11 @@ public class GetLocations200Response {
   }
 
   /**
-   * Общее количество локаций
+   * РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р»РѕРєР°С†РёР№
    * @return total
    */
   @NotNull 
-  @Schema(name = "total", example = "15", description = "Общее количество локаций", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "total", example = "15", description = "РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р»РѕРєР°С†РёР№", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("total")
   public Integer getTotal() {
     return total;

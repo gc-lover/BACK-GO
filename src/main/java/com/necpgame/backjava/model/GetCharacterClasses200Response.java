@@ -56,11 +56,11 @@ public class GetCharacterClasses200Response {
   }
 
   /**
-   * Список доступных классов
+   * РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РєР»Р°СЃСЃРѕРІ
    * @return classes
    */
   @NotNull @Valid 
-  @Schema(name = "classes", description = "Список доступных классов", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "classes", description = "РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РєР»Р°СЃСЃРѕРІ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("classes")
   public List<@Valid GameCharacterClass> getClasses() {
     return classes;

@@ -9,60 +9,60 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * QuestProgressRepository - репозиторий для работы с прогрессом квестов.
+ * QuestProgressRepository - СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РїСЂРѕРіСЂРµСЃСЃРѕРј РєРІРµСЃС‚РѕРІ.
  */
 @Repository
 public interface QuestProgressRepository extends JpaRepository<QuestProgressEntity, UUID> {
 
     /**
-     * Найти прогресс квеста для персонажа.
+     * РќР°Р№С‚Рё РїСЂРѕРіСЂРµСЃСЃ РєРІРµСЃС‚Р° РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°.
      *
-     * @param characterId ID персонажа
-     * @param questId ID квеста
-     * @return прогресс квеста
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р°
+     * @param questId ID РєРІРµСЃС‚Р°
+     * @return РїСЂРѕРіСЂРµСЃСЃ РєРІРµСЃС‚Р°
      */
     Optional<QuestProgressEntity> findByCharacterIdAndQuestId(UUID characterId, String questId);
 
     /**
-     * Найти все квесты персонажа.
+     * РќР°Р№С‚Рё РІСЃРµ РєРІРµСЃС‚С‹ РїРµСЂСЃРѕРЅР°Р¶Р°.
      *
-     * @param characterId ID персонажа
-     * @return список прогресса квестов
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р°
+     * @return СЃРїРёСЃРѕРє РїСЂРѕРіСЂРµСЃСЃР° РєРІРµСЃС‚РѕРІ
      */
     List<QuestProgressEntity> findByCharacterId(UUID characterId);
 
     /**
-     * Найти активные квесты персонажа.
+     * РќР°Р№С‚Рё Р°РєС‚РёРІРЅС‹Рµ РєРІРµСЃС‚С‹ РїРµСЂСЃРѕРЅР°Р¶Р°.
      *
-     * @param characterId ID персонажа
-     * @return список активных квестов
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р°
+     * @return СЃРїРёСЃРѕРє Р°РєС‚РёРІРЅС‹С… РєРІРµСЃС‚РѕРІ
      */
     List<QuestProgressEntity> findByCharacterIdAndStatus(UUID characterId, QuestProgressEntity.QuestStatus status);
 
     /**
-     * Проверить существование прогресса квеста.
+     * РџСЂРѕРІРµСЂРёС‚СЊ СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ РїСЂРѕРіСЂРµСЃСЃР° РєРІРµСЃС‚Р°.
      *
-     * @param characterId ID персонажа
-     * @param questId ID квеста
-     * @return true, если прогресс существует
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р°
+     * @param questId ID РєРІРµСЃС‚Р°
+     * @return true, РµСЃР»Рё РїСЂРѕРіСЂРµСЃСЃ СЃСѓС‰РµСЃС‚РІСѓРµС‚
      */
     boolean existsByCharacterIdAndQuestId(UUID characterId, String questId);
 
     /**
-     * Найти завершенные квесты персонажа.
+     * РќР°Р№С‚Рё Р·Р°РІРµСЂС€РµРЅРЅС‹Рµ РєРІРµСЃС‚С‹ РїРµСЂСЃРѕРЅР°Р¶Р°.
      *
-     * @param characterId ID персонажа
-     * @return список завершенных квестов
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р°
+     * @return СЃРїРёСЃРѕРє Р·Р°РІРµСЂС€РµРЅРЅС‹С… РєРІРµСЃС‚РѕРІ
      */
     default List<QuestProgressEntity> findCompletedQuestsByCharacterId(UUID characterId) {
         return findByCharacterIdAndStatus(characterId, QuestProgressEntity.QuestStatus.COMPLETED);
     }
 
     /**
-     * Найти активные квесты персонажа.
+     * РќР°Р№С‚Рё Р°РєС‚РёРІРЅС‹Рµ РєРІРµСЃС‚С‹ РїРµСЂСЃРѕРЅР°Р¶Р°.
      *
-     * @param characterId ID персонажа
-     * @return список активных квестов
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р°
+     * @return СЃРїРёСЃРѕРє Р°РєС‚РёРІРЅС‹С… РєРІРµСЃС‚РѕРІ
      */
     default List<QuestProgressEntity> findActiveQuestsByCharacterId(UUID characterId) {
         return findByCharacterIdAndStatus(characterId, QuestProgressEntity.QuestStatus.ACTIVE);

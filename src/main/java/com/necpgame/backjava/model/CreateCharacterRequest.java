@@ -31,7 +31,7 @@ public class CreateCharacterRequest {
   private String name;
 
   /**
-   * Класс персонажа
+   * РљР»Р°СЃСЃ РїРµСЂСЃРѕРЅР°Р¶Р°
    */
   public enum PropertyClassEnum {
     SOLO("Solo"),
@@ -92,7 +92,7 @@ public class CreateCharacterRequest {
   private JsonNullable<String> subclass = JsonNullable.<String>undefined();
 
   /**
-   * Пол персонажа
+   * РџРѕР» РїРµСЂСЃРѕРЅР°Р¶Р°
    */
   public enum GenderEnum {
     MALE("male"),
@@ -131,7 +131,7 @@ public class CreateCharacterRequest {
   private GenderEnum gender;
 
   /**
-   * Происхождение персонажа
+   * РџСЂРѕРёСЃС…РѕР¶РґРµРЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°
    */
   public enum OriginEnum {
     STREET_KID("street_kid"),
@@ -197,11 +197,11 @@ public class CreateCharacterRequest {
   }
 
   /**
-   * Имя персонажа (3-20 символов, буквы, цифры, пробелы, дефисы)
+   * РРјСЏ РїРµСЂСЃРѕРЅР°Р¶Р° (3-20 СЃРёРјРІРѕР»РѕРІ, Р±СѓРєРІС‹, С†РёС„СЂС‹, РїСЂРѕР±РµР»С‹, РґРµС„РёСЃС‹)
    * @return name
    */
-  @NotNull @Pattern(regexp = "^[a-zA-Zа-яА-Я0-9\\\\s\\\\-]+$") @Size(min = 3, max = 20) 
-  @Schema(name = "name", example = "John Doe", description = "Имя персонажа (3-20 символов, буквы, цифры, пробелы, дефисы)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @NotNull @Pattern(regexp = "^[a-zA-ZР°-СЏРђ-РЇ0-9\\\\s\\\\-]+$") @Size(min = 3, max = 20) 
+  @Schema(name = "name", example = "John Doe", description = "РРјСЏ РїРµСЂСЃРѕРЅР°Р¶Р° (3-20 СЃРёРјРІРѕР»РѕРІ, Р±СѓРєРІС‹, С†РёС„СЂС‹, РїСЂРѕР±РµР»С‹, РґРµС„РёСЃС‹)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -217,11 +217,11 @@ public class CreateCharacterRequest {
   }
 
   /**
-   * Класс персонажа
+   * РљР»Р°СЃСЃ РїРµСЂСЃРѕРЅР°Р¶Р°
    * @return propertyClass
    */
   @NotNull 
-  @Schema(name = "class", example = "Solo", description = "Класс персонажа", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "class", example = "Solo", description = "РљР»Р°СЃСЃ РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("class")
   public PropertyClassEnum getPropertyClass() {
     return propertyClass;
@@ -237,11 +237,11 @@ public class CreateCharacterRequest {
   }
 
   /**
-   * Подкласс персонажа (должен соответствовать выбранному классу)
+   * РџРѕРґРєР»Р°СЃСЃ РїРµСЂСЃРѕРЅР°Р¶Р° (РґРѕР»Р¶РµРЅ СЃРѕРѕС‚РІРµС‚СЃС‚РІРѕРІР°С‚СЊ РІС‹Р±СЂР°РЅРЅРѕРјСѓ РєР»Р°СЃСЃСѓ)
    * @return subclass
    */
   
-  @Schema(name = "subclass", description = "Подкласс персонажа (должен соответствовать выбранному классу)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "subclass", description = "РџРѕРґРєР»Р°СЃСЃ РїРµСЂСЃРѕРЅР°Р¶Р° (РґРѕР»Р¶РµРЅ СЃРѕРѕС‚РІРµС‚СЃС‚РІРѕРІР°С‚СЊ РІС‹Р±СЂР°РЅРЅРѕРјСѓ РєР»Р°СЃСЃСѓ)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("subclass")
   public JsonNullable<String> getSubclass() {
     return subclass;
@@ -257,11 +257,11 @@ public class CreateCharacterRequest {
   }
 
   /**
-   * Пол персонажа
+   * РџРѕР» РїРµСЂСЃРѕРЅР°Р¶Р°
    * @return gender
    */
   @NotNull 
-  @Schema(name = "gender", example = "male", description = "Пол персонажа", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "gender", example = "male", description = "РџРѕР» РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("gender")
   public GenderEnum getGender() {
     return gender;
@@ -277,11 +277,11 @@ public class CreateCharacterRequest {
   }
 
   /**
-   * Происхождение персонажа
+   * РџСЂРѕРёСЃС…РѕР¶РґРµРЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°
    * @return origin
    */
   @NotNull 
-  @Schema(name = "origin", example = "street_kid", description = "Происхождение персонажа", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "origin", example = "street_kid", description = "РџСЂРѕРёСЃС…РѕР¶РґРµРЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("origin")
   public OriginEnum getOrigin() {
     return origin;
@@ -297,11 +297,11 @@ public class CreateCharacterRequest {
   }
 
   /**
-   * Идентификатор фракции (должна быть доступна для выбранного происхождения)
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С„СЂР°РєС†РёРё (РґРѕР»Р¶РЅР° Р±С‹С‚СЊ РґРѕСЃС‚СѓРїРЅР° РґР»СЏ РІС‹Р±СЂР°РЅРЅРѕРіРѕ РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёСЏ)
    * @return factionId
    */
   @Valid 
-  @Schema(name = "faction_id", description = "Идентификатор фракции (должна быть доступна для выбранного происхождения)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "faction_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С„СЂР°РєС†РёРё (РґРѕР»Р¶РЅР° Р±С‹С‚СЊ РґРѕСЃС‚СѓРїРЅР° РґР»СЏ РІС‹Р±СЂР°РЅРЅРѕРіРѕ РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёСЏ)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("faction_id")
   public JsonNullable<UUID> getFactionId() {
     return factionId;
@@ -317,11 +317,11 @@ public class CreateCharacterRequest {
   }
 
   /**
-   * Идентификатор стартового города (должен быть доступен для выбранной фракции)
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃС‚Р°СЂС‚РѕРІРѕРіРѕ РіРѕСЂРѕРґР° (РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РґРѕСЃС‚СѓРїРµРЅ РґР»СЏ РІС‹Р±СЂР°РЅРЅРѕР№ С„СЂР°РєС†РёРё)
    * @return cityId
    */
   @NotNull @Valid 
-  @Schema(name = "city_id", example = "550e8400-e29b-41d4-a716-446655440000", description = "Идентификатор стартового города (должен быть доступен для выбранной фракции)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "city_id", example = "550e8400-e29b-41d4-a716-446655440000", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃС‚Р°СЂС‚РѕРІРѕРіРѕ РіРѕСЂРѕРґР° (РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РґРѕСЃС‚СѓРїРµРЅ РґР»СЏ РІС‹Р±СЂР°РЅРЅРѕР№ С„СЂР°РєС†РёРё)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("city_id")
   public UUID getCityId() {
     return cityId;

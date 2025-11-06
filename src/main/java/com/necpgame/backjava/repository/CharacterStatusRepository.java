@@ -9,21 +9,21 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * CharacterStatusRepository - репозиторий для работы со статусом персонажа.
+ * CharacterStatusRepository - СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃРѕ СЃС‚Р°С‚СѓСЃРѕРј РїРµСЂСЃРѕРЅР°Р¶Р°.
  * 
- * Источник: API-SWAGGER/api/v1/characters/status.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/characters/status.yaml
  */
 @Repository
 public interface CharacterStatusRepository extends JpaRepository<CharacterStatusEntity, UUID> {
 
     /**
-     * Найти статус персонажа.
+     * РќР°Р№С‚Рё СЃС‚Р°С‚СѓСЃ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT cs FROM CharacterStatusEntity cs WHERE cs.characterId = :characterId")
     Optional<CharacterStatusEntity> findByCharacterId(UUID characterId);
 
     /**
-     * Проверить существование статуса персонажа.
+     * РџСЂРѕРІРµСЂРёС‚СЊ СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ СЃС‚Р°С‚СѓСЃР° РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT COUNT(cs) > 0 FROM CharacterStatusEntity cs WHERE cs.characterId = :characterId")
     boolean existsByCharacterId(UUID characterId);

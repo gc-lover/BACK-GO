@@ -12,10 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * REST Controller для аутентификации и регистрации.
+ * REST Controller РґР»СЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёРё Рё СЂРµРіРёСЃС‚СЂР°С†РёРё.
  * 
- * Реализует контракт {@link AuthApi}, сгенерированный из OpenAPI спецификации.
- * Источник: API-SWAGGER/api/v1/auth/character-creation.yaml
+ * Р РµР°Р»РёР·СѓРµС‚ РєРѕРЅС‚СЂР°РєС‚ {@link AuthApi}, СЃРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅС‹Р№ РёР· OpenAPI СЃРїРµС†РёС„РёРєР°С†РёРё.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/auth/character-creation.yaml
  */
 @Slf4j
 @RestController

@@ -44,11 +44,11 @@ public class LoginRequest {
   }
 
   /**
-   * Email или username для входа
+   * Email РёР»Рё username РґР»СЏ РІС…РѕРґР°
    * @return login
    */
   @NotNull 
-  @Schema(name = "login", example = "player@example.com", description = "Email или username для входа", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "login", example = "player@example.com", description = "Email РёР»Рё username РґР»СЏ РІС…РѕРґР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("login")
   public String getLogin() {
     return login;
@@ -64,11 +64,11 @@ public class LoginRequest {
   }
 
   /**
-   * Пароль
+   * РџР°СЂРѕР»СЊ
    * @return password
    */
   @NotNull 
-  @Schema(name = "password", example = "SecurePass123!", description = "Пароль", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "password", example = "SecurePass123!", description = "РџР°СЂРѕР»СЊ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("password")
   public String getPassword() {
     return password;

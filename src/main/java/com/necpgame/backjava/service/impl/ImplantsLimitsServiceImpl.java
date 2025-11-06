@@ -15,9 +15,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Реализация сервиса для управления ограничениями и энергетикой имплантов.
+ * Р РµР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІРёСЃР° РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РѕРіСЂР°РЅРёС‡РµРЅРёСЏРјРё Рё СЌРЅРµСЂРіРµС‚РёРєРѕР№ РёРјРїР»Р°РЅС‚РѕРІ.
  * 
- * Источник: API-SWAGGER/api/v1/gameplay/combat/implants-limits.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/gameplay/combat/implants-limits.yaml
  */
 @Slf4j
 @Service
@@ -35,7 +35,7 @@ public class ImplantsLimitsServiceImpl implements ImplantsLimitsService {
     public ImplantSlots getImplantSlots(UUID playerId, String type) {
         log.info("Getting implant slots for player: {}, type: {}", playerId, type);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -44,7 +44,7 @@ public class ImplantsLimitsServiceImpl implements ImplantsLimitsService {
     public CompatibilityResult checkCompatibility(UUID playerId, CompatibilityCheckRequest request) {
         log.info("Checking compatibility for player: {}, implant: {}", playerId, request.getImplantId());
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -53,7 +53,7 @@ public class ImplantsLimitsServiceImpl implements ImplantsLimitsService {
     public ImplantLimits getImplantLimits(UUID playerId) {
         log.info("Getting implant limits for player: {}", playerId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -62,7 +62,7 @@ public class ImplantsLimitsServiceImpl implements ImplantsLimitsService {
     public ImplantLimitInfo getImplantLimit(UUID playerId) {
         log.info("Getting implant limit info for player: {}", playerId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -71,7 +71,7 @@ public class ImplantsLimitsServiceImpl implements ImplantsLimitsService {
     public ImplantLimitCalculation calculateImplantLimit(UUID playerId, CalculateLimitRequest request) {
         log.info("Calculating implant limit for player: {}", playerId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -80,7 +80,7 @@ public class ImplantsLimitsServiceImpl implements ImplantsLimitsService {
     public EnergyPoolInfo getEnergyPool(UUID playerId) {
         log.info("Getting energy pool for player: {}", playerId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -89,7 +89,7 @@ public class ImplantsLimitsServiceImpl implements ImplantsLimitsService {
     public EnergyCalculation calculateEnergyConsumption(UUID playerId, CalculateEnergyRequest request) {
         log.info("Calculating energy consumption for player: {}", playerId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -98,7 +98,7 @@ public class ImplantsLimitsServiceImpl implements ImplantsLimitsService {
     public EnergyRestoreResult restoreEnergy(UUID playerId, RestoreEnergyRequest request) {
         log.info("Restoring energy for player: {}, amount: {}", playerId, request.getAmount());
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -107,7 +107,7 @@ public class ImplantsLimitsServiceImpl implements ImplantsLimitsService {
     public List<IndividualEnergyLimits> getIndividualEnergyLimits(UUID playerId) {
         log.info("Getting individual energy limits for player: {}", playerId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return new ArrayList<>();
     }
     
@@ -116,7 +116,7 @@ public class ImplantsLimitsServiceImpl implements ImplantsLimitsService {
     public ValidationResult validateInstall(UUID playerId, ValidateInstallRequest request) {
         log.info("Validating implant install for player: {}, implant: {}", playerId, request.getImplantId());
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
 }

@@ -3,29 +3,29 @@ package com.necpgame.backjava.service;
 import com.necpgame.backjava.model.*;
 
 /**
- * GameplayActionsService - сервис для игровых действий.
+ * GameplayActionsService - СЃРµСЂРІРёСЃ РґР»СЏ РёРіСЂРѕРІС‹С… РґРµР№СЃС‚РІРёР№.
  * 
- * Сгенерировано из: API-SWAGGER/api/v1/gameplay/actions/actions.yaml
+ * РЎРіРµРЅРµСЂРёСЂРѕРІР°РЅРѕ РёР·: API-SWAGGER/api/v1/gameplay/actions/actions.yaml
  */
 public interface GameplayActionsService {
 
     /**
-     * Осмотреться в локации.
+     * РћСЃРјРѕС‚СЂРµС‚СЊСЃСЏ РІ Р»РѕРєР°С†РёРё.
      */
     ExploreLocation200Response exploreLocation(ExploreLocationRequest request);
 
     /**
-     * Отдохнуть.
+     * РћС‚РґРѕС…РЅСѓС‚СЊ.
      */
     RestAction200Response restAction(RestActionRequest request);
 
     /**
-     * Использовать объект в локации.
+     * РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РѕР±СЉРµРєС‚ РІ Р»РѕРєР°С†РёРё.
      */
     UseObject200Response useObject(UseObjectRequest request);
 
     /**
-     * Взломать систему.
+     * Р’Р·Р»РѕРјР°С‚СЊ СЃРёСЃС‚РµРјСѓ.
      */
     HackSystem200Response hackSystem(HackSystemRequest request);
 }

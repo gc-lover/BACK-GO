@@ -56,27 +56,27 @@ public interface QuestsApi {
 
     String PATH_ABANDON_QUEST = "/quests/abandon";
     /**
-     * POST /quests/abandon : Отказаться от квеста
-     * Отказывается от активного квеста (не завершая его).
+     * POST /quests/abandon : РћС‚РєР°Р·Р°С‚СЊСЃСЏ РѕС‚ РєРІРµСЃС‚Р°
+     * РћС‚РєР°Р·С‹РІР°РµС‚СЃСЏ РѕС‚ Р°РєС‚РёРІРЅРѕРіРѕ РєРІРµСЃС‚Р° (РЅРµ Р·Р°РІРµСЂС€Р°СЏ РµРіРѕ).
      *
      * @param abandonQuestRequest  (required)
-     * @return Квест отменен (status code 200)
-     *         or Запрошенный ресурс не найден.  (status code 404)
+     * @return РљРІРµСЃС‚ РѕС‚РјРµРЅРµРЅ (status code 200)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
      */
     @Operation(
         operationId = "abandonQuest",
-        summary = "Отказаться от квеста",
-        description = "Отказывается от активного квеста (не завершая его).",
+        summary = "РћС‚РєР°Р·Р°С‚СЊСЃСЏ РѕС‚ РєРІРµСЃС‚Р°",
+        description = "РћС‚РєР°Р·С‹РІР°РµС‚СЃСЏ РѕС‚ Р°РєС‚РёРІРЅРѕРіРѕ РєРІРµСЃС‚Р° (РЅРµ Р·Р°РІРµСЂС€Р°СЏ РµРіРѕ).",
         tags = { "Quests" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Квест отменен", content = {
+            @ApiResponse(responseCode = "200", description = "РљРІРµСЃС‚ РѕС‚РјРµРЅРµРЅ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = AbandonQuest200Response.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
@@ -103,7 +103,7 @@ public interface QuestsApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -116,37 +116,37 @@ public interface QuestsApi {
 
     String PATH_ACCEPT_QUEST = "/quests/accept";
     /**
-     * POST /quests/accept : Принять квест
-     * Принимает квест от NPC или из списка доступных.
+     * POST /quests/accept : РџСЂРёРЅСЏС‚СЊ РєРІРµСЃС‚
+     * РџСЂРёРЅРёРјР°РµС‚ РєРІРµСЃС‚ РѕС‚ NPC РёР»Рё РёР· СЃРїРёСЃРєР° РґРѕСЃС‚СѓРїРЅС‹С….
      *
      * @param acceptQuestRequest  (required)
-     * @return Квест принят (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно.  (status code 403)
+     * @return РљРІРµСЃС‚ РїСЂРёРЅСЏС‚ (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
+     *         or РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ.  (status code 403)
      */
     @Operation(
         operationId = "acceptQuest",
-        summary = "Принять квест",
-        description = "Принимает квест от NPC или из списка доступных.",
+        summary = "РџСЂРёРЅСЏС‚СЊ РєРІРµСЃС‚",
+        description = "РџСЂРёРЅРёРјР°РµС‚ РєРІРµСЃС‚ РѕС‚ NPC РёР»Рё РёР· СЃРїРёСЃРєР° РґРѕСЃС‚СѓРїРЅС‹С….",
         tags = { "Quests" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Квест принят", content = {
+            @ApiResponse(responseCode = "200", description = "РљРІРµСЃС‚ РїСЂРёРЅСЏС‚", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = AcceptQuest200Response.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "403", description = "У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно. ", content = {
+            @ApiResponse(responseCode = "403", description = "РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"Недостаточно прав для выполнения операции\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё\",\"details\":[]}}"
                     )
                 })
 
@@ -168,17 +168,17 @@ public interface QuestsApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"success\" : true, \"message\" : \"message\", \"quest\" : { \"requirements\" : { \"minLevel\" : 6, \"minReputation\" : { \"key\" : 1 }, \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ] }, \"completedAt\" : \"2000-01-23T04:56:07.000+00:00\", \"level\" : 1, \"description\" : \"Найдите торговца Джейка в районе Watson\", \"startedAt\" : \"2000-01-23T04:56:07.000+00:00\", \"type\" : \"side\", \"timeLimit\" : 0, \"isRepeatable\" : false, \"name\" : \"Найти торговца\", \"objectives\" : [ { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"Найти торговца\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" }, { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"Найти торговца\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" } ], \"location\" : \"location\", \"id\" : \"quest_find_trader\", \"giver\" : \"npc_trader_joe\", \"rewards\" : { \"reputation\" : { \"valentinos\" : 5 }, \"currency\" : 500, \"experience\" : 200, \"items\" : [ { \"itemId\" : \"itemId\", \"quantity\" : 0 }, { \"itemId\" : \"itemId\", \"quantity\" : 0 } ] }, \"status\" : \"active\" } }";
+                    String exampleString = "{ \"success\" : true, \"message\" : \"message\", \"quest\" : { \"requirements\" : { \"minLevel\" : 6, \"minReputation\" : { \"key\" : 1 }, \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ] }, \"completedAt\" : \"2000-01-23T04:56:07.000+00:00\", \"level\" : 1, \"description\" : \"РќР°Р№РґРёС‚Рµ С‚РѕСЂРіРѕРІС†Р° Р”Р¶РµР№РєР° РІ СЂР°Р№РѕРЅРµ Watson\", \"startedAt\" : \"2000-01-23T04:56:07.000+00:00\", \"type\" : \"side\", \"timeLimit\" : 0, \"isRepeatable\" : false, \"name\" : \"РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°\", \"objectives\" : [ { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" }, { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" } ], \"location\" : \"location\", \"id\" : \"quest_find_trader\", \"giver\" : \"npc_trader_joe\", \"rewards\" : { \"reputation\" : { \"valentinos\" : 5 }, \"currency\" : 500, \"experience\" : 200, \"items\" : [ { \"itemId\" : \"itemId\", \"quantity\" : 0 }, { \"itemId\" : \"itemId\", \"quantity\" : 0 } ] }, \"status\" : \"active\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -191,27 +191,27 @@ public interface QuestsApi {
 
     String PATH_COMPLETE_QUEST = "/quests/complete";
     /**
-     * POST /quests/complete : Завершить квест
-     * Завершает квест и выдает награды.
+     * POST /quests/complete : Р—Р°РІРµСЂС€РёС‚СЊ РєРІРµСЃС‚
+     * Р—Р°РІРµСЂС€Р°РµС‚ РєРІРµСЃС‚ Рё РІС‹РґР°РµС‚ РЅР°РіСЂР°РґС‹.
      *
      * @param completeQuestRequest  (required)
-     * @return Квест завершен (status code 200)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
+     * @return РљРІРµСЃС‚ Р·Р°РІРµСЂС€РµРЅ (status code 200)
+     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
      */
     @Operation(
         operationId = "completeQuest",
-        summary = "Завершить квест",
-        description = "Завершает квест и выдает награды.",
+        summary = "Р—Р°РІРµСЂС€РёС‚СЊ РєРІРµСЃС‚",
+        description = "Р—Р°РІРµСЂС€Р°РµС‚ РєРІРµСЃС‚ Рё РІС‹РґР°РµС‚ РЅР°РіСЂР°РґС‹.",
         tags = { "Quests" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Квест завершен", content = {
+            @ApiResponse(responseCode = "200", description = "РљРІРµСЃС‚ Р·Р°РІРµСЂС€РµРЅ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = CompleteQuest200Response.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
                     )
                 })
 
@@ -238,7 +238,7 @@ public interface QuestsApi {
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -251,27 +251,27 @@ public interface QuestsApi {
 
     String PATH_GET_ACTIVE_QUESTS = "/quests/active";
     /**
-     * GET /quests/active : Активные квесты персонажа
-     * Возвращает список активных (принятых, но не завершенных) квестов.
+     * GET /quests/active : РђРєС‚РёРІРЅС‹Рµ РєРІРµСЃС‚С‹ РїРµСЂСЃРѕРЅР°Р¶Р°
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє Р°РєС‚РёРІРЅС‹С… (РїСЂРёРЅСЏС‚С‹С…, РЅРѕ РЅРµ Р·Р°РІРµСЂС€РµРЅРЅС‹С…) РєРІРµСЃС‚РѕРІ.
      *
      * @param characterId  (required)
-     * @return Список активных квестов (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     * @return РЎРїРёСЃРѕРє Р°РєС‚РёРІРЅС‹С… РєРІРµСЃС‚РѕРІ (status code 200)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
      */
     @Operation(
         operationId = "getActiveQuests",
-        summary = "Активные квесты персонажа",
-        description = "Возвращает список активных (принятых, но не завершенных) квестов.",
+        summary = "РђРєС‚РёРІРЅС‹Рµ РєРІРµСЃС‚С‹ РїРµСЂСЃРѕРЅР°Р¶Р°",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє Р°РєС‚РёРІРЅС‹С… (РїСЂРёРЅСЏС‚С‹С…, РЅРѕ РЅРµ Р·Р°РІРµСЂС€РµРЅРЅС‹С…) РєРІРµСЃС‚РѕРІ.",
         tags = { "Quests" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Список активных квестов", content = {
+            @ApiResponse(responseCode = "200", description = "РЎРїРёСЃРѕРє Р°РєС‚РёРІРЅС‹С… РєРІРµСЃС‚РѕРІ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GetActiveQuests200Response.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
@@ -292,12 +292,12 @@ public interface QuestsApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"quests\" : [ { \"requirements\" : { \"minLevel\" : 6, \"minReputation\" : { \"key\" : 1 }, \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ] }, \"completedAt\" : \"2000-01-23T04:56:07.000+00:00\", \"level\" : 1, \"description\" : \"Найдите торговца Джейка в районе Watson\", \"startedAt\" : \"2000-01-23T04:56:07.000+00:00\", \"type\" : \"side\", \"timeLimit\" : 0, \"isRepeatable\" : false, \"name\" : \"Найти торговца\", \"objectives\" : [ { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"Найти торговца\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" }, { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"Найти торговца\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" } ], \"location\" : \"location\", \"id\" : \"quest_find_trader\", \"giver\" : \"npc_trader_joe\", \"rewards\" : { \"reputation\" : { \"valentinos\" : 5 }, \"currency\" : 500, \"experience\" : 200, \"items\" : [ { \"itemId\" : \"itemId\", \"quantity\" : 0 }, { \"itemId\" : \"itemId\", \"quantity\" : 0 } ] }, \"status\" : \"active\" }, { \"requirements\" : { \"minLevel\" : 6, \"minReputation\" : { \"key\" : 1 }, \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ] }, \"completedAt\" : \"2000-01-23T04:56:07.000+00:00\", \"level\" : 1, \"description\" : \"Найдите торговца Джейка в районе Watson\", \"startedAt\" : \"2000-01-23T04:56:07.000+00:00\", \"type\" : \"side\", \"timeLimit\" : 0, \"isRepeatable\" : false, \"name\" : \"Найти торговца\", \"objectives\" : [ { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"Найти торговца\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" }, { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"Найти торговца\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" } ], \"location\" : \"location\", \"id\" : \"quest_find_trader\", \"giver\" : \"npc_trader_joe\", \"rewards\" : { \"reputation\" : { \"valentinos\" : 5 }, \"currency\" : 500, \"experience\" : 200, \"items\" : [ { \"itemId\" : \"itemId\", \"quantity\" : 0 }, { \"itemId\" : \"itemId\", \"quantity\" : 0 } ] }, \"status\" : \"active\" } ] }";
+                    String exampleString = "{ \"quests\" : [ { \"requirements\" : { \"minLevel\" : 6, \"minReputation\" : { \"key\" : 1 }, \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ] }, \"completedAt\" : \"2000-01-23T04:56:07.000+00:00\", \"level\" : 1, \"description\" : \"РќР°Р№РґРёС‚Рµ С‚РѕСЂРіРѕРІС†Р° Р”Р¶РµР№РєР° РІ СЂР°Р№РѕРЅРµ Watson\", \"startedAt\" : \"2000-01-23T04:56:07.000+00:00\", \"type\" : \"side\", \"timeLimit\" : 0, \"isRepeatable\" : false, \"name\" : \"РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°\", \"objectives\" : [ { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" }, { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" } ], \"location\" : \"location\", \"id\" : \"quest_find_trader\", \"giver\" : \"npc_trader_joe\", \"rewards\" : { \"reputation\" : { \"valentinos\" : 5 }, \"currency\" : 500, \"experience\" : 200, \"items\" : [ { \"itemId\" : \"itemId\", \"quantity\" : 0 }, { \"itemId\" : \"itemId\", \"quantity\" : 0 } ] }, \"status\" : \"active\" }, { \"requirements\" : { \"minLevel\" : 6, \"minReputation\" : { \"key\" : 1 }, \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ] }, \"completedAt\" : \"2000-01-23T04:56:07.000+00:00\", \"level\" : 1, \"description\" : \"РќР°Р№РґРёС‚Рµ С‚РѕСЂРіРѕРІС†Р° Р”Р¶РµР№РєР° РІ СЂР°Р№РѕРЅРµ Watson\", \"startedAt\" : \"2000-01-23T04:56:07.000+00:00\", \"type\" : \"side\", \"timeLimit\" : 0, \"isRepeatable\" : false, \"name\" : \"РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°\", \"objectives\" : [ { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" }, { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" } ], \"location\" : \"location\", \"id\" : \"quest_find_trader\", \"giver\" : \"npc_trader_joe\", \"rewards\" : { \"reputation\" : { \"valentinos\" : 5 }, \"currency\" : 500, \"experience\" : 200, \"items\" : [ { \"itemId\" : \"itemId\", \"quantity\" : 0 }, { \"itemId\" : \"itemId\", \"quantity\" : 0 } ] }, \"status\" : \"active\" } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -310,28 +310,28 @@ public interface QuestsApi {
 
     String PATH_GET_AVAILABLE_QUESTS = "/quests";
     /**
-     * GET /quests : Список доступных квестов
-     * Возвращает список всех доступных квестов для персонажа (не принятых).
+     * GET /quests : РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РєРІРµСЃС‚РѕРІ
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РІСЃРµС… РґРѕСЃС‚СѓРїРЅС‹С… РєРІРµСЃС‚РѕРІ РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р° (РЅРµ РїСЂРёРЅСЏС‚С‹С…).
      *
      * @param characterId  (required)
      * @param type  (optional)
-     * @return Список доступных квестов (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     * @return РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РєРІРµСЃС‚РѕРІ (status code 200)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
      */
     @Operation(
         operationId = "getAvailableQuests",
-        summary = "Список доступных квестов",
-        description = "Возвращает список всех доступных квестов для персонажа (не принятых).",
+        summary = "РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РєРІРµСЃС‚РѕРІ",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РІСЃРµС… РґРѕСЃС‚СѓРїРЅС‹С… РєРІРµСЃС‚РѕРІ РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р° (РЅРµ РїСЂРёРЅСЏС‚С‹С…).",
         tags = { "Quests" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Список доступных квестов", content = {
+            @ApiResponse(responseCode = "200", description = "РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РєРІРµСЃС‚РѕРІ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GetAvailableQuests200Response.class))
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
@@ -353,12 +353,12 @@ public interface QuestsApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"quests\" : [ { \"timeLimit\" : 5, \"isRepeatable\" : false, \"requirements\" : { \"minLevel\" : 6, \"minReputation\" : { \"key\" : 1 }, \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ] }, \"level\" : 1, \"name\" : \"Найти торговца\", \"description\" : \"Найдите торговца Джейка в районе Watson\", \"objectives\" : [ { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"Найти торговца\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" }, { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"Найти торговца\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" } ], \"location\" : \"location\", \"id\" : \"quest_find_trader\", \"type\" : \"side\", \"giver\" : \"npc_trader_joe\", \"rewards\" : { \"reputation\" : { \"valentinos\" : 5 }, \"currency\" : 500, \"experience\" : 200, \"items\" : [ { \"itemId\" : \"itemId\", \"quantity\" : 0 }, { \"itemId\" : \"itemId\", \"quantity\" : 0 } ] } }, { \"timeLimit\" : 5, \"isRepeatable\" : false, \"requirements\" : { \"minLevel\" : 6, \"minReputation\" : { \"key\" : 1 }, \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ] }, \"level\" : 1, \"name\" : \"Найти торговца\", \"description\" : \"Найдите торговца Джейка в районе Watson\", \"objectives\" : [ { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"Найти торговца\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" }, { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"Найти торговца\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" } ], \"location\" : \"location\", \"id\" : \"quest_find_trader\", \"type\" : \"side\", \"giver\" : \"npc_trader_joe\", \"rewards\" : { \"reputation\" : { \"valentinos\" : 5 }, \"currency\" : 500, \"experience\" : 200, \"items\" : [ { \"itemId\" : \"itemId\", \"quantity\" : 0 }, { \"itemId\" : \"itemId\", \"quantity\" : 0 } ] } } ] }";
+                    String exampleString = "{ \"quests\" : [ { \"timeLimit\" : 5, \"isRepeatable\" : false, \"requirements\" : { \"minLevel\" : 6, \"minReputation\" : { \"key\" : 1 }, \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ] }, \"level\" : 1, \"name\" : \"РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°\", \"description\" : \"РќР°Р№РґРёС‚Рµ С‚РѕСЂРіРѕРІС†Р° Р”Р¶РµР№РєР° РІ СЂР°Р№РѕРЅРµ Watson\", \"objectives\" : [ { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" }, { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" } ], \"location\" : \"location\", \"id\" : \"quest_find_trader\", \"type\" : \"side\", \"giver\" : \"npc_trader_joe\", \"rewards\" : { \"reputation\" : { \"valentinos\" : 5 }, \"currency\" : 500, \"experience\" : 200, \"items\" : [ { \"itemId\" : \"itemId\", \"quantity\" : 0 }, { \"itemId\" : \"itemId\", \"quantity\" : 0 } ] } }, { \"timeLimit\" : 5, \"isRepeatable\" : false, \"requirements\" : { \"minLevel\" : 6, \"minReputation\" : { \"key\" : 1 }, \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ] }, \"level\" : 1, \"name\" : \"РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°\", \"description\" : \"РќР°Р№РґРёС‚Рµ С‚РѕСЂРіРѕРІС†Р° Р”Р¶РµР№РєР° РІ СЂР°Р№РѕРЅРµ Watson\", \"objectives\" : [ { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" }, { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" } ], \"location\" : \"location\", \"id\" : \"quest_find_trader\", \"type\" : \"side\", \"giver\" : \"npc_trader_joe\", \"rewards\" : { \"reputation\" : { \"valentinos\" : 5 }, \"currency\" : 500, \"experience\" : 200, \"items\" : [ { \"itemId\" : \"itemId\", \"quantity\" : 0 }, { \"itemId\" : \"itemId\", \"quantity\" : 0 } ] } } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -371,38 +371,38 @@ public interface QuestsApi {
 
     String PATH_GET_QUEST_DETAILS = "/quests/{questId}";
     /**
-     * GET /quests/{questId} : Детали квеста
-     * Возвращает детальную информацию о квесте.
+     * GET /quests/{questId} : Р”РµС‚Р°Р»Рё РєРІРµСЃС‚Р°
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ РґРµС‚Р°Р»СЊРЅСѓСЋ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РєРІРµСЃС‚Рµ.
      *
      * @param questId  (required)
      * @param characterId  (required)
-     * @return Детали квеста (status code 200)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     * @return Р”РµС‚Р°Р»Рё РєРІРµСЃС‚Р° (status code 200)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
+     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
      */
     @Operation(
         operationId = "getQuestDetails",
-        summary = "Детали квеста",
-        description = "Возвращает детальную информацию о квесте.",
+        summary = "Р”РµС‚Р°Р»Рё РєРІРµСЃС‚Р°",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ РґРµС‚Р°Р»СЊРЅСѓСЋ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РєРІРµСЃС‚Рµ.",
         tags = { "Quests" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Детали квеста", content = {
+            @ApiResponse(responseCode = "200", description = "Р”РµС‚Р°Р»Рё РєРІРµСЃС‚Р°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Quest.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
                     )
                 })
 
@@ -424,17 +424,17 @@ public interface QuestsApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"timeLimit\" : 5, \"isRepeatable\" : false, \"requirements\" : { \"minLevel\" : 6, \"minReputation\" : { \"key\" : 1 }, \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ] }, \"level\" : 1, \"name\" : \"Найти торговца\", \"description\" : \"Найдите торговца Джейка в районе Watson\", \"objectives\" : [ { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"Найти торговца\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" }, { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"Найти торговца\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" } ], \"location\" : \"location\", \"id\" : \"quest_find_trader\", \"type\" : \"side\", \"giver\" : \"npc_trader_joe\", \"rewards\" : { \"reputation\" : { \"valentinos\" : 5 }, \"currency\" : 500, \"experience\" : 200, \"items\" : [ { \"itemId\" : \"itemId\", \"quantity\" : 0 }, { \"itemId\" : \"itemId\", \"quantity\" : 0 } ] } }";
+                    String exampleString = "{ \"timeLimit\" : 5, \"isRepeatable\" : false, \"requirements\" : { \"minLevel\" : 6, \"minReputation\" : { \"key\" : 1 }, \"requiredQuests\" : [ \"requiredQuests\", \"requiredQuests\" ] }, \"level\" : 1, \"name\" : \"РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°\", \"description\" : \"РќР°Р№РґРёС‚Рµ С‚РѕСЂРіРѕРІС†Р° Р”Р¶РµР№РєР° РІ СЂР°Р№РѕРЅРµ Watson\", \"objectives\" : [ { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" }, { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" } ], \"location\" : \"location\", \"id\" : \"quest_find_trader\", \"type\" : \"side\", \"giver\" : \"npc_trader_joe\", \"rewards\" : { \"reputation\" : { \"valentinos\" : 5 }, \"currency\" : 500, \"experience\" : 200, \"items\" : [ { \"itemId\" : \"itemId\", \"quantity\" : 0 }, { \"itemId\" : \"itemId\", \"quantity\" : 0 } ] } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -447,28 +447,28 @@ public interface QuestsApi {
 
     String PATH_GET_QUEST_OBJECTIVES = "/quests/{questId}/objectives";
     /**
-     * GET /quests/{questId}/objectives : Цели квеста
-     * Возвращает список целей (objectives) квеста с прогрессом.
+     * GET /quests/{questId}/objectives : Р¦РµР»Рё РєРІРµСЃС‚Р°
+     * Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє С†РµР»РµР№ (objectives) РєРІРµСЃС‚Р° СЃ РїСЂРѕРіСЂРµСЃСЃРѕРј.
      *
      * @param questId  (required)
      * @param characterId  (required)
-     * @return Цели квеста (status code 200)
-     *         or Запрошенный ресурс не найден.  (status code 404)
+     * @return Р¦РµР»Рё РєРІРµСЃС‚Р° (status code 200)
+     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
      */
     @Operation(
         operationId = "getQuestObjectives",
-        summary = "Цели квеста",
-        description = "Возвращает список целей (objectives) квеста с прогрессом.",
+        summary = "Р¦РµР»Рё РєРІРµСЃС‚Р°",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє С†РµР»РµР№ (objectives) РєРІРµСЃС‚Р° СЃ РїСЂРѕРіСЂРµСЃСЃРѕРј.",
         tags = { "Quests" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Цели квеста", content = {
+            @ApiResponse(responseCode = "200", description = "Р¦РµР»Рё РєРІРµСЃС‚Р°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GetQuestObjectives200Response.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
@@ -490,12 +490,12 @@ public interface QuestsApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"objectives\" : [ { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"Найти торговца\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" }, { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"Найти торговца\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" } ] }";
+                    String exampleString = "{ \"objectives\" : [ { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" }, { \"currentProgress\" : 0, \"targetProgress\" : 1, \"description\" : \"РќР°Р№С‚Рё С‚РѕСЂРіРѕРІС†Р°\", \"optional\" : false, \"id\" : \"obj_find_npc\", \"completed\" : false, \"type\" : \"location\" } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

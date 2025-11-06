@@ -8,27 +8,27 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * RandomEventRepository - репозиторий для работы со случайными событиями.
+ * RandomEventRepository - СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃРѕ СЃР»СѓС‡Р°Р№РЅС‹РјРё СЃРѕР±С‹С‚РёСЏРјРё.
  * 
- * Источник: API-SWAGGER/api/v1/events/random-events.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/events/random-events.yaml
  */
 @Repository
 public interface RandomEventRepository extends JpaRepository<RandomEventEntity, String> {
 
     /**
-     * Найти события по типу.
+     * РќР°Р№С‚Рё СЃРѕР±С‹С‚РёСЏ РїРѕ С‚РёРїСѓ.
      */
     @Query("SELECT e FROM RandomEventEntity e WHERE e.eventType = :type AND e.active = true ORDER BY e.rarity, e.title")
     List<RandomEventEntity> findByType(String type);
 
     /**
-     * Найти активные события для уровня.
+     * РќР°Р№С‚Рё Р°РєС‚РёРІРЅС‹Рµ СЃРѕР±С‹С‚РёСЏ РґР»СЏ СѓСЂРѕРІРЅСЏ.
      */
     @Query("SELECT e FROM RandomEventEntity e WHERE e.active = true AND e.minLevel <= :level AND (e.maxLevel IS NULL OR e.maxLevel >= :level) ORDER BY e.rarity")
     List<RandomEventEntity> findByLevel(Integer level);
 
     /**
-     * Найти все активные события.
+     * РќР°Р№С‚Рё РІСЃРµ Р°РєС‚РёРІРЅС‹Рµ СЃРѕР±С‹С‚РёСЏ.
      */
     @Query("SELECT e FROM RandomEventEntity e WHERE e.active = true ORDER BY e.rarity, e.title")
     List<RandomEventEntity> findAllActive();

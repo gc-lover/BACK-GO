@@ -6,8 +6,8 @@ import org.mapstruct.*;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 /**
- * MapStruct маппер для преобразования CharacterAppearanceEntity <-> GameCharacterAppearance DTO
- * Автоматически генерирует код маппинга с поддержкой JsonNullable
+ * MapStruct РјР°РїРїРµСЂ РґР»СЏ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ CharacterAppearanceEntity <-> GameCharacterAppearance DTO
+ * РђРІС‚РѕРјР°С‚РёС‡РµСЃРєРё РіРµРЅРµСЂРёСЂСѓРµС‚ РєРѕРґ РјР°РїРїРёРЅРіР° СЃ РїРѕРґРґРµСЂР¶РєРѕР№ JsonNullable
  */
 @Mapper(
     componentModel = "spring",
@@ -17,20 +17,20 @@ import org.openapitools.jackson.nullable.JsonNullable;
 public interface CharacterAppearanceMapperMS {
     
     /**
-     * Преобразовать Entity в DTO
+     * РџСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ Entity РІ DTO
      */
     @Mapping(source = "bodyType", target = "bodyType", qualifiedByName = "bodyTypeToEnum")
     @Mapping(source = "distinctiveFeatures", target = "distinctiveFeatures", qualifiedByName = "stringToJsonNullable")
     GameCharacterAppearance toDto(CharacterAppearanceEntity entity);
     
     /**
-     * Преобразовать DTO в Entity
+     * РџСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ DTO РІ Entity
      */
     @Mapping(source = "bodyType", target = "bodyType", qualifiedByName = "enumToBodyType")
     @Mapping(source = "distinctiveFeatures", target = "distinctiveFeatures", qualifiedByName = "jsonNullableToString")
     CharacterAppearanceEntity toEntity(GameCharacterAppearance dto);
     
-    // === Custom mapping methods для enum конверсий ===
+    // === Custom mapping methods РґР»СЏ enum РєРѕРЅРІРµСЂСЃРёР№ ===
     
     @Named("bodyTypeToEnum")
     default GameCharacterAppearance.BodyTypeEnum bodyTypeToEnum(CharacterAppearanceEntity.BodyType bodyType) {
@@ -39,7 +39,7 @@ public interface CharacterAppearanceMapperMS {
     
     @Named("enumToBodyType")
     default CharacterAppearanceEntity.BodyType enumToBodyType(GameCharacterAppearance.BodyTypeEnum bodyType) {
-        // Используем getValue() вместо name() чтобы получить lowercase значение ("muscular" вместо "MUSCULAR")
+        // РСЃРїРѕР»СЊР·СѓРµРј getValue() РІРјРµСЃС‚Рѕ name() С‡С‚РѕР±С‹ РїРѕР»СѓС‡РёС‚СЊ lowercase Р·РЅР°С‡РµРЅРёРµ ("muscular" РІРјРµСЃС‚Рѕ "MUSCULAR")
         return bodyType != null ? CharacterAppearanceEntity.BodyType.valueOf(bodyType.getValue()) : null;
     }
 }

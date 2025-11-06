@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * JWT Token Provider для создания и валидации JWT токенов
+ * JWT Token Provider РґР»СЏ СЃРѕР·РґР°РЅРёСЏ Рё РІР°Р»РёРґР°С†РёРё JWT С‚РѕРєРµРЅРѕРІ
  */
 @Slf4j
 @Component
@@ -34,7 +34,7 @@ public class JwtTokenProvider {
     }
     
     /**
-     * Создать JWT токен для аккаунта
+     * РЎРѕР·РґР°С‚СЊ JWT С‚РѕРєРµРЅ РґР»СЏ Р°РєРєР°СѓРЅС‚Р°
      */
     public String createToken(UUID accountId) {
         Date now = new Date();
@@ -49,14 +49,14 @@ public class JwtTokenProvider {
     }
     
     /**
-     * Получить дату истечения токена
+     * РџРѕР»СѓС‡РёС‚СЊ РґР°С‚Сѓ РёСЃС‚РµС‡РµРЅРёСЏ С‚РѕРєРµРЅР°
      */
     public OffsetDateTime getTokenExpiration() {
         return OffsetDateTime.now().plusSeconds(jwtExpirationMs / 1000);
     }
     
     /**
-     * Получить Account ID из токена
+     * РџРѕР»СѓС‡РёС‚СЊ Account ID РёР· С‚РѕРєРµРЅР°
      */
     public UUID getAccountIdFromToken(String token) {
         Claims claims = Jwts.parser()
@@ -69,7 +69,7 @@ public class JwtTokenProvider {
     }
     
     /**
-     * Валидация токена
+     * Р’Р°Р»РёРґР°С†РёСЏ С‚РѕРєРµРЅР°
      */
     public boolean validateToken(String token) {
         try {

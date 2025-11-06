@@ -10,21 +10,21 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Repository для управления слотами имплантов персонажа.
+ * Repository РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ СЃР»РѕС‚Р°РјРё РёРјРїР»Р°РЅС‚РѕРІ РїРµСЂСЃРѕРЅР°Р¶Р°.
  * 
- * Источник: API-SWAGGER/api/v1/gameplay/combat/implants-limits.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/gameplay/combat/implants-limits.yaml
  */
 @Repository
 public interface CharacterImplantSlotRepository extends JpaRepository<CharacterImplantSlotEntity, UUID> {
     
     /**
-     * Найти все слоты персонажа.
+     * РќР°Р№С‚Рё РІСЃРµ СЃР»РѕС‚С‹ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT cis FROM CharacterImplantSlotEntity cis WHERE cis.character.id = :characterId")
     List<CharacterImplantSlotEntity> findByCharacterId(UUID characterId);
     
     /**
-     * Найти слот персонажа по типу.
+     * РќР°Р№С‚Рё СЃР»РѕС‚ РїРµСЂСЃРѕРЅР°Р¶Р° РїРѕ С‚РёРїСѓ.
      */
     @Query("SELECT cis FROM CharacterImplantSlotEntity cis WHERE cis.character.id = :characterId AND cis.slotType = :slotType")
     Optional<CharacterImplantSlotEntity> findByCharacterIdAndSlotType(UUID characterId, CharacterImplantSlotEntity.SlotType slotType);

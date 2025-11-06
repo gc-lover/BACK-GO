@@ -66,12 +66,12 @@ public class RestActionRequest {
   }
 
   /**
-   * Минуты отдыха
+   * РњРёРЅСѓС‚С‹ РѕС‚РґС‹С…Р°
    * minimum: 1
    * @return duration
    */
   @Min(value = 1) 
-  @Schema(name = "duration", description = "Минуты отдыха", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "duration", description = "РњРёРЅСѓС‚С‹ РѕС‚РґС‹С…Р°", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("duration")
   public @Nullable Integer getDuration() {
     return duration;

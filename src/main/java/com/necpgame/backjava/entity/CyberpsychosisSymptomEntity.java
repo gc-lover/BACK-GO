@@ -10,10 +10,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 /**
- * JPA Entity для симптомов киберпсихоза (справочник).
+ * JPA Entity РґР»СЏ СЃРёРјРїС‚РѕРјРѕРІ РєРёР±РµСЂРїСЃРёС…РѕР·Р° (СЃРїСЂР°РІРѕС‡РЅРёРє).
  * 
- * Связанная таблица: cyberpsychosis_symptoms
- * Источник: API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
+ * РЎРІСЏР·Р°РЅРЅР°СЏ С‚Р°Р±Р»РёС†Р°: cyberpsychosis_symptoms
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
  */
 @Data
 @NoArgsConstructor
@@ -39,21 +39,21 @@ public class CyberpsychosisSymptomEntity {
     private String description;
     
     /**
-     * Стадия: early, middle, late, cyberpsychosis
+     * РЎС‚Р°РґРёСЏ: early, middle, late, cyberpsychosis
      */
     @Column(name = "stage", nullable = false, length = 50)
     @Enumerated(EnumType.STRING)
     private Stage stage;
     
     /**
-     * Серьезность: mild, moderate, severe, critical
+     * РЎРµСЂСЊРµР·РЅРѕСЃС‚СЊ: mild, moderate, severe, critical
      */
     @Column(name = "severity", nullable = false, length = 50)
     @Enumerated(EnumType.STRING)
     private Severity severity;
     
     /**
-     * Категория: behavioral, physical, mental, social
+     * РљР°С‚РµРіРѕСЂРёСЏ: behavioral, physical, mental, social
      */
     @Column(name = "category", nullable = false, length = 50)
     @Enumerated(EnumType.STRING)

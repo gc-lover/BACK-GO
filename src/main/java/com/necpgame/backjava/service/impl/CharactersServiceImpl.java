@@ -22,8 +22,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
- * Реализация сервиса персонажей
- * Использует MapStruct для автоматического маппинга с поддержкой JsonNullable
+ * Р РµР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІРёСЃР° РїРµСЂСЃРѕРЅР°Р¶РµР№
+ * РСЃРїРѕР»СЊР·СѓРµС‚ MapStruct РґР»СЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРіРѕ РјР°РїРїРёРЅРіР° СЃ РїРѕРґРґРµСЂР¶РєРѕР№ JsonNullable
  */
 @Slf4j
 @Service
@@ -41,7 +41,7 @@ public class CharactersServiceImpl implements CharactersService {
     private final CharacterAppearanceMapperMS appearanceMapper;
     
     /**
-     * Список персонажей текущего игрока
+     * РЎРїРёСЃРѕРє РїРµСЂСЃРѕРЅР°Р¶РµР№ С‚РµРєСѓС‰РµРіРѕ РёРіСЂРѕРєР°
      */
     @Override
     @Transactional(readOnly = true)
@@ -57,14 +57,14 @@ public class CharactersServiceImpl implements CharactersService {
         
         ListCharacters200Response response = new ListCharacters200Response();
         response.setCharacters(summaries);
-        response.setMaxCharacters(5); // TODO: Вынести в конфигурацию
+        response.setMaxCharacters(5); // TODO: Р’С‹РЅРµСЃС‚Рё РІ РєРѕРЅС„РёРіСѓСЂР°С†РёСЋ
         response.setCurrentCount(summaries.size());
         
         return response;
     }
     
     /**
-     * Создать нового персонажа
+     * РЎРѕР·РґР°С‚СЊ РЅРѕРІРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°
      */
     @Override
     @Transactional
@@ -72,16 +72,16 @@ public class CharactersServiceImpl implements CharactersService {
         UUID accountId = SecurityUtil.getCurrentAccountId();
         log.info("Creating character for account {}: {}", accountId, request.getName());
         
-        // Создание персонажа
+        // РЎРѕР·РґР°РЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°
         CharacterEntity character = new CharacterEntity();
         character.setAccount(accountRepository.getReferenceById(accountId));
         character.setName(request.getName());
         character.setClassCode(request.getPropertyClass().getValue());
-        // Преобразуем enum из DTO в enum Entity (используем getValue() чтобы получить lowercase значение)
+        // РџСЂРµРѕР±СЂР°Р·СѓРµРј enum РёР· DTO РІ enum Entity (РёСЃРїРѕР»СЊР·СѓРµРј getValue() С‡С‚РѕР±С‹ РїРѕР»СѓС‡РёС‚СЊ lowercase Р·РЅР°С‡РµРЅРёРµ)
         character.setGender(CharacterEntity.Gender.valueOf(request.getGender().getValue()));
         character.setOriginCode(request.getOrigin().getValue());
         
-        // Опциональные поля с JsonNullable
+        // РћРїС†РёРѕРЅР°Р»СЊРЅС‹Рµ РїРѕР»СЏ СЃ JsonNullable
         if (request.getSubclass() != null && request.getSubclass().isPresent()) {
             character.setSubclassCode(request.getSubclass().get());
         }
@@ -92,8 +92,8 @@ public class CharactersServiceImpl implements CharactersService {
             character.setCity(cityRepository.getReferenceById(request.getCityId()));
         }
         
-        // Внешность через MapStruct
-        // Appearance обязательное поле в Entity, поэтому всегда создаем его
+        // Р’РЅРµС€РЅРѕСЃС‚СЊ С‡РµСЂРµР· MapStruct
+        // Appearance РѕР±СЏР·Р°С‚РµР»СЊРЅРѕРµ РїРѕР»Рµ РІ Entity, РїРѕСЌС‚РѕРјСѓ РІСЃРµРіРґР° СЃРѕР·РґР°РµРј РµРіРѕ
         if (request.getAppearance() == null) {
             throw new BusinessException(ErrorCode.MISSING_REQUIRED_FIELD, 
                 "Appearance is required");
@@ -117,7 +117,7 @@ public class CharactersServiceImpl implements CharactersService {
     }
     
     /**
-     * Получить детальную информацию о персонаже
+     * РџРѕР»СѓС‡РёС‚СЊ РґРµС‚Р°Р»СЊРЅСѓСЋ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РїРµСЂСЃРѕРЅР°Р¶Рµ
      */
     @Transactional(readOnly = true)
     public GameCharacter getCharacter(UUID characterId) {
@@ -128,7 +128,7 @@ public class CharactersServiceImpl implements CharactersService {
             .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND, 
                 "Character not found: " + characterId));
         
-        // Проверка владельца
+        // РџСЂРѕРІРµСЂРєР° РІР»Р°РґРµР»СЊС†Р°
         if (!character.getAccount().getId().equals(accountId)) {
             throw new BusinessException(ErrorCode.ACCESS_DENIED,
                 "You don't have access to this character");
@@ -138,7 +138,7 @@ public class CharactersServiceImpl implements CharactersService {
     }
     
     /**
-     * Удалить персонажа
+     * РЈРґР°Р»РёС‚СЊ РїРµСЂСЃРѕРЅР°Р¶Р°
      */
     @Override
     @Transactional
@@ -150,7 +150,7 @@ public class CharactersServiceImpl implements CharactersService {
             .orElseThrow(() -> new BusinessException(ErrorCode.RESOURCE_NOT_FOUND, 
                 "Character not found: " + characterId));
         
-        // Проверка владельца
+        // РџСЂРѕРІРµСЂРєР° РІР»Р°РґРµР»СЊС†Р°
         if (!character.getAccount().getId().equals(accountId)) {
             throw new BusinessException(ErrorCode.ACCESS_DENIED, 
                 "You don't have access to this character");
@@ -166,7 +166,7 @@ public class CharactersServiceImpl implements CharactersService {
     }
     
     /**
-     * Список доступных классов персонажей
+     * РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РєР»Р°СЃСЃРѕРІ РїРµСЂСЃРѕРЅР°Р¶РµР№
      */
     @Override
     @Transactional(readOnly = true)
@@ -191,7 +191,7 @@ public class CharactersServiceImpl implements CharactersService {
     }
     
     /**
-     * Список доступных происхождений персонажей
+     * РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёР№ РїРµСЂСЃРѕРЅР°Р¶РµР№
      */
     @Override
     @Transactional(readOnly = true)
@@ -201,7 +201,7 @@ public class CharactersServiceImpl implements CharactersService {
         var origins = characterOriginRepository.findAll().stream()
             .map(entity -> {
                 GameCharacterOrigin dto = new GameCharacterOrigin();
-                // Используем enum из DTO
+                // РСЃРїРѕР»СЊР·СѓРµРј enum РёР· DTO
                 GameCharacterOrigin.IdEnum idEnum = GameCharacterOrigin.IdEnum.fromValue(entity.getOriginCode());
                 dto.setId(idEnum);
                 dto.setName(entity.getName());

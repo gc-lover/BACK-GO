@@ -23,10 +23,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Последствия киберпсихоза. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Последствия 
+ * РџРѕСЃР»РµРґСЃС‚РІРёСЏ РєРёР±РµСЂРїСЃРёС…РѕР·Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РџРѕСЃР»РµРґСЃС‚РІРёСЏ 
  */
 
-@Schema(name = "ConsequencesInfo", description = "Последствия киберпсихоза. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Последствия ")
+@Schema(name = "ConsequencesInfo", description = "РџРѕСЃР»РµРґСЃС‚РІРёСЏ РєРёР±РµСЂРїСЃРёС…РѕР·Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РџРѕСЃР»РµРґСЃС‚РІРёСЏ ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class ConsequencesInfo {
 
@@ -107,11 +107,11 @@ public class ConsequencesInfo {
   }
 
   /**
-   * Эффекты на контроль персонажа
+   * Р­С„С„РµРєС‚С‹ РЅР° РєРѕРЅС‚СЂРѕР»СЊ РїРµСЂСЃРѕРЅР°Р¶Р°
    * @return controlEffects
    */
   @NotNull 
-  @Schema(name = "control_effects", description = "Эффекты на контроль персонажа", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "control_effects", description = "Р­С„С„РµРєС‚С‹ РЅР° РєРѕРЅС‚СЂРѕР»СЊ РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("control_effects")
   public Map<String, Object> getControlEffects() {
     return controlEffects;
@@ -135,11 +135,11 @@ public class ConsequencesInfo {
   }
 
   /**
-   * Визуальные индикаторы стадии
+   * Р’РёР·СѓР°Р»СЊРЅС‹Рµ РёРЅРґРёРєР°С‚РѕСЂС‹ СЃС‚Р°РґРёРё
    * @return visualIndicators
    */
   
-  @Schema(name = "visual_indicators", description = "Визуальные индикаторы стадии", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "visual_indicators", description = "Р’РёР·СѓР°Р»СЊРЅС‹Рµ РёРЅРґРёРєР°С‚РѕСЂС‹ СЃС‚Р°РґРёРё", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("visual_indicators")
   public List<String> getVisualIndicators() {
     return visualIndicators;

@@ -6,126 +6,126 @@ import java.util.UUID;
 import java.util.List;
 
 /**
- * CyberpsychosisService - сервис для управления системой киберпсихоза.
+ * CyberpsychosisService - СЃРµСЂРІРёСЃ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ СЃРёСЃС‚РµРјРѕР№ РєРёР±РµСЂРїСЃРёС…РѕР·Р°.
  * 
- * Сгенерировано из: API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
+ * РЎРіРµРЅРµСЂРёСЂРѕРІР°РЅРѕ РёР·: API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
  * 
- * НЕ редактируйте этот файл вручную - он генерируется автоматически!
+ * РќР• СЂРµРґР°РєС‚РёСЂСѓР№С‚Рµ СЌС‚РѕС‚ С„Р°Р№Р» РІСЂСѓС‡РЅСѓСЋ - РѕРЅ РіРµРЅРµСЂРёСЂСѓРµС‚СЃСЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё!
  */
 public interface CyberpsychosisService {
 
-    // ===== Управление человечностью =====
+    // ===== РЈРїСЂР°РІР»РµРЅРёРµ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚СЊСЋ =====
     
     /**
-     * Получить текущий уровень человечности игрока.
+     * РџРѕР»СѓС‡РёС‚СЊ С‚РµРєСѓС‰РёР№ СѓСЂРѕРІРµРЅСЊ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РёРіСЂРѕРєР°.
      */
     HumanityInfo getHumanity(UUID playerId);
     
     /**
-     * Рассчитать потерю человечности от импланта.
+     * Р Р°СЃСЃС‡РёС‚Р°С‚СЊ РїРѕС‚РµСЂСЋ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё РѕС‚ РёРјРїР»Р°РЅС‚Р°.
      */
     HumanityLossCalculation calculateHumanityLoss(UUID playerId, CalculateLossRequest request);
     
     /**
-     * Применить потерю человечности.
+     * РџСЂРёРјРµРЅРёС‚СЊ РїРѕС‚РµСЂСЋ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё.
      */
     HumanityUpdateResult applyHumanityLoss(UUID playerId, ApplyLossRequest request);
     
-    // ===== Стадии киберпсихоза =====
+    // ===== РЎС‚Р°РґРёРё РєРёР±РµСЂРїСЃРёС…РѕР·Р° =====
     
     /**
-     * Получить текущую стадию киберпсихоза.
+     * РџРѕР»СѓС‡РёС‚СЊ С‚РµРєСѓС‰СѓСЋ СЃС‚Р°РґРёСЋ РєРёР±РµСЂРїСЃРёС…РѕР·Р°.
      */
     CyberpsychosisStage getCyberpsychosisStage(UUID playerId);
     
     /**
-     * Получить список симптомов текущей стадии.
+     * РџРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє СЃРёРјРїС‚РѕРјРѕРІ С‚РµРєСѓС‰РµР№ СЃС‚Р°РґРёРё.
      */
     List<Symptom> getSymptoms(UUID playerId);
     
     /**
-     * Получить информацию о конкретной стадии.
+     * РџРѕР»СѓС‡РёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РєРѕРЅРєСЂРµС‚РЅРѕР№ СЃС‚Р°РґРёРё.
      */
     StageInfo getStageInfo(String stageId);
     
-    // ===== Прогрессия киберпсихоза =====
+    // ===== РџСЂРѕРіСЂРµСЃСЃРёСЏ РєРёР±РµСЂРїСЃРёС…РѕР·Р° =====
     
     /**
-     * Получить информацию о прогрессии киберпсихоза.
+     * РџРѕР»СѓС‡РёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РїСЂРѕРіСЂРµСЃСЃРёРё РєРёР±РµСЂРїСЃРёС…РѕР·Р°.
      */
     ProgressionInfo getProgression(UUID playerId);
     
     /**
-     * Рассчитать риск прогрессии.
+     * Р Р°СЃСЃС‡РёС‚Р°С‚СЊ СЂРёСЃРє РїСЂРѕРіСЂРµСЃСЃРёРё.
      */
     ProgressionCalculation calculateProgression(UUID playerId, CalculateProgressionRequest request);
     
     /**
-     * Триггернуть прогрессию киберпсихоза.
+     * РўСЂРёРіРіРµСЂРЅСѓС‚СЊ РїСЂРѕРіСЂРµСЃСЃРёСЋ РєРёР±РµСЂРїСЃРёС…РѕР·Р°.
      */
     ProgressionTriggerResult triggerProgression(UUID playerId, TriggerProgressionRequest request);
     
-    // ===== Последствия киберпсихоза =====
+    // ===== РџРѕСЃР»РµРґСЃС‚РІРёСЏ РєРёР±РµСЂРїСЃРёС…РѕР·Р° =====
     
     /**
-     * Получить все последствия киберпсихоза.
+     * РџРѕР»СѓС‡РёС‚СЊ РІСЃРµ РїРѕСЃР»РµРґСЃС‚РІРёСЏ РєРёР±РµСЂРїСЃРёС…РѕР·Р°.
      */
     ConsequencesInfo getConsequences(UUID playerId);
     
     /**
-     * Получить штрафы к характеристикам.
+     * РџРѕР»СѓС‡РёС‚СЊ С€С‚СЂР°С„С‹ Рє С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєР°Рј.
      */
     StatPenalties getStatPenalties(UUID playerId);
     
     /**
-     * Получить социальные эффекты киберпсихоза.
+     * РџРѕР»СѓС‡РёС‚СЊ СЃРѕС†РёР°Р»СЊРЅС‹Рµ СЌС„С„РµРєС‚С‹ РєРёР±РµСЂРїСЃРёС…РѕР·Р°.
      */
     SocialEffects getSocialEffects(UUID playerId);
     
-    // ===== Управление киберпсихозом =====
+    // ===== РЈРїСЂР°РІР»РµРЅРёРµ РєРёР±РµСЂРїСЃРёС…РѕР·РѕРј =====
     
     /**
-     * Применить профилактику киберпсихоза.
+     * РџСЂРёРјРµРЅРёС‚СЊ РїСЂРѕС„РёР»Р°РєС‚РёРєСѓ РєРёР±РµСЂРїСЃРёС…РѕР·Р°.
      */
     PreventionResult applyPrevention(UUID playerId, ApplyPreventionRequest request);
     
     /**
-     * Применить лечение киберпсихоза.
+     * РџСЂРёРјРµРЅРёС‚СЊ Р»РµС‡РµРЅРёРµ РєРёР±РµСЂРїСЃРёС…РѕР·Р°.
      */
     TreatmentResult applyTreatment(UUID playerId, ApplyTreatmentRequest request);
     
     /**
-     * Получить доступные методы лечения.
+     * РџРѕР»СѓС‡РёС‚СЊ РґРѕСЃС‚СѓРїРЅС‹Рµ РјРµС‚РѕРґС‹ Р»РµС‡РµРЅРёСЏ.
      */
     GetTreatments200Response getTreatments(UUID playerId);
     
     /**
-     * Применить управление симптомами.
+     * РџСЂРёРјРµРЅРёС‚СЊ СѓРїСЂР°РІР»РµРЅРёРµ СЃРёРјРїС‚РѕРјР°РјРё.
      */
     SymptomManagementResult applySymptomManagement(UUID playerId, ApplySymptomManagementRequest request);
     
     /**
-     * Получить информацию об адаптации к киберпсихозу.
+     * РџРѕР»СѓС‡РёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± Р°РґР°РїС‚Р°С†РёРё Рє РєРёР±РµСЂРїСЃРёС…РѕР·Сѓ.
      */
     AdaptationInfo getAdaptation(UUID playerId);
     
     /**
-     * Удалить имплант для восстановления человечности.
+     * РЈРґР°Р»РёС‚СЊ РёРјРїР»Р°РЅС‚ РґР»СЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё.
      */
     ImplantRemovalResult removeImplant(UUID playerId, RemoveImplantRequest request);
     
     /**
-     * Выполнить детоксикацию.
+     * Р’С‹РїРѕР»РЅРёС‚СЊ РґРµС‚РѕРєСЃРёРєР°С†РёСЋ.
      */
     DetoxificationResult performDetoxification(UUID playerId, DetoxificationRequest request);
     
     /**
-     * Получить стоимость лечения.
+     * РџРѕР»СѓС‡РёС‚СЊ СЃС‚РѕРёРјРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ.
      */
     TreatmentCosts getTreatmentCosts(UUID playerId, String treatmentType);
     
     /**
-     * Применить социальную поддержку для снижения киберпсихоза.
+     * РџСЂРёРјРµРЅРёС‚СЊ СЃРѕС†РёР°Р»СЊРЅСѓСЋ РїРѕРґРґРµСЂР¶РєСѓ РґР»СЏ СЃРЅРёР¶РµРЅРёСЏ РєРёР±РµСЂРїСЃРёС…РѕР·Р°.
      */
     SocialSupportResult applySocialSupport(UUID playerId, ApplySocialSupportRequest request);
 }

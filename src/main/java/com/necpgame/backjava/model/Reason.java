@@ -17,17 +17,17 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Причина отказа в установке
+ * РџСЂРёС‡РёРЅР° РѕС‚РєР°Р·Р° РІ СѓСЃС‚Р°РЅРѕРІРєРµ
  */
 
-@Schema(name = "Reason", description = "Причина отказа в установке")
+@Schema(name = "Reason", description = "РџСЂРёС‡РёРЅР° РѕС‚РєР°Р·Р° РІ СѓСЃС‚Р°РЅРѕРІРєРµ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class Reason {
 
   private String message;
 
   /**
-   * Тип причины
+   * РўРёРї РїСЂРёС‡РёРЅС‹
    */
   public enum TypeEnum {
     SLOT("slot"),
@@ -70,7 +70,7 @@ public class Reason {
   private TypeEnum type;
 
   /**
-   * Серьезность причины
+   * РЎРµСЂСЊРµР·РЅРѕСЃС‚СЊ РїСЂРёС‡РёРЅС‹
    */
   public enum SeverityEnum {
     LOW("low"),
@@ -129,11 +129,11 @@ public class Reason {
   }
 
   /**
-   * Текст причины
+   * РўРµРєСЃС‚ РїСЂРёС‡РёРЅС‹
    * @return message
    */
   @NotNull 
-  @Schema(name = "message", description = "Текст причины", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "message", description = "РўРµРєСЃС‚ РїСЂРёС‡РёРЅС‹", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("message")
   public String getMessage() {
     return message;
@@ -149,11 +149,11 @@ public class Reason {
   }
 
   /**
-   * Тип причины
+   * РўРёРї РїСЂРёС‡РёРЅС‹
    * @return type
    */
   @NotNull 
-  @Schema(name = "type", description = "Тип причины", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "type", description = "РўРёРї РїСЂРёС‡РёРЅС‹", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("type")
   public TypeEnum getType() {
     return type;
@@ -169,11 +169,11 @@ public class Reason {
   }
 
   /**
-   * Серьезность причины
+   * РЎРµСЂСЊРµР·РЅРѕСЃС‚СЊ РїСЂРёС‡РёРЅС‹
    * @return severity
    */
   @NotNull 
-  @Schema(name = "severity", description = "Серьезность причины", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "severity", description = "РЎРµСЂСЊРµР·РЅРѕСЃС‚СЊ РїСЂРёС‡РёРЅС‹", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("severity")
   public SeverityEnum getSeverity() {
     return severity;

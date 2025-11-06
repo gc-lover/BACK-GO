@@ -20,10 +20,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Информация о слоте импланта
+ * РРЅС„РѕСЂРјР°С†РёСЏ Рѕ СЃР»РѕС‚Рµ РёРјРїР»Р°РЅС‚Р°
  */
 
-@Schema(name = "SlotInfo", description = "Информация о слоте импланта")
+@Schema(name = "SlotInfo", description = "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ СЃР»РѕС‚Рµ РёРјРїР»Р°РЅС‚Р°")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class SlotInfo {
 
@@ -54,11 +54,11 @@ public class SlotInfo {
   }
 
   /**
-   * Идентификатор слота
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃР»РѕС‚Р°
    * @return slotId
    */
   @NotNull @Valid 
-  @Schema(name = "slot_id", description = "Идентификатор слота", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "slot_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃР»РѕС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("slot_id")
   public UUID getSlotId() {
     return slotId;
@@ -74,11 +74,11 @@ public class SlotInfo {
   }
 
   /**
-   * Занят ли слот
+   * Р—Р°РЅСЏС‚ Р»Рё СЃР»РѕС‚
    * @return isOccupied
    */
   @NotNull 
-  @Schema(name = "is_occupied", description = "Занят ли слот", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "is_occupied", description = "Р—Р°РЅСЏС‚ Р»Рё СЃР»РѕС‚", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("is_occupied")
   public Boolean getIsOccupied() {
     return isOccupied;
@@ -94,11 +94,11 @@ public class SlotInfo {
   }
 
   /**
-   * Идентификатор установленного импланта (если занят)
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅРѕРіРѕ РёРјРїР»Р°РЅС‚Р° (РµСЃР»Рё Р·Р°РЅСЏС‚)
    * @return installedImplantId
    */
   @Valid 
-  @Schema(name = "installed_implant_id", description = "Идентификатор установленного импланта (если занят)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "installed_implant_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅРѕРіРѕ РёРјРїР»Р°РЅС‚Р° (РµСЃР»Рё Р·Р°РЅСЏС‚)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("installed_implant_id")
   public JsonNullable<UUID> getInstalledImplantId() {
     return installedImplantId;
@@ -114,11 +114,11 @@ public class SlotInfo {
   }
 
   /**
-   * Можно ли установить имплант в этот слот
+   * РњРѕР¶РЅРѕ Р»Рё СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РёРјРїР»Р°РЅС‚ РІ СЌС‚РѕС‚ СЃР»РѕС‚
    * @return canInstall
    */
   @NotNull 
-  @Schema(name = "can_install", description = "Можно ли установить имплант в этот слот", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "can_install", description = "РњРѕР¶РЅРѕ Р»Рё СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РёРјРїР»Р°РЅС‚ РІ СЌС‚РѕС‚ СЃР»РѕС‚", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("can_install")
   public Boolean getCanInstall() {
     return canInstall;

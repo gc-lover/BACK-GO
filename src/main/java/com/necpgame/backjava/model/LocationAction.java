@@ -33,7 +33,7 @@ public class LocationAction {
   private Boolean enabled;
 
   /**
-   * Тип действия
+   * РўРёРї РґРµР№СЃС‚РІРёСЏ
    */
   public enum ActionTypeEnum {
     EXPLORATION("exploration"),
@@ -102,11 +102,11 @@ public class LocationAction {
   }
 
   /**
-   * ID действия
+   * ID РґРµР№СЃС‚РІРёСЏ
    * @return id
    */
   @NotNull 
-  @Schema(name = "id", example = "explore_market", description = "ID действия", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "id", example = "explore_market", description = "ID РґРµР№СЃС‚РІРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("id")
   public String getId() {
     return id;
@@ -122,11 +122,11 @@ public class LocationAction {
   }
 
   /**
-   * Название действия для отображения
+   * РќР°Р·РІР°РЅРёРµ РґРµР№СЃС‚РІРёСЏ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ
    * @return label
    */
   @NotNull 
-  @Schema(name = "label", example = "Исследовать рынок", description = "Название действия для отображения", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "label", example = "РСЃСЃР»РµРґРѕРІР°С‚СЊ СЂС‹РЅРѕРє", description = "РќР°Р·РІР°РЅРёРµ РґРµР№СЃС‚РІРёСЏ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("label")
   public String getLabel() {
     return label;
@@ -142,11 +142,11 @@ public class LocationAction {
   }
 
   /**
-   * Описание действия
+   * РћРїРёСЃР°РЅРёРµ РґРµР№СЃС‚РІРёСЏ
    * @return description
    */
   @NotNull 
-  @Schema(name = "description", example = "Посетить местный рынок и посмотреть товары", description = "Описание действия", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "description", example = "РџРѕСЃРµС‚РёС‚СЊ РјРµСЃС‚РЅС‹Р№ СЂС‹РЅРѕРє Рё РїРѕСЃРјРѕС‚СЂРµС‚СЊ С‚РѕРІР°СЂС‹", description = "РћРїРёСЃР°РЅРёРµ РґРµР№СЃС‚РІРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {
     return description;
@@ -162,11 +162,11 @@ public class LocationAction {
   }
 
   /**
-   * Доступно ли действие для персонажа
+   * Р”РѕСЃС‚СѓРїРЅРѕ Р»Рё РґРµР№СЃС‚РІРёРµ РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°
    * @return enabled
    */
   @NotNull 
-  @Schema(name = "enabled", example = "true", description = "Доступно ли действие для персонажа", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "enabled", example = "true", description = "Р”РѕСЃС‚СѓРїРЅРѕ Р»Рё РґРµР№СЃС‚РІРёРµ РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("enabled")
   public Boolean getEnabled() {
     return enabled;
@@ -182,11 +182,11 @@ public class LocationAction {
   }
 
   /**
-   * Тип действия
+   * РўРёРї РґРµР№СЃС‚РІРёСЏ
    * @return actionType
    */
   @NotNull 
-  @Schema(name = "actionType", example = "exploration", description = "Тип действия", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "actionType", example = "exploration", description = "РўРёРї РґРµР№СЃС‚РІРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("actionType")
   public ActionTypeEnum getActionType() {
     return actionType;
@@ -222,11 +222,11 @@ public class LocationAction {
   }
 
   /**
-   * Причина недоступности (если enabled=false)
+   * РџСЂРёС‡РёРЅР° РЅРµРґРѕСЃС‚СѓРїРЅРѕСЃС‚Рё (РµСЃР»Рё enabled=false)
    * @return disabledReason
    */
   
-  @Schema(name = "disabledReason", example = "Требуется уровень 5", description = "Причина недоступности (если enabled=false)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "disabledReason", example = "РўСЂРµР±СѓРµС‚СЃСЏ СѓСЂРѕРІРµРЅСЊ 5", description = "РџСЂРёС‡РёРЅР° РЅРµРґРѕСЃС‚СѓРїРЅРѕСЃС‚Рё (РµСЃР»Рё enabled=false)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("disabledReason")
   public @Nullable String getDisabledReason() {
     return disabledReason;

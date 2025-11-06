@@ -16,32 +16,32 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 /**
- * Game Initial State API - контракт для получения начального состояния игры.
+ * Game Initial State API - РєРѕРЅС‚СЂР°РєС‚ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РЅР°С‡Р°Р»СЊРЅРѕРіРѕ СЃРѕСЃС‚РѕСЏРЅРёСЏ РёРіСЂС‹.
  * 
- * Сгенерировано из: API-SWAGGER/api/v1/game/initial-state.yaml
+ * РЎРіРµРЅРµСЂРёСЂРѕРІР°РЅРѕ РёР·: API-SWAGGER/api/v1/game/initial-state.yaml
  * OpenAPI Generator version: 7.2.0
  * 
- * НЕ редактируйте этот файл вручную - он генерируется автоматически!
+ * РќР• СЂРµРґР°РєС‚РёСЂСѓР№С‚Рµ СЌС‚РѕС‚ С„Р°Р№Р» РІСЂСѓС‡РЅСѓСЋ - РѕРЅ РіРµРЅРµСЂРёСЂСѓРµС‚СЃСЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё!
  */
 @Validated
-@Tag(name = "Initial State", description = "Начальное состояние игры")
+@Tag(name = "Initial State", description = "РќР°С‡Р°Р»СЊРЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹")
 public interface GameInitialStateApi {
 
     /**
-     * GET /v1/game/initial-state : Получить начальное состояние игры
+     * GET /v1/game/initial-state : РџРѕР»СѓС‡РёС‚СЊ РЅР°С‡Р°Р»СЊРЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹
      * 
-     * @param characterId ID персонажа (required)
-     * @return Начальное состояние игры (status code 200)
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р° (required)
+     * @return РќР°С‡Р°Р»СЊРЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹ (status code 200)
      *         or Not Found (status code 404)
      *         or Internal Server Error (status code 500)
      */
     @Operation(
         operationId = "getInitialState",
-        summary = "Получить начальное состояние игры",
-        description = "Возвращает начальное состояние игры для персонажа.",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ РЅР°С‡Р°Р»СЊРЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ РЅР°С‡Р°Р»СЊРЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹ РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°.",
         tags = { "Initial State" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Начальное состояние игры", content = {
+            @ApiResponse(responseCode = "200", description = "РќР°С‡Р°Р»СЊРЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РёРіСЂС‹", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = InitialStateResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "Not Found", content = {
@@ -60,27 +60,27 @@ public interface GameInitialStateApi {
         produces = { "application/json" }
     )
     default ResponseEntity<InitialStateResponse> getInitialState(
-        @Parameter(name = "characterId", description = "ID персонажа", required = true)
+        @Parameter(name = "characterId", description = "ID РїРµСЂСЃРѕРЅР°Р¶Р°", required = true)
         @Valid @RequestParam(value = "characterId", required = true) UUID characterId
     ) {
         return ResponseEntity.ok().build();
     }
 
     /**
-     * GET /v1/game/tutorial-steps : Получить шаги туториала
+     * GET /v1/game/tutorial-steps : РџРѕР»СѓС‡РёС‚СЊ С€Р°РіРё С‚СѓС‚РѕСЂРёР°Р»Р°
      * 
-     * @param characterId ID персонажа (required)
-     * @return Шаги туториала (status code 200)
+     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р° (required)
+     * @return РЁР°РіРё С‚СѓС‚РѕСЂРёР°Р»Р° (status code 200)
      *         or Not Found (status code 404)
      *         or Internal Server Error (status code 500)
      */
     @Operation(
         operationId = "getTutorialSteps",
-        summary = "Получить шаги туториала",
-        description = "Возвращает список шагов туториала для нового игрока.",
+        summary = "РџРѕР»СѓС‡РёС‚СЊ С€Р°РіРё С‚СѓС‚РѕСЂРёР°Р»Р°",
+        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє С€Р°РіРѕРІ С‚СѓС‚РѕСЂРёР°Р»Р° РґР»СЏ РЅРѕРІРѕРіРѕ РёРіСЂРѕРєР°.",
         tags = { "Initial State" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Шаги туториала", content = {
+            @ApiResponse(responseCode = "200", description = "РЁР°РіРё С‚СѓС‚РѕСЂРёР°Р»Р°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = TutorialStepsResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "Not Found", content = {
@@ -99,7 +99,7 @@ public interface GameInitialStateApi {
         produces = { "application/json" }
     )
     default ResponseEntity<TutorialStepsResponse> getTutorialSteps(
-        @Parameter(name = "characterId", description = "ID персонажа", required = true)
+        @Parameter(name = "characterId", description = "ID РїРµСЂСЃРѕРЅР°Р¶Р°", required = true)
         @Valid @RequestParam(value = "characterId", required = true) UUID characterId
     ) {
         return ResponseEntity.ok().build();

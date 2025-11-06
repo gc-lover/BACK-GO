@@ -53,11 +53,11 @@ public class RegisterRequest {
   }
 
   /**
-   * Email адрес (должен быть уникальным)
+   * Email Р°РґСЂРµСЃ (РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ СѓРЅРёРєР°Р»СЊРЅС‹Рј)
    * @return email
    */
   @NotNull @jakarta.validation.constraints.Email 
-  @Schema(name = "email", example = "player@example.com", description = "Email адрес (должен быть уникальным)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "email", example = "player@example.com", description = "Email Р°РґСЂРµСЃ (РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ СѓРЅРёРєР°Р»СЊРЅС‹Рј)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("email")
   public String getEmail() {
     return email;
@@ -73,11 +73,11 @@ public class RegisterRequest {
   }
 
   /**
-   * Логин пользователя (3-20 символов, буквы, цифры, подчеркивания, уникальный)
+   * Р›РѕРіРёРЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (3-20 СЃРёРјРІРѕР»РѕРІ, Р±СѓРєРІС‹, С†РёС„СЂС‹, РїРѕРґС‡РµСЂРєРёРІР°РЅРёСЏ, СѓРЅРёРєР°Р»СЊРЅС‹Р№)
    * @return username
    */
   @NotNull @Pattern(regexp = "^[a-zA-Z0-9_]+$") @Size(min = 3, max = 20) 
-  @Schema(name = "username", example = "player123", description = "Логин пользователя (3-20 символов, буквы, цифры, подчеркивания, уникальный)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "username", example = "player123", description = "Р›РѕРіРёРЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (3-20 СЃРёРјРІРѕР»РѕРІ, Р±СѓРєРІС‹, С†РёС„СЂС‹, РїРѕРґС‡РµСЂРєРёРІР°РЅРёСЏ, СѓРЅРёРєР°Р»СЊРЅС‹Р№)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("username")
   public String getUsername() {
     return username;
@@ -93,11 +93,11 @@ public class RegisterRequest {
   }
 
   /**
-   * Пароль (минимум 8 символов, буквы, цифры, спецсимволы)
+   * РџР°СЂРѕР»СЊ (РјРёРЅРёРјСѓРј 8 СЃРёРјРІРѕР»РѕРІ, Р±СѓРєРІС‹, С†РёС„СЂС‹, СЃРїРµС†СЃРёРјРІРѕР»С‹)
    * @return password
    */
   @NotNull @Size(min = 8) 
-  @Schema(name = "password", example = "SecurePass123!", description = "Пароль (минимум 8 символов, буквы, цифры, спецсимволы)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "password", example = "SecurePass123!", description = "РџР°СЂРѕР»СЊ (РјРёРЅРёРјСѓРј 8 СЃРёРјРІРѕР»РѕРІ, Р±СѓРєРІС‹, С†РёС„СЂС‹, СЃРїРµС†СЃРёРјРІРѕР»С‹)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("password")
   public String getPassword() {
     return password;
@@ -113,11 +113,11 @@ public class RegisterRequest {
   }
 
   /**
-   * Подтверждение пароля (должно совпадать с password)
+   * РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ РїР°СЂРѕР»СЏ (РґРѕР»Р¶РЅРѕ СЃРѕРІРїР°РґР°С‚СЊ СЃ password)
    * @return passwordConfirm
    */
   @NotNull 
-  @Schema(name = "password_confirm", example = "SecurePass123!", description = "Подтверждение пароля (должно совпадать с password)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "password_confirm", example = "SecurePass123!", description = "РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ РїР°СЂРѕР»СЏ (РґРѕР»Р¶РЅРѕ СЃРѕРІРїР°РґР°С‚СЊ СЃ password)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("password_confirm")
   public String getPasswordConfirm() {
     return passwordConfirm;
@@ -133,11 +133,11 @@ public class RegisterRequest {
   }
 
   /**
-   * Согласие с условиями использования (обязательно true)
+   * РЎРѕРіР»Р°СЃРёРµ СЃ СѓСЃР»РѕРІРёСЏРјРё РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ (РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ true)
    * @return termsAccepted
    */
   @NotNull 
-  @Schema(name = "terms_accepted", example = "true", description = "Согласие с условиями использования (обязательно true)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "terms_accepted", example = "true", description = "РЎРѕРіР»Р°СЃРёРµ СЃ СѓСЃР»РѕРІРёСЏРјРё РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ (РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ true)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("terms_accepted")
   public Boolean getTermsAccepted() {
     return termsAccepted;

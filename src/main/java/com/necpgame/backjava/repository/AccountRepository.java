@@ -10,33 +10,33 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Repository для работы с аккаунтами игроков
+ * Repository РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р°РєРєР°СѓРЅС‚Р°РјРё РёРіСЂРѕРєРѕРІ
  */
 @Repository
 public interface AccountRepository extends JpaRepository<AccountEntity, UUID> {
     
     /**
-     * Найти аккаунт по email
+     * РќР°Р№С‚Рё Р°РєРєР°СѓРЅС‚ РїРѕ email
      */
     Optional<AccountEntity> findByEmail(String email);
     
     /**
-     * Найти аккаунт по username
+     * РќР°Р№С‚Рё Р°РєРєР°СѓРЅС‚ РїРѕ username
      */
     Optional<AccountEntity> findByUsername(String username);
     
     /**
-     * Проверить существование аккаунта по email
+     * РџСЂРѕРІРµСЂРёС‚СЊ СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ Р°РєРєР°СѓРЅС‚Р° РїРѕ email
      */
     boolean existsByEmail(String email);
     
     /**
-     * Проверить существование аккаунта по username
+     * РџСЂРѕРІРµСЂРёС‚СЊ СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ Р°РєРєР°СѓРЅС‚Р° РїРѕ username
      */
     boolean existsByUsername(String username);
     
     /**
-     * Найти активный аккаунт по email или username
+     * РќР°Р№С‚Рё Р°РєС‚РёРІРЅС‹Р№ Р°РєРєР°СѓРЅС‚ РїРѕ email РёР»Рё username
      */
     @Query("SELECT a FROM AccountEntity a WHERE (a.email = :login OR a.username = :login) AND a.isActive = true")
     Optional<AccountEntity> findActiveByEmailOrUsername(@Param("login") String login);

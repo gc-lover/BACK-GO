@@ -10,10 +10,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 /**
- * RandomEventEntity - справочник случайных событий.
+ * RandomEventEntity - СЃРїСЂР°РІРѕС‡РЅРёРє СЃР»СѓС‡Р°Р№РЅС‹С… СЃРѕР±С‹С‚РёР№.
  * 
- * Хранит шаблоны случайных событий в игре.
- * Источник: API-SWAGGER/api/v1/events/random-events.yaml (RandomEvent schema)
+ * РҐСЂР°РЅРёС‚ С€Р°Р±Р»РѕРЅС‹ СЃР»СѓС‡Р°Р№РЅС‹С… СЃРѕР±С‹С‚РёР№ РІ РёРіСЂРµ.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/events/random-events.yaml (RandomEvent schema)
  */
 @Entity
 @Table(name = "random_events", indexes = {

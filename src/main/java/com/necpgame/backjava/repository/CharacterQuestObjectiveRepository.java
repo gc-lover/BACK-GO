@@ -10,33 +10,33 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * CharacterQuestObjectiveRepository - репозиторий для работы с прогрессом целей квестов персонажей.
+ * CharacterQuestObjectiveRepository - СЂРµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РїСЂРѕРіСЂРµСЃСЃРѕРј С†РµР»РµР№ РєРІРµСЃС‚РѕРІ РїРµСЂСЃРѕРЅР°Р¶РµР№.
  * 
- * Источник: API-SWAGGER/api/v1/quests/quests.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/quests/quests.yaml
  */
 @Repository
 public interface CharacterQuestObjectiveRepository extends JpaRepository<CharacterQuestObjectiveEntity, UUID> {
 
     /**
-     * Найти прогресс всех целей квеста для персонажа.
+     * РќР°Р№С‚Рё РїСЂРѕРіСЂРµСЃСЃ РІСЃРµС… С†РµР»РµР№ РєРІРµСЃС‚Р° РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT cqo FROM CharacterQuestObjectiveEntity cqo WHERE cqo.characterId = :characterId AND cqo.questId = :questId")
     List<CharacterQuestObjectiveEntity> findByCharacterIdAndQuestId(UUID characterId, String questId);
 
     /**
-     * Найти прогресс конкретной цели квеста для персонажа.
+     * РќР°Р№С‚Рё РїСЂРѕРіСЂРµСЃСЃ РєРѕРЅРєСЂРµС‚РЅРѕР№ С†РµР»Рё РєРІРµСЃС‚Р° РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT cqo FROM CharacterQuestObjectiveEntity cqo WHERE cqo.characterId = :characterId AND cqo.objectiveId = :objectiveId")
     Optional<CharacterQuestObjectiveEntity> findByCharacterIdAndObjectiveId(UUID characterId, String objectiveId);
 
     /**
-     * Проверить выполнена ли цель квеста.
+     * РџСЂРѕРІРµСЂРёС‚СЊ РІС‹РїРѕР»РЅРµРЅР° Р»Рё С†РµР»СЊ РєРІРµСЃС‚Р°.
      */
     @Query("SELECT COUNT(cqo) > 0 FROM CharacterQuestObjectiveEntity cqo WHERE cqo.characterId = :characterId AND cqo.objectiveId = :objectiveId AND cqo.completed = true")
     boolean isObjectiveCompleted(UUID characterId, String objectiveId);
 
     /**
-     * Посчитать выполненные цели квеста.
+     * РџРѕСЃС‡РёС‚Р°С‚СЊ РІС‹РїРѕР»РЅРµРЅРЅС‹Рµ С†РµР»Рё РєРІРµСЃС‚Р°.
      */
     @Query("SELECT COUNT(cqo) FROM CharacterQuestObjectiveEntity cqo WHERE cqo.characterId = :characterId AND cqo.questId = :questId AND cqo.completed = true")
     long countCompletedObjectivesByQuest(UUID characterId, String questId);

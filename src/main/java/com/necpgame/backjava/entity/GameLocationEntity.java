@@ -10,10 +10,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 /**
- * GameLocationEntity - игровая локация (уровень, район, место).
+ * GameLocationEntity - РёРіСЂРѕРІР°СЏ Р»РѕРєР°С†РёСЏ (СѓСЂРѕРІРµРЅСЊ, СЂР°Р№РѕРЅ, РјРµСЃС‚Рѕ).
  * 
- * Справочник всех локаций в игре с полным описанием.
- * Источник: API-SWAGGER/api/v1/locations/locations.yaml (LocationDetails schema)
+ * РЎРїСЂР°РІРѕС‡РЅРёРє РІСЃРµС… Р»РѕРєР°С†РёР№ РІ РёРіСЂРµ СЃ РїРѕР»РЅС‹Рј РѕРїРёСЃР°РЅРёРµРј.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/locations/locations.yaml (LocationDetails schema)
  */
 @Entity
 @Table(name = "game_locations", indexes = {

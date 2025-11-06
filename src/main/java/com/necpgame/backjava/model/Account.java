@@ -63,11 +63,11 @@ public class Account {
   }
 
   /**
-   * Уникальный идентификатор аккаунта
+   * РЈРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ Р°РєРєР°СѓРЅС‚Р°
    * @return id
    */
   @NotNull @Valid 
-  @Schema(name = "id", example = "550e8400-e29b-41d4-a716-446655440000", description = "Уникальный идентификатор аккаунта", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "id", example = "550e8400-e29b-41d4-a716-446655440000", description = "РЈРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ Р°РєРєР°СѓРЅС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("id")
   public UUID getId() {
     return id;
@@ -83,11 +83,11 @@ public class Account {
   }
 
   /**
-   * Email адрес
+   * Email Р°РґСЂРµСЃ
    * @return email
    */
   @NotNull @jakarta.validation.constraints.Email 
-  @Schema(name = "email", example = "player@example.com", description = "Email адрес", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "email", example = "player@example.com", description = "Email Р°РґСЂРµСЃ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("email")
   public String getEmail() {
     return email;
@@ -103,11 +103,11 @@ public class Account {
   }
 
   /**
-   * Логин пользователя
+   * Р›РѕРіРёРЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
    * @return username
    */
   @NotNull 
-  @Schema(name = "username", example = "player123", description = "Логин пользователя", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "username", example = "player123", description = "Р›РѕРіРёРЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("username")
   public String getUsername() {
     return username;
@@ -123,11 +123,11 @@ public class Account {
   }
 
   /**
-   * Дата создания аккаунта
+   * Р”Р°С‚Р° СЃРѕР·РґР°РЅРёСЏ Р°РєРєР°СѓРЅС‚Р°
    * @return createdAt
    */
   @NotNull @Valid 
-  @Schema(name = "created_at", example = "2025-01-27T12:00Z", description = "Дата создания аккаунта", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "created_at", example = "2025-01-27T12:00Z", description = "Р”Р°С‚Р° СЃРѕР·РґР°РЅРёСЏ Р°РєРєР°СѓРЅС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("created_at")
   public OffsetDateTime getCreatedAt() {
     return createdAt;
@@ -143,11 +143,11 @@ public class Account {
   }
 
   /**
-   * Дата последнего входа
+   * Р”Р°С‚Р° РїРѕСЃР»РµРґРЅРµРіРѕ РІС…РѕРґР°
    * @return lastLogin
    */
   @Valid 
-  @Schema(name = "last_login", example = "2025-01-27T12:00Z", description = "Дата последнего входа", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "last_login", example = "2025-01-27T12:00Z", description = "Р”Р°С‚Р° РїРѕСЃР»РµРґРЅРµРіРѕ РІС…РѕРґР°", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("last_login")
   public JsonNullable<OffsetDateTime> getLastLogin() {
     return lastLogin;
@@ -163,11 +163,11 @@ public class Account {
   }
 
   /**
-   * Активен ли аккаунт
+   * РђРєС‚РёРІРµРЅ Р»Рё Р°РєРєР°СѓРЅС‚
    * @return isActive
    */
   @NotNull 
-  @Schema(name = "is_active", example = "true", description = "Активен ли аккаунт", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "is_active", example = "true", description = "РђРєС‚РёРІРµРЅ Р»Рё Р°РєРєР°СѓРЅС‚", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("is_active")
   public Boolean getIsActive() {
     return isActive;

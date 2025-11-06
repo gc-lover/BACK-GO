@@ -51,11 +51,11 @@ public class LoginResponse {
   }
 
   /**
-   * JWT токен для аутентификации
+   * JWT С‚РѕРєРµРЅ РґР»СЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёРё
    * @return token
    */
   @NotNull 
-  @Schema(name = "token", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...", description = "JWT токен для аутентификации", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "token", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...", description = "JWT С‚РѕРєРµРЅ РґР»СЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("token")
   public String getToken() {
     return token;
@@ -71,11 +71,11 @@ public class LoginResponse {
   }
 
   /**
-   * Идентификатор аккаунта
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ Р°РєРєР°СѓРЅС‚Р°
    * @return accountId
    */
   @NotNull @Valid 
-  @Schema(name = "account_id", example = "550e8400-e29b-41d4-a716-446655440000", description = "Идентификатор аккаунта", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "account_id", example = "550e8400-e29b-41d4-a716-446655440000", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ Р°РєРєР°СѓРЅС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("account_id")
   public UUID getAccountId() {
     return accountId;
@@ -91,11 +91,11 @@ public class LoginResponse {
   }
 
   /**
-   * Дата истечения токена
+   * Р”Р°С‚Р° РёСЃС‚РµС‡РµРЅРёСЏ С‚РѕРєРµРЅР°
    * @return expiresAt
    */
   @NotNull @Valid 
-  @Schema(name = "expires_at", example = "2025-01-27T20:00Z", description = "Дата истечения токена", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "expires_at", example = "2025-01-27T20:00Z", description = "Р”Р°С‚Р° РёСЃС‚РµС‡РµРЅРёСЏ С‚РѕРєРµРЅР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("expires_at")
   public OffsetDateTime getExpiresAt() {
     return expiresAt;

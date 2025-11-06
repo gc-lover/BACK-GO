@@ -21,17 +21,17 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Запрос на расчет потери человечности
+ * Р—Р°РїСЂРѕСЃ РЅР° СЂР°СЃС‡РµС‚ РїРѕС‚РµСЂРё С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё
  */
 
-@Schema(name = "CalculateLossRequest", description = "Запрос на расчет потери человечности")
+@Schema(name = "CalculateLossRequest", description = "Р—Р°РїСЂРѕСЃ РЅР° СЂР°СЃС‡РµС‚ РїРѕС‚РµСЂРё С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class CalculateLossRequest {
 
   private UUID implantId;
 
   /**
-   * Тип импланта
+   * РўРёРї РёРјРїР»Р°РЅС‚Р°
    */
   public enum ImplantTypeEnum {
     COMBAT("combat"),
@@ -74,7 +74,7 @@ public class CalculateLossRequest {
   private ImplantTypeEnum implantType;
 
   /**
-   * Качество импланта
+   * РљР°С‡РµСЃС‚РІРѕ РёРјРїР»Р°РЅС‚Р°
    */
   public enum QualityEnum {
     COMMON("common"),
@@ -140,11 +140,11 @@ public class CalculateLossRequest {
   }
 
   /**
-   * Идентификатор импланта
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРјРїР»Р°РЅС‚Р°
    * @return implantId
    */
   @NotNull @Valid 
-  @Schema(name = "implant_id", description = "Идентификатор импланта", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "implant_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РёРјРїР»Р°РЅС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("implant_id")
   public UUID getImplantId() {
     return implantId;
@@ -160,11 +160,11 @@ public class CalculateLossRequest {
   }
 
   /**
-   * Тип импланта
+   * РўРёРї РёРјРїР»Р°РЅС‚Р°
    * @return implantType
    */
   @NotNull 
-  @Schema(name = "implant_type", description = "Тип импланта", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "implant_type", description = "РўРёРї РёРјРїР»Р°РЅС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("implant_type")
   public ImplantTypeEnum getImplantType() {
     return implantType;
@@ -180,11 +180,11 @@ public class CalculateLossRequest {
   }
 
   /**
-   * Качество импланта
+   * РљР°С‡РµСЃС‚РІРѕ РёРјРїР»Р°РЅС‚Р°
    * @return quality
    */
   
-  @Schema(name = "quality", description = "Качество импланта", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "quality", description = "РљР°С‡РµСЃС‚РІРѕ РёРјРїР»Р°РЅС‚Р°", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("quality")
   public JsonNullable<QualityEnum> getQuality() {
     return quality;
@@ -200,11 +200,11 @@ public class CalculateLossRequest {
   }
 
   /**
-   * Установщик импланта (NPC или игрок)
+   * РЈСЃС‚Р°РЅРѕРІС‰РёРє РёРјРїР»Р°РЅС‚Р° (NPC РёР»Рё РёРіСЂРѕРє)
    * @return installer
    */
   
-  @Schema(name = "installer", description = "Установщик импланта (NPC или игрок)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "installer", description = "РЈСЃС‚Р°РЅРѕРІС‰РёРє РёРјРїР»Р°РЅС‚Р° (NPC РёР»Рё РёРіСЂРѕРє)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("installer")
   public JsonNullable<String> getInstaller() {
     return installer;
@@ -220,11 +220,11 @@ public class CalculateLossRequest {
   }
 
   /**
-   * Совместим ли имплант с установленными
+   * РЎРѕРІРјРµСЃС‚РёРј Р»Рё РёРјРїР»Р°РЅС‚ СЃ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹РјРё
    * @return compatibility
    */
   
-  @Schema(name = "compatibility", description = "Совместим ли имплант с установленными", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "compatibility", description = "РЎРѕРІРјРµСЃС‚РёРј Р»Рё РёРјРїР»Р°РЅС‚ СЃ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹РјРё", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("compatibility")
   public JsonNullable<Boolean> getCompatibility() {
     return compatibility;
@@ -240,12 +240,12 @@ public class CalculateLossRequest {
   }
 
   /**
-   * Интенсивность использования импланта
+   * РРЅС‚РµРЅСЃРёРІРЅРѕСЃС‚СЊ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РёРјРїР»Р°РЅС‚Р°
    * minimum: 0
    * @return intensity
    */
   @DecimalMin(value = "0") 
-  @Schema(name = "intensity", description = "Интенсивность использования импланта", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "intensity", description = "РРЅС‚РµРЅСЃРёРІРЅРѕСЃС‚СЊ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РёРјРїР»Р°РЅС‚Р°", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("intensity")
   public JsonNullable<@DecimalMin(value = "0") Float> getIntensity() {
     return intensity;

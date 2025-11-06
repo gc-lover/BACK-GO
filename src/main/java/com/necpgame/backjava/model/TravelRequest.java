@@ -29,7 +29,7 @@ public class TravelRequest {
   private String targetLocationId;
 
   /**
-   * Метод перемещения: - walk: пешком (расходует энергию и время) - fast_travel: быстрое перемещение (мгновенное, требует открытой локации) - vehicle: на транспорте (быстрее пешком, расходует топливо) 
+   * РњРµС‚РѕРґ РїРµСЂРµРјРµС‰РµРЅРёСЏ: - walk: РїРµС€РєРѕРј (СЂР°СЃС…РѕРґСѓРµС‚ СЌРЅРµСЂРіРёСЋ Рё РІСЂРµРјСЏ) - fast_travel: Р±С‹СЃС‚СЂРѕРµ РїРµСЂРµРјРµС‰РµРЅРёРµ (РјРіРЅРѕРІРµРЅРЅРѕРµ, С‚СЂРµР±СѓРµС‚ РѕС‚РєСЂС‹С‚РѕР№ Р»РѕРєР°С†РёРё) - vehicle: РЅР° С‚СЂР°РЅСЃРїРѕСЂС‚Рµ (Р±С‹СЃС‚СЂРµРµ РїРµС€РєРѕРј, СЂР°СЃС…РѕРґСѓРµС‚ С‚РѕРїР»РёРІРѕ) 
    */
   public enum TravelMethodEnum {
     WALK("walk"),
@@ -85,11 +85,11 @@ public class TravelRequest {
   }
 
   /**
-   * ID персонажа
+   * ID РїРµСЂСЃРѕРЅР°Р¶Р°
    * @return characterId
    */
   @NotNull @Valid 
-  @Schema(name = "characterId", example = "550e8400-e29b-41d4-a716-446655440000", description = "ID персонажа", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "characterId", example = "550e8400-e29b-41d4-a716-446655440000", description = "ID РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("characterId")
   public UUID getCharacterId() {
     return characterId;
@@ -105,11 +105,11 @@ public class TravelRequest {
   }
 
   /**
-   * ID целевой локации
+   * ID С†РµР»РµРІРѕР№ Р»РѕРєР°С†РёРё
    * @return targetLocationId
    */
   @NotNull 
-  @Schema(name = "targetLocationId", example = "watson_kabuki", description = "ID целевой локации", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "targetLocationId", example = "watson_kabuki", description = "ID С†РµР»РµРІРѕР№ Р»РѕРєР°С†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("targetLocationId")
   public String getTargetLocationId() {
     return targetLocationId;
@@ -125,11 +125,11 @@ public class TravelRequest {
   }
 
   /**
-   * Метод перемещения: - walk: пешком (расходует энергию и время) - fast_travel: быстрое перемещение (мгновенное, требует открытой локации) - vehicle: на транспорте (быстрее пешком, расходует топливо) 
+   * РњРµС‚РѕРґ РїРµСЂРµРјРµС‰РµРЅРёСЏ: - walk: РїРµС€РєРѕРј (СЂР°СЃС…РѕРґСѓРµС‚ СЌРЅРµСЂРіРёСЋ Рё РІСЂРµРјСЏ) - fast_travel: Р±С‹СЃС‚СЂРѕРµ РїРµСЂРµРјРµС‰РµРЅРёРµ (РјРіРЅРѕРІРµРЅРЅРѕРµ, С‚СЂРµР±СѓРµС‚ РѕС‚РєСЂС‹С‚РѕР№ Р»РѕРєР°С†РёРё) - vehicle: РЅР° С‚СЂР°РЅСЃРїРѕСЂС‚Рµ (Р±С‹СЃС‚СЂРµРµ РїРµС€РєРѕРј, СЂР°СЃС…РѕРґСѓРµС‚ С‚РѕРїР»РёРІРѕ) 
    * @return travelMethod
    */
   
-  @Schema(name = "travelMethod", example = "walk", description = "Метод перемещения: - walk: пешком (расходует энергию и время) - fast_travel: быстрое перемещение (мгновенное, требует открытой локации) - vehicle: на транспорте (быстрее пешком, расходует топливо) ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "travelMethod", example = "walk", description = "РњРµС‚РѕРґ РїРµСЂРµРјРµС‰РµРЅРёСЏ: - walk: РїРµС€РєРѕРј (СЂР°СЃС…РѕРґСѓРµС‚ СЌРЅРµСЂРіРёСЋ Рё РІСЂРµРјСЏ) - fast_travel: Р±С‹СЃС‚СЂРѕРµ РїРµСЂРµРјРµС‰РµРЅРёРµ (РјРіРЅРѕРІРµРЅРЅРѕРµ, С‚СЂРµР±СѓРµС‚ РѕС‚РєСЂС‹С‚РѕР№ Р»РѕРєР°С†РёРё) - vehicle: РЅР° С‚СЂР°РЅСЃРїРѕСЂС‚Рµ (Р±С‹СЃС‚СЂРµРµ РїРµС€РєРѕРј, СЂР°СЃС…РѕРґСѓРµС‚ С‚РѕРїР»РёРІРѕ) ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("travelMethod")
   public TravelMethodEnum getTravelMethod() {
     return travelMethod;

@@ -17,10 +17,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Информация о лимите имплантов
+ * РРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р»РёРјРёС‚Рµ РёРјРїР»Р°РЅС‚РѕРІ
  */
 
-@Schema(name = "ImplantLimitInfo", description = "Информация о лимите имплантов")
+@Schema(name = "ImplantLimitInfo", description = "РРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р»РёРјРёС‚Рµ РёРјРїР»Р°РЅС‚РѕРІ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class ImplantLimitInfo {
 
@@ -58,12 +58,12 @@ public class ImplantLimitInfo {
   }
 
   /**
-   * Базовый лимит
+   * Р‘Р°Р·РѕРІС‹Р№ Р»РёРјРёС‚
    * minimum: 0
    * @return baseLimit
    */
   @NotNull @Min(value = 0) 
-  @Schema(name = "base_limit", description = "Базовый лимит", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "base_limit", description = "Р‘Р°Р·РѕРІС‹Р№ Р»РёРјРёС‚", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("base_limit")
   public Integer getBaseLimit() {
     return baseLimit;
@@ -99,12 +99,12 @@ public class ImplantLimitInfo {
   }
 
   /**
-   * Штраф от человечности
+   * РЁС‚СЂР°С„ РѕС‚ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё
    * maximum: 0
    * @return humanityPenalty
    */
   @Max(value = 0) 
-  @Schema(name = "humanity_penalty", description = "Штраф от человечности", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "humanity_penalty", description = "РЁС‚СЂР°С„ РѕС‚ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚Рё", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("humanity_penalty")
   public @Nullable Integer getHumanityPenalty() {
     return humanityPenalty;
@@ -120,12 +120,12 @@ public class ImplantLimitInfo {
   }
 
   /**
-   * Текущий лимит
+   * РўРµРєСѓС‰РёР№ Р»РёРјРёС‚
    * minimum: 0
    * @return currentLimit
    */
   @NotNull @Min(value = 0) 
-  @Schema(name = "current_limit", description = "Текущий лимит", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "current_limit", description = "РўРµРєСѓС‰РёР№ Р»РёРјРёС‚", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("current_limit")
   public Integer getCurrentLimit() {
     return currentLimit;
@@ -141,12 +141,12 @@ public class ImplantLimitInfo {
   }
 
   /**
-   * Использовано
+   * РСЃРїРѕР»СЊР·РѕРІР°РЅРѕ
    * minimum: 0
    * @return used
    */
   @NotNull @Min(value = 0) 
-  @Schema(name = "used", description = "Использовано", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "used", description = "РСЃРїРѕР»СЊР·РѕРІР°РЅРѕ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("used")
   public Integer getUsed() {
     return used;
@@ -162,12 +162,12 @@ public class ImplantLimitInfo {
   }
 
   /**
-   * Доступно
+   * Р”РѕСЃС‚СѓРїРЅРѕ
    * minimum: 0
    * @return available
    */
   @NotNull @Min(value = 0) 
-  @Schema(name = "available", description = "Доступно", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "available", description = "Р”РѕСЃС‚СѓРїРЅРѕ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("available")
   public Integer getAvailable() {
     return available;
@@ -183,11 +183,11 @@ public class ImplantLimitInfo {
   }
 
   /**
-   * Можно ли временно превысить
+   * РњРѕР¶РЅРѕ Р»Рё РІСЂРµРјРµРЅРЅРѕ РїСЂРµРІС‹СЃРёС‚СЊ
    * @return canExceedTemporarily
    */
   
-  @Schema(name = "can_exceed_temporarily", description = "Можно ли временно превысить", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "can_exceed_temporarily", description = "РњРѕР¶РЅРѕ Р»Рё РІСЂРµРјРµРЅРЅРѕ РїСЂРµРІС‹СЃРёС‚СЊ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("can_exceed_temporarily")
   public @Nullable Boolean getCanExceedTemporarily() {
     return canExceedTemporarily;

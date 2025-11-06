@@ -15,9 +15,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Реализация сервиса для управления системой киберпсихоза.
+ * Р РµР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІРёСЃР° РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ СЃРёСЃС‚РµРјРѕР№ РєРёР±РµСЂРїСЃРёС…РѕР·Р°.
  * 
- * Источник: API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
  */
 @Slf4j
 @Service
@@ -30,7 +30,7 @@ public class CyberpsychosisServiceImpl implements CyberpsychosisService {
     private final CharacterActiveSymptomRepository activeSymptomRepository;
     private final CyberpsychosisTreatmentRepository treatmentRepository;
     
-    // ===== Управление человечностью =====
+    // ===== РЈРїСЂР°РІР»РµРЅРёРµ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚СЊСЋ =====
     
     @Override
     @Transactional(readOnly = true)
@@ -53,7 +53,7 @@ public class CyberpsychosisServiceImpl implements CyberpsychosisService {
     public HumanityLossCalculation calculateHumanityLoss(UUID playerId, CalculateLossRequest request) {
         log.info("Calculating humanity loss for player: {}", playerId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -62,11 +62,11 @@ public class CyberpsychosisServiceImpl implements CyberpsychosisService {
     public HumanityUpdateResult applyHumanityLoss(UUID playerId, ApplyLossRequest request) {
         log.info("Applying humanity loss for player: {}", playerId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
-    // ===== Стадии киберпсихоза =====
+    // ===== РЎС‚Р°РґРёРё РєРёР±РµСЂРїСЃРёС…РѕР·Р° =====
     
     @Override
     @Transactional(readOnly = true)
@@ -94,7 +94,7 @@ public class CyberpsychosisServiceImpl implements CyberpsychosisService {
     public List<Symptom> getSymptoms(UUID playerId) {
         log.info("Getting symptoms for player: {}", playerId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return new ArrayList<>();
     }
     
@@ -103,18 +103,18 @@ public class CyberpsychosisServiceImpl implements CyberpsychosisService {
     public StageInfo getStageInfo(String stageId) {
         log.info("Getting stage info: {}", stageId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
-    // ===== Прогрессия киберпсихоза =====
+    // ===== РџСЂРѕРіСЂРµСЃСЃРёСЏ РєРёР±РµСЂРїСЃРёС…РѕР·Р° =====
     
     @Override
     @Transactional(readOnly = true)
     public ProgressionInfo getProgression(UUID playerId) {
         log.info("Getting progression for player: {}", playerId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -123,7 +123,7 @@ public class CyberpsychosisServiceImpl implements CyberpsychosisService {
     public ProgressionCalculation calculateProgression(UUID playerId, CalculateProgressionRequest request) {
         log.info("Calculating progression for player: {}", playerId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -132,11 +132,11 @@ public class CyberpsychosisServiceImpl implements CyberpsychosisService {
     public ProgressionTriggerResult triggerProgression(UUID playerId, TriggerProgressionRequest request) {
         log.info("Triggering progression for player: {}", playerId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
-    // ===== Последствия киберпсихоза =====
+    // ===== РџРѕСЃР»РµРґСЃС‚РІРёСЏ РєРёР±РµСЂРїСЃРёС…РѕР·Р° =====
     
     @Override
     @Transactional(readOnly = true)
@@ -155,7 +155,7 @@ public class CyberpsychosisServiceImpl implements CyberpsychosisService {
     public StatPenalties getStatPenalties(UUID playerId) {
         log.info("Getting stat penalties for player: {}", playerId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return new StatPenalties();
     }
     
@@ -164,19 +164,19 @@ public class CyberpsychosisServiceImpl implements CyberpsychosisService {
     public SocialEffects getSocialEffects(UUID playerId) {
         log.info("Getting social effects for player: {}", playerId);
         
-        // TODO: Реализовать получение социальных эффектов
+        // TODO: Р РµР°Р»РёР·РѕРІР°С‚СЊ РїРѕР»СѓС‡РµРЅРёРµ СЃРѕС†РёР°Р»СЊРЅС‹С… СЌС„С„РµРєС‚РѕРІ
         
         return new SocialEffects();
     }
     
-    // ===== Управление киберпсихозом =====
+    // ===== РЈРїСЂР°РІР»РµРЅРёРµ РєРёР±РµСЂРїСЃРёС…РѕР·РѕРј =====
     
     @Override
     @Transactional
     public PreventionResult applyPrevention(UUID playerId, ApplyPreventionRequest request) {
         log.info("Applying prevention for player: {}", playerId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -185,7 +185,7 @@ public class CyberpsychosisServiceImpl implements CyberpsychosisService {
     public TreatmentResult applyTreatment(UUID playerId, ApplyTreatmentRequest request) {
         log.info("Applying treatment for player: {}", playerId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -194,7 +194,7 @@ public class CyberpsychosisServiceImpl implements CyberpsychosisService {
     public GetTreatments200Response getTreatments(UUID playerId) {
         log.info("Getting treatments for player: {}", playerId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -203,7 +203,7 @@ public class CyberpsychosisServiceImpl implements CyberpsychosisService {
     public SymptomManagementResult applySymptomManagement(UUID playerId, ApplySymptomManagementRequest request) {
         log.info("Applying symptom management for player: {}", playerId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -212,7 +212,7 @@ public class CyberpsychosisServiceImpl implements CyberpsychosisService {
     public AdaptationInfo getAdaptation(UUID playerId) {
         log.info("Getting adaptation info for player: {}", playerId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -221,7 +221,7 @@ public class CyberpsychosisServiceImpl implements CyberpsychosisService {
     public ImplantRemovalResult removeImplant(UUID playerId, RemoveImplantRequest request) {
         log.info("Removing implant for player: {}, implantId: {}", playerId, request.getImplantId());
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -230,7 +230,7 @@ public class CyberpsychosisServiceImpl implements CyberpsychosisService {
     public DetoxificationResult performDetoxification(UUID playerId, DetoxificationRequest request) {
         log.info("Performing detoxification for player: {}", playerId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -239,7 +239,7 @@ public class CyberpsychosisServiceImpl implements CyberpsychosisService {
     public TreatmentCosts getTreatmentCosts(UUID playerId, String treatmentType) {
         log.info("Getting treatment costs for player: {}, type: {}", playerId, treatmentType);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     
@@ -248,7 +248,7 @@ public class CyberpsychosisServiceImpl implements CyberpsychosisService {
     public SocialSupportResult applySocialSupport(UUID playerId, ApplySocialSupportRequest request) {
         log.info("Applying social support for player: {}", playerId);
         
-        // TODO: Полная реализация
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ
         return null;
     }
     

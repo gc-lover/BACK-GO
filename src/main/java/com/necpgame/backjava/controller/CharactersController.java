@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 /**
- * REST Controller для работы с персонажами
- * Реализует CharactersApi интерфейс - все Spring MVC аннотации определены там
+ * REST Controller РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РїРµСЂСЃРѕРЅР°Р¶Р°РјРё
+ * Р РµР°Р»РёР·СѓРµС‚ CharactersApi РёРЅС‚РµСЂС„РµР№СЃ - РІСЃРµ Spring MVC Р°РЅРЅРѕС‚Р°С†РёРё РѕРїСЂРµРґРµР»РµРЅС‹ С‚Р°Рј
  */
 @Slf4j
 @RestController
@@ -22,7 +22,7 @@ public class CharactersController implements CharactersApi {
     private final CharactersService charactersService;
     
     /**
-     * GET /characters - Список персонажей игрока
+     * GET /characters - РЎРїРёСЃРѕРє РїРµСЂСЃРѕРЅР°Р¶РµР№ РёРіСЂРѕРєР°
      */
     @Override
     public ResponseEntity<ListCharacters200Response> listCharacters() {
@@ -32,7 +32,7 @@ public class CharactersController implements CharactersApi {
     }
     
     /**
-     * POST /characters - Создать нового персонажа
+     * POST /characters - РЎРѕР·РґР°С‚СЊ РЅРѕРІРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°
      */
     @Override
     public ResponseEntity<CreateCharacter201Response> createCharacter(CreateCharacterRequest createCharacterRequest) {
@@ -42,7 +42,7 @@ public class CharactersController implements CharactersApi {
     }
     
     /**
-     * DELETE /characters/{characterId} - Удалить персонажа
+     * DELETE /characters/{characterId} - РЈРґР°Р»РёС‚СЊ РїРµСЂСЃРѕРЅР°Р¶Р°
      */
     @Override
     public ResponseEntity<DeleteCharacter200Response> deleteCharacter(UUID characterId) {
@@ -52,7 +52,7 @@ public class CharactersController implements CharactersApi {
     }
     
     /**
-     * GET /characters/classes - Список доступных классов персонажей
+     * GET /characters/classes - РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РєР»Р°СЃСЃРѕРІ РїРµСЂСЃРѕРЅР°Р¶РµР№
      */
     @Override
     public ResponseEntity<GetCharacterClasses200Response> getCharacterClasses() {
@@ -62,7 +62,7 @@ public class CharactersController implements CharactersApi {
     }
     
     /**
-     * GET /characters/origins - Список доступных происхождений персонажей
+     * GET /characters/origins - РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёР№ РїРµСЂСЃРѕРЅР°Р¶РµР№
      */
     @Override
     public ResponseEntity<GetCharacterOrigins200Response> getCharacterOrigins() {

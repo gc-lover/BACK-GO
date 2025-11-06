@@ -10,10 +10,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 /**
- * JPA Entity для опций диалога NPC (справочник).
+ * JPA Entity РґР»СЏ РѕРїС†РёР№ РґРёР°Р»РѕРіР° NPC (СЃРїСЂР°РІРѕС‡РЅРёРє).
  * 
- * Связанная таблица: npc_dialogue_options
- * Источник: API-SWAGGER/api/v1/npcs/npcs.yaml
+ * РЎРІСЏР·Р°РЅРЅР°СЏ С‚Р°Р±Р»РёС†Р°: npc_dialogue_options
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/npcs/npcs.yaml
  */
 @Data
 @NoArgsConstructor

@@ -7,9 +7,9 @@ import jakarta.validation.constraints.*;
 import java.util.Objects;
 
 /**
- * GameActiveQuest - активный квест
+ * GameActiveQuest - Р°РєС‚РёРІРЅС‹Р№ РєРІРµСЃС‚
  */
-@Schema(description = "Активный квест")
+@Schema(description = "РђРєС‚РёРІРЅС‹Р№ РєРІРµСЃС‚")
 public class GameActiveQuest {
 
     @JsonProperty("questId")
@@ -18,7 +18,7 @@ public class GameActiveQuest {
     @JsonProperty("progress")
     private Integer progress;
 
-    @Schema(description = "ID квеста")
+    @Schema(description = "ID РєРІРµСЃС‚Р°")
     public String getQuestId() {
         return questId;
     }
@@ -27,7 +27,7 @@ public class GameActiveQuest {
         this.questId = questId;
     }
 
-    @Schema(description = "Прогресс квеста в процентах")
+    @Schema(description = "РџСЂРѕРіСЂРµСЃСЃ РєРІРµСЃС‚Р° РІ РїСЂРѕС†РµРЅС‚Р°С…")
     @Min(0)
     @Max(100)
     public Integer getProgress() {

@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Entity для таблицы character_classes - классы персонажей (справочник)
- * Соответствует CharacterClass DTO из OpenAPI спецификации
+ * Entity РґР»СЏ С‚Р°Р±Р»РёС†С‹ character_classes - РєР»Р°СЃСЃС‹ РїРµСЂСЃРѕРЅР°Р¶РµР№ (СЃРїСЂР°РІРѕС‡РЅРёРє)
+ * РЎРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ CharacterClass DTO РёР· OpenAPI СЃРїРµС†РёС„РёРєР°С†РёРё
  */
 @Data
 @Entity

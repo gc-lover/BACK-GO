@@ -10,10 +10,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 /**
- * VendorEntity - торговец (NPC продавец).
+ * VendorEntity - С‚РѕСЂРіРѕРІРµС† (NPC РїСЂРѕРґР°РІРµС†).
  * 
- * Справочник всех торговцев в игре с информацией о специализации и ассортименте.
- * Источник: API-SWAGGER/api/v1/trading/trading.yaml (Vendor schema)
+ * РЎРїСЂР°РІРѕС‡РЅРёРє РІСЃРµС… С‚РѕСЂРіРѕРІС†РµРІ РІ РёРіСЂРµ СЃ РёРЅС„РѕСЂРјР°С†РёРµР№ Рѕ СЃРїРµС†РёР°Р»РёР·Р°С†РёРё Рё Р°СЃСЃРѕСЂС‚РёРјРµРЅС‚Рµ.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/trading/trading.yaml (Vendor schema)
  */
 @Entity
 @Table(name = "vendors", indexes = {

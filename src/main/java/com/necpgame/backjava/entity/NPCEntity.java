@@ -10,9 +10,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 /**
- * NPCEntity - NPC персонаж в игре.
+ * NPCEntity - NPC РїРµСЂСЃРѕРЅР°Р¶ РІ РёРіСЂРµ.
  * 
- * Хранит информацию о NPC (торговцы, квестодатели, обычные жители).
+ * РҐСЂР°РЅРёС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ NPC (С‚РѕСЂРіРѕРІС†С‹, РєРІРµСЃС‚РѕРґР°С‚РµР»Рё, РѕР±С‹С‡РЅС‹Рµ Р¶РёС‚РµР»Рё).
  */
 @Entity
 @Table(name = "npcs", indexes = {
@@ -60,7 +60,7 @@ public class NPCEntity {
     private LocalDateTime updatedAt;
 
     /**
-     * Тип NPC
+     * РўРёРї NPC
      */
     public enum NPCType {
         TRADER,

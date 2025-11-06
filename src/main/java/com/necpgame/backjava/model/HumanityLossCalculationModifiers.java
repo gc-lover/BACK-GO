@@ -17,10 +17,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Модификаторы потери (тип, качество, установщик, совместимость, интенсивность)
+ * РњРѕРґРёС„РёРєР°С‚РѕСЂС‹ РїРѕС‚РµСЂРё (С‚РёРї, РєР°С‡РµСЃС‚РІРѕ, СѓСЃС‚Р°РЅРѕРІС‰РёРє, СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚СЊ, РёРЅС‚РµРЅСЃРёРІРЅРѕСЃС‚СЊ)
  */
 
-@Schema(name = "HumanityLossCalculation_modifiers", description = "Модификаторы потери (тип, качество, установщик, совместимость, интенсивность)")
+@Schema(name = "HumanityLossCalculation_modifiers", description = "РњРѕРґРёС„РёРєР°С‚РѕСЂС‹ РїРѕС‚РµСЂРё (С‚РёРї, РєР°С‡РµСЃС‚РІРѕ, СѓСЃС‚Р°РЅРѕРІС‰РёРє, СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚СЊ, РёРЅС‚РµРЅСЃРёРІРЅРѕСЃС‚СЊ)")
 @JsonTypeName("HumanityLossCalculation_modifiers")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class HumanityLossCalculationModifiers {

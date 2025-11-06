@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * JPA Entity для активных симптомов киберпсихоза персонажа.
+ * JPA Entity РґР»СЏ Р°РєС‚РёРІРЅС‹С… СЃРёРјРїС‚РѕРјРѕРІ РєРёР±РµСЂРїСЃРёС…РѕР·Р° РїРµСЂСЃРѕРЅР°Р¶Р°.
  * 
- * Связанная таблица: character_active_symptoms
- * Источник: API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
+ * РЎРІСЏР·Р°РЅРЅР°СЏ С‚Р°Р±Р»РёС†Р°: character_active_symptoms
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
  */
 @Data
 @NoArgsConstructor

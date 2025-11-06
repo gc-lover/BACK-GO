@@ -20,10 +20,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Результат управления симптомами. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Управление симптомами 
+ * Р РµР·СѓР»СЊС‚Р°С‚ СѓРїСЂР°РІР»РµРЅРёСЏ СЃРёРјРїС‚РѕРјР°РјРё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; РЈРїСЂР°РІР»РµРЅРёРµ СЃРёРјРїС‚РѕРјР°РјРё 
  */
 
-@Schema(name = "SymptomManagementResult", description = "Результат управления симптомами. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Управление симптомами ")
+@Schema(name = "SymptomManagementResult", description = "Р РµР·СѓР»СЊС‚Р°С‚ СѓРїСЂР°РІР»РµРЅРёСЏ СЃРёРјРїС‚РѕРјР°РјРё. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> РЈРїСЂР°РІР»РµРЅРёРµ СЃРёРјРїС‚РѕРјР°РјРё ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class SymptomManagementResult {
 
@@ -64,11 +64,11 @@ public class SymptomManagementResult {
   }
 
   /**
-   * Идентификаторы затронутых симптомов
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂС‹ Р·Р°С‚СЂРѕРЅСѓС‚С‹С… СЃРёРјРїС‚РѕРјРѕРІ
    * @return symptomsAffected
    */
   @NotNull @Valid 
-  @Schema(name = "symptoms_affected", description = "Идентификаторы затронутых симптомов", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "symptoms_affected", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂС‹ Р·Р°С‚СЂРѕРЅСѓС‚С‹С… СЃРёРјРїС‚РѕРјРѕРІ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("symptoms_affected")
   public List<UUID> getSymptomsAffected() {
     return symptomsAffected;
@@ -84,13 +84,13 @@ public class SymptomManagementResult {
   }
 
   /**
-   * Эффективность управления симптомами (0-100%)
+   * Р­С„С„РµРєС‚РёРІРЅРѕСЃС‚СЊ СѓРїСЂР°РІР»РµРЅРёСЏ СЃРёРјРїС‚РѕРјР°РјРё (0-100%)
    * minimum: 0
    * maximum: 100
    * @return effectiveness
    */
   @NotNull @DecimalMin(value = "0") @DecimalMax(value = "100") 
-  @Schema(name = "effectiveness", description = "Эффективность управления симптомами (0-100%)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "effectiveness", description = "Р­С„С„РµРєС‚РёРІРЅРѕСЃС‚СЊ СѓРїСЂР°РІР»РµРЅРёСЏ СЃРёРјРїС‚РѕРјР°РјРё (0-100%)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("effectiveness")
   public Float getEffectiveness() {
     return effectiveness;
@@ -106,12 +106,12 @@ public class SymptomManagementResult {
   }
 
   /**
-   * Длительность эффекта в секундах
+   * Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ СЌС„С„РµРєС‚Р° РІ СЃРµРєСѓРЅРґР°С…
    * minimum: 0
    * @return duration
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "duration", description = "Длительность эффекта в секундах", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "duration", description = "Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ СЌС„С„РµРєС‚Р° РІ СЃРµРєСѓРЅРґР°С…", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("duration")
   public Float getDuration() {
     return duration;
@@ -127,12 +127,12 @@ public class SymptomManagementResult {
   }
 
   /**
-   * Стоимость управления симптомами
+   * РЎС‚РѕРёРјРѕСЃС‚СЊ СѓРїСЂР°РІР»РµРЅРёСЏ СЃРёРјРїС‚РѕРјР°РјРё
    * minimum: 0
    * @return cost
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "cost", description = "Стоимость управления симптомами", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "cost", description = "РЎС‚РѕРёРјРѕСЃС‚СЊ СѓРїСЂР°РІР»РµРЅРёСЏ СЃРёРјРїС‚РѕРјР°РјРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("cost")
   public Float getCost() {
     return cost;

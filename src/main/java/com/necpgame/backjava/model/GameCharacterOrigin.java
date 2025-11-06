@@ -29,7 +29,7 @@ import jakarta.annotation.Generated;
 public class GameCharacterOrigin {
 
   /**
-   * Идентификатор происхождения
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёСЏ
    */
   public enum IdEnum {
     STREET_KID("street_kid"),
@@ -101,11 +101,11 @@ public class GameCharacterOrigin {
   }
 
   /**
-   * Идентификатор происхождения
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёСЏ
    * @return id
    */
   @NotNull 
-  @Schema(name = "id", example = "street_kid", description = "Идентификатор происхождения", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "id", example = "street_kid", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("id")
   public IdEnum getId() {
     return id;
@@ -121,11 +121,11 @@ public class GameCharacterOrigin {
   }
 
   /**
-   * Название происхождения
+   * РќР°Р·РІР°РЅРёРµ РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёСЏ
    * @return name
    */
   @NotNull 
-  @Schema(name = "name", example = "Уличный бродяга", description = "Название происхождения", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "name", example = "РЈР»РёС‡РЅС‹Р№ Р±СЂРѕРґСЏРіР°", description = "РќР°Р·РІР°РЅРёРµ РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -141,11 +141,11 @@ public class GameCharacterOrigin {
   }
 
   /**
-   * Описание происхождения
+   * РћРїРёСЃР°РЅРёРµ РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёСЏ
    * @return description
    */
   @NotNull 
-  @Schema(name = "description", example = "Вырос на улицах, выживание любой ценой", description = "Описание происхождения", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "description", example = "Р’С‹СЂРѕСЃ РЅР° СѓР»РёС†Р°С…, РІС‹Р¶РёРІР°РЅРёРµ Р»СЋР±РѕР№ С†РµРЅРѕР№", description = "РћРїРёСЃР°РЅРёРµ РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("description")
   public String getDescription() {
     return description;
@@ -169,11 +169,11 @@ public class GameCharacterOrigin {
   }
 
   /**
-   * Список стартовых навыков
+   * РЎРїРёСЃРѕРє СЃС‚Р°СЂС‚РѕРІС‹С… РЅР°РІС‹РєРѕРІ
    * @return startingSkills
    */
   @NotNull 
-  @Schema(name = "starting_skills", example = "[\"street_combat\",\"survival\"]", description = "Список стартовых навыков", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "starting_skills", example = "[\"street_combat\",\"survival\"]", description = "РЎРїРёСЃРѕРє СЃС‚Р°СЂС‚РѕРІС‹С… РЅР°РІС‹РєРѕРІ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("starting_skills")
   public List<String> getStartingSkills() {
     return startingSkills;
@@ -197,11 +197,11 @@ public class GameCharacterOrigin {
   }
 
   /**
-   * Список доступных фракций (UUID)
+   * РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… С„СЂР°РєС†РёР№ (UUID)
    * @return availableFactions
    */
   @NotNull @Valid 
-  @Schema(name = "available_factions", example = "[\"550e8400-e29b-41d4-a716-446655440000\"]", description = "Список доступных фракций (UUID)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "available_factions", example = "[\"550e8400-e29b-41d4-a716-446655440000\"]", description = "РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… С„СЂР°РєС†РёР№ (UUID)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("available_factions")
   public List<UUID> getAvailableFactions() {
     return availableFactions;

@@ -19,10 +19,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Запрос на расчет прогрессии
+ * Р—Р°РїСЂРѕСЃ РЅР° СЂР°СЃС‡РµС‚ РїСЂРѕРіСЂРµСЃСЃРёРё
  */
 
-@Schema(name = "CalculateProgressionRequest", description = "Запрос на расчет прогрессии")
+@Schema(name = "CalculateProgressionRequest", description = "Р—Р°РїСЂРѕСЃ РЅР° СЂР°СЃС‡РµС‚ РїСЂРѕРіСЂРµСЃСЃРёРё")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class CalculateProgressionRequest {
 
@@ -48,12 +48,12 @@ public class CalculateProgressionRequest {
   }
 
   /**
-   * Период времени для расчета в секундах
+   * РџРµСЂРёРѕРґ РІСЂРµРјРµРЅРё РґР»СЏ СЂР°СЃС‡РµС‚Р° РІ СЃРµРєСѓРЅРґР°С…
    * minimum: 0
    * @return timePeriod
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "time_period", description = "Период времени для расчета в секундах", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "time_period", description = "РџРµСЂРёРѕРґ РІСЂРµРјРµРЅРё РґР»СЏ СЂР°СЃС‡РµС‚Р° РІ СЃРµРєСѓРЅРґР°С…", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("time_period")
   public Float getTimePeriod() {
     return timePeriod;
@@ -77,11 +77,11 @@ public class CalculateProgressionRequest {
   }
 
   /**
-   * События за период (бои, повреждения имплантов, стрессовые события)
+   * РЎРѕР±С‹С‚РёСЏ Р·Р° РїРµСЂРёРѕРґ (Р±РѕРё, РїРѕРІСЂРµР¶РґРµРЅРёСЏ РёРјРїР»Р°РЅС‚РѕРІ, СЃС‚СЂРµСЃСЃРѕРІС‹Рµ СЃРѕР±С‹С‚РёСЏ)
    * @return events
    */
   
-  @Schema(name = "events", description = "События за период (бои, повреждения имплантов, стрессовые события)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "events", description = "РЎРѕР±С‹С‚РёСЏ Р·Р° РїРµСЂРёРѕРґ (Р±РѕРё, РїРѕРІСЂРµР¶РґРµРЅРёСЏ РёРјРїР»Р°РЅС‚РѕРІ, СЃС‚СЂРµСЃСЃРѕРІС‹Рµ СЃРѕР±С‹С‚РёСЏ)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("events")
   public List<Object> getEvents() {
     return events;

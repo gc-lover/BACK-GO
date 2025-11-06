@@ -11,9 +11,9 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * GameReturnResponse - ответ при возврате в игру
+ * GameReturnResponse - РѕС‚РІРµС‚ РїСЂРё РІРѕР·РІСЂР°С‚Рµ РІ РёРіСЂСѓ
  */
-@Schema(description = "Ответ при возврате в игру")
+@Schema(description = "РћС‚РІРµС‚ РїСЂРё РІРѕР·РІСЂР°С‚Рµ РІ РёРіСЂСѓ")
 public class GameReturnResponse {
 
     @JsonProperty("gameSessionId")
@@ -31,7 +31,7 @@ public class GameReturnResponse {
     @JsonProperty("activeQuests")
     private List<GameActiveQuest> activeQuests = new ArrayList<>();
 
-    @Schema(description = "ID игровой сессии", required = true)
+    @Schema(description = "ID РёРіСЂРѕРІРѕР№ СЃРµСЃСЃРёРё", required = true)
     @NotNull
     public UUID getGameSessionId() {
         return gameSessionId;
@@ -41,7 +41,7 @@ public class GameReturnResponse {
         this.gameSessionId = gameSessionId;
     }
 
-    @Schema(description = "ID персонажа", required = true)
+    @Schema(description = "ID РїРµСЂСЃРѕРЅР°Р¶Р°", required = true)
     @NotNull
     public UUID getCharacterId() {
         return characterId;
@@ -51,7 +51,7 @@ public class GameReturnResponse {
         this.characterId = characterId;
     }
 
-    @Schema(description = "Текущая локация", required = true)
+    @Schema(description = "РўРµРєСѓС‰Р°СЏ Р»РѕРєР°С†РёСЏ", required = true)
     @NotNull
     @Valid
     public GameLocation getCurrentLocation() {
@@ -62,7 +62,7 @@ public class GameReturnResponse {
         this.currentLocation = currentLocation;
     }
 
-    @Schema(description = "Состояние персонажа", required = true)
+    @Schema(description = "РЎРѕСЃС‚РѕСЏРЅРёРµ РїРµСЂСЃРѕРЅР°Р¶Р°", required = true)
     @NotNull
     @Valid
     public GameCharacterState getCharacterState() {
@@ -73,7 +73,7 @@ public class GameReturnResponse {
         this.characterState = characterState;
     }
 
-    @Schema(description = "Активные квесты")
+    @Schema(description = "РђРєС‚РёРІРЅС‹Рµ РєРІРµСЃС‚С‹")
     public List<GameActiveQuest> getActiveQuests() {
         return activeQuests;
     }

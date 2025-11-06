@@ -17,8 +17,8 @@ import org.springframework.validation.annotation.Validated;
 public interface AuthService {
 
     /**
-     * POST /auth/login : Вход в систему
-     * Аутентификация игрока по email или username и паролю. Возвращает JWT токен.
+     * POST /auth/login : Р’С…РѕРґ РІ СЃРёСЃС‚РµРјСѓ
+     * РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РёРіСЂРѕРєР° РїРѕ email РёР»Рё username Рё РїР°СЂРѕР»СЋ. Р’РѕР·РІСЂР°С‰Р°РµС‚ JWT С‚РѕРєРµРЅ.
      *
      * @param loginRequest  (required)
      * @return LoginResponse
@@ -26,8 +26,8 @@ public interface AuthService {
     LoginResponse login(LoginRequest loginRequest);
 
     /**
-     * POST /auth/register : Регистрация нового аккаунта
-     * Создает новый аккаунт игрока. Проверяет уникальность email и username.
+     * POST /auth/register : Р РµРіРёСЃС‚СЂР°С†РёСЏ РЅРѕРІРѕРіРѕ Р°РєРєР°СѓРЅС‚Р°
+     * РЎРѕР·РґР°РµС‚ РЅРѕРІС‹Р№ Р°РєРєР°СѓРЅС‚ РёРіСЂРѕРєР°. РџСЂРѕРІРµСЂСЏРµС‚ СѓРЅРёРєР°Р»СЊРЅРѕСЃС‚СЊ email Рё username.
      *
      * @param registerRequest  (required)
      * @return Register201Response

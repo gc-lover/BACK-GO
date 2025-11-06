@@ -43,11 +43,11 @@ public class DeleteCharacter200Response {
   }
 
   /**
-   * Сообщение об успешном удалении
+   * РЎРѕРѕР±С‰РµРЅРёРµ РѕР± СѓСЃРїРµС€РЅРѕРј СѓРґР°Р»РµРЅРёРё
    * @return message
    */
   @NotNull 
-  @Schema(name = "message", example = "Character deleted successfully", description = "Сообщение об успешном удалении", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "message", example = "Character deleted successfully", description = "РЎРѕРѕР±С‰РµРЅРёРµ РѕР± СѓСЃРїРµС€РЅРѕРј СѓРґР°Р»РµРЅРёРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("message")
   public String getMessage() {
     return message;

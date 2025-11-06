@@ -11,10 +11,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * InventoryItemEntity - справочник предметов в игре.
+ * InventoryItemEntity - СЃРїСЂР°РІРѕС‡РЅРёРє РїСЂРµРґРјРµС‚РѕРІ РІ РёРіСЂРµ.
  * 
- * Хранит информацию о всех предметах (оружие, броня, импланты, расходники).
- * Источник: API-SWAGGER/api/v1/inventory/inventory.yaml (InventoryItem schema)
+ * РҐСЂР°РЅРёС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РІСЃРµС… РїСЂРµРґРјРµС‚Р°С… (РѕСЂСѓР¶РёРµ, Р±СЂРѕРЅСЏ, РёРјРїР»Р°РЅС‚С‹, СЂР°СЃС…РѕРґРЅРёРєРё).
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/inventory/inventory.yaml (InventoryItem schema)
  */
 @Entity
 @Table(name = "inventory_items", indexes = {
@@ -98,7 +98,7 @@ public class InventoryItemEntity {
     private LocalDateTime updatedAt;
 
     /**
-     * Категория предмета (из OpenAPI - ItemCategory enum)
+     * РљР°С‚РµРіРѕСЂРёСЏ РїСЂРµРґРјРµС‚Р° (РёР· OpenAPI - ItemCategory enum)
      */
     public enum ItemCategory {
         WEAPONS,
@@ -111,7 +111,7 @@ public class InventoryItemEntity {
     }
 
     /**
-     * Редкость предмета (из OpenAPI)
+     * Р РµРґРєРѕСЃС‚СЊ РїСЂРµРґРјРµС‚Р° (РёР· OpenAPI)
      */
     public enum ItemRarity {
         COMMON,

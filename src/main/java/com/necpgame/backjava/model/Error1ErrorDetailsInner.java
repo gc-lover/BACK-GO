@@ -36,11 +36,11 @@ public class Error1ErrorDetailsInner {
   }
 
   /**
-   * Поле с ошибкой
+   * РџРѕР»Рµ СЃ РѕС€РёР±РєРѕР№
    * @return field
    */
   
-  @Schema(name = "field", description = "Поле с ошибкой", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "field", description = "РџРѕР»Рµ СЃ РѕС€РёР±РєРѕР№", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("field")
   public @Nullable String getField() {
     return field;
@@ -56,11 +56,11 @@ public class Error1ErrorDetailsInner {
   }
 
   /**
-   * Сообщение об ошибке для поля
+   * РЎРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ РґР»СЏ РїРѕР»СЏ
    * @return message
    */
   
-  @Schema(name = "message", description = "Сообщение об ошибке для поля", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "message", description = "РЎРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ РґР»СЏ РїРѕР»СЏ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("message")
   public @Nullable String getMessage() {
     return message;
@@ -76,11 +76,11 @@ public class Error1ErrorDetailsInner {
   }
 
   /**
-   * Код ошибки для поля
+   * РљРѕРґ РѕС€РёР±РєРё РґР»СЏ РїРѕР»СЏ
    * @return code
    */
   
-  @Schema(name = "code", description = "Код ошибки для поля", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "code", description = "РљРѕРґ РѕС€РёР±РєРё РґР»СЏ РїРѕР»СЏ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("code")
   public @Nullable String getCode() {
     return code;

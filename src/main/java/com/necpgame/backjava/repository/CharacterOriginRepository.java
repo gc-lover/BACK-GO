@@ -9,18 +9,18 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Repository для работы с происхождениями персонажей (справочник)
+ * Repository РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёСЏРјРё РїРµСЂСЃРѕРЅР°Р¶РµР№ (СЃРїСЂР°РІРѕС‡РЅРёРє)
  */
 @Repository
 public interface CharacterOriginRepository extends JpaRepository<CharacterOriginEntity, String> {
     
     /**
-     * Найти происхождение по коду
+     * РќР°Р№С‚Рё РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёРµ РїРѕ РєРѕРґСѓ
      */
     Optional<CharacterOriginEntity> findByOriginCode(String originCode);
     
     /**
-     * Получить все происхождения с доступными фракциями
+     * РџРѕР»СѓС‡РёС‚СЊ РІСЃРµ РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёСЏ СЃ РґРѕСЃС‚СѓРїРЅС‹РјРё С„СЂР°РєС†РёСЏРјРё
      */
     @Query("SELECT DISTINCT o FROM CharacterOriginEntity o LEFT JOIN FETCH o.availableFactions")
     List<CharacterOriginEntity> findAllWithFactions();

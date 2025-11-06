@@ -18,10 +18,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Конфликт совместимости
+ * РљРѕРЅС„Р»РёРєС‚ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё
  */
 
-@Schema(name = "Conflict", description = "Конфликт совместимости")
+@Schema(name = "Conflict", description = "РљРѕРЅС„Р»РёРєС‚ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class Conflict {
 
@@ -30,7 +30,7 @@ public class Conflict {
   private String reason;
 
   /**
-   * Серьезность конфликта
+   * РЎРµСЂСЊРµР·РЅРѕСЃС‚СЊ РєРѕРЅС„Р»РёРєС‚Р°
    */
   public enum SeverityEnum {
     LOW("low"),
@@ -89,11 +89,11 @@ public class Conflict {
   }
 
   /**
-   * Идентификатор конфликтующего импланта
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РєРѕРЅС„Р»РёРєС‚СѓСЋС‰РµРіРѕ РёРјРїР»Р°РЅС‚Р°
    * @return implantId
    */
   @NotNull @Valid 
-  @Schema(name = "implant_id", description = "Идентификатор конфликтующего импланта", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "implant_id", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РєРѕРЅС„Р»РёРєС‚СѓСЋС‰РµРіРѕ РёРјРїР»Р°РЅС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("implant_id")
   public UUID getImplantId() {
     return implantId;
@@ -109,11 +109,11 @@ public class Conflict {
   }
 
   /**
-   * Причина конфликта
+   * РџСЂРёС‡РёРЅР° РєРѕРЅС„Р»РёРєС‚Р°
    * @return reason
    */
   @NotNull 
-  @Schema(name = "reason", description = "Причина конфликта", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "reason", description = "РџСЂРёС‡РёРЅР° РєРѕРЅС„Р»РёРєС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("reason")
   public String getReason() {
     return reason;
@@ -129,11 +129,11 @@ public class Conflict {
   }
 
   /**
-   * Серьезность конфликта
+   * РЎРµСЂСЊРµР·РЅРѕСЃС‚СЊ РєРѕРЅС„Р»РёРєС‚Р°
    * @return severity
    */
   @NotNull 
-  @Schema(name = "severity", description = "Серьезность конфликта", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "severity", description = "РЎРµСЂСЊРµР·РЅРѕСЃС‚СЊ РєРѕРЅС„Р»РёРєС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("severity")
   public SeverityEnum getSeverity() {
     return severity;

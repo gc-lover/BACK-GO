@@ -7,8 +7,8 @@ import org.mapstruct.*;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 /**
- * MapStruct маппер для преобразования CharacterEntity <-> GameCharacter DTO
- * Автоматически генерирует код маппинга с поддержкой JsonNullable
+ * MapStruct РјР°РїРїРµСЂ РґР»СЏ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ CharacterEntity <-> GameCharacter DTO
+ * РђРІС‚РѕРјР°С‚РёС‡РµСЃРєРё РіРµРЅРµСЂРёСЂСѓРµС‚ РєРѕРґ РјР°РїРїРёРЅРіР° СЃ РїРѕРґРґРµСЂР¶РєРѕР№ JsonNullable
  */
 @Mapper(
     componentModel = "spring",
@@ -18,7 +18,7 @@ import org.openapitools.jackson.nullable.JsonNullable;
 public interface CharacterMapperMS {
     
     /**
-     * Преобразовать Entity в DTO
+     * РџСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ Entity РІ DTO
      */
     @Mapping(source = "account.id", target = "accountId")
     @Mapping(source = "classCode", target = "propertyClass", qualifiedByName = "stringToClassEnum")
@@ -33,7 +33,7 @@ public interface CharacterMapperMS {
     GameCharacter toDto(CharacterEntity entity);
     
     /**
-     * Преобразовать Entity в краткий DTO (для списка персонажей)
+     * РџСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ Entity РІ РєСЂР°С‚РєРёР№ DTO (РґР»СЏ СЃРїРёСЃРєР° РїРµСЂСЃРѕРЅР°Р¶РµР№)
      */
     @Mapping(source = "classCode", target = "propertyClass")
     @Mapping(source = "faction.name", target = "factionName", qualifiedByName = "stringToJsonNullable")
@@ -41,7 +41,7 @@ public interface CharacterMapperMS {
     @Mapping(source = "lastLogin", target = "lastLogin", qualifiedByName = "dateToJsonNullable")
     GameCharacterSummary toSummaryDto(CharacterEntity entity);
     
-    // === Custom mapping methods для enum конверсий ===
+    // === Custom mapping methods РґР»СЏ enum РєРѕРЅРІРµСЂСЃРёР№ ===
     
     @Named("stringToClassEnum")
     default GameCharacter.PropertyClassEnum stringToClassEnum(String classCode) {

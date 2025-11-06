@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * CharacterStatsEntity - базовые характеристики персонажа (сила, рефлексы, интеллект, техника, хладнокровие).
+ * CharacterStatsEntity - Р±Р°Р·РѕРІС‹Рµ С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё РїРµСЂСЃРѕРЅР°Р¶Р° (СЃРёР»Р°, СЂРµС„Р»РµРєСЃС‹, РёРЅС‚РµР»Р»РµРєС‚, С‚РµС…РЅРёРєР°, С…Р»Р°РґРЅРѕРєСЂРѕРІРёРµ).
  * 
- * Источник: API-SWAGGER/api/v1/characters/status.yaml (CharacterStats schema)
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/characters/status.yaml (CharacterStats schema)
  */
 @Entity
 @Table(name = "character_stats", indexes = {

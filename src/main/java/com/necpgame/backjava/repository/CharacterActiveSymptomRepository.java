@@ -9,27 +9,27 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Repository для управления активными симптомами персонажа.
+ * Repository РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ Р°РєС‚РёРІРЅС‹РјРё СЃРёРјРїС‚РѕРјР°РјРё РїРµСЂСЃРѕРЅР°Р¶Р°.
  * 
- * Источник: API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml
  */
 @Repository
 public interface CharacterActiveSymptomRepository extends JpaRepository<CharacterActiveSymptomEntity, UUID> {
     
     /**
-     * Найти все симптомы персонажа.
+     * РќР°Р№С‚Рё РІСЃРµ СЃРёРјРїС‚РѕРјС‹ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT cas FROM CharacterActiveSymptomEntity cas WHERE cas.character.id = :characterId")
     List<CharacterActiveSymptomEntity> findByCharacterId(UUID characterId);
     
     /**
-     * Найти активные симптомы персонажа.
+     * РќР°Р№С‚Рё Р°РєС‚РёРІРЅС‹Рµ СЃРёРјРїС‚РѕРјС‹ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     @Query("SELECT cas FROM CharacterActiveSymptomEntity cas WHERE cas.character.id = :characterId AND cas.isActive = true")
     List<CharacterActiveSymptomEntity> findActiveByCharacterId(UUID characterId);
     
     /**
-     * Подсчитать количество активных симптомов.
+     * РџРѕРґСЃС‡РёС‚Р°С‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ Р°РєС‚РёРІРЅС‹С… СЃРёРјРїС‚РѕРјРѕРІ.
      */
     @Query("SELECT COUNT(cas) FROM CharacterActiveSymptomEntity cas WHERE cas.character.id = :characterId AND cas.isActive = true")
     Long countActiveByCharacterId(UUID characterId);

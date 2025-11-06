@@ -6,13 +6,13 @@ import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.stereotype.Component;
 
 /**
- * Mapper для преобразования AccountEntity ↔ Account DTO
+ * Mapper РґР»СЏ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ AccountEntity в†” Account DTO
  */
 @Component
 public class AccountMapper {
     
     /**
-     * Преобразовать Entity в DTO
+     * РџСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ Entity РІ DTO
      */
     public Account toDto(AccountEntity entity) {
         if (entity == null) {
@@ -32,7 +32,7 @@ public class AccountMapper {
     }
     
     /**
-     * Преобразовать DTO в Entity (для создания нового аккаунта)
+     * РџСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ DTO РІ Entity (РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РЅРѕРІРѕРіРѕ Р°РєРєР°СѓРЅС‚Р°)
      */
     public AccountEntity toEntity(Account dto) {
         if (dto == null) {

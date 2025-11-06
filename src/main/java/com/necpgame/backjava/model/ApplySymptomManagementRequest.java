@@ -21,15 +21,15 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Запрос на применение управления симптомами
+ * Р—Р°РїСЂРѕСЃ РЅР° РїСЂРёРјРµРЅРµРЅРёРµ СѓРїСЂР°РІР»РµРЅРёСЏ СЃРёРјРїС‚РѕРјР°РјРё
  */
 
-@Schema(name = "ApplySymptomManagementRequest", description = "Запрос на применение управления симптомами")
+@Schema(name = "ApplySymptomManagementRequest", description = "Р—Р°РїСЂРѕСЃ РЅР° РїСЂРёРјРµРЅРµРЅРёРµ СѓРїСЂР°РІР»РµРЅРёСЏ СЃРёРјРїС‚РѕРјР°РјРё")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class ApplySymptomManagementRequest {
 
   /**
-   * Метод управления симптомами
+   * РњРµС‚РѕРґ СѓРїСЂР°РІР»РµРЅРёСЏ СЃРёРјРїС‚РѕРјР°РјРё
    */
   public enum MethodEnum {
     MEDICATION("medication"),
@@ -87,11 +87,11 @@ public class ApplySymptomManagementRequest {
   }
 
   /**
-   * Метод управления симптомами
+   * РњРµС‚РѕРґ СѓРїСЂР°РІР»РµРЅРёСЏ СЃРёРјРїС‚РѕРјР°РјРё
    * @return method
    */
   @NotNull 
-  @Schema(name = "method", description = "Метод управления симптомами", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "method", description = "РњРµС‚РѕРґ СѓРїСЂР°РІР»РµРЅРёСЏ СЃРёРјРїС‚РѕРјР°РјРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("method")
   public MethodEnum getMethod() {
     return method;
@@ -115,11 +115,11 @@ public class ApplySymptomManagementRequest {
   }
 
   /**
-   * Идентификаторы симптомов для управления
+   * РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂС‹ СЃРёРјРїС‚РѕРјРѕРІ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ
    * @return symptomIds
    */
   @Valid 
-  @Schema(name = "symptom_ids", description = "Идентификаторы симптомов для управления", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "symptom_ids", description = "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂС‹ СЃРёРјРїС‚РѕРјРѕРІ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("symptom_ids")
   public List<UUID> getSymptomIds() {
     return symptomIds;

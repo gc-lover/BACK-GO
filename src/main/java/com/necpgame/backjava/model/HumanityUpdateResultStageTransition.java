@@ -20,10 +20,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Переход между стадиями (если произошел)
+ * РџРµСЂРµС…РѕРґ РјРµР¶РґСѓ СЃС‚Р°РґРёСЏРјРё (РµСЃР»Рё РїСЂРѕРёР·РѕС€РµР»)
  */
 
-@Schema(name = "HumanityUpdateResult_stage_transition", description = "Переход между стадиями (если произошел)")
+@Schema(name = "HumanityUpdateResult_stage_transition", description = "РџРµСЂРµС…РѕРґ РјРµР¶РґСѓ СЃС‚Р°РґРёСЏРјРё (РµСЃР»Рё РїСЂРѕРёР·РѕС€РµР»)")
 @JsonTypeName("HumanityUpdateResult_stage_transition")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class HumanityUpdateResultStageTransition {

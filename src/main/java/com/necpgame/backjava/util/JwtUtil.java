@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * Утилита для работы с JWT токенами
+ * РЈС‚РёР»РёС‚Р° РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ JWT С‚РѕРєРµРЅР°РјРё
  */
 @Slf4j
 @Component
@@ -27,7 +27,7 @@ public class JwtUtil {
     private long expiration;
     
     /**
-     * Генерация JWT токена
+     * Р“РµРЅРµСЂР°С†РёСЏ JWT С‚РѕРєРµРЅР°
      */
     public String generateToken(UUID accountId, String email) {
         Date now = new Date();
@@ -45,7 +45,7 @@ public class JwtUtil {
     }
     
     /**
-     * Извлечение accountId из токена
+     * РР·РІР»РµС‡РµРЅРёРµ accountId РёР· С‚РѕРєРµРЅР°
      */
     public UUID getAccountIdFromToken(String token) {
         Claims claims = getClaimsFromToken(token);
@@ -53,7 +53,7 @@ public class JwtUtil {
     }
     
     /**
-     * Извлечение Claims из токена
+     * РР·РІР»РµС‡РµРЅРёРµ Claims РёР· С‚РѕРєРµРЅР°
      */
     private Claims getClaimsFromToken(String token) {
         SecretKey key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
@@ -65,7 +65,7 @@ public class JwtUtil {
     }
     
     /**
-     * Валидация токена
+     * Р’Р°Р»РёРґР°С†РёСЏ С‚РѕРєРµРЅР°
      */
     public boolean validateToken(String token) {
         try {

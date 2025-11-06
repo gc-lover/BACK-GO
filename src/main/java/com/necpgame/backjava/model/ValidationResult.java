@@ -22,10 +22,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Результат валидации установки импланта. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Ограничения имплантов 
+ * Р РµР·СѓР»СЊС‚Р°С‚ РІР°Р»РёРґР°С†РёРё СѓСЃС‚Р°РЅРѕРІРєРё РёРјРїР»Р°РЅС‚Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; РћРіСЂР°РЅРёС‡РµРЅРёСЏ РёРјРїР»Р°РЅС‚РѕРІ 
  */
 
-@Schema(name = "ValidationResult", description = "Результат валидации установки импланта. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Ограничения имплантов ")
+@Schema(name = "ValidationResult", description = "Р РµР·СѓР»СЊС‚Р°С‚ РІР°Р»РёРґР°С†РёРё СѓСЃС‚Р°РЅРѕРІРєРё РёРјРїР»Р°РЅС‚Р°. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> РћРіСЂР°РЅРёС‡РµРЅРёСЏ РёРјРїР»Р°РЅС‚РѕРІ ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class ValidationResult {
 
@@ -69,11 +69,11 @@ public class ValidationResult {
   }
 
   /**
-   * Можно ли установить имплант
+   * РњРѕР¶РЅРѕ Р»Рё СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РёРјРїР»Р°РЅС‚
    * @return canInstall
    */
   @NotNull 
-  @Schema(name = "can_install", description = "Можно ли установить имплант", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "can_install", description = "РњРѕР¶РЅРѕ Р»Рё СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РёРјРїР»Р°РЅС‚", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("can_install")
   public Boolean getCanInstall() {
     return canInstall;
@@ -97,11 +97,11 @@ public class ValidationResult {
   }
 
   /**
-   * Причины отказа (если can_install=false)
+   * РџСЂРёС‡РёРЅС‹ РѕС‚РєР°Р·Р° (РµСЃР»Рё can_install=false)
    * @return reasons
    */
   @Valid 
-  @Schema(name = "reasons", description = "Причины отказа (если can_install=false)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "reasons", description = "РџСЂРёС‡РёРЅС‹ РѕС‚РєР°Р·Р° (РµСЃР»Рё can_install=false)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("reasons")
   public List<@Valid Reason> getReasons() {
     return reasons;
@@ -125,11 +125,11 @@ public class ValidationResult {
   }
 
   /**
-   * Предупреждения
+   * РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ
    * @return warnings
    */
   @Valid 
-  @Schema(name = "warnings", description = "Предупреждения", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "warnings", description = "РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("warnings")
   public List<@Valid Warning> getWarnings() {
     return warnings;
@@ -153,11 +153,11 @@ public class ValidationResult {
   }
 
   /**
-   * Ошибки валидации
+   * РћС€РёР±РєРё РІР°Р»РёРґР°С†РёРё
    * @return errors
    */
   @Valid 
-  @Schema(name = "errors", description = "Ошибки валидации", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "errors", description = "РћС€РёР±РєРё РІР°Р»РёРґР°С†РёРё", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("errors")
   public List<@Valid Error> getErrors() {
     return errors;
@@ -173,11 +173,11 @@ public class ValidationResult {
   }
 
   /**
-   * Доступен ли слот для установки
+   * Р”РѕСЃС‚СѓРїРµРЅ Р»Рё СЃР»РѕС‚ РґР»СЏ СѓСЃС‚Р°РЅРѕРІРєРё
    * @return slotAvailable
    */
   @NotNull 
-  @Schema(name = "slot_available", description = "Доступен ли слот для установки", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "slot_available", description = "Р”РѕСЃС‚СѓРїРµРЅ Р»Рё СЃР»РѕС‚ РґР»СЏ СѓСЃС‚Р°РЅРѕРІРєРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("slot_available")
   public Boolean getSlotAvailable() {
     return slotAvailable;
@@ -193,11 +193,11 @@ public class ValidationResult {
   }
 
   /**
-   * Совместим ли имплант с установленными
+   * РЎРѕРІРјРµСЃС‚РёРј Р»Рё РёРјРїР»Р°РЅС‚ СЃ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹РјРё
    * @return compatibilityOk
    */
   @NotNull 
-  @Schema(name = "compatibility_ok", description = "Совместим ли имплант с установленными", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "compatibility_ok", description = "РЎРѕРІРјРµСЃС‚РёРј Р»Рё РёРјРїР»Р°РЅС‚ СЃ СѓСЃС‚Р°РЅРѕРІР»РµРЅРЅС‹РјРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("compatibility_ok")
   public Boolean getCompatibilityOk() {
     return compatibilityOk;
@@ -213,11 +213,11 @@ public class ValidationResult {
   }
 
   /**
-   * Не превышен ли лимит имплантов
+   * РќРµ РїСЂРµРІС‹С€РµРЅ Р»Рё Р»РёРјРёС‚ РёРјРїР»Р°РЅС‚РѕРІ
    * @return limitOk
    */
   @NotNull 
-  @Schema(name = "limit_ok", description = "Не превышен ли лимит имплантов", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "limit_ok", description = "РќРµ РїСЂРµРІС‹С€РµРЅ Р»Рё Р»РёРјРёС‚ РёРјРїР»Р°РЅС‚РѕРІ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("limit_ok")
   public Boolean getLimitOk() {
     return limitOk;
@@ -233,11 +233,11 @@ public class ValidationResult {
   }
 
   /**
-   * Достаточно ли энергии для установки
+   * Р”РѕСЃС‚Р°С‚РѕС‡РЅРѕ Р»Рё СЌРЅРµСЂРіРёРё РґР»СЏ СѓСЃС‚Р°РЅРѕРІРєРё
    * @return energyOk
    */
   @NotNull 
-  @Schema(name = "energy_ok", description = "Достаточно ли энергии для установки", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "energy_ok", description = "Р”РѕСЃС‚Р°С‚РѕС‡РЅРѕ Р»Рё СЌРЅРµСЂРіРёРё РґР»СЏ СѓСЃС‚Р°РЅРѕРІРєРё", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("energy_ok")
   public Boolean getEnergyOk() {
     return energyOk;

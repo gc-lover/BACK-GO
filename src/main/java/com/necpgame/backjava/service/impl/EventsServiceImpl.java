@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.UUID;
 
 /**
- * Реализация сервиса для работы со случайными событиями.
+ * Р РµР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІРёСЃР° РґР»СЏ СЂР°Р±РѕС‚С‹ СЃРѕ СЃР»СѓС‡Р°Р№РЅС‹РјРё СЃРѕР±С‹С‚РёСЏРјРё.
  * 
- * Источник: API-SWAGGER/api/v1/events/random-events.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/events/random-events.yaml
  */
 @Slf4j
 @Service
@@ -28,7 +28,7 @@ public class EventsServiceImpl implements EventsService {
     public RandomEvent getRandomEvent(UUID characterId, String locationId, String context) {
         log.info("Getting random event for character: {} (location: {}, context: {})", characterId, locationId, context);
         
-        // TODO: Полная реализация (сгенерировать случайное событие, добавить в активные)
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (СЃРіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ СЃР»СѓС‡Р°Р№РЅРѕРµ СЃРѕР±С‹С‚РёРµ, РґРѕР±Р°РІРёС‚СЊ РІ Р°РєС‚РёРІРЅС‹Рµ)
         return null;
     }
     
@@ -37,7 +37,7 @@ public class EventsServiceImpl implements EventsService {
     public EventResult respondToEvent(String eventId, RespondToEventRequest request) {
         log.info("Responding to event: {} with option: {}", eventId, request.getOptionId());
         
-        // TODO: Полная реализация (обработать ответ, применить награды/штрафы, завершить событие)
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (РѕР±СЂР°Р±РѕС‚Р°С‚СЊ РѕС‚РІРµС‚, РїСЂРёРјРµРЅРёС‚СЊ РЅР°РіСЂР°РґС‹/С€С‚СЂР°С„С‹, Р·Р°РІРµСЂС€РёС‚СЊ СЃРѕР±С‹С‚РёРµ)
         return null;
     }
     
@@ -46,7 +46,7 @@ public class EventsServiceImpl implements EventsService {
     public GetActiveEvents200Response getActiveEvents(UUID characterId) {
         log.info("Getting active events for character: {}", characterId);
         
-        // TODO: Полная реализация (загрузить активные события персонажа)
+        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (Р·Р°РіСЂСѓР·РёС‚СЊ Р°РєС‚РёРІРЅС‹Рµ СЃРѕР±С‹С‚РёСЏ РїРµСЂСЃРѕРЅР°Р¶Р°)
         return null;
     }
 }

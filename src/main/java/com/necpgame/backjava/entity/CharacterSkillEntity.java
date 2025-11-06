@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * CharacterSkillEntity - навыки персонажа с прогрессом.
+ * CharacterSkillEntity - РЅР°РІС‹РєРё РїРµСЂСЃРѕРЅР°Р¶Р° СЃ РїСЂРѕРіСЂРµСЃСЃРѕРј.
  * 
- * Отслеживает уровень и опыт навыков для каждого персонажа.
- * Источник: API-SWAGGER/api/v1/characters/status.yaml (Skill schema)
+ * РћС‚СЃР»РµР¶РёРІР°РµС‚ СѓСЂРѕРІРµРЅСЊ Рё РѕРїС‹С‚ РЅР°РІС‹РєРѕРІ РґР»СЏ РєР°Р¶РґРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°.
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/characters/status.yaml (Skill schema)
  */
 @Entity
 @Table(name = "character_skills", indexes = {

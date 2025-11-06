@@ -17,15 +17,15 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Запрос на триггер прогрессии
+ * Р—Р°РїСЂРѕСЃ РЅР° С‚СЂРёРіРіРµСЂ РїСЂРѕРіСЂРµСЃСЃРёРё
  */
 
-@Schema(name = "TriggerProgressionRequest", description = "Запрос на триггер прогрессии")
+@Schema(name = "TriggerProgressionRequest", description = "Р—Р°РїСЂРѕСЃ РЅР° С‚СЂРёРіРіРµСЂ РїСЂРѕРіСЂРµСЃСЃРёРё")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class TriggerProgressionRequest {
 
   /**
-   * Тип триггера
+   * РўРёРї С‚СЂРёРіРіРµСЂР°
    */
   public enum TriggerTypeEnum {
     CRITICAL_MOMENT("critical_moment"),
@@ -83,11 +83,11 @@ public class TriggerProgressionRequest {
   }
 
   /**
-   * Тип триггера
+   * РўРёРї С‚СЂРёРіРіРµСЂР°
    * @return triggerType
    */
   @NotNull 
-  @Schema(name = "trigger_type", description = "Тип триггера", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "trigger_type", description = "РўРёРї С‚СЂРёРіРіРµСЂР°", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("trigger_type")
   public TriggerTypeEnum getTriggerType() {
     return triggerType;
@@ -103,13 +103,13 @@ public class TriggerProgressionRequest {
   }
 
   /**
-   * Интенсивность триггера (0-100%)
+   * РРЅС‚РµРЅСЃРёРІРЅРѕСЃС‚СЊ С‚СЂРёРіРіРµСЂР° (0-100%)
    * minimum: 0
    * maximum: 100
    * @return intensity
    */
   @NotNull @DecimalMin(value = "0") @DecimalMax(value = "100") 
-  @Schema(name = "intensity", description = "Интенсивность триггера (0-100%)", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "intensity", description = "РРЅС‚РµРЅСЃРёРІРЅРѕСЃС‚СЊ С‚СЂРёРіРіРµСЂР° (0-100%)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("intensity")
   public Float getIntensity() {
     return intensity;

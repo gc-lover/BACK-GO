@@ -8,9 +8,9 @@ import jakarta.validation.constraints.*;
 import java.util.Objects;
 
 /**
- * GameQuest - квест в игре
+ * GameQuest - РєРІРµСЃС‚ РІ РёРіСЂРµ
  */
-@Schema(description = "Квест в игре")
+@Schema(description = "РљРІРµСЃС‚ РІ РёРіСЂРµ")
 public class GameQuest {
 
     @JsonProperty("id")
@@ -35,7 +35,7 @@ public class GameQuest {
     private GameQuestRewards rewards;
 
     /**
-     * Тип квеста
+     * РўРёРї РєРІРµСЃС‚Р°
      */
     public enum TypeEnum {
         MAIN("main"),
@@ -58,7 +58,7 @@ public class GameQuest {
         }
     }
 
-    @Schema(description = "Уникальный идентификатор квеста", required = true)
+    @Schema(description = "РЈРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РєРІРµСЃС‚Р°", required = true)
     @NotNull
     public String getId() {
         return id;
@@ -68,7 +68,7 @@ public class GameQuest {
         this.id = id;
     }
 
-    @Schema(description = "Название квеста", required = true)
+    @Schema(description = "РќР°Р·РІР°РЅРёРµ РєРІРµСЃС‚Р°", required = true)
     @NotNull
     @Size(min = 1, max = 200)
     public String getName() {
@@ -79,7 +79,7 @@ public class GameQuest {
         this.name = name;
     }
 
-    @Schema(description = "Описание квеста", required = true)
+    @Schema(description = "РћРїРёСЃР°РЅРёРµ РєРІРµСЃС‚Р°", required = true)
     @NotNull
     @Size(min = 10, max = 2000)
     public String getDescription() {
@@ -90,7 +90,7 @@ public class GameQuest {
         this.description = description;
     }
 
-    @Schema(description = "Тип квеста")
+    @Schema(description = "РўРёРї РєРІРµСЃС‚Р°")
     public TypeEnum getType() {
         return type;
     }
@@ -99,7 +99,7 @@ public class GameQuest {
         this.type = type;
     }
 
-    @Schema(description = "Рекомендуемый уровень для квеста", required = true)
+    @Schema(description = "Р РµРєРѕРјРµРЅРґСѓРµРјС‹Р№ СѓСЂРѕРІРµРЅСЊ РґР»СЏ РєРІРµСЃС‚Р°", required = true)
     @NotNull
     @Min(1)
     public Integer getLevel() {
@@ -110,7 +110,7 @@ public class GameQuest {
         this.level = level;
     }
 
-    @Schema(description = "ID NPC, дающего квест", required = true)
+    @Schema(description = "ID NPC, РґР°СЋС‰РµРіРѕ РєРІРµСЃС‚", required = true)
     @NotNull
     public String getGiverNpcId() {
         return giverNpcId;
@@ -120,7 +120,7 @@ public class GameQuest {
         this.giverNpcId = giverNpcId;
     }
 
-    @Schema(description = "Награды за квест", required = true)
+    @Schema(description = "РќР°РіСЂР°РґС‹ Р·Р° РєРІРµСЃС‚", required = true)
     @NotNull
     @Valid
     public GameQuestRewards getRewards() {

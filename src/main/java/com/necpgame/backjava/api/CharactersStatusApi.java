@@ -49,17 +49,17 @@ public interface CharactersStatusApi {
 
     String PATH_GET_CHARACTER_SKILLS = "/characters/{characterId}/skills";
     /**
-     * GET /characters/{characterId}/skills : Навыки персонажа
+     * GET /characters/{characterId}/skills : РќР°РІС‹РєРё РїРµСЂСЃРѕРЅР°Р¶Р°
      *
      * @param characterId  (required)
-     * @return Навыки (status code 200)
+     * @return РќР°РІС‹РєРё (status code 200)
      */
     @Operation(
         operationId = "getCharacterSkills",
-        summary = "Навыки персонажа",
+        summary = "РќР°РІС‹РєРё РїРµСЂСЃРѕРЅР°Р¶Р°",
         tags = { "Characters", "Skills" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Навыки", content = {
+            @ApiResponse(responseCode = "200", description = "РќР°РІС‹РєРё", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = GetCharacterSkills200Response.class))
             })
         },
@@ -91,17 +91,17 @@ public interface CharactersStatusApi {
 
     String PATH_GET_CHARACTER_STATS = "/characters/{characterId}/stats";
     /**
-     * GET /characters/{characterId}/stats : Характеристики персонажа
+     * GET /characters/{characterId}/stats : РҐР°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё РїРµСЂСЃРѕРЅР°Р¶Р°
      *
      * @param characterId  (required)
-     * @return Характеристики (status code 200)
+     * @return РҐР°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё (status code 200)
      */
     @Operation(
         operationId = "getCharacterStats",
-        summary = "Характеристики персонажа",
+        summary = "РҐР°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё РїРµСЂСЃРѕРЅР°Р¶Р°",
         tags = { "Characters", "Stats" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Характеристики", content = {
+            @ApiResponse(responseCode = "200", description = "РҐР°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = CharacterStats.class))
             })
         },
@@ -133,17 +133,17 @@ public interface CharactersStatusApi {
 
     String PATH_GET_CHARACTER_STATUS = "/characters/{characterId}/status";
     /**
-     * GET /characters/{characterId}/status : Текущий статус персонажа
+     * GET /characters/{characterId}/status : РўРµРєСѓС‰РёР№ СЃС‚Р°С‚СѓСЃ РїРµСЂСЃРѕРЅР°Р¶Р°
      *
      * @param characterId  (required)
-     * @return Статус персонажа (status code 200)
+     * @return РЎС‚Р°С‚СѓСЃ РїРµСЂСЃРѕРЅР°Р¶Р° (status code 200)
      */
     @Operation(
         operationId = "getCharacterStatus",
-        summary = "Текущий статус персонажа",
+        summary = "РўРµРєСѓС‰РёР№ СЃС‚Р°С‚СѓСЃ РїРµСЂСЃРѕРЅР°Р¶Р°",
         tags = { "Characters", "Status" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Статус персонажа", content = {
+            @ApiResponse(responseCode = "200", description = "РЎС‚Р°С‚СѓСЃ РїРµСЂСЃРѕРЅР°Р¶Р°", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = CharacterStatus.class))
             })
         },
@@ -175,18 +175,18 @@ public interface CharactersStatusApi {
 
     String PATH_UPDATE_CHARACTER_STATUS = "/characters/{characterId}/status/update";
     /**
-     * POST /characters/{characterId}/status/update : Обновить статус персонажа
+     * POST /characters/{characterId}/status/update : РћР±РЅРѕРІРёС‚СЊ СЃС‚Р°С‚СѓСЃ РїРµСЂСЃРѕРЅР°Р¶Р°
      *
      * @param characterId  (required)
      * @param updateCharacterStatusRequest  (optional)
-     * @return Статус обновлен (status code 200)
+     * @return РЎС‚Р°С‚СѓСЃ РѕР±РЅРѕРІР»РµРЅ (status code 200)
      */
     @Operation(
         operationId = "updateCharacterStatus",
-        summary = "Обновить статус персонажа",
+        summary = "РћР±РЅРѕРІРёС‚СЊ СЃС‚Р°С‚СѓСЃ РїРµСЂСЃРѕРЅР°Р¶Р°",
         tags = { "Characters", "Status" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Статус обновлен", content = {
+            @ApiResponse(responseCode = "200", description = "РЎС‚Р°С‚СѓСЃ РѕР±РЅРѕРІР»РµРЅ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = CharacterStatus.class))
             })
         },

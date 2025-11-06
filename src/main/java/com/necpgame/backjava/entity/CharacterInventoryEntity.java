@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * CharacterInventoryEntity - предметы в инвентаре персонажа.
+ * CharacterInventoryEntity - РїСЂРµРґРјРµС‚С‹ РІ РёРЅРІРµРЅС‚Р°СЂРµ РїРµСЂСЃРѕРЅР°Р¶Р°.
  * 
- * Хранит информацию о предметах в инвентаре каждого персонажа (количество, позиция).
- * Источник: API-SWAGGER/api/v1/inventory/inventory.yaml
+ * РҐСЂР°РЅРёС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РїСЂРµРґРјРµС‚Р°С… РІ РёРЅРІРµРЅС‚Р°СЂРµ РєР°Р¶РґРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р° (РєРѕР»РёС‡РµСЃС‚РІРѕ, РїРѕР·РёС†РёСЏ).
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/inventory/inventory.yaml
  */
 @Entity
 @Table(name = "character_inventory", indexes = {

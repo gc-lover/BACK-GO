@@ -70,7 +70,7 @@ public class DropItem200Response {
    * @return message
    */
   @NotNull 
-  @Schema(name = "message", example = "Предмет успешно выброшен", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "message", example = "РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ РІС‹Р±СЂРѕС€РµРЅ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("message")
   public String getMessage() {
     return message;

@@ -8,18 +8,18 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * GameReturnRequest - запрос на возврат в игру
+ * GameReturnRequest - Р·Р°РїСЂРѕСЃ РЅР° РІРѕР·РІСЂР°С‚ РІ РёРіСЂСѓ
  */
-@Schema(description = "Запрос на возврат в игру")
+@Schema(description = "Р—Р°РїСЂРѕСЃ РЅР° РІРѕР·РІСЂР°С‚ РІ РёРіСЂСѓ")
 public class GameReturnRequest {
 
     @JsonProperty("characterId")
     private UUID characterId;
 
     /**
-     * ID персонажа
+     * ID РїРµСЂСЃРѕРЅР°Р¶Р°
      */
-    @Schema(description = "ID персонажа", example = "550e8400-e29b-41d4-a716-446655440000", required = true)
+    @Schema(description = "ID РїРµСЂСЃРѕРЅР°Р¶Р°", example = "550e8400-e29b-41d4-a716-446655440000", required = true)
     @NotNull
     public UUID getCharacterId() {
         return characterId;

@@ -5,39 +5,39 @@ import com.necpgame.backjava.model.*;
 import java.util.UUID;
 
 /**
- * CombatService - сервис для работы с боевой системой.
+ * CombatService - СЃРµСЂРІРёСЃ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р±РѕРµРІРѕР№ СЃРёСЃС‚РµРјРѕР№.
  * 
- * Сгенерировано на основе: API-SWAGGER/api/v1/combat/combat.yaml
+ * РЎРіРµРЅРµСЂРёСЂРѕРІР°РЅРѕ РЅР° РѕСЃРЅРѕРІРµ: API-SWAGGER/api/v1/combat/combat.yaml
  */
 public interface CombatService {
 
     /**
-     * Начать бой.
+     * РќР°С‡Р°С‚СЊ Р±РѕР№.
      */
     CombatState initiateCombat(InitiateCombatRequest request);
 
     /**
-     * Получить текущее состояние боя.
+     * РџРѕР»СѓС‡РёС‚СЊ С‚РµРєСѓС‰РµРµ СЃРѕСЃС‚РѕСЏРЅРёРµ Р±РѕСЏ.
      */
     CombatState getCombatState(UUID combatId);
 
     /**
-     * Выполнить действие в бою.
+     * Р’С‹РїРѕР»РЅРёС‚СЊ РґРµР№СЃС‚РІРёРµ РІ Р±РѕСЋ.
      */
     CombatState performCombatAction(UUID combatId, PerformCombatActionRequest request);
 
     /**
-     * Получить доступные действия для персонажа.
+     * РџРѕР»СѓС‡РёС‚СЊ РґРѕСЃС‚СѓРїРЅС‹Рµ РґРµР№СЃС‚РІРёСЏ РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
     GetAvailableActions200Response getAvailableActions(UUID combatId, UUID characterId);
 
     /**
-     * Сбежать из боя.
+     * РЎР±РµР¶Р°С‚СЊ РёР· Р±РѕСЏ.
      */
     FleeCombat200Response fleeCombat(UUID combatId, FleeCombatRequest request);
 
     /**
-     * Получить результат завершенного боя.
+     * РџРѕР»СѓС‡РёС‚СЊ СЂРµР·СѓР»СЊС‚Р°С‚ Р·Р°РІРµСЂС€РµРЅРЅРѕРіРѕ Р±РѕСЏ.
      */
     CombatResult getCombatResult(UUID combatId);
 }

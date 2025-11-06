@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.stream.Collectors;
 
 /**
- * Реализация сервиса фракций
+ * Р РµР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІРёСЃР° С„СЂР°РєС†РёР№
  */
 @Slf4j
 @Service
@@ -22,7 +22,7 @@ public class FactionsServiceImpl implements FactionsService {
     private final FactionRepository factionRepository;
     
     /**
-     * Получить список всех фракций (с опциональной фильтрацией по происхождению)
+     * РџРѕР»СѓС‡РёС‚СЊ СЃРїРёСЃРѕРє РІСЃРµС… С„СЂР°РєС†РёР№ (СЃ РѕРїС†РёРѕРЅР°Р»СЊРЅРѕР№ С„РёР»СЊС‚СЂР°С†РёРµР№ РїРѕ РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёСЋ)
      */
     @Override
     @Transactional(readOnly = true)
@@ -36,7 +36,7 @@ public class FactionsServiceImpl implements FactionsService {
                     Faction dto = new Faction();
                     dto.setId(entity.getId());
                     dto.setName(entity.getName());
-                    // Конвертируем Entity.FactionType в DTO.TypeEnum
+                    // РљРѕРЅРІРµСЂС‚РёСЂСѓРµРј Entity.FactionType РІ DTO.TypeEnum
                     if (entity.getType() != null) {
                         String typeName = entity.getType().name(); // corporation, gang, organization
                         dto.setType(Faction.TypeEnum.fromValue(typeName));

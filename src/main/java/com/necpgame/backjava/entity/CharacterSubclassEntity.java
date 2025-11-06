@@ -6,8 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Entity для таблицы character_subclasses - подклассы персонажей (справочник)
- * Связана с CharacterClass через ManyToOne
+ * Entity РґР»СЏ С‚Р°Р±Р»РёС†С‹ character_subclasses - РїРѕРґРєР»Р°СЃСЃС‹ РїРµСЂСЃРѕРЅР°Р¶РµР№ (СЃРїСЂР°РІРѕС‡РЅРёРє)
+ * РЎРІСЏР·Р°РЅР° СЃ CharacterClass С‡РµСЂРµР· ManyToOne
  */
 @Data
 @Entity

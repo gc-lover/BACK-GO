@@ -16,9 +16,9 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Реализация сервиса для работы со статусом и характеристиками персонажа.
+ * Р РµР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІРёСЃР° РґР»СЏ СЂР°Р±РѕС‚С‹ СЃРѕ СЃС‚Р°С‚СѓСЃРѕРј Рё С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєР°РјРё РїРµСЂСЃРѕРЅР°Р¶Р°.
  * 
- * Источник: API-SWAGGER/api/v1/characters/status.yaml
+ * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/characters/status.yaml
  */
 @Slf4j
 @Service
@@ -84,7 +84,7 @@ public class CharactersStatusServiceImpl implements CharactersStatusService {
             Skill skill = new Skill();
             skill.setId(cs.getSkillId());
             
-            // Get skill details from справочник
+            // Get skill details from СЃРїСЂР°РІРѕС‡РЅРёРє
             SkillEntity skillEntity = skillRepository.findById(cs.getSkillId()).orElse(null);
             if (skillEntity != null) {
                 skill.setName(skillEntity.getName());

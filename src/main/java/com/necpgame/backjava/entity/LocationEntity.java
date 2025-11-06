@@ -10,9 +10,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 /**
- * LocationEntity - локация в игре.
+ * LocationEntity - Р»РѕРєР°С†РёСЏ РІ РёРіСЂРµ.
  * 
- * Хранит информацию о локациях (Downtown, Watson и т.д.).
+ * РҐСЂР°РЅРёС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ Р»РѕРєР°С†РёСЏС… (Downtown, Watson Рё С‚.Рґ.).
  */
 @Entity
 @Table(name = "locations", indexes = {
@@ -64,7 +64,7 @@ public class LocationEntity {
     private LocalDateTime updatedAt;
 
     /**
-     * Уровень опасности локации
+     * РЈСЂРѕРІРµРЅСЊ РѕРїР°СЃРЅРѕСЃС‚Рё Р»РѕРєР°С†РёРё
      */
     public enum DangerLevel {
         LOW,
@@ -73,7 +73,7 @@ public class LocationEntity {
     }
 
     /**
-     * Тип локации
+     * РўРёРї Р»РѕРєР°С†РёРё
      */
     public enum LocationType {
         CORPORATE,

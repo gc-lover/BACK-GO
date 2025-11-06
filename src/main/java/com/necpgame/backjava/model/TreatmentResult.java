@@ -21,10 +21,10 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Результат лечения. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Лечение 
+ * Р РµР·СѓР»СЊС‚Р°С‚ Р»РµС‡РµРЅРёСЏ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -&gt; Р›РµС‡РµРЅРёРµ 
  */
 
-@Schema(name = "TreatmentResult", description = "Результат лечения. Источник: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Лечение ")
+@Schema(name = "TreatmentResult", description = "Р РµР·СѓР»СЊС‚Р°С‚ Р»РµС‡РµРЅРёСЏ. РСЃС‚РѕС‡РЅРёРє: .BRAIN/02-gameplay/combat/combat-cyberpsychosis.md -> Р›РµС‡РµРЅРёРµ ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class TreatmentResult {
 
@@ -58,12 +58,12 @@ public class TreatmentResult {
   }
 
   /**
-   * Восстановленная человечность
+   * Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРЅР°СЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚СЊ
    * minimum: 0
    * @return humanityRestored
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "humanity_restored", description = "Восстановленная человечность", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "humanity_restored", description = "Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРЅР°СЏ С‡РµР»РѕРІРµС‡РЅРѕСЃС‚СЊ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("humanity_restored")
   public Float getHumanityRestored() {
     return humanityRestored;
@@ -79,12 +79,12 @@ public class TreatmentResult {
   }
 
   /**
-   * Стоимость лечения
+   * РЎС‚РѕРёРјРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ
    * minimum: 0
    * @return cost
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "cost", description = "Стоимость лечения", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "cost", description = "РЎС‚РѕРёРјРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("cost")
   public Float getCost() {
     return cost;
@@ -100,12 +100,12 @@ public class TreatmentResult {
   }
 
   /**
-   * Длительность лечения в секундах
+   * Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ РІ СЃРµРєСѓРЅРґР°С…
    * minimum: 0
    * @return duration
    */
   @NotNull @DecimalMin(value = "0") 
-  @Schema(name = "duration", description = "Длительность лечения в секундах", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "duration", description = "Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ Р»РµС‡РµРЅРёСЏ РІ СЃРµРєСѓРЅРґР°С…", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("duration")
   public Float getDuration() {
     return duration;
@@ -121,12 +121,12 @@ public class TreatmentResult {
   }
 
   /**
-   * Кулдаун до следующего лечения в секундах
+   * РљСѓР»РґР°СѓРЅ РґРѕ СЃР»РµРґСѓСЋС‰РµРіРѕ Р»РµС‡РµРЅРёСЏ РІ СЃРµРєСѓРЅРґР°С…
    * minimum: 0
    * @return cooldown
    */
   @DecimalMin(value = "0") 
-  @Schema(name = "cooldown", description = "Кулдаун до следующего лечения в секундах", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "cooldown", description = "РљСѓР»РґР°СѓРЅ РґРѕ СЃР»РµРґСѓСЋС‰РµРіРѕ Р»РµС‡РµРЅРёСЏ РІ СЃРµРєСѓРЅРґР°С…", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("cooldown")
   public JsonNullable<@DecimalMin(value = "0") Float> getCooldown() {
     return cooldown;
@@ -150,11 +150,11 @@ public class TreatmentResult {
   }
 
   /**
-   * Ограничения восстановления (например, нельзя полностью восстановить после 25% потери)
+   * РћРіСЂР°РЅРёС‡РµРЅРёСЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ (РЅР°РїСЂРёРјРµСЂ, РЅРµР»СЊР·СЏ РїРѕР»РЅРѕСЃС‚СЊСЋ РІРѕСЃСЃС‚Р°РЅРѕРІРёС‚СЊ РїРѕСЃР»Рµ 25% РїРѕС‚РµСЂРё)
    * @return limitations
    */
   
-  @Schema(name = "limitations", description = "Ограничения восстановления (например, нельзя полностью восстановить после 25% потери)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "limitations", description = "РћРіСЂР°РЅРёС‡РµРЅРёСЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёСЏ (РЅР°РїСЂРёРјРµСЂ, РЅРµР»СЊР·СЏ РїРѕР»РЅРѕСЃС‚СЊСЋ РІРѕСЃСЃС‚Р°РЅРѕРІРёС‚СЊ РїРѕСЃР»Рµ 25% РїРѕС‚РµСЂРё)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("limitations")
   public List<String> getLimitations() {
     return limitations;
