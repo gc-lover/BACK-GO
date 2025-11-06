@@ -5,40 +5,37 @@
  */
 package com.necpgame.backjava.api;
 
+import com.necpgame.backjava.model.BlockPlayerRequest;
 import com.necpgame.backjava.model.CreatePartyRequest;
+import com.necpgame.backjava.model.GetFriends200Response;
 import com.necpgame.backjava.model.InviteToPartyRequest;
 import com.necpgame.backjava.model.JoinPartyRequest;
 import com.necpgame.backjava.model.Party;
 import com.necpgame.backjava.model.PartyDetails;
-import io.swagger.v3.oas.annotations.ExternalDocumentation;
+import com.necpgame.backjava.model.SendFriendRequestRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 @Validated
+@Tag(name = "Friends", description = "Система друзей")
 @Tag(name = "Party", description = "Система групп")
 public interface SocialApi {
 
@@ -46,14 +43,139 @@ public interface SocialApi {
         return Optional.empty();
     }
 
+    String PATH_ACCEPT_FRIEND_REQUEST = "/social/friends/request/{request_id}/accept";
+    @Operation(
+        operationId = "acceptFriendRequest",
+        summary = "Принять запрос в друзья",
+        description = "Принимает запрос, добавляет в friends list",
+        tags = { "Friends" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Запрос принят", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = SocialApi.PATH_ACCEPT_FRIEND_REQUEST,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<Object> acceptFriendRequest(
+        @NotNull @Parameter(name = "request_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("request_id") String requestId
+    ) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    String PATH_BLOCK_PLAYER = "/social/friends/block";
+    @Operation(
+        operationId = "blockPlayer",
+        summary = "Заблокировать игрока",
+        description = "Добавляет игрока в block list. Блокирует сообщения, invites, trade. ",
+        tags = { "Friends" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Игрок заблокирован", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = SocialApi.PATH_BLOCK_PLAYER,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Object> blockPlayer(
+        @Parameter(name = "BlockPlayerRequest", description = "", required = true) @Valid @RequestBody BlockPlayerRequest blockPlayerRequest
+    ) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    String PATH_GET_FRIENDS = "/social/friends";
+    @Operation(
+        operationId = "getFriends",
+        summary = "Получить список друзей",
+        description = "Возвращает список друзей с online статусом",
+        tags = { "Friends" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Список друзей", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = GetFriends200Response.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = SocialApi.PATH_GET_FRIENDS,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<GetFriends200Response> getFriends(
+        @NotNull @Parameter(name = "player_id", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "player_id", required = true) String playerId
+    ) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    String PATH_REMOVE_FRIEND = "/social/friends/{friend_id}/remove";
+    @Operation(
+        operationId = "removeFriend",
+        summary = "Удалить из друзей",
+        description = "Удаляет игрока из списка друзей",
+        tags = { "Friends" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Удален из друзей", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.DELETE,
+        value = SocialApi.PATH_REMOVE_FRIEND,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<Object> removeFriend(
+        @NotNull @Parameter(name = "friend_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("friend_id") String friendId
+    ) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    String PATH_SEND_FRIEND_REQUEST = "/social/friends/request";
+    @Operation(
+        operationId = "sendFriendRequest",
+        summary = "Отправить запрос в друзья",
+        description = "Отправляет запрос на добавление в друзья",
+        tags = { "Friends" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Запрос отправлен", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = SocialApi.PATH_SEND_FRIEND_REQUEST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Object> sendFriendRequest(
+        @Parameter(name = "SendFriendRequestRequest", description = "", required = true) @Valid @RequestBody SendFriendRequestRequest sendFriendRequestRequest
+    ) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
     String PATH_CREATE_PARTY = "/social/party/create";
-    /**
-     * POST /social/party/create : Создать группу
-     * Создает новую группу. Создатель становится лидером. 
-     *
-     * @param createPartyRequest  (required)
-     * @return Группа создана (status code 201)
-     */
     @Operation(
         operationId = "createParty",
         summary = "Создать группу",
@@ -87,18 +209,9 @@ public interface SocialApi {
             }
         });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
     }
 
-
     String PATH_GET_PARTY = "/social/party/{party_id}";
-    /**
-     * GET /social/party/{party_id} : Получить информацию о группе
-     * Возвращает детали группы, участников, настройки
-     *
-     * @param partyId  (required)
-     * @return Информация о группе (status code 200)
-     */
     @Operation(
         operationId = "getParty",
         summary = "Получить информацию о группе",
@@ -131,19 +244,9 @@ public interface SocialApi {
             }
         });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
     }
 
-
     String PATH_INVITE_TO_PARTY = "/social/party/{party_id}/invite";
-    /**
-     * POST /social/party/{party_id}/invite : Пригласить в группу
-     * Отправляет приглашение в группу. Только лидер может приглашать. 
-     *
-     * @param partyId  (required)
-     * @param inviteToPartyRequest  (required)
-     * @return Приглашение отправлено (status code 200)
-     */
     @Operation(
         operationId = "inviteToParty",
         summary = "Пригласить в группу",
@@ -169,19 +272,9 @@ public interface SocialApi {
         @Parameter(name = "InviteToPartyRequest", description = "", required = true) @Valid @RequestBody InviteToPartyRequest inviteToPartyRequest
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
     }
 
-
     String PATH_JOIN_PARTY = "/social/party/{party_id}/join";
-    /**
-     * POST /social/party/{party_id}/join : Присоединиться к группе
-     * Принимает приглашение и присоединяется к группе
-     *
-     * @param partyId  (required)
-     * @param joinPartyRequest  (required)
-     * @return Присоединился к группе (status code 200)
-     */
     @Operation(
         operationId = "joinParty",
         summary = "Присоединиться к группе",
@@ -216,19 +309,9 @@ public interface SocialApi {
             }
         });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
     }
 
-
     String PATH_LEAVE_PARTY = "/social/party/{party_id}/leave";
-    /**
-     * POST /social/party/{party_id}/leave : Покинуть группу
-     * Покидает группу. Если лидер - лидерство передается другому. 
-     *
-     * @param partyId  (required)
-     * @param joinPartyRequest  (required)
-     * @return Покинул группу (status code 200)
-     */
     @Operation(
         operationId = "leaveParty",
         summary = "Покинуть группу",
@@ -254,7 +337,5 @@ public interface SocialApi {
         @Parameter(name = "JoinPartyRequest", description = "", required = true) @Valid @RequestBody JoinPartyRequest joinPartyRequest
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
     }
-
 }

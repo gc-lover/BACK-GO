@@ -7,13 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * REST Controller для системы групп (Party)
- * Implements SocialApi - сгенерирован из party-system.yaml
- */
 @RestController
 @RequiredArgsConstructor
-public class PartyController implements SocialApi {
+public class SocialController implements SocialApi {
 
     private final SocialService socialService;
 
@@ -40,6 +36,31 @@ public class PartyController implements SocialApi {
     @Override
     public ResponseEntity<Object> leaveParty(String partyId, JoinPartyRequest joinPartyRequest) {
         return ResponseEntity.ok(socialService.leaveParty(partyId, joinPartyRequest));
+    }
+
+    @Override
+    public ResponseEntity<Object> acceptFriendRequest(String requestId) {
+        return ResponseEntity.ok(socialService.acceptFriendRequest(requestId));
+    }
+
+    @Override
+    public ResponseEntity<Object> blockPlayer(BlockPlayerRequest blockPlayerRequest) {
+        return ResponseEntity.ok(socialService.blockPlayer(blockPlayerRequest));
+    }
+
+    @Override
+    public ResponseEntity<GetFriends200Response> getFriends(String playerId) {
+        return ResponseEntity.ok(socialService.getFriends(playerId));
+    }
+
+    @Override
+    public ResponseEntity<Object> removeFriend(String friendId) {
+        return ResponseEntity.ok(socialService.removeFriend(friendId));
+    }
+
+    @Override
+    public ResponseEntity<Object> sendFriendRequest(SendFriendRequestRequest sendFriendRequestRequest) {
+        return ResponseEntity.ok(socialService.sendFriendRequest(sendFriendRequestRequest));
     }
 }
 

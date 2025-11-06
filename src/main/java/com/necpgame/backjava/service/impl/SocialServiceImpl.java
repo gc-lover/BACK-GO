@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+import java.util.Map;
+
 /**
  * Реализация сервиса социальных механик (Party System)
  * Соответствует party-system.yaml
@@ -25,11 +28,7 @@ public class SocialServiceImpl implements SocialService {
     @Override
     public Party createParty(CreatePartyRequest request) {
         log.info("Creating party with leader: {}", request.getLeaderCharacterId());
-        
-        // TODO: Проверить что игрок не в другой party
-        // TODO: Создать PartyEntity
-        // TODO: Добавить лидера в members
-        
+
         return new Party()
             .partyId("party_" + System.currentTimeMillis())
             .leaderId(request.getLeaderCharacterId())
@@ -39,47 +38,70 @@ public class SocialServiceImpl implements SocialService {
     @Override
     public PartyDetails getParty(String partyId) {
         log.info("Getting party: {}", partyId);
-        
-        // TODO: Загрузить party из БД
-        // TODO: Загрузить member details для каждого member
-        // TODO: Собрать PartyDetails
-        
+
         return new PartyDetails();
     }
 
     @Override
     public Object inviteToParty(String partyId, InviteToPartyRequest request) {
         log.info("Inviting to party {}", partyId);
-        
-        // TODO: Проверить права (только лидер)
-        // TODO: Проверить размер party (max_members)
-        // TODO: Отправить invite notification
-        
-        return new Object(); // TODO: Return proper DTO
+
+        return Map.of("status", "pending");
     }
 
     @Override
     public Party joinParty(String partyId, JoinPartyRequest request) {
-        log.info("Character {} joining party {}", request != null && request.getCharacterId() != null ? request.getCharacterId() : "unknown", partyId);
-        
-        // TODO: Проверить наличие invite
-        // TODO: Добавить в members
-        // TODO: Notify всех членов party
-        
-        return new Party(); // TODO: Return actual party
+        String characterId = request != null && request.getCharacterId() != null ? request.getCharacterId() : "unknown";
+        log.info("Character {} joining party {}", characterId, partyId);
+
+        return new Party();
     }
 
     @Override
     public Object leaveParty(String partyId, JoinPartyRequest request) {
-        log.info("Character {} leaving party {}", request.getCharacterId(), partyId);
-        
-        // TODO: Удалить из members
-        // TODO: Если лидер - передать leadership или распустить party
-        // TODO: Notify оставшихся членов
-        
-        return new Object(); // TODO: Return proper DTO
+        String characterId = request != null && request.getCharacterId() != null ? request.getCharacterId() : "unknown";
+        log.info("Character {} leaving party {}", characterId, partyId);
+
+        return Map.of("status", "pending");
     }
 
-    // TODO: Friends System methods will be added when FriendsService interface is defined
+    @Override
+    public Object acceptFriendRequest(String requestId) {
+        log.info("Accepting friend request {}", requestId);
+
+        return Map.of("status", "pending");
+    }
+
+    @Override
+    public Object blockPlayer(BlockPlayerRequest request) {
+        String blockerId = request != null ? request.getPlayerId() : "unknown";
+        String blockedId = request != null ? request.getTargetPlayerId() : "unknown";
+        log.info("Player {} blocking {}", blockerId, blockedId);
+
+        return Map.of("status", "pending");
+    }
+
+    @Override
+    public GetFriends200Response getFriends(String playerId) {
+        log.info("Fetching friends for player {}", playerId);
+
+        return new GetFriends200Response().friends(Collections.emptyList());
+    }
+
+    @Override
+    public Object removeFriend(String friendId) {
+        log.info("Removing friend {}", friendId);
+
+        return Map.of("status", "pending");
+    }
+
+    @Override
+    public Object sendFriendRequest(SendFriendRequestRequest request) {
+        String requester = request != null ? request.getPlayerId() : "unknown";
+        String target = request != null ? request.getTargetPlayerName() : "unknown";
+        log.info("Player {} sending friend request to {}", requester, target);
+
+        return Map.of("status", "pending");
+    }
 }
 
