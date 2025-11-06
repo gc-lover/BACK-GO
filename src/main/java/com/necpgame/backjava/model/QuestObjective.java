@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  * QuestObjective
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:35:20.532232100+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:50:05.709666800+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class QuestObjective {
 
   private String id;
@@ -283,4 +283,5 @@ public class QuestObjective {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
 

@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
 
 @Schema(name = "InventoryItem_requirements", description = "Требования для использования/экипировки")
 @JsonTypeName("InventoryItem_requirements")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:44:09.238273+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:50:45.778329200+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class InventoryItemRequirements {
 
   private @Nullable Integer minLevel;
@@ -156,4 +156,5 @@ public class InventoryItemRequirements {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
 

@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("completeQuest_200_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:35:20.532232100+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:50:05.709666800+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class CompleteQuest200Response {
 
   private @Nullable Boolean success;
@@ -132,4 +132,5 @@ public class CompleteQuest200Response {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
 

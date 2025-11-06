@@ -26,7 +26,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("Quest_requirements")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:35:20.532232100+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:50:05.709666800+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class QuestRequirements {
 
   private @Nullable Integer minLevel;
@@ -154,4 +154,5 @@ public class QuestRequirements {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
 

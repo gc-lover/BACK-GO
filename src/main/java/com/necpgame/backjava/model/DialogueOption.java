@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * DialogueOption
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:29:55.974685600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:49:00.930667100+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class DialogueOption {
 
   private String id;
@@ -227,4 +227,5 @@ public class DialogueOption {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
 

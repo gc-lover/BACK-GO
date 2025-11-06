@@ -4,12 +4,12 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.necpgame.backjava.model.QuestRewardsItemsInner;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.necpgame.backjava.model.QuestRewardsItemsInner;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -25,7 +25,7 @@ import jakarta.annotation.Generated;
  * QuestRewards
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:35:20.532232100+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:50:05.709666800+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class QuestRewards {
 
   private Integer experience;
@@ -189,4 +189,5 @@ public class QuestRewards {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
 

@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("interactWithNPC_200_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:29:55.974685600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:49:00.930667100+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class InteractWithNPC200Response {
 
   private @Nullable Boolean success;
@@ -107,4 +107,5 @@ public class InteractWithNPC200Response {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
 

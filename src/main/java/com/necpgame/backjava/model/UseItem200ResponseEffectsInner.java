@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("useItem_200_response_effects_inner")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:44:09.238273+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:50:45.778329200+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class UseItem200ResponseEffectsInner {
 
   /**
@@ -171,4 +171,5 @@ public class UseItem200ResponseEffectsInner {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
 

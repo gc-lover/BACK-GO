@@ -39,6 +39,6 @@ public interface InventoryService {
     /**
      * Выбросить предмет.
      */
-    DropItem200Response dropItem(UUID characterId, String itemId);
+    DropItem200Response dropItem(UUID characterId, String itemId, Integer quantity);
 }
 

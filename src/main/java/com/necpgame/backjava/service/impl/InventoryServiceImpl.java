@@ -56,7 +56,7 @@ public class InventoryServiceImpl implements InventoryService {
     
     @Override
     @Transactional
-    public DropItem200Response dropItem(UUID characterId, String itemId) {
+    public DropItem200Response dropItem(UUID characterId, String itemId, Integer quantity) {
         log.info("Dropping item: {} for character: {}", itemId, characterId);
         return null; // TODO: Полная реализация
     }

@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Категория предмета: - weapons: Оружие (пистолеты, винтовки, ножи) - armor: Броня (голова, тело, руки, ноги) - implants: Импланты (кибернетика) - consumables: Расходники (медикаменты, еда, энергетики) - resources: Ресурсы для крафта - quest_items: Квестовые предметы - misc: Прочее 
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:44:09.238273+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:50:45.778329200+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public enum ItemCategory {
   
   WEAPONS("weapons"),
@@ -63,4 +63,5 @@ public enum ItemCategory {
     throw new IllegalArgumentException("Unexpected value '" + value + "'");
   }
 }
+
 

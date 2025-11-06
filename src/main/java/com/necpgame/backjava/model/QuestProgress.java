@@ -5,14 +5,14 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.necpgame.backjava.model.QuestObjective;
-import com.necpgame.backjava.model.QuestRequirements;
-import com.necpgame.backjava.model.QuestRewards;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.openapitools.jackson.nullable.JsonNullable;
+import com.necpgame.backjava.model.QuestObjective;
+import com.necpgame.backjava.model.QuestRequirements;
+import com.necpgame.backjava.model.QuestRewards;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 import java.util.NoSuchElementException;
@@ -30,7 +30,7 @@ import jakarta.annotation.Generated;
  * QuestProgress
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:35:20.532232100+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:50:05.709666800+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class QuestProgress {
 
   private String id;
@@ -548,4 +548,5 @@ public class QuestProgress {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
 

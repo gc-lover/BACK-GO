@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("unequipItem_200_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:44:09.238273+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:50:45.778329200+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class UnequipItem200Response {
 
   private Boolean success;
@@ -145,4 +145,5 @@ public class UnequipItem200Response {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
 

@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("restAction_request")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:42:07.104404100+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:50:35.859669800+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class RestActionRequest {
 
   private UUID characterId;
@@ -120,4 +120,5 @@ public class RestActionRequest {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
 

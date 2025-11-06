@@ -54,9 +54,9 @@ public class InventoryController implements InventoryInventoryApi {
     }
     
     @Override
-    public ResponseEntity<DropItem200Response> dropItem(UUID characterId, String itemId) {
-        log.info("DELETE /inventory/drop?characterId={}&itemId={}", characterId, itemId);
-        return ResponseEntity.ok(service.dropItem(characterId, itemId));
+    public ResponseEntity<DropItem200Response> dropItem(UUID characterId, String itemId, Integer quantity) {
+        log.info("DELETE /inventory/drop?characterId={}&itemId={}&quantity={}", characterId, itemId, quantity);
+        return ResponseEntity.ok(service.dropItem(characterId, itemId, quantity != null ? quantity : 1));
     }
 }
 
