@@ -102,4 +102,7 @@
     <!-- Party System -->
     <include file="db/changelog/changes/064-create-parties-table.xml"/>
 
+    <!-- Friend System -->
+    <include file="db/changelog/changes/065-create-friendships-table.xml"/>
+
 </databaseChangeLog>

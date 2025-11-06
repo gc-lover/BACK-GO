@@ -1,6 +1,7 @@
 package com.necpgame.backjava.service.impl;
 
 import com.necpgame.backjava.model.*;
+import com.necpgame.backjava.repository.FriendshipRepository;
 import com.necpgame.backjava.repository.PartyRepository;
 import com.necpgame.backjava.service.SocialService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class SocialServiceImpl implements SocialService {
 
     private final PartyRepository partyRepository;
+    private final FriendshipRepository friendshipRepository;
 
     @Override
     public Party createParty(CreatePartyRequest request) {
@@ -77,5 +79,7 @@ public class SocialServiceImpl implements SocialService {
         
         return new Object(); // TODO: Return proper DTO
     }
+
+    // TODO: Friends System methods will be added when FriendsService interface is defined
 }
 
