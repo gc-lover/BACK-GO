@@ -35,12 +35,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import javax.annotation.Generated;
+import jakarta.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T22:14:20.180301500+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 @Validated
@@ -72,7 +72,7 @@ public interface GameplayCombatWeaponsApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = GameplayApi.PATH_GET_META_WEAPONS,
+        value = GameplayCombatWeaponsApi.PATH_GET_META_WEAPONS,
         produces = { "application/json" }
     )
     default ResponseEntity<GetMetaWeapons200Response> getMetaWeapons(
@@ -123,7 +123,7 @@ public interface GameplayCombatWeaponsApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = GameplayApi.PATH_GET_WEAPON,
+        value = GameplayCombatWeaponsApi.PATH_GET_WEAPON,
         produces = { "application/json" }
     )
     default ResponseEntity<WeaponDetails> getWeapon(
@@ -179,7 +179,7 @@ public interface GameplayCombatWeaponsApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = GameplayApi.PATH_GET_WEAPON_MASTERY,
+        value = GameplayCombatWeaponsApi.PATH_GET_WEAPON_MASTERY,
         produces = { "application/json" }
     )
     default ResponseEntity<WeaponMasteryProgress> getWeaponMastery(
@@ -225,7 +225,7 @@ public interface GameplayCombatWeaponsApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = GameplayApi.PATH_GET_WEAPON_MODS,
+        value = GameplayCombatWeaponsApi.PATH_GET_WEAPON_MODS,
         produces = { "application/json" }
     )
     default ResponseEntity<GetWeaponMods200Response> getWeaponMods(
@@ -266,7 +266,7 @@ public interface GameplayCombatWeaponsApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = GameplayApi.PATH_GET_WEAPONS_BY_BRAND,
+        value = GameplayCombatWeaponsApi.PATH_GET_WEAPONS_BY_BRAND,
         produces = { "application/json" }
     )
     default ResponseEntity<GetWeaponsByBrand200Response> getWeaponsByBrand(
@@ -307,7 +307,7 @@ public interface GameplayCombatWeaponsApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = GameplayApi.PATH_GET_WEAPONS_BY_CLASS,
+        value = GameplayCombatWeaponsApi.PATH_GET_WEAPONS_BY_CLASS,
         produces = { "application/json" }
     )
     default ResponseEntity<GetWeaponsByClass200Response> getWeaponsByClass(
@@ -350,7 +350,7 @@ public interface GameplayCombatWeaponsApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = GameplayApi.PATH_GET_WEAPONS_CATALOG,
+        value = GameplayCombatWeaponsApi.PATH_GET_WEAPONS_CATALOG,
         produces = { "application/json" }
     )
     default ResponseEntity<GetWeaponsCatalog200Response> getWeaponsCatalog(
@@ -393,7 +393,7 @@ public interface GameplayCombatWeaponsApi {
     )
     @RequestMapping(
         method = RequestMethod.PUT,
-        value = GameplayApi.PATH_UPDATE_WEAPON_MASTERY,
+        value = GameplayCombatWeaponsApi.PATH_UPDATE_WEAPON_MASTERY,
         produces = { "application/json" },
         consumes = { "application/json" }
     )

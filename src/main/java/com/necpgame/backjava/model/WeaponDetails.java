@@ -8,19 +8,19 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.openapitools.model.WeaponDetailsRequirements;
-import org.openapitools.model.WeaponDetailsSpecialAbilitiesInner;
-import org.openapitools.model.WeaponStats;
+import com.necpgame.backjava.model.WeaponDetailsRequirements;
+import com.necpgame.backjava.model.WeaponDetailsSpecialAbilitiesInner;
+import com.necpgame.backjava.model.WeaponStats;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import java.util.*;
-import javax.annotation.Generated;
+import jakarta.annotation.Generated;
 
 /**
  * WeaponDetails

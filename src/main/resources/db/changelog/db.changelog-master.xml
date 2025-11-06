@@ -82,5 +82,10 @@
     <!-- Random Events System -->
     <include file="db/changelog/changes/053-create-random-events-table.xml"/>
     <include file="db/changelog/changes/054-create-character-active-events-table.xml"/>
+    
+    <!-- Weapons System -->
+    <include file="db/changelog/changes/055-create-weapons-table.xml"/>
+    <include file="db/changelog/changes/056-create-character-weapon-mastery-table.xml"/>
+    <include file="db/changelog/changes/057-create-weapon-mods-table.xml"/>
 
 </databaseChangeLog>
