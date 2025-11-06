@@ -96,4 +96,7 @@
     <!-- Loot System -->
     <include file="db/changelog/changes/062-create-loot-tables.xml"/>
 
+    <!-- Trade System -->
+    <include file="db/changelog/changes/063-create-trade-tables.xml"/>
+
 </databaseChangeLog>
