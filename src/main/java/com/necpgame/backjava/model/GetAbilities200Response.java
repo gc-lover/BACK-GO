@@ -4,7 +4,11 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.necpgame.backjava.model.ErrorError;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import com.necpgame.backjava.model.Ability;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -17,43 +21,42 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Error
+ * GetAbilities200Response
  */
 
+@JsonTypeName("getAbilities_200_response")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T22:49:04.787810800+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
-public class Error {
+public class GetAbilities200Response {
 
-  private ErrorError error;
+  @Valid
+  private List<@Valid Ability> abilities = new ArrayList<>();
 
-  public Error() {
-    super();
+  public GetAbilities200Response abilities(List<@Valid Ability> abilities) {
+    this.abilities = abilities;
+    return this;
   }
 
-  /**
-   * Constructor with only required parameters
-   */
-  public Error(ErrorError error) {
-    this.error = error;
-  }
-
-  public Error error(ErrorError error) {
-    this.error = error;
+  public GetAbilities200Response addAbilitiesItem(Ability abilitiesItem) {
+    if (this.abilities == null) {
+      this.abilities = new ArrayList<>();
+    }
+    this.abilities.add(abilitiesItem);
     return this;
   }
 
   /**
-   * Get error
-   * @return error
+   * Get abilities
+   * @return abilities
    */
-  @NotNull @Valid 
-  @Schema(name = "error", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("error")
-  public ErrorError getError() {
-    return error;
+  @Valid 
+  @Schema(name = "abilities", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("abilities")
+  public List<@Valid Ability> getAbilities() {
+    return abilities;
   }
 
-  public void setError(ErrorError error) {
-    this.error = error;
+  public void setAbilities(List<@Valid Ability> abilities) {
+    this.abilities = abilities;
   }
 
   @Override
@@ -64,20 +67,20 @@ public class Error {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Error error = (Error) o;
-    return Objects.equals(this.error, error.error);
+    GetAbilities200Response getAbilities200Response = (GetAbilities200Response) o;
+    return Objects.equals(this.abilities, getAbilities200Response.abilities);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(error);
+    return Objects.hash(abilities);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Error {\n");
-    sb.append("    error: ").append(toIndentedString(error)).append("\n");
+    sb.append("class GetAbilities200Response {\n");
+    sb.append("    abilities: ").append(toIndentedString(abilities)).append("\n");
     sb.append("}");
     return sb.toString();
   }
