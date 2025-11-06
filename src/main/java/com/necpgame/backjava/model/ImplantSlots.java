@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.necpgame.backjava.model.ImplantSlotsSlotsByType;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -16,67 +17,44 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Ошибка валидации
+ * Слоты имплантов игрока по типам. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -&gt; Ограничения имплантов 
  */
 
-@Schema(name = "Error", description = "Ошибка валидации")
+@Schema(name = "ImplantSlots", description = "Слоты имплантов игрока по типам. Источник: .BRAIN/02-gameplay/combat/combat-implants-limits.md -> Ограничения имплантов ")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
-public class Error {
+public class ImplantSlots {
 
-  private String message;
+  private ImplantSlotsSlotsByType slotsByType;
 
-  private String code;
-
-  public Error() {
+  public ImplantSlots() {
     super();
   }
 
   /**
    * Constructor with only required parameters
    */
-  public Error(String message, String code) {
-    this.message = message;
-    this.code = code;
+  public ImplantSlots(ImplantSlotsSlotsByType slotsByType) {
+    this.slotsByType = slotsByType;
   }
 
-  public Error message(String message) {
-    this.message = message;
+  public ImplantSlots slotsByType(ImplantSlotsSlotsByType slotsByType) {
+    this.slotsByType = slotsByType;
     return this;
   }
 
   /**
-   * Текст ошибки
-   * @return message
+   * Get slotsByType
+   * @return slotsByType
    */
-  @NotNull 
-  @Schema(name = "message", description = "Текст ошибки", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("message")
-  public String getMessage() {
-    return message;
+  @NotNull @Valid 
+  @Schema(name = "slots_by_type", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("slots_by_type")
+  public ImplantSlotsSlotsByType getSlotsByType() {
+    return slotsByType;
   }
 
-  public void setMessage(String message) {
-    this.message = message;
-  }
-
-  public Error code(String code) {
-    this.code = code;
-    return this;
-  }
-
-  /**
-   * Код ошибки
-   * @return code
-   */
-  @NotNull 
-  @Schema(name = "code", description = "Код ошибки", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("code")
-  public String getCode() {
-    return code;
-  }
-
-  public void setCode(String code) {
-    this.code = code;
+  public void setSlotsByType(ImplantSlotsSlotsByType slotsByType) {
+    this.slotsByType = slotsByType;
   }
 
   @Override
@@ -87,22 +65,20 @@ public class Error {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Error error = (Error) o;
-    return Objects.equals(this.message, error.message) &&
-        Objects.equals(this.code, error.code);
+    ImplantSlots implantSlots = (ImplantSlots) o;
+    return Objects.equals(this.slotsByType, implantSlots.slotsByType);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(message, code);
+    return Objects.hash(slotsByType);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Error {\n");
-    sb.append("    message: ").append(toIndentedString(message)).append("\n");
-    sb.append("    code: ").append(toIndentedString(code)).append("\n");
+    sb.append("class ImplantSlots {\n");
+    sb.append("    slotsByType: ").append(toIndentedString(slotsByType)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.necpgame.backjava.model.Error1Error;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -16,67 +18,44 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Ошибка валидации
+ * Error1
  */
 
-@Schema(name = "Error", description = "Ошибка валидации")
+@JsonTypeName("Error_1")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:51:47.912860600+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
-public class Error {
+public class Error1 {
 
-  private String message;
+  private Error1Error error;
 
-  private String code;
-
-  public Error() {
+  public Error1() {
     super();
   }
 
   /**
    * Constructor with only required parameters
    */
-  public Error(String message, String code) {
-    this.message = message;
-    this.code = code;
+  public Error1(Error1Error error) {
+    this.error = error;
   }
 
-  public Error message(String message) {
-    this.message = message;
+  public Error1 error(Error1Error error) {
+    this.error = error;
     return this;
   }
 
   /**
-   * Текст ошибки
-   * @return message
+   * Get error
+   * @return error
    */
-  @NotNull 
-  @Schema(name = "message", description = "Текст ошибки", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("message")
-  public String getMessage() {
-    return message;
+  @NotNull @Valid 
+  @Schema(name = "error", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("error")
+  public Error1Error getError() {
+    return error;
   }
 
-  public void setMessage(String message) {
-    this.message = message;
-  }
-
-  public Error code(String code) {
-    this.code = code;
-    return this;
-  }
-
-  /**
-   * Код ошибки
-   * @return code
-   */
-  @NotNull 
-  @Schema(name = "code", description = "Код ошибки", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("code")
-  public String getCode() {
-    return code;
-  }
-
-  public void setCode(String code) {
-    this.code = code;
+  public void setError(Error1Error error) {
+    this.error = error;
   }
 
   @Override
@@ -87,22 +66,20 @@ public class Error {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Error error = (Error) o;
-    return Objects.equals(this.message, error.message) &&
-        Objects.equals(this.code, error.code);
+    Error1 error1 = (Error1) o;
+    return Objects.equals(this.error, error1.error);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(message, code);
+    return Objects.hash(error);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Error {\n");
-    sb.append("    message: ").append(toIndentedString(message)).append("\n");
-    sb.append("    code: ").append(toIndentedString(code)).append("\n");
+    sb.append("class Error1 {\n");
+    sb.append("    error: ").append(toIndentedString(error)).append("\n");
     sb.append("}");
     return sb.toString();
   }
