@@ -99,4 +99,7 @@
     <!-- Trade System -->
     <include file="db/changelog/changes/063-create-trade-tables.xml"/>
 
+    <!-- Party System -->
+    <include file="db/changelog/changes/064-create-parties-table.xml"/>
+
 </databaseChangeLog>
