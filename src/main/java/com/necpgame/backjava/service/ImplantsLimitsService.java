@@ -87,10 +87,9 @@ public interface ImplantsLimitsService {
      * Получить индивидуальные энергетические лимиты имплантов.
      * 
      * @param playerId ID игрока
-     * @param activeOnly фильтр только активных имплантов
-     * @return индивидуальные лимиты имплантов
+     * @return список индивидуальных лимитов имплантов
      */
-    IndividualEnergyLimits getIndividualEnergyLimits(UUID playerId, Boolean activeOnly);
+    List<IndividualEnergyLimits> getIndividualEnergyLimits(UUID playerId);
 
     /**
      * Валидировать установку импланта.

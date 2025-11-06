@@ -5,35 +5,36 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
-    <changeSet id="019-create-implants-table" author="system">
-        <createTable tableName="implants">
-            <column name="id" type="VARCHAR(100)">
+    <changeSet id="024-create-character-humanity-table" author="system">
+        <createTable tableName="character_humanity">
+            <column name="id" type="UUID">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="name" type="VARCHAR(200)">
+            <column name="character_id" type="UUID">
+                <constraints nullable="false" unique="true"
+                             foreignKeyName="fk_character_humanity_character" 
+                             references="characters(id)"
+                             deleteCascade="true"/>
+            </column>
+            <column name="current_humanity" type="REAL" defaultValueNumeric="100.0">
                 <constraints nullable="false"/>
             </column>
-            <column name="description" type="TEXT"/>
-            <column name="type" type="VARCHAR(50)">
+            <column name="max_humanity" type="REAL" defaultValueNumeric="100.0">
                 <constraints nullable="false"/>
             </column>
-            <column name="slot_type" type="VARCHAR(50)">
+            <column name="loss_percentage" type="REAL" defaultValueNumeric="0.0">
                 <constraints nullable="false"/>
             </column>
-            <column name="energy_cost" type="REAL">
+            <column name="stage" type="VARCHAR(50)" defaultValue="early">
                 <constraints nullable="false"/>
             </column>
-            <column name="humanity_cost" type="INTEGER">
+            <column name="total_humanity_lost" type="REAL" defaultValueNumeric="0.0">
                 <constraints nullable="false"/>
             </column>
-            <column name="rarity" type="VARCHAR(50)">
+            <column name="last_loss_at" type="TIMESTAMP"/>
+            <column name="adaptation_level" type="INTEGER" defaultValueNumeric="0">
                 <constraints nullable="false"/>
             </column>
-            <column name="min_level" type="INTEGER">
-                <constraints nullable="false"/>
-            </column>
-            <column name="stat_bonuses" type="JSONB"/>
-            <column name="special_effects" type="JSONB"/>
             <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
@@ -42,15 +43,13 @@
             </column>
         </createTable>
         
-        <createIndex tableName="implants" indexName="idx_implants_type">
-            <column name="type"/>
+        <createIndex tableName="character_humanity" indexName="idx_character_humanity_character" unique="true">
+            <column name="character_id"/>
         </createIndex>
-        <createIndex tableName="implants" indexName="idx_implants_slot_type">
-            <column name="slot_type"/>
-        </createIndex>
-        <createIndex tableName="implants" indexName="idx_implants_rarity">
-            <column name="rarity"/>
+        <createIndex tableName="character_humanity" indexName="idx_character_humanity_stage">
+            <column name="stage"/>
         </createIndex>
     </changeSet>
 
 </databaseChangeLog>
+

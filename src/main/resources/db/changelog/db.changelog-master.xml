@@ -34,4 +34,11 @@
     <include file="db/changelog/changes/022-create-character-implant-slots-table.xml"/>
     <include file="db/changelog/changes/023-seed-implants-data.xml"/>
 
+    <!-- Миграции для Cyberpsychosis API -->
+    <include file="db/changelog/changes/024-create-character-humanity-table.xml"/>
+    <include file="db/changelog/changes/025-create-cyberpsychosis-symptoms-table.xml"/>
+    <include file="db/changelog/changes/026-create-character-active-symptoms-table.xml"/>
+    <include file="db/changelog/changes/027-create-cyberpsychosis-treatments-table.xml"/>
+    <include file="db/changelog/changes/028-seed-cyberpsychosis-data.xml"/>
+
 </databaseChangeLog>

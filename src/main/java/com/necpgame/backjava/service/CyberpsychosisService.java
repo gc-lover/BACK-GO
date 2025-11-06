@@ -41,7 +41,7 @@ public interface CyberpsychosisService {
     /**
      * Получить список симптомов текущей стадии.
      */
-    List<Symptom> getSymptoms(UUID playerId, Boolean activeOnly, String severity);
+    List<Symptom> getSymptoms(UUID playerId);
     
     /**
      * Получить информацию о конкретной стадии.
@@ -75,7 +75,7 @@ public interface CyberpsychosisService {
     /**
      * Получить штрафы к характеристикам.
      */
-    StatPenalties getStatPenalties(UUID playerId, Boolean includeTemporary);
+    StatPenalties getStatPenalties(UUID playerId);
     
     /**
      * Получить социальные эффекты киберпсихоза.
@@ -97,7 +97,7 @@ public interface CyberpsychosisService {
     /**
      * Получить доступные методы лечения.
      */
-    GetTreatments200Response getTreatments(UUID playerId, String type, Integer page, Integer pageSize);
+    GetTreatments200Response getTreatments(UUID playerId);
     
     /**
      * Применить управление симптомами.

@@ -5,8 +5,8 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
-    <changeSet id="019-create-implants-table" author="system">
-        <createTable tableName="implants">
+    <changeSet id="027-create-cyberpsychosis-treatments-table" author="system">
+        <createTable tableName="cyberpsychosis_treatments">
             <column name="id" type="VARCHAR(100)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -17,23 +17,20 @@
             <column name="type" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="slot_type" type="VARCHAR(50)">
+            <column name="humanity_restore" type="REAL" defaultValueNumeric="0.0">
                 <constraints nullable="false"/>
             </column>
-            <column name="energy_cost" type="REAL">
+            <column name="cost_credits" type="INTEGER" defaultValueNumeric="0">
                 <constraints nullable="false"/>
             </column>
-            <column name="humanity_cost" type="INTEGER">
+            <column name="duration_hours" type="INTEGER" defaultValueNumeric="1">
                 <constraints nullable="false"/>
             </column>
-            <column name="rarity" type="VARCHAR(50)">
+            <column name="required_stage" type="VARCHAR(50)"/>
+            <column name="success_rate" type="INTEGER" defaultValueNumeric="100">
                 <constraints nullable="false"/>
             </column>
-            <column name="min_level" type="INTEGER">
-                <constraints nullable="false"/>
-            </column>
-            <column name="stat_bonuses" type="JSONB"/>
-            <column name="special_effects" type="JSONB"/>
+            <column name="side_effects" type="JSONB"/>
             <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
@@ -42,15 +39,13 @@
             </column>
         </createTable>
         
-        <createIndex tableName="implants" indexName="idx_implants_type">
+        <createIndex tableName="cyberpsychosis_treatments" indexName="idx_cyberpsychosis_treatments_type">
             <column name="type"/>
         </createIndex>
-        <createIndex tableName="implants" indexName="idx_implants_slot_type">
-            <column name="slot_type"/>
-        </createIndex>
-        <createIndex tableName="implants" indexName="idx_implants_rarity">
-            <column name="rarity"/>
+        <createIndex tableName="cyberpsychosis_treatments" indexName="idx_cyberpsychosis_treatments_required_stage">
+            <column name="required_stage"/>
         </createIndex>
     </changeSet>
 
 </databaseChangeLog>
+

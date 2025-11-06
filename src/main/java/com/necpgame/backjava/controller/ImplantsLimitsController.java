@@ -65,11 +65,12 @@ public class ImplantsLimitsController implements GameplayImplantsApi {
         return ResponseEntity.ok(service.getImplantSlots(playerId, type));
     }
     
-    @Override
-    public ResponseEntity<IndividualEnergyLimits> getIndividualEnergyLimits(UUID playerId, Boolean activeOnly) {
-        log.info("GET /gameplay/combat/implants/{}/energy/individual?activeOnly={}", playerId, activeOnly);
-        return ResponseEntity.ok(service.getIndividualEnergyLimits(playerId, activeOnly));
-    }
+    // TODO: Временно закомментировано из-за несоответствия API интерфейсу
+    // @Override
+    // public ResponseEntity<List<IndividualEnergyLimits>> getIndividualEnergyLimits(UUID playerId) {
+    //     log.info("GET /gameplay/combat/implants/{}/energy/individual", playerId);
+    //     return ResponseEntity.ok(service.getIndividualEnergyLimits(playerId));
+    // }
     
     @Override
     public ResponseEntity<EnergyRestoreResult> restoreEnergy(UUID playerId, RestoreEnergyRequest restoreEnergyRequest) {
