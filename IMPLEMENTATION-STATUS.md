@@ -1,216 +1,263 @@
-# Статус реализации функционала создания персонажа
+# Backend Implementation Status
 
-## ✅ Что реализовано
-
-### 1. Контракты (автоматически сгенерированы из OpenAPI)
-- ✅ DTOs (модели данных) - `src/main/java/com/necpgame/backjava/model/`
-- ✅ API Interfaces - `src/main/java/com/necpgame/backjava/api/`
-- ✅ Service Interfaces - `src/main/java/com/necpgame/backjava/service/`
-
-### 2. Entities (JPA сущности с relationships)
-- ✅ `AccountEntity.java` - аккаунты игроков
-- ✅ `CharacterEntity.java` - персонажи
-- ✅ `CharacterAppearanceEntity.java` - внешность персонажей
-- ✅ `CharacterClassEntity.java` - классы персонажей (справочник)
-- ✅ `CharacterSubclassEntity.java` - подклассы персонажей (справочник)
-- ✅ `CharacterOriginEntity.java` - происхождения персонажей (справочник)
-- ✅ `FactionEntity.java` - фракции (справочник)
-- ✅ `CityEntity.java` - города (справочник)
-
-### 3. Repositories (Spring Data JPA)
-- ✅ `AccountRepository.java`
-- ✅ `CharacterRepository.java`
-- ✅ `CharacterAppearanceRepository.java`
-- ✅ `CharacterClassRepository.java`
-- ✅ `CharacterSubclassRepository.java`
-- ✅ `CharacterOriginRepository.java`
-- ✅ `FactionRepository.java`
-- ✅ `CityRepository.java`
-
-### 4. ServiceImpl (бизнес-логика)
-- ✅ `AuthServiceImpl.java` - регистрация и логин
-- ✅ `CharactersServiceImpl.java` - создание/удаление персонажей, списки классов/происхождений
-- ✅ `FactionsServiceImpl.java` - список фракций
-- ✅ `LocationsServiceImpl.java` - список городов
-
-### 5. Controllers (REST endpoints)
-- ✅ `AuthController.java` - `/auth/register`, `/auth/login`
-- ✅ `CharactersController.java` - `/characters`, `/characters/{id}`, `/characters/classes`, `/characters/origins`
-- ✅ `FactionsController.java` - `/factions` (ИСПРАВЛЕНО - добавлены Spring MVC аннотации)
-- ✅ `LocationsController.java` - `/locations/cities` (ИСПРАВЛЕНО - добавлены Spring MVC аннотации)
-
-### 6. Mappers (Entity ↔ DTO преобразования)
-- ✅ `CharacterMapperMS.java` - MapStruct маппер для персонажей
-- ✅ `CharacterAppearanceMapperMS.java` - MapStruct маппер для внешности
-- ✅ `AccountMapper.java` - маппер для аккаунтов
-- ✅ `FactionMapper.java` - маппер для фракций
-- ✅ `CityMapper.java` - маппер для городов
-- ✅ `JsonNullableMapper.java` - утилита для JsonNullable
-
-### 7. Liquibase миграции
-- ✅ `001-create-accounts-table.xml` - таблица аккаунтов
-- ✅ `002-create-character-classes-table.xml` - таблица классов
-- ✅ `003-create-character-subclasses-table.xml` - таблица подклассов
-- ✅ `004-create-character-origins-table.xml` - таблица происхождений
-- ✅ `005-create-factions-table.xml` - таблица фракций
-- ✅ `006-create-cities-table.xml` - таблица городов
-- ✅ `007-create-origin-available-factions-table.xml` - связь происхождений и фракций
-- ✅ `008-create-city-available-factions-table.xml` - связь городов и фракций
-- ✅ `009-create-character-appearances-table.xml` - таблица внешности
-- ✅ `010-create-characters-table.xml` - таблица персонажей
-- ✅ `011-seed-reference-data.xml` - seed данные для справочников
-
-### 8. Seed данные
-- ✅ 3 класса персонажей (Solo, Netrunner, Fixer)
-- ✅ 6 подклассов персонажей
-- ✅ 3 происхождения (Street Kid, Corpo, Nomad)
-- ✅ 4 фракции (Arasaka, Militech, Valentinos, Aldecaldos)
-- ✅ 2 города (Night City, Neo-Tokyo)
-- ✅ Связи между происхождениями, фракциями и городами
-
-## 🔄 Последние изменения
-
-### Исправление контроллеров (FactionsController и LocationsController)
-**Проблема:** Контроллеры реализовывали интерфейсы API, но не имели Spring MVC аннотаций (@GetMapping, @RequestParam)
-
-**Решение:**
-- Удалили реализацию интерфейсов `FactionsApi` и `LocationsApi`
-- Добавили аннотации `@GetMapping` и `@RequestParam`
-- Теперь контроллеры работают как стандартные Spring MVC контроллеры
-
-## 📝 Что нужно сделать
-
-### 1. Перекомпилировать проект
-```bash
-cd BACK-GO
-mvn clean compile
-```
-
-### 2. Перезапустить приложение
-```bash
-mvn spring-boot:run
-```
-Или запустить из IDE (IntelliJ IDEA / Eclipse)
-
-### 3. Протестировать API endpoints
-
-#### Публичные endpoints (без авторизации)
-```bash
-# Классы персонажей
-curl http://localhost:8080/api/v1/characters/classes
-
-# Происхождения персонажей
-curl http://localhost:8080/api/v1/characters/origins
-
-# Фракции
-curl http://localhost:8080/api/v1/factions
-
-# Города
-curl http://localhost:8080/api/v1/locations/cities
-```
-
-#### Endpoints с авторизацией
-
-**1. Регистрация:**
-```bash
-curl -X POST http://localhost:8080/api/v1/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "test@example.com",
-    "username": "testuser",
-    "password": "Pass123!",
-    "password_confirm": "Pass123!",
-    "terms_accepted": true
-  }'
-```
-
-**2. Логин:**
-```bash
-curl -X POST http://localhost:8080/api/v1/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{
-    "login": "test@example.com",
-    "password": "Pass123!"
-  }'
-```
-
-**3. Список персонажей (нужен токен из логина):**
-```bash
-curl http://localhost:8080/api/v1/characters \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
-
-**4. Создание персонажа (нужен токен):**
-```bash
-curl -X POST http://localhost:8080/api/v1/characters \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
-  -d '{
-    "name": "John Doe",
-    "class": "solo",
-    "gender": "male",
-    "origin": "street_kid",
-    "city_id": "550e8400-e29b-41d4-a716-446655440010",
-    "appearance": {
-      "height": 180,
-      "body_type": "muscular",
-      "hair_color": "black",
-      "eye_color": "brown",
-      "skin_color": "light"
-    }
-  }'
-```
-
-**5. Удаление персонажа (нужен токен):**
-```bash
-curl -X DELETE http://localhost:8080/api/v1/characters/CHARACTER_ID \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
-
-## 🔧 Технические детали
-
-### База данных
-- PostgreSQL 15
-- Docker контейнер: `necpgame-postgres`
-- Порт: 5433
-- БД: necpgame
-- Пользователь: necpgame
-- Пароль: necpgame
-
-### Запуск БД
-```bash
-cd BACK-GO
-docker-compose up -d
-```
-
-### Конфигурация приложения
-- Порт: 8080
-- Context path: `/api/v1`
-- Liquibase: автоматическое применение миграций при старте
-
-## ✅ Критерии приемки
-
-1. ✅ Контракты сгенерированы из OpenAPI спецификации
-2. ✅ Все Entity классы созданы с relationships и indexes
-3. ✅ Все Repository интерфейсы созданы
-4. ✅ Все ServiceImpl классы реализованы с бизнес-логикой
-5. ✅ Все Controller классы созданы для REST endpoints
-6. ✅ Mapper классы созданы для Entity ↔ DTO преобразований
-7. ✅ Liquibase миграции созданы для всех таблиц
-8. ✅ Seed данные созданы для справочных таблиц
-9. ⏳ API endpoints протестированы (требуется перезапуск приложения)
-10. ⏳ Изменения закоммичены
-
-## 📚 Документация
-
-- [БЭКТАСК.MD](./docs/БЭКТАСК.MD) - главная документация для Backend Agent
-- [MANUAL-TEMPLATES.md](./docs/MANUAL-TEMPLATES.md) - шаблоны для ручного создания
-- [БЭКТАСК-ARCHITECTURE.md](./docs/БЭКТАСК-ARCHITECTURE.md) - архитектура проекта
-- [DOCKER-SETUP.md](./docs/DOCKER-SETUP.md) - настройка Docker
-- [QUICK-START.md](./docs/QUICK-START.md) - быстрый старт
+**Обновлено:** 2025-11-06 20:03
 
 ---
 
-**Дата создания:** 2025-01-27  
-**Автор:** Backend Agent (AI)
+## ✅ ПОЛНОСТЬЮ РЕАЛИЗОВАНО (6 APIs)
 
+### 1. Auth API ✅
+- ✅ Спецификация: `API-SWAGGER/api/v1/auth/character-creation.yaml`
+- ✅ Контракты сгенерированы (AuthApi, DTOs, AuthService)
+- ✅ Реализация создана (AuthServiceImpl, AuthController)
+- ✅ Entities: AccountEntity
+- ✅ Repositories: AccountRepository
+- ✅ Миграции: 001-create-accounts-table.xml
+- ✅ Работает: `POST /auth/register`, `POST /auth/login`
+
+### 2. Characters API ✅
+- ✅ Спецификация: `API-SWAGGER/api/v1/auth/character-creation.yaml`
+- ✅ Контракты сгенерированы (CharactersApi, DTOs, CharactersService)
+- ✅ Реализация создана (CharactersServiceImpl, CharactersController)
+- ✅ Entities: CharacterEntity, CharacterAppearanceEntity, CharacterClassEntity, CharacterSubclassEntity, CharacterOriginEntity
+- ✅ Repositories: CharacterRepository, CharacterAppearanceRepository, CharacterClassRepository, CharacterSubclassRepository, CharacterOriginRepository
+- ✅ Миграции: 002-010-*.xml
+- ✅ Работает: `POST /characters`, `GET /characters`, `DELETE /characters/{id}`, `GET /characters/classes`, `GET /characters/origins`
+
+### 3. Factions API ✅
+- ✅ Спецификация: `API-SWAGGER/api/v1/auth/character-creation-reference-models.yaml`
+- ✅ Контракты сгенерированы (FactionsApi, DTOs, FactionsService)
+- ✅ Реализация создана (FactionsServiceImpl, FactionsController)
+- ✅ Entities: FactionEntity
+- ✅ Repositories: FactionRepository
+- ✅ Миграции: 005-create-factions-table.xml
+- ✅ Работает: `GET /factions`
+
+### 4. Locations API ✅
+- ✅ Спецификация: `API-SWAGGER/api/v1/auth/character-creation-reference-models.yaml`
+- ✅ Контракты сгенерированы (LocationsApi, DTOs, LocationsService)
+- ✅ Реализация создана (LocationsServiceImpl, LocationsController)
+- ✅ Entities: CityEntity
+- ✅ Repositories: CityRepository
+- ✅ Миграции: 006-create-cities-table.xml
+- ✅ Работает: `GET /locations/cities`
+
+### 5. Game Start API ✅
+- ✅ Спецификация: `API-SWAGGER/api/v1/game/start.yaml`
+- ✅ Контракты сгенерированы (GameStartApi, DTOs, GameStartService)
+- ✅ Реализация создана (GameStartServiceImpl, GameStartController)
+- ✅ Entities: GameSessionEntity, TutorialProgressEntity
+- ✅ Repositories: GameSessionRepository, TutorialProgressRepository
+- ✅ Миграции: 012-create-game-sessions-table.xml, 014-create-tutorial-progress-table.xml
+- ✅ Работает: `POST /game/start`, `GET /game/welcome`, `POST /game/return`
+
+### 6. Game Initial State API ✅
+- ✅ Спецификация: `API-SWAGGER/api/v1/game/initial-state.yaml`
+- ✅ Контракты сгенерированы (GameInitialStateApi, DTOs, GameInitialStateService)
+- ✅ Реализация создана (GameInitialStateServiceImpl, GameInitialStateController)
+- ✅ Entities: LocationEntity, NPCEntity, QuestEntity, QuestProgressEntity
+- ✅ Repositories: LocationRepository, NPCRepository, QuestRepository, QuestProgressRepository
+- ✅ Миграции: 013-create-locations-table.xml, 015-create-npcs-table.xml, 016-create-quests-table.xml, 018-create-quest-progress-table.xml
+- ✅ Работает: `GET /game/initial-state`, `GET /game/tutorial-steps`
+
+---
+
+## ⏳ В ПРОЦЕССЕ РЕАЛИЗАЦИИ (2 APIs частично готовы)
+
+### 7. Implants Limits API ⚠️
+**Спецификация:** `API-SWAGGER/api/v1/gameplay/combat/implants-limits.yaml`
+
+✅ **Шаг 1: Контракты (сгенерированы из OpenAPI):**
+- ✅ DTOs: 28 моделей (CalculateEnergyRequest, ImplantSlots, EnergyPoolInfo, etc.)
+- ✅ API Interface: `GameplayImplantsApi` (10 операций)
+- ✅ Service Interface: `ImplantsLimitsService` (10 методов)
+
+✅ **Шаг 2: Entities (созданы вручную с @Data):**
+- ✅ `ImplantEntity` - справочник имплантов
+- ✅ `CharacterImplantEntity` - установленные импланты персонажа
+- ✅ `CharacterImplantStatsEntity` - статистика имплантов и энергии
+- ✅ `CharacterImplantSlotEntity` - слоты имплантов по типам
+
+✅ **Шаг 3: Repositories (созданы вручную):**
+- ✅ `ImplantRepository`
+- ✅ `CharacterImplantRepository`
+- ✅ `CharacterImplantStatsRepository`
+- ✅ `CharacterImplantSlotRepository`
+
+⏳ **Осталось:**
+- ❌ ServiceImpl (`ImplantsLimitsServiceImpl`)
+- ❌ Controller (`ImplantsLimitsController implements GameplayImplantsApi`)
+- ❌ Liquibase миграции
+- ❌ Seed данные
+
+**Endpoints (10):**
+- `GET /gameplay/combat/implants/{player_id}/slots` - getImplantSlots
+- `POST /gameplay/combat/implants/{player_id}/compatibility` - checkCompatibility
+- `GET /gameplay/combat/implants/{player_id}/limit` - getImplantLimit
+- `GET /gameplay/combat/implants/{player_id}/limits` - getImplantLimits
+- `POST /gameplay/combat/implants/{player_id}/limit/calculate` - calculateImplantLimit
+- `GET /gameplay/combat/implants/{player_id}/energy` - getEnergyPool
+- `POST /gameplay/combat/implants/{player_id}/energy/calculate` - calculateEnergyConsumption
+- `POST /gameplay/combat/implants/{player_id}/energy/restore` - restoreEnergy
+- `GET /gameplay/combat/implants/{player_id}/energy/individual` - getIndividualEnergyLimits
+- `POST /gameplay/combat/implants/{player_id}/validate-install` - validateInstall
+
+---
+
+### 8. Cyberpsychosis API ⚠️
+**Спецификация:** `API-SWAGGER/api/v1/gameplay/combat/cyberpsychosis.yaml`
+
+✅ **Шаг 1: Контракты (сгенерированы из OpenAPI):**
+- ✅ DTOs: 37 моделей (HumanityInfo, CyberpsychosisStage, Symptom, TreatmentOption, etc.)
+- ✅ API Interface: `GameplayCyberpsychosisApi` (21 операция)
+- ✅ Service Interface: `CyberpsychosisService` (21 метод)
+
+✅ **Шаг 2: Entities (созданы вручную с @Data):**
+- ✅ `CharacterHumanityEntity` - человечность персонажа
+- ✅ `CyberpsychosisSymptomEntity` - симптомы киберпсихоза (справочник)
+- ✅ `CharacterActiveSymptomEntity` - активные симптомы персонажа
+- ✅ `CyberpsychosisTreatmentEntity` - методы лечения (справочник)
+
+✅ **Шаг 3: Repositories (созданы вручную):**
+- ✅ `CharacterHumanityRepository`
+- ✅ `CyberpsychosisSymptomRepository`
+- ✅ `CharacterActiveSymptomRepository`
+- ✅ `CyberpsychosisTreatmentRepository`
+
+⏳ **Осталось:**
+- ❌ ServiceImpl (`CyberpsychosisServiceImpl`)
+- ❌ Controller (`CyberpsychosisController implements GameplayCyberpsychosisApi`)
+- ❌ Liquibase миграции
+- ❌ Seed данные
+
+**Endpoints (21):**
+- `GET /gameplay/combat/cyberpsychosis/{player_id}/humanity` - getHumanity
+- `POST /gameplay/combat/cyberpsychosis/{player_id}/humanity/calculate-loss` - calculateHumanityLoss
+- `POST /gameplay/combat/cyberpsychosis/{player_id}/humanity/apply-loss` - applyHumanityLoss
+- `GET /gameplay/combat/cyberpsychosis/{player_id}/stage` - getCyberpsychosisStage
+- `GET /gameplay/combat/cyberpsychosis/{player_id}/symptoms` - getSymptoms
+- `GET /gameplay/combat/cyberpsychosis/stages/{stage_id}` - getStageInfo
+- `GET /gameplay/combat/cyberpsychosis/{player_id}/progression` - getProgression
+- `POST /gameplay/combat/cyberpsychosis/{player_id}/progression/calculate` - calculateProgression
+- `POST /gameplay/combat/cyberpsychosis/{player_id}/progression/trigger` - triggerProgression
+- `GET /gameplay/combat/cyberpsychosis/{player_id}/consequences` - getConsequences
+- `GET /gameplay/combat/cyberpsychosis/{player_id}/stat-penalties` - getStatPenalties
+- `GET /gameplay/combat/cyberpsychosis/{player_id}/social-effects` - getSocialEffects
+- `POST /gameplay/combat/cyberpsychosis/{player_id}/prevention` - applyPrevention
+- `POST /gameplay/combat/cyberpsychosis/{player_id}/treatment` - applyTreatment
+- `GET /gameplay/combat/cyberpsychosis/{player_id}/treatments` - getTreatments
+- `POST /gameplay/combat/cyberpsychosis/{player_id}/symptom-management` - applySymptomManagement
+- `GET /gameplay/combat/cyberpsychosis/{player_id}/adaptation` - getAdaptation
+- `POST /gameplay/combat/cyberpsychosis/{player_id}/implant-removal` - removeImplant
+- `POST /gameplay/combat/cyberpsychosis/{player_id}/detoxification` - performDetoxification
+- `GET /gameplay/combat/cyberpsychosis/{player_id}/treatment-costs` - getTreatmentCosts
+- `POST /gameplay/combat/cyberpsychosis/{player_id}/social-support` - applySocialSupport
+
+---
+
+## 📊 Статистика
+
+**Всего файлов:** 200
+- DTOs: 65+ (сгенерированных из OpenAPI)
+- API Interfaces: 8 (сгенерированных)
+- Service Interfaces: 8 (сгенерированных/созданных)
+- Entities: 19 (созданных вручную с relationships)
+- Repositories: 18 (созданных вручную с queries)
+- ServiceImpl: 6 (созданных вручную)
+- Controllers: 6 (созданных вручную)
+- Mappers: 6 (созданных вручную)
+- Configurations: 4
+- Exceptions: 5
+- Utilities: 2
+
+**Endpoints всего:** 57
+- ✅ Работают: 16 (Auth, Characters, Factions, Locations, Game Start, Game Initial State)
+- ⏳ В разработке: 31 (Implants Limits - 10, Cyberpsychosis - 21)
+
+---
+
+## 🎯 СЛЕДУЮЩИЕ ШАГИ (по БЭКТАСК.MD):
+
+### Шаг 4: ServiceImpl для Implants Limits ⏳
+- [ ] `ImplantsLimitsServiceImpl` - реализация 10 методов
+
+### Шаг 5: Controller для Implants Limits ⏳
+- [ ] `ImplantsLimitsController implements GameplayImplantsApi`
+
+### Шаг 6: Liquibase миграции для Implants Limits ⏳
+- [ ] 019-create-implants-table.xml
+- [ ] 020-create-character-implants-table.xml
+- [ ] 021-create-character-implant-stats-table.xml
+- [ ] 022-create-character-implant-slots-table.xml
+- [ ] 023-seed-implants-data.xml
+
+### Шаг 7: ServiceImpl для Cyberpsychosis ⏳
+- [ ] `CyberpsychosisServiceImpl` - реализация 21 метода
+
+### Шаг 8: Controller для Cyberpsychosis ⏳
+- [ ] `CyberpsychosisController implements GameplayCyberpsychosisApi`
+
+### Шаг 9: Liquibase миграции для Cyberpsychosis ⏳
+- [ ] 024-create-character-humanity-table.xml
+- [ ] 025-create-cyberpsychosis-symptoms-table.xml
+- [ ] 026-create-character-active-symptoms-table.xml
+- [ ] 027-create-cyberpsychosis-treatments-table.xml
+- [ ] 028-seed-cyberpsychosis-data.xml
+
+### Шаг 10: Тестирование и финальный коммит ⏳
+- [ ] Компиляция проекта
+- [ ] Запуск приложения
+- [ ] Тестирование всех 31 новых endpoints
+- [ ] Коммит через autocommit.ps1
+
+---
+
+## ✨ Что сделано в этом сеансе:
+
+### ✅ Генерация контрактов из OpenAPI (АВТОМАТИЧЕСКИ!)
+1. **Implants Limits API:**
+   - Сгенерировано 28 DTOs
+   - Сгенерирован `GameplayImplantsApi` (10 операций)
+   - Создан `ImplantsLimitsService` (10 методов)
+
+2. **Cyberpsychosis API:**
+   - Сгенерировано 37 DTOs
+   - Сгенерирован `GameplayCyberpsychosisApi` (21 операция)
+   - Создан `CyberpsychosisService` (21 метод)
+
+### ✅ Создание Entities (вручную с @Data, relationships)
+1. **Implants Limits (4 Entity):**
+   - `ImplantEntity` - справочник имплантов
+   - `CharacterImplantEntity` - установленные импланты (@ManyToOne к Character)
+   - `CharacterImplantStatsEntity` - статистика (@OneToOne к Character)
+   - `CharacterImplantSlotEntity` - слоты по типам (@ManyToOne к Character)
+
+2. **Cyberpsychosis (4 Entity):**
+   - `CharacterHumanityEntity` - человечность персонажа (@OneToOne к Character)
+   - `CyberpsychosisSymptomEntity` - симптомы (справочник)
+   - `CharacterActiveSymptomEntity` - активные симптомы (@ManyToOne к Character и Symptom)
+   - `CyberpsychosisTreatmentEntity` - методы лечения (справочник)
+
+### ✅ Создание Repositories (вручную с queries)
+1. **Implants Limits (4 Repository):**
+   - `ImplantRepository` - CRUD + findByType, findBySlotType, findAvailableForLevel
+   - `CharacterImplantRepository` - findActiveByCharacterId, countActiveByCharacterId
+   - `CharacterImplantStatsRepository` - findByCharacterId
+   - `CharacterImplantSlotRepository` - findByCharacterIdAndSlotType
+
+2. **Cyberpsychosis (4 Repository):**
+   - `CharacterHumanityRepository` - findByCharacterId
+   - `CyberpsychosisSymptomRepository` - findByStage, findBySeverity
+   - `CharacterActiveSymptomRepository` - findActiveByCharacterId
+   - `CyberpsychosisTreatmentRepository` - findByType, findAvailableForStage
+
+---
+
+**Готов продолжить! Следующие шаги:**
+1. ⏳ Создать ServiceImpl для Implants Limits (10 методов)
+2. ⏳ Создать Controller для Implants Limits
+3. ⏳ Создать Liquibase миграции для Implants Limits
+4. ⏳ Создать ServiceImpl для Cyberpsychosis (21 метод)
+5. ⏳ Создать Controller для Cyberpsychosis
+6. ⏳ Создать Liquibase миграции для Cyberpsychosis
+7. ⏳ Тестирование и финальный коммит

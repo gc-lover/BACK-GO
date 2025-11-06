@@ -27,4 +27,11 @@
     <include file="db/changelog/changes/017-create-quest-progress-table.xml"/>
     <include file="db/changelog/changes/018-seed-game-start-data.xml"/>
 
+    <!-- Миграции для Implants Limits API -->
+    <include file="db/changelog/changes/019-create-implants-table.xml"/>
+    <include file="db/changelog/changes/020-create-character-implants-table.xml"/>
+    <include file="db/changelog/changes/021-create-character-implant-stats-table.xml"/>
+    <include file="db/changelog/changes/022-create-character-implant-slots-table.xml"/>
+    <include file="db/changelog/changes/023-seed-implants-data.xml"/>
+
 </databaseChangeLog>
