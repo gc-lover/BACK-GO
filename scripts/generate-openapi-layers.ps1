@@ -227,8 +227,15 @@ foreach ($ApiFile in $ApiFiles) {
             $tempSrc = "target/generated-openapi-temp/com"
             $targetSrc = "src/main/java/com"
             if (Test-Path $tempSrc) {
-                Copy-Item -Path $tempSrc -Destination "src/main/java/" -Recurse -Force
-                Write-Success "DTOs и API Interfaces сгенерированы и скопированы в src/"
+                # ИСПРАВЛЕНО: Используем robocopy для копирования ТОЛЬКО новых файлов
+                # /XC /XN /XO = Skip existing files (eXclude Changed, eXclude Newer, eXclude Older)
+                $null = robocopy $tempSrc $targetSrc /E /XC /XN /XO /NJH /NJS /NFL /NDL
+                # robocopy exit codes: 0-1 = success
+                if ($LASTEXITCODE -le 1) {
+                    Write-Success "DTOs и API Interfaces сгенерированы и скопированы в src/ (только новые файлы)"
+                } else {
+                    Write-Success "DTOs и API Interfaces сгенерированы и скопированы в src/"
+                }
             } else {
                 Write-Failed "Не найдена директория $tempSrc после генерации"
                 $FailedFiles++
@@ -264,9 +271,17 @@ foreach ($ApiFile in $ApiFiles) {
         if ($LASTEXITCODE -eq 0) {
             # Копируем только service директорию в src/main/java/
             $tempSrc = "target/generated-services-temp/com"
+            $targetSrc = "src/main/java/com"
             if (Test-Path $tempSrc) {
-                Copy-Item -Path $tempSrc -Destination "src/main/java/" -Recurse -Force
-                Write-Success "Service интерфейсы сгенерированы и скопированы в src/"
+                # ИСПРАВЛЕНО: Используем robocopy для копирования ТОЛЬКО новых файлов
+                # /XC /XN /XO = Skip existing files (eXclude Changed, eXclude Newer, eXclude Older)
+                $null = robocopy $tempSrc $targetSrc /E /XC /XN /XO /NJH /NJS /NFL /NDL
+                # robocopy exit codes: 0-1 = success
+                if ($LASTEXITCODE -le 1) {
+                    Write-Success "Service интерфейсы сгенерированы и скопированы в src/ (только новые файлы)"
+                } else {
+                    Write-Success "Service интерфейсы сгенерированы и скопированы в src/"
+                }
             } else {
                 Write-Failed "Не найдена директория $tempSrc после генерации"
                 $FailedFiles++
