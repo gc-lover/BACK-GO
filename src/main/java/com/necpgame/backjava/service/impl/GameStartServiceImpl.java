@@ -282,7 +282,7 @@ public class GameStartServiceImpl implements GameStartService {
         dto.setDangerLevel(mapDangerLevel(entity.getDangerLevel()));
         dto.setMinLevel(entity.getMinLevel());
         dto.setType(mapLocationType(entity.getType()));
-        dto.setConnectedLocations(parseConnectedLocations(entity.getConnectedLocations()));
+        // Note: connectedLocations поле есть в LocationDetails, а не в GameLocation (cities)
         return dto;
     }
 

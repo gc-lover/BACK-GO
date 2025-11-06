@@ -5,6 +5,13 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+import com.necpgame.backjava.model.LocationAction;
+import com.necpgame.backjava.model.LocationDetailsAllOfEvents;
+import com.necpgame.backjava.model.LocationDetailsAllOfPointsOfInterest;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -17,11 +24,11 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * GameLocation
+ * LocationDetails
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T21:22:04.712198900+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
-public class GameLocation {
+public class LocationDetails {
 
   private String id;
 
@@ -162,14 +169,31 @@ public class GameLocation {
 
   private @Nullable Boolean accessible;
 
-  public GameLocation() {
+  private String atmosphere;
+
+  @Valid
+  private List<@Valid LocationDetailsAllOfPointsOfInterest> pointsOfInterest = new ArrayList<>();
+
+  @Valid
+  private List<@Valid LocationAction> availableActions = new ArrayList<>();
+
+  @Valid
+  private List<UUID> availableNPCs = new ArrayList<>();
+
+  @Valid
+  private List<String> connectedLocations = new ArrayList<>();
+
+  @Valid
+  private List<@Valid LocationDetailsAllOfEvents> events = new ArrayList<>();
+
+  public LocationDetails() {
     super();
   }
 
   /**
    * Constructor with only required parameters
    */
-  public GameLocation(String id, String name, String description, String city, String district, RegionEnum region, DangerLevelEnum dangerLevel, Integer minLevel, TypeEnum type) {
+  public LocationDetails(String id, String name, String description, String city, String district, RegionEnum region, DangerLevelEnum dangerLevel, Integer minLevel, TypeEnum type, String atmosphere, List<@Valid LocationAction> availableActions) {
     this.id = id;
     this.name = name;
     this.description = description;
@@ -179,9 +203,11 @@ public class GameLocation {
     this.dangerLevel = dangerLevel;
     this.minLevel = minLevel;
     this.type = type;
+    this.atmosphere = atmosphere;
+    this.availableActions = availableActions;
   }
 
-  public GameLocation id(String id) {
+  public LocationDetails id(String id) {
     this.id = id;
     return this;
   }
@@ -201,7 +227,7 @@ public class GameLocation {
     this.id = id;
   }
 
-  public GameLocation name(String name) {
+  public LocationDetails name(String name) {
     this.name = name;
     return this;
   }
@@ -221,7 +247,7 @@ public class GameLocation {
     this.name = name;
   }
 
-  public GameLocation description(String description) {
+  public LocationDetails description(String description) {
     this.description = description;
     return this;
   }
@@ -241,7 +267,7 @@ public class GameLocation {
     this.description = description;
   }
 
-  public GameLocation city(String city) {
+  public LocationDetails city(String city) {
     this.city = city;
     return this;
   }
@@ -261,7 +287,7 @@ public class GameLocation {
     this.city = city;
   }
 
-  public GameLocation district(String district) {
+  public LocationDetails district(String district) {
     this.district = district;
     return this;
   }
@@ -281,7 +307,7 @@ public class GameLocation {
     this.district = district;
   }
 
-  public GameLocation region(RegionEnum region) {
+  public LocationDetails region(RegionEnum region) {
     this.region = region;
     return this;
   }
@@ -301,7 +327,7 @@ public class GameLocation {
     this.region = region;
   }
 
-  public GameLocation dangerLevel(DangerLevelEnum dangerLevel) {
+  public LocationDetails dangerLevel(DangerLevelEnum dangerLevel) {
     this.dangerLevel = dangerLevel;
     return this;
   }
@@ -321,7 +347,7 @@ public class GameLocation {
     this.dangerLevel = dangerLevel;
   }
 
-  public GameLocation minLevel(Integer minLevel) {
+  public LocationDetails minLevel(Integer minLevel) {
     this.minLevel = minLevel;
     return this;
   }
@@ -342,7 +368,7 @@ public class GameLocation {
     this.minLevel = minLevel;
   }
 
-  public GameLocation type(TypeEnum type) {
+  public LocationDetails type(TypeEnum type) {
     this.type = type;
     return this;
   }
@@ -362,7 +388,7 @@ public class GameLocation {
     this.type = type;
   }
 
-  public GameLocation accessible(@Nullable Boolean accessible) {
+  public LocationDetails accessible(@Nullable Boolean accessible) {
     this.accessible = accessible;
     return this;
   }
@@ -382,6 +408,166 @@ public class GameLocation {
     this.accessible = accessible;
   }
 
+  public LocationDetails atmosphere(String atmosphere) {
+    this.atmosphere = atmosphere;
+    return this;
+  }
+
+  /**
+   * Атмосферное описание локации
+   * @return atmosphere
+   */
+  @NotNull 
+  @Schema(name = "atmosphere", example = "Небоскребы упираются в облака, неоновые огни...", description = "Атмосферное описание локации", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("atmosphere")
+  public String getAtmosphere() {
+    return atmosphere;
+  }
+
+  public void setAtmosphere(String atmosphere) {
+    this.atmosphere = atmosphere;
+  }
+
+  public LocationDetails pointsOfInterest(List<@Valid LocationDetailsAllOfPointsOfInterest> pointsOfInterest) {
+    this.pointsOfInterest = pointsOfInterest;
+    return this;
+  }
+
+  public LocationDetails addPointsOfInterestItem(LocationDetailsAllOfPointsOfInterest pointsOfInterestItem) {
+    if (this.pointsOfInterest == null) {
+      this.pointsOfInterest = new ArrayList<>();
+    }
+    this.pointsOfInterest.add(pointsOfInterestItem);
+    return this;
+  }
+
+  /**
+   * Точки интереса в локации
+   * @return pointsOfInterest
+   */
+  @Valid 
+  @Schema(name = "pointsOfInterest", example = "[{\"id\":\"arasaka_tower\",\"name\":\"Башня Arasaka\",\"description\":\"Впечатляющий небоскреб корпорации Arasaka\"}]", description = "Точки интереса в локации", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("pointsOfInterest")
+  public List<@Valid LocationDetailsAllOfPointsOfInterest> getPointsOfInterest() {
+    return pointsOfInterest;
+  }
+
+  public void setPointsOfInterest(List<@Valid LocationDetailsAllOfPointsOfInterest> pointsOfInterest) {
+    this.pointsOfInterest = pointsOfInterest;
+  }
+
+  public LocationDetails availableActions(List<@Valid LocationAction> availableActions) {
+    this.availableActions = availableActions;
+    return this;
+  }
+
+  public LocationDetails addAvailableActionsItem(LocationAction availableActionsItem) {
+    if (this.availableActions == null) {
+      this.availableActions = new ArrayList<>();
+    }
+    this.availableActions.add(availableActionsItem);
+    return this;
+  }
+
+  /**
+   * Доступные действия в локации
+   * @return availableActions
+   */
+  @NotNull @Valid 
+  @Schema(name = "availableActions", description = "Доступные действия в локации", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("availableActions")
+  public List<@Valid LocationAction> getAvailableActions() {
+    return availableActions;
+  }
+
+  public void setAvailableActions(List<@Valid LocationAction> availableActions) {
+    this.availableActions = availableActions;
+  }
+
+  public LocationDetails availableNPCs(List<UUID> availableNPCs) {
+    this.availableNPCs = availableNPCs;
+    return this;
+  }
+
+  public LocationDetails addAvailableNPCsItem(UUID availableNPCsItem) {
+    if (this.availableNPCs == null) {
+      this.availableNPCs = new ArrayList<>();
+    }
+    this.availableNPCs.add(availableNPCsItem);
+    return this;
+  }
+
+  /**
+   * Доступные NPC в локации
+   * @return availableNPCs
+   */
+  @Valid 
+  @Schema(name = "availableNPCs", example = "[\"npc_id_1\",\"npc_id_2\"]", description = "Доступные NPC в локации", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("availableNPCs")
+  public List<UUID> getAvailableNPCs() {
+    return availableNPCs;
+  }
+
+  public void setAvailableNPCs(List<UUID> availableNPCs) {
+    this.availableNPCs = availableNPCs;
+  }
+
+  public LocationDetails connectedLocations(List<String> connectedLocations) {
+    this.connectedLocations = connectedLocations;
+    return this;
+  }
+
+  public LocationDetails addConnectedLocationsItem(String connectedLocationsItem) {
+    if (this.connectedLocations == null) {
+      this.connectedLocations = new ArrayList<>();
+    }
+    this.connectedLocations.add(connectedLocationsItem);
+    return this;
+  }
+
+  /**
+   * Связанные локации (ID)
+   * @return connectedLocations
+   */
+  
+  @Schema(name = "connectedLocations", example = "[\"watson_kabuki\",\"westbrook_japantown\"]", description = "Связанные локации (ID)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("connectedLocations")
+  public List<String> getConnectedLocations() {
+    return connectedLocations;
+  }
+
+  public void setConnectedLocations(List<String> connectedLocations) {
+    this.connectedLocations = connectedLocations;
+  }
+
+  public LocationDetails events(List<@Valid LocationDetailsAllOfEvents> events) {
+    this.events = events;
+    return this;
+  }
+
+  public LocationDetails addEventsItem(LocationDetailsAllOfEvents eventsItem) {
+    if (this.events == null) {
+      this.events = new ArrayList<>();
+    }
+    this.events.add(eventsItem);
+    return this;
+  }
+
+  /**
+   * Текущие события в локации (опционально)
+   * @return events
+   */
+  @Valid 
+  @Schema(name = "events", description = "Текущие события в локации (опционально)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("events")
+  public List<@Valid LocationDetailsAllOfEvents> getEvents() {
+    return events;
+  }
+
+  public void setEvents(List<@Valid LocationDetailsAllOfEvents> events) {
+    this.events = events;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -390,28 +576,34 @@ public class GameLocation {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    GameLocation gameLocation = (GameLocation) o;
-    return Objects.equals(this.id, gameLocation.id) &&
-        Objects.equals(this.name, gameLocation.name) &&
-        Objects.equals(this.description, gameLocation.description) &&
-        Objects.equals(this.city, gameLocation.city) &&
-        Objects.equals(this.district, gameLocation.district) &&
-        Objects.equals(this.region, gameLocation.region) &&
-        Objects.equals(this.dangerLevel, gameLocation.dangerLevel) &&
-        Objects.equals(this.minLevel, gameLocation.minLevel) &&
-        Objects.equals(this.type, gameLocation.type) &&
-        Objects.equals(this.accessible, gameLocation.accessible);
+    LocationDetails locationDetails = (LocationDetails) o;
+    return Objects.equals(this.id, locationDetails.id) &&
+        Objects.equals(this.name, locationDetails.name) &&
+        Objects.equals(this.description, locationDetails.description) &&
+        Objects.equals(this.city, locationDetails.city) &&
+        Objects.equals(this.district, locationDetails.district) &&
+        Objects.equals(this.region, locationDetails.region) &&
+        Objects.equals(this.dangerLevel, locationDetails.dangerLevel) &&
+        Objects.equals(this.minLevel, locationDetails.minLevel) &&
+        Objects.equals(this.type, locationDetails.type) &&
+        Objects.equals(this.accessible, locationDetails.accessible) &&
+        Objects.equals(this.atmosphere, locationDetails.atmosphere) &&
+        Objects.equals(this.pointsOfInterest, locationDetails.pointsOfInterest) &&
+        Objects.equals(this.availableActions, locationDetails.availableActions) &&
+        Objects.equals(this.availableNPCs, locationDetails.availableNPCs) &&
+        Objects.equals(this.connectedLocations, locationDetails.connectedLocations) &&
+        Objects.equals(this.events, locationDetails.events);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, description, city, district, region, dangerLevel, minLevel, type, accessible);
+    return Objects.hash(id, name, description, city, district, region, dangerLevel, minLevel, type, accessible, atmosphere, pointsOfInterest, availableActions, availableNPCs, connectedLocations, events);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class GameLocation {\n");
+    sb.append("class LocationDetails {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
@@ -422,6 +614,12 @@ public class GameLocation {
     sb.append("    minLevel: ").append(toIndentedString(minLevel)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    accessible: ").append(toIndentedString(accessible)).append("\n");
+    sb.append("    atmosphere: ").append(toIndentedString(atmosphere)).append("\n");
+    sb.append("    pointsOfInterest: ").append(toIndentedString(pointsOfInterest)).append("\n");
+    sb.append("    availableActions: ").append(toIndentedString(availableActions)).append("\n");
+    sb.append("    availableNPCs: ").append(toIndentedString(availableNPCs)).append("\n");
+    sb.append("    connectedLocations: ").append(toIndentedString(connectedLocations)).append("\n");
+    sb.append("    events: ").append(toIndentedString(events)).append("\n");
     sb.append("}");
     return sb.toString();
   }
