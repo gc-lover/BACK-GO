@@ -41,23 +41,24 @@ public class QuestsController implements QuestsQuestsApi {
         return ResponseEntity.ok(service.getQuestDetails(questId, characterId));
     }
     
-    @Override
-    public ResponseEntity<AcceptQuest200Response> acceptQuest(String questId, AcceptQuestRequest acceptQuestRequest) {
-        log.info("POST /quests/{}/accept", questId);
-        return ResponseEntity.ok(service.acceptQuest(questId, acceptQuestRequest));
-    }
+    // TODO: Временно закомментировано - несоответствие API интерфейсу
+    // @Override
+    // public ResponseEntity<AcceptQuest200Response> acceptQuest(String questId, AcceptQuestRequest acceptQuestRequest) {
+    //     log.info("POST /quests/{}/accept", questId);
+    //     return ResponseEntity.ok(service.acceptQuest(questId, acceptQuestRequest));
+    // }
     
-    @Override
-    public ResponseEntity<CompleteQuest200Response> completeQuest(String questId, CompleteQuestRequest completeQuestRequest) {
-        log.info("POST /quests/{}/complete", questId);
-        return ResponseEntity.ok(service.completeQuest(questId, completeQuestRequest));
-    }
+    // @Override
+    // public ResponseEntity<CompleteQuest200Response> completeQuest(String questId, CompleteQuestRequest completeQuestRequest) {
+    //     log.info("POST /quests/{}/complete", questId);
+    //     return ResponseEntity.ok(service.completeQuest(questId, completeQuestRequest));
+    // }
     
-    @Override
-    public ResponseEntity<AbandonQuest200Response> abandonQuest(String questId, AbandonQuestRequest abandonQuestRequest) {
-        log.info("POST /quests/{}/abandon", questId);
-        return ResponseEntity.ok(service.abandonQuest(questId, abandonQuestRequest));
-    }
+    // @Override
+    // public ResponseEntity<AbandonQuest200Response> abandonQuest(String questId, AbandonQuestRequest abandonQuestRequest) {
+    //     log.info("POST /quests/{}/abandon", questId);
+    //     return ResponseEntity.ok(service.abandonQuest(questId, abandonQuestRequest));
+    // }
     
     @Override
     public ResponseEntity<GetQuestObjectives200Response> getQuestObjectives(String questId, UUID characterId) {
