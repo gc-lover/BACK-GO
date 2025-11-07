@@ -5,13 +5,8 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import org.openapitools.jackson.nullable.JsonNullable;
-import com.necpgame.backjava.model.EventOption;
+import com.necpgame.backjava.model.TriggerConditions;
 import org.springframework.lang.Nullable;
-import java.util.NoSuchElementException;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -26,33 +21,34 @@ import jakarta.annotation.Generated;
  * RandomEvent
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T21:22:13.174724+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 public class RandomEvent {
 
-  private String id;
+  private @Nullable String eventId;
 
-  private String name;
+  private @Nullable String name;
 
-  private String description;
-
-  @Valid
-  private List<@Valid EventOption> options = new ArrayList<>();
-
-  private JsonNullable<Integer> timeLimit = JsonNullable.<Integer>undefined();
+  private @Nullable String description;
 
   /**
-   * Gets or Sets dangerLevel
+   * Gets or Sets category
    */
-  public enum DangerLevelEnum {
-    LOW("low"),
+  public enum CategoryEnum {
+    COMBAT("COMBAT"),
     
-    MEDIUM("medium"),
+    SOCIAL("SOCIAL"),
     
-    HIGH("high");
+    ECONOMY("ECONOMY"),
+    
+    EXPLORATION("EXPLORATION"),
+    
+    FACTION("FACTION"),
+    
+    STORY("STORY");
 
     private final String value;
 
-    DangerLevelEnum(String value) {
+    CategoryEnum(String value) {
       this.value = value;
     }
 
@@ -67,8 +63,8 @@ public class RandomEvent {
     }
 
     @JsonCreator
-    public static DangerLevelEnum fromValue(String value) {
-      for (DangerLevelEnum b : DangerLevelEnum.values()) {
+    public static CategoryEnum fromValue(String value) {
+      for (CategoryEnum b : CategoryEnum.values()) {
         if (b.value.equals(value)) {
           return b;
         }
@@ -77,43 +73,37 @@ public class RandomEvent {
     }
   }
 
-  private @Nullable DangerLevelEnum dangerLevel;
+  private @Nullable CategoryEnum category;
 
-  public RandomEvent() {
-    super();
-  }
+  private @Nullable String period;
 
-  /**
-   * Constructor with only required parameters
-   */
-  public RandomEvent(String id, String name, String description, List<@Valid EventOption> options) {
-    this.id = id;
-    this.name = name;
-    this.description = description;
-    this.options = options;
-  }
+  private @Nullable Float baseTriggerChance;
 
-  public RandomEvent id(String id) {
-    this.id = id;
+  private @Nullable TriggerConditions triggerConditions;
+
+  private @Nullable Integer possibleOutcomesCount;
+
+  public RandomEvent eventId(@Nullable String eventId) {
+    this.eventId = eventId;
     return this;
   }
 
   /**
-   * Get id
-   * @return id
+   * Get eventId
+   * @return eventId
    */
-  @NotNull 
-  @Schema(name = "id", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("id")
-  public String getId() {
-    return id;
+  
+  @Schema(name = "event_id", example = "event_badlands_ambush", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("event_id")
+  public @Nullable String getEventId() {
+    return eventId;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setEventId(@Nullable String eventId) {
+    this.eventId = eventId;
   }
 
-  public RandomEvent name(String name) {
+  public RandomEvent name(@Nullable String name) {
     this.name = name;
     return this;
   }
@@ -122,18 +112,18 @@ public class RandomEvent {
    * Get name
    * @return name
    */
-  @NotNull 
-  @Schema(name = "name", requiredMode = Schema.RequiredMode.REQUIRED)
+  
+  @Schema(name = "name", example = "Badlands Ambush", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("name")
-  public String getName() {
+  public @Nullable String getName() {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(@Nullable String name) {
     this.name = name;
   }
 
-  public RandomEvent description(String description) {
+  public RandomEvent description(@Nullable String description) {
     this.description = description;
     return this;
   }
@@ -142,83 +132,115 @@ public class RandomEvent {
    * Get description
    * @return description
    */
-  @NotNull 
-  @Schema(name = "description", requiredMode = Schema.RequiredMode.REQUIRED)
+  
+  @Schema(name = "description", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("description")
-  public String getDescription() {
+  public @Nullable String getDescription() {
     return description;
   }
 
-  public void setDescription(String description) {
+  public void setDescription(@Nullable String description) {
     this.description = description;
   }
 
-  public RandomEvent options(List<@Valid EventOption> options) {
-    this.options = options;
-    return this;
-  }
-
-  public RandomEvent addOptionsItem(EventOption optionsItem) {
-    if (this.options == null) {
-      this.options = new ArrayList<>();
-    }
-    this.options.add(optionsItem);
+  public RandomEvent category(@Nullable CategoryEnum category) {
+    this.category = category;
     return this;
   }
 
   /**
-   * Get options
-   * @return options
-   */
-  @NotNull @Valid 
-  @Schema(name = "options", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("options")
-  public List<@Valid EventOption> getOptions() {
-    return options;
-  }
-
-  public void setOptions(List<@Valid EventOption> options) {
-    this.options = options;
-  }
-
-  public RandomEvent timeLimit(Integer timeLimit) {
-    this.timeLimit = JsonNullable.of(timeLimit);
-    return this;
-  }
-
-  /**
-   * Get timeLimit
-   * @return timeLimit
+   * Get category
+   * @return category
    */
   
-  @Schema(name = "timeLimit", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("timeLimit")
-  public JsonNullable<Integer> getTimeLimit() {
-    return timeLimit;
+  @Schema(name = "category", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("category")
+  public @Nullable CategoryEnum getCategory() {
+    return category;
   }
 
-  public void setTimeLimit(JsonNullable<Integer> timeLimit) {
-    this.timeLimit = timeLimit;
+  public void setCategory(@Nullable CategoryEnum category) {
+    this.category = category;
   }
 
-  public RandomEvent dangerLevel(@Nullable DangerLevelEnum dangerLevel) {
-    this.dangerLevel = dangerLevel;
+  public RandomEvent period(@Nullable String period) {
+    this.period = period;
     return this;
   }
 
   /**
-   * Get dangerLevel
-   * @return dangerLevel
+   * Get period
+   * @return period
    */
   
-  @Schema(name = "dangerLevel", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("dangerLevel")
-  public @Nullable DangerLevelEnum getDangerLevel() {
-    return dangerLevel;
+  @Schema(name = "period", example = "2060-2077", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("period")
+  public @Nullable String getPeriod() {
+    return period;
   }
 
-  public void setDangerLevel(@Nullable DangerLevelEnum dangerLevel) {
-    this.dangerLevel = dangerLevel;
+  public void setPeriod(@Nullable String period) {
+    this.period = period;
+  }
+
+  public RandomEvent baseTriggerChance(@Nullable Float baseTriggerChance) {
+    this.baseTriggerChance = baseTriggerChance;
+    return this;
+  }
+
+  /**
+   * Базовый шанс появления (0-1)
+   * @return baseTriggerChance
+   */
+  
+  @Schema(name = "base_trigger_chance", example = "0.15", description = "Базовый шанс появления (0-1)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("base_trigger_chance")
+  public @Nullable Float getBaseTriggerChance() {
+    return baseTriggerChance;
+  }
+
+  public void setBaseTriggerChance(@Nullable Float baseTriggerChance) {
+    this.baseTriggerChance = baseTriggerChance;
+  }
+
+  public RandomEvent triggerConditions(@Nullable TriggerConditions triggerConditions) {
+    this.triggerConditions = triggerConditions;
+    return this;
+  }
+
+  /**
+   * Get triggerConditions
+   * @return triggerConditions
+   */
+  @Valid 
+  @Schema(name = "trigger_conditions", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("trigger_conditions")
+  public @Nullable TriggerConditions getTriggerConditions() {
+    return triggerConditions;
+  }
+
+  public void setTriggerConditions(@Nullable TriggerConditions triggerConditions) {
+    this.triggerConditions = triggerConditions;
+  }
+
+  public RandomEvent possibleOutcomesCount(@Nullable Integer possibleOutcomesCount) {
+    this.possibleOutcomesCount = possibleOutcomesCount;
+    return this;
+  }
+
+  /**
+   * Get possibleOutcomesCount
+   * @return possibleOutcomesCount
+   */
+  
+  @Schema(name = "possible_outcomes_count", example = "3", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("possible_outcomes_count")
+  public @Nullable Integer getPossibleOutcomesCount() {
+    return possibleOutcomesCount;
+  }
+
+  public void setPossibleOutcomesCount(@Nullable Integer possibleOutcomesCount) {
+    this.possibleOutcomesCount = possibleOutcomesCount;
   }
 
   @Override
@@ -230,40 +252,33 @@ public class RandomEvent {
       return false;
     }
     RandomEvent randomEvent = (RandomEvent) o;
-    return Objects.equals(this.id, randomEvent.id) &&
+    return Objects.equals(this.eventId, randomEvent.eventId) &&
         Objects.equals(this.name, randomEvent.name) &&
         Objects.equals(this.description, randomEvent.description) &&
-        Objects.equals(this.options, randomEvent.options) &&
-        equalsNullable(this.timeLimit, randomEvent.timeLimit) &&
-        Objects.equals(this.dangerLevel, randomEvent.dangerLevel);
-  }
-
-  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
-    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
+        Objects.equals(this.category, randomEvent.category) &&
+        Objects.equals(this.period, randomEvent.period) &&
+        Objects.equals(this.baseTriggerChance, randomEvent.baseTriggerChance) &&
+        Objects.equals(this.triggerConditions, randomEvent.triggerConditions) &&
+        Objects.equals(this.possibleOutcomesCount, randomEvent.possibleOutcomesCount);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, description, options, hashCodeNullable(timeLimit), dangerLevel);
-  }
-
-  private static <T> int hashCodeNullable(JsonNullable<T> a) {
-    if (a == null) {
-      return 1;
-    }
-    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
+    return Objects.hash(eventId, name, description, category, period, baseTriggerChance, triggerConditions, possibleOutcomesCount);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class RandomEvent {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    eventId: ").append(toIndentedString(eventId)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("    options: ").append(toIndentedString(options)).append("\n");
-    sb.append("    timeLimit: ").append(toIndentedString(timeLimit)).append("\n");
-    sb.append("    dangerLevel: ").append(toIndentedString(dangerLevel)).append("\n");
+    sb.append("    category: ").append(toIndentedString(category)).append("\n");
+    sb.append("    period: ").append(toIndentedString(period)).append("\n");
+    sb.append("    baseTriggerChance: ").append(toIndentedString(baseTriggerChance)).append("\n");
+    sb.append("    triggerConditions: ").append(toIndentedString(triggerConditions)).append("\n");
+    sb.append("    possibleOutcomesCount: ").append(toIndentedString(possibleOutcomesCount)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -1,26 +1,33 @@
 package com.necpgame.backjava.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
 /**
- * RandomEventEntity - СЃРїСЂР°РІРѕС‡РЅРёРє СЃР»СѓС‡Р°Р№РЅС‹С… СЃРѕР±С‹С‚РёР№.
- * 
- * РҐСЂР°РЅРёС‚ С€Р°Р±Р»РѕРЅС‹ СЃР»СѓС‡Р°Р№РЅС‹С… СЃРѕР±С‹С‚РёР№ РІ РёРіСЂРµ.
- * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/events/random-events.yaml (RandomEvent schema)
+ * RandomEventEntity - справочник расширенных случайных событий.
+ *
+ * Источник: API-SWAGGER/api/v1/gameplay/world/random-events-extended/random-events.yaml
  */
 @Entity
 @Table(name = "random_events", indexes = {
-    @Index(name = "idx_random_events_type", columnList = "event_type"),
-    @Index(name = "idx_random_events_trigger", columnList = "trigger_type")
+    @Index(name = "idx_random_events_category", columnList = "category"),
+    @Index(name = "idx_random_events_period", columnList = "period")
 })
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class RandomEventEntity {
@@ -29,30 +36,49 @@ public class RandomEventEntity {
     @Column(name = "id", length = 100, nullable = false)
     private String id;
 
-    @Column(name = "title", nullable = false, length = 200)
-    private String title;
+    @Column(name = "name", nullable = false, length = 200)
+    private String name;
 
-    @Column(name = "description", nullable = false, length = 2000)
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "event_type", nullable = false, length = 50)
-    private String eventType; // encounter, discovery, combat, social, quest
+    @Column(name = "category", length = 40)
+    private String category;
 
-    @Column(name = "trigger_type", length = 50)
-    private String triggerType; // location_enter, time_based, random, quest_related
+    @Column(name = "period", length = 20)
+    private String period;
 
-    @Column(name = "min_level", nullable = false)
-    private Integer minLevel = 1;
+    @Column(name = "base_trigger_chance", precision = 6, scale = 4)
+    private Double baseTriggerChance;
 
-    @Column(name = "max_level")
-    private Integer maxLevel;
+    @Column(name = "possible_outcomes_count")
+    private Integer possibleOutcomesCount;
 
-    @Column(name = "rarity", nullable = false, length = 20)
-    private String rarity; // common, uncommon, rare, epic, legendary
+    @Column(name = "location_types_json", columnDefinition = "jsonb")
+    private String locationTypesJson;
 
-    @Column(name = "options", columnDefinition = "TEXT")
-    private String options; // JSON array of EventOption
+    @Column(name = "trigger_conditions_json", columnDefinition = "jsonb")
+    private String triggerConditionsJson;
 
+    @Column(name = "trigger_locations_json", columnDefinition = "jsonb")
+    private String triggerLocationsJson;
+
+    @Column(name = "time_restrictions_json", columnDefinition = "jsonb")
+    private String timeRestrictionsJson;
+
+    @Column(name = "npcs_involved_json", columnDefinition = "jsonb")
+    private String npcsInvolvedJson;
+
+    @Column(name = "choices_json", columnDefinition = "jsonb")
+    private String choicesJson;
+
+    @Column(name = "outcomes_json", columnDefinition = "jsonb")
+    private String outcomesJson;
+
+    @Column(name = "full_description", columnDefinition = "TEXT")
+    private String fullDescription;
+
+    @Builder.Default
     @Column(name = "active", nullable = false)
     private Boolean active = true;
 

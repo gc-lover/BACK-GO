@@ -1,9 +1,22 @@
 package com.necpgame.backjava.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,10 +24,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * CharacterActiveEventEntity - Р°РєС‚РёРІРЅРѕРµ СЃРѕР±С‹С‚РёРµ РїРµСЂСЃРѕРЅР°Р¶Р°.
- * 
- * РҐСЂР°РЅРёС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ С‚РµРєСѓС‰РёС… Р°РєС‚РёРІРЅС‹С… СЃРѕР±С‹С‚РёСЏС… РїРµСЂСЃРѕРЅР°Р¶Р°.
- * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/events/random-events.yaml
+ * CharacterActiveEventEntity - активные события персонажа.
  */
 @Entity
 @Table(name = "character_active_events", indexes = {
@@ -22,7 +32,9 @@ import java.util.UUID;
     @Index(name = "idx_character_active_events_event", columnList = "event_id"),
     @Index(name = "idx_character_active_events_status", columnList = "status")
 })
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class CharacterActiveEventEntity {
@@ -37,12 +49,10 @@ public class CharacterActiveEventEntity {
     @Column(name = "event_id", nullable = false, length = 100)
     private String eventId;
 
+    @Builder.Default
     @Column(name = "status", nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
     private EventStatus status = EventStatus.ACTIVE;
-
-    @Column(name = "expires_at")
-    private LocalDateTime expiresAt;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -51,6 +61,36 @@ public class CharacterActiveEventEntity {
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+
+    @Column(name = "triggered_at", nullable = false)
+    private LocalDateTime triggeredAt;
+
+    @Column(name = "expires_at")
+    private LocalDateTime expiresAt;
+
+    @Column(name = "location_id", length = 120)
+    private String locationId;
+
+    @Column(name = "location_type", length = 40)
+    private String locationType;
+
+    @Column(name = "time_of_day", length = 20)
+    private String timeOfDay;
+
+    @Column(name = "generation_chance", precision = 6, scale = 4)
+    private Double generationChance;
+
+    @Column(name = "event_snapshot", columnDefinition = "jsonb")
+    private String eventSnapshot;
+
+    @Column(name = "choice_id", length = 100)
+    private String choiceId;
+
+    @Column(name = "outcome_id", length = 100)
+    private String outcomeId;
+
+    @Column(name = "consequences_snapshot", columnDefinition = "jsonb")
+    private String consequencesSnapshot;
 
     // Relationships
     @ManyToOne(fetch = FetchType.LAZY)
@@ -61,9 +101,6 @@ public class CharacterActiveEventEntity {
     @JoinColumn(name = "event_id", referencedColumnName = "id", insertable = false, updatable = false)
     private RandomEventEntity event;
 
-    /**
-     * РЎС‚Р°С‚СѓСЃ СЃРѕР±С‹С‚РёСЏ
-     */
     public enum EventStatus {
         ACTIVE,
         COMPLETED,

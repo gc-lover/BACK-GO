@@ -138,4 +138,9 @@
     <!-- Quest Catalog -->
     <include file="db/changelog/changes/076-create-quest-catalog-tables.xml"/>
 
+    <!-- Random Events Extended -->
+    <include file="db/changelog/changes/077-update-random-events-table.xml"/>
+    <include file="db/changelog/changes/078-update-character-active-events-table.xml"/>
+    <include file="db/changelog/changes/079-create-character-event-history-table.xml"/>
+
 </databaseChangeLog>
