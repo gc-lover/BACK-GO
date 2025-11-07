@@ -158,4 +158,8 @@
     <include file="db/changelog/changes/087-create-trading-guilds-tables.xml"/>
     <include file="db/changelog/changes/088-seed-trading-guilds-data.xml"/>
 
+    <!-- World Events Framework -->
+    <include file="db/changelog/changes/089-create-world-events-framework-tables.xml"/>
+    <include file="db/changelog/changes/090-seed-world-events-framework-data.xml"/>
+
 </databaseChangeLog>
