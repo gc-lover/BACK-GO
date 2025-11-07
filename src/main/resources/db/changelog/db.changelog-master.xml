@@ -143,4 +143,9 @@
     <include file="db/changelog/changes/078-update-character-active-events-table.xml"/>
     <include file="db/changelog/changes/079-create-character-event-history-table.xml"/>
 
+    <!-- Currency Exchange -->
+    <include file="db/changelog/changes/080-create-currency-exchange-base-tables.xml"/>
+    <include file="db/changelog/changes/081-create-currency-exchange-orders-table.xml"/>
+    <include file="db/changelog/changes/082-create-currency-arbitrage-table.xml"/>
+
 </databaseChangeLog>
