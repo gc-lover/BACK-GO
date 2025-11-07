@@ -260,12 +260,12 @@ public class LoreServiceImpl implements LoreService {
         String query = q.trim();
         String normalized = query.toLowerCase(Locale.ROOT);
 
-        List<LoreSearchResult> results = new ArrayList<>();
+        List<LoreSearchResult> collected = new ArrayList<>();
         Set<String> seen = new LinkedHashSet<>();
         Consumer<LoreSearchResult> collector = result -> {
             String key = result.getResultType() + "::" + result.getId();
             if (seen.add(key)) {
-                results.add(result);
+                collected.add(result);
             }
         };
 
@@ -286,9 +286,9 @@ public class LoreServiceImpl implements LoreService {
             collectTimelineEvents(normalized, collector);
         }
 
-        if (results.size() > MAX_SEARCH_RESULTS) {
-            results = results.subList(0, MAX_SEARCH_RESULTS);
-        }
+        List<LoreSearchResult> results = collected.size() > MAX_SEARCH_RESULTS
+            ? new ArrayList<>(collected.subList(0, MAX_SEARCH_RESULTS))
+            : collected;
 
         SearchLore200Response response = new SearchLore200Response();
         response.setResults(results);

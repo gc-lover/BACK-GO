@@ -375,7 +375,7 @@ public class SystemServiceImpl implements SystemService {
     public Void systemMaintenanceStatusPost(MaintenanceStatusUpdateRequest maintenanceStatusUpdateRequest) {
         MaintenanceStatusPayloadEntity entity = new MaintenanceStatusPayloadEntity();
         entity.setStatus(maintenanceStatusUpdateRequest.getStatus());
-        entity.setProgressPercent(optionalFloat(maintenanceStatusUpdateRequest.getProgressPercent()));
+        entity.setProgressPercent(null);
         entity.setMessage(maintenanceStatusUpdateRequest.getMessage());
         entity.setPublicVisible(Boolean.TRUE.equals(maintenanceStatusUpdateRequest.getPublic()));
         maintenanceStatusPayloadRepository.save(entity);

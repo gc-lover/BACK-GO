@@ -107,7 +107,7 @@ public class PlayersServiceImpl implements PlayersService {
         Map<UUID, CharacterStatusEntity> statusMap = loadStatuses(characters);
         boolean showDeleted = Boolean.TRUE.equals(includeDeleted);
         List<PlayerCharacter> items = characters.stream()
-            .filter(character -> showDeleted || !Boolean.TRUE.equals(character.getDeleted()))
+            .filter(character -> showDeleted || !character.isDeleted())
             .sorted(Comparator.comparing(CharacterEntity::getCreatedAt))
             .map(character -> playerCharacterMapper.toSummary(character, statusMap.get(character.getId()), player))
             .collect(Collectors.toList());
@@ -202,7 +202,7 @@ public class PlayersServiceImpl implements PlayersService {
         if (!character.getAccount().getId().equals(account.getId())) {
             throw new BusinessException(ErrorCode.OPERATION_NOT_ALLOWED, "Персонаж принадлежит другому аккаунту");
         }
-        if (Boolean.TRUE.equals(character.getDeleted())) {
+        if (character.isDeleted()) {
             return new DeleteCharacter200Response("Персонаж уже находится в состоянии удаления");
         }
         PlayerEntity player = loadOrCreatePlayer(account);
@@ -231,7 +231,7 @@ public class PlayersServiceImpl implements PlayersService {
         if (!character.getAccount().getId().equals(account.getId())) {
             throw new BusinessException(ErrorCode.OPERATION_NOT_ALLOWED, "Персонаж принадлежит другому аккаунту");
         }
-        if (!Boolean.TRUE.equals(character.getDeleted())) {
+        if (!character.isDeleted()) {
             throw new BusinessException(ErrorCode.OPERATION_NOT_ALLOWED, "Персонаж не требует восстановления");
         }
         if (character.getRestoreDeadline() != null && character.getRestoreDeadline().isBefore(now())) {
@@ -264,7 +264,7 @@ public class PlayersServiceImpl implements PlayersService {
         if (!character.getAccount().getId().equals(account.getId())) {
             throw new BusinessException(ErrorCode.OPERATION_NOT_ALLOWED, "Персонаж принадлежит другому аккаунту");
         }
-        if (Boolean.TRUE.equals(character.getDeleted())) {
+        if (character.isDeleted()) {
             throw new BusinessException(ErrorCode.OPERATION_NOT_ALLOWED, "Персонаж находится в состоянии удаления");
         }
         PlayerEntity player = loadOrCreatePlayer(account);

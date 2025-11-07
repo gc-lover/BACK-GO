@@ -4,7 +4,7 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -20,10 +20,9 @@ import jakarta.annotation.Generated;
  * UseItemRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:50:45.778329200+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@JsonTypeName("useItem_request")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-08T01:55:07.487632800+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class UseItemRequest {
-
-  private UUID characterId;
 
   private String itemId;
 
@@ -36,29 +35,8 @@ public class UseItemRequest {
   /**
    * Constructor with only required parameters
    */
-  public UseItemRequest(UUID characterId, String itemId) {
-    this.characterId = characterId;
+  public UseItemRequest(String itemId) {
     this.itemId = itemId;
-  }
-
-  public UseItemRequest characterId(UUID characterId) {
-    this.characterId = characterId;
-    return this;
-  }
-
-  /**
-   * ID РїРµСЂСЃРѕРЅР°Р¶Р°
-   * @return characterId
-   */
-  @NotNull @Valid 
-  @Schema(name = "characterId", example = "550e8400-e29b-41d4-a716-446655440000", description = "ID РїРµСЂСЃРѕРЅР°Р¶Р°", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("characterId")
-  public UUID getCharacterId() {
-    return characterId;
-  }
-
-  public void setCharacterId(UUID characterId) {
-    this.characterId = characterId;
   }
 
   public UseItemRequest itemId(String itemId) {
@@ -67,12 +45,12 @@ public class UseItemRequest {
   }
 
   /**
-   * ID РїСЂРµРґРјРµС‚Р° РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ
+   * Get itemId
    * @return itemId
    */
   @NotNull 
-  @Schema(name = "itemId", example = "item_health_pack", description = "ID РїСЂРµРґРјРµС‚Р° РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("itemId")
+  @Schema(name = "item_id", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("item_id")
   public String getItemId() {
     return itemId;
   }
@@ -87,12 +65,11 @@ public class UseItemRequest {
   }
 
   /**
-   * РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРµРґРјРµС‚РѕРІ РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ
-   * minimum: 1
+   * Get quantity
    * @return quantity
    */
-  @Min(value = 1) 
-  @Schema(name = "quantity", example = "1", description = "РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРµРґРјРµС‚РѕРІ РґР»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  
+  @Schema(name = "quantity", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("quantity")
   public Integer getQuantity() {
     return quantity;
@@ -111,21 +88,19 @@ public class UseItemRequest {
       return false;
     }
     UseItemRequest useItemRequest = (UseItemRequest) o;
-    return Objects.equals(this.characterId, useItemRequest.characterId) &&
-        Objects.equals(this.itemId, useItemRequest.itemId) &&
+    return Objects.equals(this.itemId, useItemRequest.itemId) &&
         Objects.equals(this.quantity, useItemRequest.quantity);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(characterId, itemId, quantity);
+    return Objects.hash(itemId, quantity);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class UseItemRequest {\n");
-    sb.append("    characterId: ").append(toIndentedString(characterId)).append("\n");
     sb.append("    itemId: ").append(toIndentedString(itemId)).append("\n");
     sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
     sb.append("}");
@@ -143,5 +118,4 @@ public class UseItemRequest {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
 

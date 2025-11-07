@@ -1,77 +1,134 @@
 package com.necpgame.backjava.service.impl;
 
-import com.necpgame.backjava.model.*;
-import com.necpgame.backjava.repository.LootDropRepository;
-import com.necpgame.backjava.repository.LootRollRepository;
+import com.necpgame.backjava.model.DistributionResult;
+import com.necpgame.backjava.model.GuaranteedDistributionRequest;
+import com.necpgame.backjava.model.LootConfigResponse;
+import com.necpgame.backjava.model.LootEntryBatchRequest;
+import com.necpgame.backjava.model.LootEventNotificationRequest;
+import com.necpgame.backjava.model.LootGenerationRequest;
+import com.necpgame.backjava.model.LootGenerationResult;
+import com.necpgame.backjava.model.LootHistoryResponse;
+import com.necpgame.backjava.model.LootReleaseRequest;
+import com.necpgame.backjava.model.LootReservationResponse;
+import com.necpgame.backjava.model.LootReserveRequest;
+import com.necpgame.backjava.model.LootRoll;
+import com.necpgame.backjava.model.LootStatsResponse;
+import com.necpgame.backjava.model.LootTableListResponse;
+import com.necpgame.backjava.model.LootTableSummary;
+import com.necpgame.backjava.model.LootTableUpsertRequest;
+import com.necpgame.backjava.model.PersonalDistributionRequest;
+import com.necpgame.backjava.model.PityTimerState;
+import com.necpgame.backjava.model.PityTimerUpdateRequest;
+import com.necpgame.backjava.model.RaidDistributionRequest;
+import com.necpgame.backjava.model.RollStartRequest;
+import com.necpgame.backjava.model.SharedDistributionRequest;
+import com.necpgame.backjava.model.SimulationRequest;
+import com.necpgame.backjava.model.SimulationResponse;
 import com.necpgame.backjava.service.LootService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.time.OffsetDateTime;
+import java.util.UUID;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Реализация сервиса лута
- * Соответствует loot-system.yaml
- */
 @Service
-@RequiredArgsConstructor
-@Slf4j
-@Transactional
 public class LootServiceImpl implements LootService {
 
-    private final LootDropRepository lootDropRepository;
-    private final LootRollRepository lootRollRepository;
-
-    @Override
-    public GeneratedLoot generateLoot(GenerateLootRequest request) {
-        log.info("Generating loot for source: {} / {}", request.getSourceType(), request.getSourceId());
-        
-        // TODO: Реализовать генерацию лута из loot tables
-        // TODO: Применить loot modifiers (luck, drop rate bonuses)
-        // TODO: Сохранить в world_drops
-        // TODO: Если personal loot - сразу добавить в inventory
-        
-        return new GeneratedLoot()
-            .dropId("drop_" + System.currentTimeMillis())
-            .sourceType(request.getSourceType() != null ? request.getSourceType().getValue() : null);
+    private UnsupportedOperationException error() {
+        return new UnsupportedOperationException("Loot service is not implemented yet");
     }
 
     @Override
-    public LootDrop getLootDrop(String dropId) {
-        log.info("Getting loot drop: {}", dropId);
-        
-        // TODO: Загрузить из БД
-        // TODO: Проверить expires_at
-        // TODO: Вернуть информацию о предметах
-        
-        return new LootDrop()
-            .dropId(dropId);
+    public LootConfigResponse lootConfigGet() {
+        throw error();
     }
 
     @Override
-    public GetRollResult200Response getRollResult(String rollId) {
-        log.info("Getting roll result: {}", rollId);
-        
-        // TODO: Загрузить roll из БД
-        // TODO: Если completed - вернуть winner
-        // TODO: Если active - проверить timer (60s)
-        // TODO: Если expired - определить winner по highest roll
-        
-        return new GetRollResult200Response()
-            .rollId(rollId);
+    public Void lootDistributionGuaranteedPost(GuaranteedDistributionRequest guaranteedDistributionRequest) {
+        throw error();
     }
 
     @Override
-    public LootItem200Response lootItem(String dropId, LootItemRequest request) {
-        log.info("Looting item from drop: {} by character: {}", dropId, request.getCharacterId());
-        
-        // TODO: Проверить loot mode
-        // TODO: Personal loot - мгновенно в inventory
-        // TODO: Shared/Need-Greed - создать roll
-        // TODO: Master looter - проверить права
-        
-        return new LootItem200Response()
-            .success(true);
+    public DistributionResult lootDistributionPersonalPost(PersonalDistributionRequest personalDistributionRequest) {
+        throw error();
+    }
+
+    @Override
+    public DistributionResult lootDistributionRaidPost(RaidDistributionRequest raidDistributionRequest) {
+        throw error();
+    }
+
+    @Override
+    public DistributionResult lootDistributionSharedPost(SharedDistributionRequest sharedDistributionRequest) {
+        throw error();
+    }
+
+    @Override
+    public Void lootEventsNotifyPost(LootEventNotificationRequest lootEventNotificationRequest) {
+        throw error();
+    }
+
+    @Override
+    public LootHistoryResponse lootHistoryGet(String playerId, String sourceId, String distributionMode, String rarity, OffsetDateTime from, OffsetDateTime to, Integer page, Integer pageSize) {
+        throw error();
+    }
+
+    @Override
+    public PityTimerState lootPityPost(PityTimerUpdateRequest pityTimerUpdateRequest) {
+        throw error();
+    }
+
+    @Override
+    public Void lootReleasePost(LootReleaseRequest lootReleaseRequest) {
+        throw error();
+    }
+
+    @Override
+    public LootReservationResponse lootReservePost(LootReserveRequest lootReserveRequest) {
+        throw error();
+    }
+
+    @Override
+    public Void lootRollsPost(RollStartRequest rollStartRequest) {
+        throw error();
+    }
+
+    @Override
+    public LootRoll lootRollsSessionIdGet(UUID sessionId) {
+        throw error();
+    }
+
+    @Override
+    public LootGenerationResult lootSourcesSourceIdGeneratePost(String sourceId, LootGenerationRequest lootGenerationRequest) {
+        throw error();
+    }
+
+    @Override
+    public SimulationResponse lootSourcesSourceIdSimulatePost(String sourceId, SimulationRequest simulationRequest) {
+        throw error();
+    }
+
+    @Override
+    public LootStatsResponse lootStatsGet(String tableId, String timeRange) {
+        throw error();
+    }
+
+    @Override
+    public LootTableListResponse lootTablesGet(String sourceType, Boolean active, String rarityCurve, Integer page, Integer pageSize) {
+        throw error();
+    }
+
+    @Override
+    public LootTableSummary lootTablesPost(LootTableUpsertRequest lootTableUpsertRequest) {
+        throw error();
+    }
+
+    @Override
+    public Void lootTablesTableIdEntriesPost(String tableId, LootEntryBatchRequest lootEntryBatchRequest) {
+        throw error();
+    }
+
+    @Override
+    public LootTableUpsertRequest lootTablesTableIdGet(String tableId) {
+        throw error();
     }
 }
 

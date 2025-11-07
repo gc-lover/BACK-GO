@@ -47,17 +47,17 @@ public class FactionsServiceImpl implements FactionsService {
         log.info("Fetching legacy factions list, origin filter: {}", origin);
 
         List<Faction> factions = factionRepository.findAll().stream()
-                .map(entity -> {
-                    Faction dto = new Faction();
-                    dto.setId(entity.getId());
-                    dto.setName(entity.getName());
-                    if (entity.getType() != null) {
-                        dto.setType(Faction.TypeEnum.fromValue(entity.getType().name()));
-                    }
-                    dto.setDescription(entity.getDescription());
-                    return dto;
-                })
-                .collect(Collectors.toList());
+            .map(entity -> {
+                Faction dto = new Faction()
+                    .factionId(entity.getId() != null ? entity.getId().toString() : null)
+                    .name(entity.getName())
+                    .descriptionShort(entity.getDescription());
+                if (entity.getType() != null) {
+                    dto.type(Faction.TypeEnum.fromValue(entity.getType().name()));
+                }
+                return dto;
+            })
+            .collect(Collectors.toList());
 
         GetFactions200Response response = new GetFactions200Response();
         response.setFactions(factions);

@@ -1,81 +1,103 @@
 package com.necpgame.backjava.service.impl;
 
-import com.necpgame.backjava.model.*;
-import com.necpgame.backjava.repository.*;
+import com.necpgame.backjava.model.ActionRequest;
+import com.necpgame.backjava.model.ActionResult;
+import com.necpgame.backjava.model.CombatLogResponse;
+import com.necpgame.backjava.model.CombatMetricsResponse;
+import com.necpgame.backjava.model.CombatSession;
+import com.necpgame.backjava.model.CombatSessionCreateRequest;
+import com.necpgame.backjava.model.CombatSessionStateResponse;
+import com.necpgame.backjava.model.DamagePreviewRequest;
+import com.necpgame.backjava.model.DamagePreviewResponse;
+import com.necpgame.backjava.model.LagCompensationRequest;
+import com.necpgame.backjava.model.LagCompensationResponse;
+import com.necpgame.backjava.model.Participant;
+import com.necpgame.backjava.model.ReviveRequest;
+import com.necpgame.backjava.model.SessionAbortRequest;
+import com.necpgame.backjava.model.SessionCompleteRequest;
+import com.necpgame.backjava.model.SessionCompleteResponse;
+import com.necpgame.backjava.model.SessionJoinRequest;
+import com.necpgame.backjava.model.SimulationRequest;
+import com.necpgame.backjava.model.SurrenderRequest;
 import com.necpgame.backjava.service.CombatService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.time.OffsetDateTime;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
-
-/**
- * Р РµР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІРёСЃР° РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ Р±РѕРµРІРѕР№ СЃРёСЃС‚РµРјРѕР№.
- * 
- * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/combat/combat.yaml
- */
-@Slf4j
 @Service
-@RequiredArgsConstructor
 public class CombatServiceImpl implements CombatService {
-    
-    private final CombatSessionRepository combatSessionRepository;
-    private final CombatParticipantRepository combatParticipantRepository;
-    private final CombatLogRepository combatLogRepository;
-    
-    @Override
-    @Transactional
-    public CombatState initiateCombat(InitiateCombatRequest request) {
-        log.info("Initiating combat for character: {} vs target: {}", request.getCharacterId(), request.getTargetId());
-        
-        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (СЃРѕР·РґР°С‚СЊ СЃРµСЃСЃРёСЋ, РґРѕР±Р°РІРёС‚СЊ СѓС‡Р°СЃС‚РЅРёРєРѕРІ, РѕРїСЂРµРґРµР»РёС‚СЊ РёРЅРёС†РёР°С‚РёРІСѓ)
-        return null;
+
+    private UnsupportedOperationException error() {
+        return new UnsupportedOperationException("Combat service is not implemented yet");
     }
-    
+
     @Override
-    @Transactional(readOnly = true)
-    public CombatState getCombatState(UUID combatId) {
-        log.info("Getting combat state: {}", combatId);
-        
-        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (Р·Р°РіСЂСѓР·РёС‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ РёР· Р‘Р”, СЃРѕР±СЂР°С‚СЊ DTO)
-        return null;
+    public CombatSession combatSessionsPost(CombatSessionCreateRequest combatSessionCreateRequest) {
+        throw error();
     }
-    
+
     @Override
-    @Transactional
-    public CombatState performCombatAction(UUID combatId, PerformCombatActionRequest request) {
-        log.info("Performing combat action in combat: {}", combatId);
-        
-        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (РІС‹РїРѕР»РЅРёС‚СЊ РґРµР№СЃС‚РІРёРµ, РѕР±РЅРѕРІРёС‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ, РґРѕР±Р°РІРёС‚СЊ РІ Р»РѕРі)
-        return null;
+    public Void combatSessionsSessionIdAbortPost(String sessionId, SessionAbortRequest sessionAbortRequest) {
+        throw error();
     }
-    
+
     @Override
-    @Transactional(readOnly = true)
-    public GetAvailableActions200Response getAvailableActions(UUID combatId, UUID characterId) {
-        log.info("Getting available actions for character: {} in combat: {}", characterId, combatId);
-        
-        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (РѕРїСЂРµРґРµР»РёС‚СЊ РґРѕСЃС‚СѓРїРЅС‹Рµ РґРµР№СЃС‚РІРёСЏ РЅР° РѕСЃРЅРѕРІРµ СЃРѕСЃС‚РѕСЏРЅРёСЏ)
-        return null;
+    public ActionResult combatSessionsSessionIdActionsPost(String sessionId, ActionRequest actionRequest) {
+        throw error();
     }
-    
+
     @Override
-    @Transactional
-    public FleeCombat200Response fleeCombat(UUID combatId, FleeCombatRequest request) {
-        log.info("Attempting to flee from combat: {}", combatId);
-        
-        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (РїСЂРѕРІРµСЂРєР° РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё РїРѕР±РµРіР°, Р·Р°РІРµСЂС€РµРЅРёРµ Р±РѕСЏ)
-        return null;
+    public SessionCompleteResponse combatSessionsSessionIdCompletePost(String sessionId, SessionCompleteRequest sessionCompleteRequest) {
+        throw error();
     }
-    
+
     @Override
-    @Transactional(readOnly = true)
-    public CombatResult getCombatResult(UUID combatId) {
-        log.info("Getting combat result: {}", combatId);
-        
-        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (Р·Р°РіСЂСѓР·РёС‚СЊ СЂРµР·СѓР»СЊС‚Р°С‚ Р·Р°РІРµСЂС€РµРЅРЅРѕРіРѕ Р±РѕСЏ)
-        return null;
+    public DamagePreviewResponse combatSessionsSessionIdDamagePreviewPost(String sessionId, DamagePreviewRequest damagePreviewRequest) {
+        throw error();
+    }
+
+    @Override
+    public CombatSessionStateResponse combatSessionsSessionIdGet(String sessionId) {
+        throw error();
+    }
+
+    @Override
+    public Participant combatSessionsSessionIdJoinPost(String sessionId, SessionJoinRequest sessionJoinRequest) {
+        throw error();
+    }
+
+    @Override
+    public LagCompensationResponse combatSessionsSessionIdLagCompensationPost(String sessionId, LagCompensationRequest lagCompensationRequest) {
+        throw error();
+    }
+
+    @Override
+    public CombatLogResponse combatSessionsSessionIdLogGet(String sessionId, OffsetDateTime from, OffsetDateTime to) {
+        throw error();
+    }
+
+    @Override
+    public CombatMetricsResponse combatSessionsSessionIdMetricsGet(String sessionId) {
+        throw error();
+    }
+
+    @Override
+    public Void combatSessionsSessionIdRevivePost(String sessionId, ReviveRequest reviveRequest) {
+        throw error();
+    }
+
+    @Override
+    public Void combatSessionsSessionIdSimulatePost(String sessionId, SimulationRequest simulationRequest) {
+        throw error();
+    }
+
+    @Override
+    public Void combatSessionsSessionIdSurrenderPost(String sessionId, SurrenderRequest surrenderRequest) {
+        throw error();
+    }
+
+    @Override
+    public Void combatSessionsSessionIdTurnEndPost(String sessionId) {
+        throw error();
     }
 }
 

@@ -4,9 +4,7 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.necpgame.backjava.model.InventoryItemRequirements;
-import com.necpgame.backjava.model.ItemCategory;
+import java.math.BigDecimal;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -22,352 +20,161 @@ import jakarta.annotation.Generated;
  * InventoryItem
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:50:45.778329200+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-08T01:55:07.487632800+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 public class InventoryItem {
 
-  private String id;
+  private @Nullable String itemId;
 
-  private String name;
+  private @Nullable String name;
 
-  private String description;
+  private @Nullable Integer slot;
 
-  private ItemCategory category;
+  private @Nullable Integer stackSize;
 
-  private Float weight;
+  private @Nullable BigDecimal durability;
 
-  private Integer quantity;
+  private @Nullable Boolean isEquipped;
 
-  private Boolean stackable;
+  private @Nullable Boolean isBound;
 
-  /**
-   * Р РµРґРєРѕСЃС‚СЊ РїСЂРµРґРјРµС‚Р°
-   */
-  public enum RarityEnum {
-    COMMON("common"),
-    
-    UNCOMMON("uncommon"),
-    
-    RARE("rare"),
-    
-    EPIC("epic"),
-    
-    LEGENDARY("legendary");
-
-    private final String value;
-
-    RarityEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static RarityEnum fromValue(String value) {
-      for (RarityEnum b : RarityEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
-
-  private @Nullable RarityEnum rarity;
-
-  private @Nullable Integer value;
-
-  private @Nullable Boolean equippable;
-
-  private @Nullable Boolean usable;
-
-  private @Nullable Boolean questItem;
-
-  private @Nullable InventoryItemRequirements requirements;
-
-  public InventoryItem() {
-    super();
-  }
-
-  /**
-   * Constructor with only required parameters
-   */
-  public InventoryItem(String id, String name, String description, ItemCategory category, Float weight, Integer quantity, Boolean stackable) {
-    this.id = id;
-    this.name = name;
-    this.description = description;
-    this.category = category;
-    this.weight = weight;
-    this.quantity = quantity;
-    this.stackable = stackable;
-  }
-
-  public InventoryItem id(String id) {
-    this.id = id;
+  public InventoryItem itemId(@Nullable String itemId) {
+    this.itemId = itemId;
     return this;
   }
 
   /**
-   * ID РїСЂРµРґРјРµС‚Р°
-   * @return id
+   * Get itemId
+   * @return itemId
    */
-  @NotNull 
-  @Schema(name = "id", example = "item_pistol_01", description = "ID РїСЂРµРґРјРµС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("id")
-  public String getId() {
-    return id;
+  
+  @Schema(name = "item_id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("item_id")
+  public @Nullable String getItemId() {
+    return itemId;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setItemId(@Nullable String itemId) {
+    this.itemId = itemId;
   }
 
-  public InventoryItem name(String name) {
+  public InventoryItem name(@Nullable String name) {
     this.name = name;
     return this;
   }
 
   /**
-   * РќР°Р·РІР°РЅРёРµ РїСЂРµРґРјРµС‚Р°
+   * Get name
    * @return name
    */
-  @NotNull 
-  @Schema(name = "name", example = "M-10AF Lexington", description = "РќР°Р·РІР°РЅРёРµ РїСЂРµРґРјРµС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
+  
+  @Schema(name = "name", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("name")
-  public String getName() {
+  public @Nullable String getName() {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(@Nullable String name) {
     this.name = name;
   }
 
-  public InventoryItem description(String description) {
-    this.description = description;
+  public InventoryItem slot(@Nullable Integer slot) {
+    this.slot = slot;
     return this;
   }
 
   /**
-   * РћРїРёСЃР°РЅРёРµ РїСЂРµРґРјРµС‚Р°
-   * @return description
-   */
-  @NotNull 
-  @Schema(name = "description", example = "РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРёСЃС‚РѕР»РµС‚ РєР°Р»РёР±СЂР° 10РјРј", description = "РћРїРёСЃР°РЅРёРµ РїСЂРµРґРјРµС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("description")
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public InventoryItem category(ItemCategory category) {
-    this.category = category;
-    return this;
-  }
-
-  /**
-   * Get category
-   * @return category
-   */
-  @NotNull @Valid 
-  @Schema(name = "category", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("category")
-  public ItemCategory getCategory() {
-    return category;
-  }
-
-  public void setCategory(ItemCategory category) {
-    this.category = category;
-  }
-
-  public InventoryItem weight(Float weight) {
-    this.weight = weight;
-    return this;
-  }
-
-  /**
-   * Р’РµСЃ РѕРґРЅРѕРіРѕ РїСЂРµРґРјРµС‚Р° (РєРі)
-   * @return weight
-   */
-  @NotNull 
-  @Schema(name = "weight", example = "1.5", description = "Р’РµСЃ РѕРґРЅРѕРіРѕ РїСЂРµРґРјРµС‚Р° (РєРі)", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("weight")
-  public Float getWeight() {
-    return weight;
-  }
-
-  public void setWeight(Float weight) {
-    this.weight = weight;
-  }
-
-  public InventoryItem quantity(Integer quantity) {
-    this.quantity = quantity;
-    return this;
-  }
-
-  /**
-   * РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРµРґРјРµС‚РѕРІ (РґР»СЏ stackable)
-   * minimum: 1
-   * @return quantity
-   */
-  @NotNull @Min(value = 1) 
-  @Schema(name = "quantity", example = "1", description = "РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРµРґРјРµС‚РѕРІ (РґР»СЏ stackable)", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("quantity")
-  public Integer getQuantity() {
-    return quantity;
-  }
-
-  public void setQuantity(Integer quantity) {
-    this.quantity = quantity;
-  }
-
-  public InventoryItem stackable(Boolean stackable) {
-    this.stackable = stackable;
-    return this;
-  }
-
-  /**
-   * РњРѕР¶РЅРѕ Р»Рё СЃРєР»Р°РґС‹РІР°С‚СЊ РїСЂРµРґРјРµС‚С‹
-   * @return stackable
-   */
-  @NotNull 
-  @Schema(name = "stackable", example = "false", description = "РњРѕР¶РЅРѕ Р»Рё СЃРєР»Р°РґС‹РІР°С‚СЊ РїСЂРµРґРјРµС‚С‹", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("stackable")
-  public Boolean getStackable() {
-    return stackable;
-  }
-
-  public void setStackable(Boolean stackable) {
-    this.stackable = stackable;
-  }
-
-  public InventoryItem rarity(@Nullable RarityEnum rarity) {
-    this.rarity = rarity;
-    return this;
-  }
-
-  /**
-   * Р РµРґРєРѕСЃС‚СЊ РїСЂРµРґРјРµС‚Р°
-   * @return rarity
+   * Get slot
+   * @return slot
    */
   
-  @Schema(name = "rarity", example = "common", description = "Р РµРґРєРѕСЃС‚СЊ РїСЂРµРґРјРµС‚Р°", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("rarity")
-  public @Nullable RarityEnum getRarity() {
-    return rarity;
+  @Schema(name = "slot", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("slot")
+  public @Nullable Integer getSlot() {
+    return slot;
   }
 
-  public void setRarity(@Nullable RarityEnum rarity) {
-    this.rarity = rarity;
+  public void setSlot(@Nullable Integer slot) {
+    this.slot = slot;
   }
 
-  public InventoryItem value(@Nullable Integer value) {
-    this.value = value;
+  public InventoryItem stackSize(@Nullable Integer stackSize) {
+    this.stackSize = stackSize;
     return this;
   }
 
   /**
-   * РЎС‚РѕРёРјРѕСЃС‚СЊ РїСЂРµРґРјРµС‚Р° (eddies)
-   * @return value
+   * Get stackSize
+   * @return stackSize
    */
   
-  @Schema(name = "value", example = "500", description = "РЎС‚РѕРёРјРѕСЃС‚СЊ РїСЂРµРґРјРµС‚Р° (eddies)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("value")
-  public @Nullable Integer getValue() {
-    return value;
+  @Schema(name = "stack_size", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("stack_size")
+  public @Nullable Integer getStackSize() {
+    return stackSize;
   }
 
-  public void setValue(@Nullable Integer value) {
-    this.value = value;
+  public void setStackSize(@Nullable Integer stackSize) {
+    this.stackSize = stackSize;
   }
 
-  public InventoryItem equippable(@Nullable Boolean equippable) {
-    this.equippable = equippable;
+  public InventoryItem durability(@Nullable BigDecimal durability) {
+    this.durability = durability;
     return this;
   }
 
   /**
-   * РњРѕР¶РЅРѕ Р»Рё СЌРєРёРїРёСЂРѕРІР°С‚СЊ РїСЂРµРґРјРµС‚
-   * @return equippable
-   */
-  
-  @Schema(name = "equippable", example = "true", description = "РњРѕР¶РЅРѕ Р»Рё СЌРєРёРїРёСЂРѕРІР°С‚СЊ РїСЂРµРґРјРµС‚", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("equippable")
-  public @Nullable Boolean getEquippable() {
-    return equippable;
-  }
-
-  public void setEquippable(@Nullable Boolean equippable) {
-    this.equippable = equippable;
-  }
-
-  public InventoryItem usable(@Nullable Boolean usable) {
-    this.usable = usable;
-    return this;
-  }
-
-  /**
-   * РњРѕР¶РЅРѕ Р»Рё РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїСЂРµРґРјРµС‚
-   * @return usable
-   */
-  
-  @Schema(name = "usable", example = "false", description = "РњРѕР¶РЅРѕ Р»Рё РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїСЂРµРґРјРµС‚", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("usable")
-  public @Nullable Boolean getUsable() {
-    return usable;
-  }
-
-  public void setUsable(@Nullable Boolean usable) {
-    this.usable = usable;
-  }
-
-  public InventoryItem questItem(@Nullable Boolean questItem) {
-    this.questItem = questItem;
-    return this;
-  }
-
-  /**
-   * РЇРІР»СЏРµС‚СЃСЏ Р»Рё РєРІРµСЃС‚РѕРІС‹Рј РїСЂРµРґРјРµС‚РѕРј
-   * @return questItem
-   */
-  
-  @Schema(name = "questItem", example = "false", description = "РЇРІР»СЏРµС‚СЃСЏ Р»Рё РєРІРµСЃС‚РѕРІС‹Рј РїСЂРµРґРјРµС‚РѕРј", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("questItem")
-  public @Nullable Boolean getQuestItem() {
-    return questItem;
-  }
-
-  public void setQuestItem(@Nullable Boolean questItem) {
-    this.questItem = questItem;
-  }
-
-  public InventoryItem requirements(@Nullable InventoryItemRequirements requirements) {
-    this.requirements = requirements;
-    return this;
-  }
-
-  /**
-   * Get requirements
-   * @return requirements
+   * Get durability
+   * @return durability
    */
   @Valid 
-  @Schema(name = "requirements", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("requirements")
-  public @Nullable InventoryItemRequirements getRequirements() {
-    return requirements;
+  @Schema(name = "durability", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("durability")
+  public @Nullable BigDecimal getDurability() {
+    return durability;
   }
 
-  public void setRequirements(@Nullable InventoryItemRequirements requirements) {
-    this.requirements = requirements;
+  public void setDurability(@Nullable BigDecimal durability) {
+    this.durability = durability;
+  }
+
+  public InventoryItem isEquipped(@Nullable Boolean isEquipped) {
+    this.isEquipped = isEquipped;
+    return this;
+  }
+
+  /**
+   * Get isEquipped
+   * @return isEquipped
+   */
+  
+  @Schema(name = "is_equipped", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("is_equipped")
+  public @Nullable Boolean getIsEquipped() {
+    return isEquipped;
+  }
+
+  public void setIsEquipped(@Nullable Boolean isEquipped) {
+    this.isEquipped = isEquipped;
+  }
+
+  public InventoryItem isBound(@Nullable Boolean isBound) {
+    this.isBound = isBound;
+    return this;
+  }
+
+  /**
+   * Get isBound
+   * @return isBound
+   */
+  
+  @Schema(name = "is_bound", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("is_bound")
+  public @Nullable Boolean getIsBound() {
+    return isBound;
+  }
+
+  public void setIsBound(@Nullable Boolean isBound) {
+    this.isBound = isBound;
   }
 
   @Override
@@ -379,43 +186,31 @@ public class InventoryItem {
       return false;
     }
     InventoryItem inventoryItem = (InventoryItem) o;
-    return Objects.equals(this.id, inventoryItem.id) &&
+    return Objects.equals(this.itemId, inventoryItem.itemId) &&
         Objects.equals(this.name, inventoryItem.name) &&
-        Objects.equals(this.description, inventoryItem.description) &&
-        Objects.equals(this.category, inventoryItem.category) &&
-        Objects.equals(this.weight, inventoryItem.weight) &&
-        Objects.equals(this.quantity, inventoryItem.quantity) &&
-        Objects.equals(this.stackable, inventoryItem.stackable) &&
-        Objects.equals(this.rarity, inventoryItem.rarity) &&
-        Objects.equals(this.value, inventoryItem.value) &&
-        Objects.equals(this.equippable, inventoryItem.equippable) &&
-        Objects.equals(this.usable, inventoryItem.usable) &&
-        Objects.equals(this.questItem, inventoryItem.questItem) &&
-        Objects.equals(this.requirements, inventoryItem.requirements);
+        Objects.equals(this.slot, inventoryItem.slot) &&
+        Objects.equals(this.stackSize, inventoryItem.stackSize) &&
+        Objects.equals(this.durability, inventoryItem.durability) &&
+        Objects.equals(this.isEquipped, inventoryItem.isEquipped) &&
+        Objects.equals(this.isBound, inventoryItem.isBound);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, description, category, weight, quantity, stackable, rarity, value, equippable, usable, questItem, requirements);
+    return Objects.hash(itemId, name, slot, stackSize, durability, isEquipped, isBound);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class InventoryItem {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    itemId: ").append(toIndentedString(itemId)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("    category: ").append(toIndentedString(category)).append("\n");
-    sb.append("    weight: ").append(toIndentedString(weight)).append("\n");
-    sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
-    sb.append("    stackable: ").append(toIndentedString(stackable)).append("\n");
-    sb.append("    rarity: ").append(toIndentedString(rarity)).append("\n");
-    sb.append("    value: ").append(toIndentedString(value)).append("\n");
-    sb.append("    equippable: ").append(toIndentedString(equippable)).append("\n");
-    sb.append("    usable: ").append(toIndentedString(usable)).append("\n");
-    sb.append("    questItem: ").append(toIndentedString(questItem)).append("\n");
-    sb.append("    requirements: ").append(toIndentedString(requirements)).append("\n");
+    sb.append("    slot: ").append(toIndentedString(slot)).append("\n");
+    sb.append("    stackSize: ").append(toIndentedString(stackSize)).append("\n");
+    sb.append("    durability: ").append(toIndentedString(durability)).append("\n");
+    sb.append("    isEquipped: ").append(toIndentedString(isEquipped)).append("\n");
+    sb.append("    isBound: ").append(toIndentedString(isBound)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -431,6 +226,4 @@ public class InventoryItem {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
-
 
