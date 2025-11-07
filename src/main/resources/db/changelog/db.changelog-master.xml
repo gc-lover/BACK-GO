@@ -135,4 +135,7 @@
     <!-- Faction Quests -->
     <include file="db/changelog/changes/075-create-faction-quests-tables.xml"/>
 
+    <!-- Quest Catalog -->
+    <include file="db/changelog/changes/076-create-quest-catalog-tables.xml"/>
+
 </databaseChangeLog>

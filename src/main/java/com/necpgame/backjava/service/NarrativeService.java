@@ -4,19 +4,28 @@ import com.necpgame.backjava.model.CompleteQuestRequest;
 import com.necpgame.backjava.model.DialogueChoiceRequest;
 import com.necpgame.backjava.model.DialogueChoiceResult;
 import com.necpgame.backjava.model.DialogueNode;
+import com.necpgame.backjava.model.DialogueTree;
 import com.necpgame.backjava.model.FactionQuestDetailed;
 import com.necpgame.backjava.model.GetActiveQuests200Response;
 import com.necpgame.backjava.model.GetAvailableFactionQuests200Response;
 import com.necpgame.backjava.model.GetFactionQuestProgress200Response;
+import com.necpgame.backjava.model.GetQuestCatalog200Response;
 import com.necpgame.backjava.model.GetQuestBranches200Response;
+import com.necpgame.backjava.model.GetQuestChains200Response;
 import com.necpgame.backjava.model.GetQuestEndings200Response;
+import com.necpgame.backjava.model.GetQuestRecommendations200Response;
 import com.necpgame.backjava.model.ListFactionQuests200Response;
 import com.necpgame.backjava.model.QuestCompletionResult;
 import com.necpgame.backjava.model.QuestInstance;
+import com.necpgame.backjava.model.QuestDetails;
+import com.necpgame.backjava.model.QuestLootTable;
+import com.necpgame.backjava.model.SearchQuests200Response;
 import com.necpgame.backjava.model.SkillCheckRequest;
 import com.necpgame.backjava.model.SkillCheckResult;
 import com.necpgame.backjava.model.StartQuestRequest;
+import java.util.List;
 import java.util.UUID;
+import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -27,6 +36,33 @@ import org.springframework.validation.annotation.Validated;
  */
 @Validated
 public interface NarrativeService {
+
+    GetQuestCatalog200Response getQuestCatalog(
+        @Nullable String type,
+        @Nullable String period,
+        @Nullable String difficulty,
+        @Nullable String faction,
+        @Nullable Integer minLevel,
+        @Nullable Integer maxLevel,
+        @Nullable Boolean hasRomance,
+        @Nullable Boolean hasCombat,
+        @Nullable Integer estimatedTimeMin,
+        @Nullable Integer estimatedTimeMax,
+        @Nullable Integer page,
+        @Nullable Integer pageSize
+    );
+
+    SearchQuests200Response searchQuests(String query, @Nullable List<String> searchIn, @Nullable Integer page, @Nullable Integer pageSize);
+
+    QuestDetails getQuestDetails(String questId);
+
+    DialogueTree getQuestDialogueTree(String questId);
+
+    QuestLootTable getQuestLootTable(String questId);
+
+    GetQuestRecommendations200Response getQuestRecommendations(UUID characterId, @Nullable Integer count);
+
+    GetQuestChains200Response getQuestChains(@Nullable String faction, @Nullable String storyline);
 
     /**
      * GET /narrative/faction-quests : Получить список фракционных квестов

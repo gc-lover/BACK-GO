@@ -5,21 +5,30 @@ import com.necpgame.backjava.model.CompleteQuestRequest;
 import com.necpgame.backjava.model.DialogueChoiceRequest;
 import com.necpgame.backjava.model.DialogueChoiceResult;
 import com.necpgame.backjava.model.DialogueNode;
+import com.necpgame.backjava.model.DialogueTree;
 import com.necpgame.backjava.model.FactionQuestDetailed;
 import com.necpgame.backjava.model.GetActiveQuests200Response;
 import com.necpgame.backjava.model.GetAvailableFactionQuests200Response;
 import com.necpgame.backjava.model.GetFactionQuestProgress200Response;
+import com.necpgame.backjava.model.GetQuestCatalog200Response;
 import com.necpgame.backjava.model.GetQuestBranches200Response;
+import com.necpgame.backjava.model.GetQuestChains200Response;
 import com.necpgame.backjava.model.GetQuestEndings200Response;
+import com.necpgame.backjava.model.GetQuestRecommendations200Response;
 import com.necpgame.backjava.model.ListFactionQuests200Response;
 import com.necpgame.backjava.model.QuestCompletionResult;
+import com.necpgame.backjava.model.QuestDetails;
 import com.necpgame.backjava.model.QuestInstance;
+import com.necpgame.backjava.model.QuestLootTable;
+import com.necpgame.backjava.model.SearchQuests200Response;
 import com.necpgame.backjava.model.SkillCheckRequest;
 import com.necpgame.backjava.model.SkillCheckResult;
 import com.necpgame.backjava.model.StartQuestRequest;
 import com.necpgame.backjava.service.NarrativeService;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.Nullable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +40,49 @@ public class NarrativeController implements NarrativeApi {
     private final NarrativeService narrativeService;
 
     @Override
-    public ResponseEntity<ListFactionQuests200Response> listFactionQuests(String faction, Integer minReputation, Integer playerLevelMin, Integer page, Integer pageSize) {
+    public ResponseEntity<GetQuestCatalog200Response> getQuestCatalog(@Nullable String type, @Nullable String period, @Nullable String difficulty, @Nullable String faction, @Nullable Integer minLevel, @Nullable Integer maxLevel, @Nullable Boolean hasRomance, @Nullable Boolean hasCombat, @Nullable Integer estimatedTimeMin, @Nullable Integer estimatedTimeMax, @Nullable Integer page, @Nullable Integer pageSize) {
+        GetQuestCatalog200Response response = narrativeService.getQuestCatalog(type, period, difficulty, faction, minLevel, maxLevel, hasRomance, hasCombat, estimatedTimeMin, estimatedTimeMax, page, pageSize);
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<SearchQuests200Response> searchQuests(String q, @Nullable List<String> searchIn, @Nullable Integer page, @Nullable Integer pageSize) {
+        SearchQuests200Response response = narrativeService.searchQuests(q, searchIn, page, pageSize);
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<QuestDetails> getQuestDetails(String questId) {
+        QuestDetails details = narrativeService.getQuestDetails(questId);
+        return ResponseEntity.ok(details);
+    }
+
+    @Override
+    public ResponseEntity<DialogueTree> getQuestDialogueTree(String questId) {
+        DialogueTree tree = narrativeService.getQuestDialogueTree(questId);
+        return ResponseEntity.ok(tree);
+    }
+
+    @Override
+    public ResponseEntity<QuestLootTable> getQuestLootTable(String questId) {
+        QuestLootTable lootTable = narrativeService.getQuestLootTable(questId);
+        return ResponseEntity.ok(lootTable);
+    }
+
+    @Override
+    public ResponseEntity<GetQuestRecommendations200Response> getQuestRecommendations(UUID characterId, @Nullable Integer count) {
+        GetQuestRecommendations200Response response = narrativeService.getQuestRecommendations(characterId, count);
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<GetQuestChains200Response> getQuestChains(@Nullable String faction, @Nullable String storyline) {
+        GetQuestChains200Response response = narrativeService.getQuestChains(faction, storyline);
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<ListFactionQuests200Response> listFactionQuests(@Nullable String faction, @Nullable Integer minReputation, @Nullable Integer playerLevelMin, @Nullable Integer page, @Nullable Integer pageSize) {
         ListFactionQuests200Response response = narrativeService.listFactionQuests(faction, minReputation, playerLevelMin, page, pageSize);
         return ResponseEntity.ok(response);
     }

@@ -10,6 +10,7 @@ import com.necpgame.backjava.entity.CharacterFactionQuestProgressEntity.Progress
 import com.necpgame.backjava.entity.FactionQuestBranchEntity;
 import com.necpgame.backjava.entity.FactionQuestEndingEntity;
 import com.necpgame.backjava.entity.FactionQuestEntity;
+import com.necpgame.backjava.entity.QuestCatalogEntryEntity;
 import com.necpgame.backjava.entity.QuestDialogueStateEntity;
 import com.necpgame.backjava.entity.QuestEntity;
 import com.necpgame.backjava.entity.QuestInstanceEntity;
@@ -17,6 +18,7 @@ import com.necpgame.backjava.entity.QuestInstanceEntity.QuestStatus;
 import com.necpgame.backjava.entity.QuestObjectiveEntity;
 import com.necpgame.backjava.entity.QuestObjectiveEntity.ObjectiveType;
 import com.necpgame.backjava.entity.QuestSkillCheckResultEntity;
+import com.necpgame.backjava.model.DialogueTree;
 import com.necpgame.backjava.model.ActiveQuestProgress;
 import com.necpgame.backjava.model.ActiveQuestProgressChoicesMadeInner;
 import com.necpgame.backjava.model.ActiveQuestProgressObjectivesInner;
@@ -25,6 +27,7 @@ import com.necpgame.backjava.model.DialogueChoiceRequest;
 import com.necpgame.backjava.model.DialogueChoiceResult;
 import com.necpgame.backjava.model.DialogueNode;
 import com.necpgame.backjava.model.DialogueOption;
+import com.necpgame.backjava.model.GetQuestCatalog200Response;
 import com.necpgame.backjava.model.FactionQuest;
 import com.necpgame.backjava.model.FactionQuest.FactionEnum;
 import com.necpgame.backjava.model.FactionQuest.DifficultyEnum;
@@ -36,9 +39,16 @@ import com.necpgame.backjava.model.GetAvailableFactionQuests200ResponseLockedQue
 import com.necpgame.backjava.model.GetFactionQuestProgress200Response;
 import com.necpgame.backjava.model.GetFactionQuestProgress200ResponseCompletedQuestsInner;
 import com.necpgame.backjava.model.GetQuestBranches200Response;
+import com.necpgame.backjava.model.GetQuestChains200Response;
 import com.necpgame.backjava.model.GetQuestEndings200Response;
+import com.necpgame.backjava.model.GetQuestRecommendations200Response;
+import com.necpgame.backjava.model.GetQuestRecommendations200ResponseRecommendationsInner;
 import com.necpgame.backjava.model.ListFactionQuests200Response;
 import com.necpgame.backjava.model.PaginationMeta;
+import com.necpgame.backjava.model.QuestCatalogEntry;
+import com.necpgame.backjava.model.QuestCatalogEntryRewardsSummary;
+import com.necpgame.backjava.model.QuestChain;
+import com.necpgame.backjava.model.QuestChainQuestsInner;
 import com.necpgame.backjava.model.QuestBranch;
 import com.necpgame.backjava.model.QuestCompletionResult;
 import com.necpgame.backjava.model.QuestEnding;
@@ -49,6 +59,16 @@ import com.necpgame.backjava.model.QuestProgress;
 import com.necpgame.backjava.model.QuestRequirements;
 import com.necpgame.backjava.model.QuestRewards;
 import com.necpgame.backjava.model.QuestRewardsItemsInner;
+import com.necpgame.backjava.model.QuestDetails;
+import com.necpgame.backjava.model.QuestDetailsAllOfKeyNpcs;
+import com.necpgame.backjava.model.QuestDetailsAllOfObjectives;
+import com.necpgame.backjava.model.QuestDetailsAllOfRewardsDetailed;
+import com.necpgame.backjava.model.QuestLootTable;
+import com.necpgame.backjava.model.QuestLootTableGuaranteedLootInner;
+import com.necpgame.backjava.model.QuestLootTableRandomLootInner;
+import com.necpgame.backjava.model.QuestLootTableRandomLootInnerQuantityRange;
+import com.necpgame.backjava.model.QuestSearchResult;
+import com.necpgame.backjava.model.SearchQuests200Response;
 import com.necpgame.backjava.model.SkillCheckRequest;
 import com.necpgame.backjava.model.SkillCheckResult;
 import com.necpgame.backjava.model.StartQuestRequest;
@@ -57,6 +77,7 @@ import com.necpgame.backjava.repository.CharacterProgressionRepository;
 import com.necpgame.backjava.repository.FactionQuestBranchRepository;
 import com.necpgame.backjava.repository.FactionQuestEndingRepository;
 import com.necpgame.backjava.repository.FactionQuestRepository;
+import com.necpgame.backjava.repository.QuestCatalogEntryRepository;
 import com.necpgame.backjava.repository.QuestDialogueStateRepository;
 import com.necpgame.backjava.repository.QuestInstanceRepository;
 import com.necpgame.backjava.repository.QuestObjectiveRepository;
@@ -65,13 +86,18 @@ import com.necpgame.backjava.repository.QuestSkillCheckResultRepository;
 import com.necpgame.backjava.repository.QuestTemplateDefinitionRepository;
 import com.necpgame.backjava.service.NarrativeService;
 import org.springframework.transaction.annotation.Transactional;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -106,6 +132,11 @@ public class NarrativeServiceImpl implements NarrativeService {
     private static final TypeReference<List<FactionQuestDetailedAllOfKeyNpcs>> KEY_NPC_LIST_TYPE = new TypeReference<>() {};
     private static final TypeReference<List<ActiveQuestProgressChoicesMadeInner>> PROGRESS_CHOICES_LIST_TYPE = new TypeReference<>() {};
     private static final TypeReference<List<ActiveQuestProgressObjectivesInner>> PROGRESS_OBJECTIVES_LIST_TYPE = new TypeReference<>() {};
+    private static final TypeReference<List<QuestDetailsAllOfObjectives>> QUEST_DETAILS_OBJECTIVES_TYPE = new TypeReference<>() {};
+    private static final TypeReference<List<QuestDetailsAllOfKeyNpcs>> QUEST_DETAILS_KEY_NPCS_TYPE = new TypeReference<>() {};
+    private static final TypeReference<QuestDetailsAllOfRewardsDetailed> QUEST_DETAILS_REWARDS_TYPE = new TypeReference<>() {};
+    private static final TypeReference<Map<String, Integer>> REWARDS_SUMMARY_MAP_TYPE = new TypeReference<>() {};
+    private static final TypeReference<Map<String, Object>> STRING_OBJECT_MAP_TYPE = new TypeReference<>() {};
 
     private final QuestRepository questRepository;
     private final QuestObjectiveRepository questObjectiveRepository;
@@ -116,12 +147,172 @@ public class NarrativeServiceImpl implements NarrativeService {
     private final FactionQuestRepository factionQuestRepository;
     private final FactionQuestBranchRepository factionQuestBranchRepository;
     private final FactionQuestEndingRepository factionQuestEndingRepository;
+    private final QuestCatalogEntryRepository questCatalogEntryRepository;
     private final CharacterFactionQuestProgressRepository characterFactionQuestProgressRepository;
     private final CharacterProgressionRepository characterProgressionRepository;
     private final ObjectMapper objectMapper;
 
     @Value("${quest.engine.max-active-quests:20}")
     private int maxActiveQuests;
+
+    @Override
+    @Transactional(readOnly = true)
+    public GetQuestCatalog200Response getQuestCatalog(@Nullable String type, @Nullable String period, @Nullable String difficulty, @Nullable String faction, @Nullable Integer minLevel, @Nullable Integer maxLevel, @Nullable Boolean hasRomance, @Nullable Boolean hasCombat, @Nullable Integer estimatedTimeMin, @Nullable Integer estimatedTimeMax, @Nullable Integer page, @Nullable Integer pageSize) {
+        Specification<QuestCatalogEntryEntity> specification = buildQuestCatalogSpecification(type, period, difficulty, faction, minLevel, maxLevel, hasRomance, hasCombat, estimatedTimeMin, estimatedTimeMax);
+        Pageable pageable = createPageable(page, pageSize);
+        Page<QuestCatalogEntryEntity> quests = questCatalogEntryRepository.findAll(specification, pageable);
+
+        List<QuestCatalogEntry> data = quests.getContent().stream()
+            .map(this::toQuestCatalogEntry)
+            .collect(Collectors.toList());
+
+        PaginationMeta meta = new PaginationMeta()
+            .page(quests.getNumber() + 1)
+            .pageSize(quests.getSize())
+            .total(safeLongToInt(quests.getTotalElements()))
+            .totalPages(quests.getTotalPages())
+            .hasNext(quests.hasNext())
+            .hasPrev(quests.hasPrevious());
+
+        Map<String, Object> filters = new LinkedHashMap<>();
+        if (StringUtils.hasText(type)) {
+            filters.put("type", type);
+        }
+        if (StringUtils.hasText(period)) {
+            filters.put("period", period);
+        }
+        if (StringUtils.hasText(difficulty)) {
+            filters.put("difficulty", difficulty);
+        }
+        if (StringUtils.hasText(faction)) {
+            filters.put("faction", faction);
+        }
+        if (minLevel != null) {
+            filters.put("min_level", minLevel);
+        }
+        if (maxLevel != null) {
+            filters.put("max_level", maxLevel);
+        }
+        if (hasRomance != null) {
+            filters.put("has_romance", hasRomance);
+        }
+        if (hasCombat != null) {
+            filters.put("has_combat", hasCombat);
+        }
+        if (estimatedTimeMin != null) {
+            filters.put("estimated_time_min", estimatedTimeMin);
+        }
+        if (estimatedTimeMax != null) {
+            filters.put("estimated_time_max", estimatedTimeMax);
+        }
+
+        Object filtersApplied = filters.isEmpty() ? null : filters;
+
+        return new GetQuestCatalog200Response()
+            .data(data)
+            .meta(meta)
+            .filtersApplied(filtersApplied);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public SearchQuests200Response searchQuests(String query, @Nullable List<String> searchIn, @Nullable Integer page, @Nullable Integer pageSize) {
+        String safeQuery = requireText(query, "q");
+        Specification<QuestCatalogEntryEntity> specification = buildQuestCatalogSearchSpecification(safeQuery, searchIn);
+        Pageable pageable = createPageable(page, pageSize);
+        Page<QuestCatalogEntryEntity> quests = questCatalogEntryRepository.findAll(specification, pageable);
+
+        List<QuestSearchResult> results = quests.getContent().stream()
+            .map(entity -> toQuestSearchResult(entity, safeQuery))
+            .collect(Collectors.toList());
+
+        PaginationMeta meta = new PaginationMeta()
+            .page(quests.getNumber() + 1)
+            .pageSize(quests.getSize())
+            .total(safeLongToInt(quests.getTotalElements()))
+            .totalPages(quests.getTotalPages())
+            .hasNext(quests.hasNext())
+            .hasPrev(quests.hasPrevious());
+
+        return new SearchQuests200Response()
+            .data(results)
+            .meta(meta);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public QuestDetails getQuestDetails(String questId) {
+        QuestCatalogEntryEntity entity = findQuestCatalogEntry(requireText(questId, "quest_id"));
+        return toQuestDetails(entity);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public DialogueTree getQuestDialogueTree(String questId) {
+        QuestCatalogEntryEntity entity = findQuestCatalogEntry(requireText(questId, "quest_id"));
+        if (!StringUtils.hasText(entity.getDialogueTreeJson())) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "dialogue tree not available for quest");
+        }
+        DialogueTree tree = readValue(entity.getDialogueTreeJson(), DialogueTree.class);
+        if (tree == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "dialogue tree not available for quest");
+        }
+        return tree;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public QuestLootTable getQuestLootTable(String questId) {
+        QuestCatalogEntryEntity entity = findQuestCatalogEntry(requireText(questId, "quest_id"));
+        if (!StringUtils.hasText(entity.getLootTableJson())) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "loot table not available for quest");
+        }
+        QuestLootTable lootTable = toQuestLootTable(entity);
+        if (lootTable.getGuaranteedLoot() == null && lootTable.getRandomLoot() == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "loot table not available for quest");
+        }
+        return lootTable;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public GetQuestRecommendations200Response getQuestRecommendations(UUID characterId, @Nullable Integer count) {
+        int safeCount = count == null || count < 1 ? 10 : Math.min(count, 50);
+        UUID safeCharacterId = Objects.requireNonNull(characterId, "characterId");
+        int characterLevel = characterProgressionRepository.findById(safeCharacterId)
+            .map(progress -> Optional.ofNullable(progress.getLevel()).orElse(1))
+            .orElse(1);
+
+        List<GetQuestRecommendations200ResponseRecommendationsInner> recommendations = questCatalogEntryRepository.findAll().stream()
+            .map(entity -> buildRecommendation(entity, characterLevel))
+            .sorted(Comparator.comparing(GetQuestRecommendations200ResponseRecommendationsInner::getMatchScore).reversed())
+            .limit(safeCount)
+            .collect(Collectors.toList());
+
+        return new GetQuestRecommendations200Response()
+            .recommendations(recommendations);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public GetQuestChains200Response getQuestChains(@Nullable String faction, @Nullable String storyline) {
+        List<QuestCatalogEntryEntity> entries = questCatalogEntryRepository.findAll();
+        final String factionFilter = normalizeFilter(faction);
+        final String storylineFilter = normalizeFilter(storyline);
+
+        Map<String, List<QuestCatalogEntryEntity>> grouped = entries.stream()
+            .filter(entity -> StringUtils.hasText(entity.getStoryline()))
+            .filter(entity -> factionFilter == null || (StringUtils.hasText(entity.getFaction()) && entity.getFaction().trim().equalsIgnoreCase(factionFilter)))
+            .filter(entity -> storylineFilter == null || entity.getStoryline().trim().toLowerCase().contains(storylineFilter))
+            .collect(Collectors.groupingBy(QuestCatalogEntryEntity::getStoryline, LinkedHashMap::new, Collectors.toList()));
+
+        List<QuestChain> chains = grouped.entrySet().stream()
+            .map(entry -> toQuestChain(entry.getKey(), entry.getValue()))
+            .collect(Collectors.toList());
+
+        return new GetQuestChains200Response()
+            .chains(chains);
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -950,12 +1141,539 @@ public class NarrativeServiceImpl implements NarrativeService {
         return current;
     }
 
-    private Pageable createPageable(Integer page, Integer pageSize) {
+    @NonNull
+    private Pageable createPageable(@Nullable Integer page, @Nullable Integer pageSize) {
         int pageIndex = page == null || page < 1 ? 0 : page - 1;
         int size = pageSize == null || pageSize < 1 ? 20 : pageSize;
         return PageRequest.of(pageIndex, size);
     }
 
+    @NonNull
+    private Specification<QuestCatalogEntryEntity> buildQuestCatalogSpecification(
+        String type,
+        String period,
+        String difficulty,
+        String faction,
+        Integer minLevel,
+        Integer maxLevel,
+        Boolean hasRomance,
+        Boolean hasCombat,
+        Integer estimatedTimeMin,
+        Integer estimatedTimeMax
+    ) {
+        return (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (StringUtils.hasText(type)) {
+                predicates.add(cb.equal(root.get("type"), type.trim().toUpperCase(Locale.ROOT)));
+            }
+
+            if (StringUtils.hasText(period)) {
+                predicates.add(cb.equal(root.get("period"), period.trim()));
+            }
+
+            if (StringUtils.hasText(difficulty)) {
+                predicates.add(cb.equal(root.get("difficulty"), difficulty.trim().toUpperCase(Locale.ROOT)));
+            }
+
+            if (StringUtils.hasText(faction)) {
+                String factionLower = faction.trim().toLowerCase(Locale.ROOT);
+                predicates.add(cb.equal(cb.lower(root.get("faction")), factionLower));
+            }
+
+            if (minLevel != null) {
+                predicates.add(cb.greaterThanOrEqualTo(cb.coalesce(root.get("levelRequirement"), cb.literal(0)), minLevel));
+            }
+
+            if (maxLevel != null) {
+                predicates.add(cb.lessThanOrEqualTo(cb.coalesce(root.get("levelRequirement"), cb.literal(Integer.MAX_VALUE)), maxLevel));
+            }
+
+            if (hasRomance != null) {
+                predicates.add(cb.equal(root.get("hasRomance"), hasRomance));
+            }
+
+            if (hasCombat != null) {
+                predicates.add(cb.equal(root.get("hasCombat"), hasCombat));
+            }
+
+            if (estimatedTimeMin != null) {
+                predicates.add(cb.greaterThanOrEqualTo(cb.coalesce(root.get("estimatedTimeMinutes"), cb.literal(0)), estimatedTimeMin));
+            }
+
+            if (estimatedTimeMax != null) {
+                predicates.add(cb.lessThanOrEqualTo(cb.coalesce(root.get("estimatedTimeMinutes"), cb.literal(Integer.MAX_VALUE)), estimatedTimeMax));
+            }
+
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+    }
+
+    @NonNull
+    private Specification<QuestCatalogEntryEntity> buildQuestCatalogSearchSpecification(String queryText, List<String> searchIn) {
+        return (root, cq, cb) -> {
+            String pattern = "%" + queryText.toLowerCase(Locale.ROOT) + "%";
+            List<String> fields = resolveSearchFields(searchIn);
+            List<Predicate> likePredicates = new ArrayList<>();
+            for (String field : fields) {
+                likePredicates.add(cb.like(cb.lower(root.get(field)), pattern));
+            }
+            if (likePredicates.isEmpty()) {
+                likePredicates.add(cb.like(cb.lower(root.get("title")), pattern));
+            }
+            return cb.or(likePredicates.toArray(new Predicate[0]));
+        };
+    }
+
+    private List<String> resolveSearchFields(List<String> searchIn) {
+        if (searchIn == null || searchIn.isEmpty()) {
+            return List.of("title", "description", "fullDescription", "storyline");
+        }
+        List<String> fields = new ArrayList<>();
+        for (String item : searchIn) {
+            if (!StringUtils.hasText(item)) {
+                continue;
+            }
+            switch (item.trim().toUpperCase(Locale.ROOT)) {
+                case "TITLE" -> fields.add("title");
+                case "DESCRIPTION" -> fields.add("description");
+                case "NPC_NAMES" -> fields.add("keyNpcsJson");
+                case "LOCATIONS" -> fields.add("locationsJson");
+                case "TAGS" -> fields.add("tagsJson");
+                case "STORYLINE" -> fields.add("storyline");
+                default -> {
+                }
+            }
+        }
+        if (fields.isEmpty()) {
+            fields.addAll(List.of("title", "description", "fullDescription", "storyline"));
+        }
+        return fields;
+    }
+
+    private QuestCatalogEntryEntity findQuestCatalogEntry(@NonNull String questId) {
+        return questCatalogEntryRepository.findById(questId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "quest not found"));
+    }
+
+    private QuestCatalogEntry toQuestCatalogEntry(QuestCatalogEntryEntity entity) {
+        QuestCatalogEntry entry = new QuestCatalogEntry()
+            .questId(entity.getQuestId())
+            .title(entity.getTitle())
+            .description(entity.getDescription())
+            .period(entity.getPeriod())
+            .levelRequirement(entity.getLevelRequirement())
+            .estimatedTimeMinutes(entity.getEstimatedTimeMinutes());
+
+        if (StringUtils.hasText(entity.getType())) {
+            try {
+                entry.type(QuestCatalogEntry.TypeEnum.fromValue(entity.getType()));
+            } catch (IllegalArgumentException ex) {
+                entry.type(QuestCatalogEntry.TypeEnum.SIDE);
+            }
+        } else {
+            entry.type(QuestCatalogEntry.TypeEnum.SIDE);
+        }
+
+        if (StringUtils.hasText(entity.getDifficulty())) {
+            try {
+                entry.difficulty(QuestCatalogEntry.DifficultyEnum.fromValue(entity.getDifficulty()));
+            } catch (IllegalArgumentException ex) {
+                entry.difficulty(QuestCatalogEntry.DifficultyEnum.MEDIUM);
+            }
+        } else {
+            entry.difficulty(QuestCatalogEntry.DifficultyEnum.MEDIUM);
+        }
+
+        if (StringUtils.hasText(entity.getFaction())) {
+            entry.faction(entity.getFaction());
+        }
+
+        List<String> tags = readValue(entity.getTagsJson(), STRING_LIST_TYPE);
+        entry.tags(tags == null ? new ArrayList<>() : tags);
+
+        QuestCatalogEntryRewardsSummary summary = toRewardsSummary(entity.getRewardsSummaryJson());
+        if (summary != null) {
+            entry.rewardsSummary(summary);
+        }
+
+        if (entity.getCompletionRate() != null) {
+            entry.completionRate(safeBigDecimalToFloat(entity.getCompletionRate()));
+        }
+
+        if (entity.getAverageRating() != null) {
+            entry.averageRating(safeBigDecimalToFloat(entity.getAverageRating()));
+        }
+
+        return entry;
+    }
+
+    private QuestDetails toQuestDetails(QuestCatalogEntryEntity entity) {
+        QuestCatalogEntry base = toQuestCatalogEntry(entity);
+
+        QuestDetails details = new QuestDetails()
+            .questId(base.getQuestId())
+            .title(base.getTitle())
+            .description(base.getDescription())
+            .period(base.getPeriod())
+            .levelRequirement(base.getLevelRequirement())
+            .estimatedTimeMinutes(base.getEstimatedTimeMinutes())
+            .branchesCount(Optional.ofNullable(entity.getBranchesCount()).orElse(0))
+            .endingsCount(Optional.ofNullable(entity.getEndingsCount()).orElse(0))
+            .hasDialogueTree(Boolean.TRUE.equals(entity.getHasDialogueTree()))
+            .hasSkillChecks(Boolean.TRUE.equals(entity.getHasSkillChecks()))
+            .hasCombat(Boolean.TRUE.equals(entity.getHasCombat()))
+            .hasRomance(Boolean.TRUE.equals(entity.getHasRomance()))
+            .fullDescription(entity.getFullDescription())
+            .storyline(entity.getStoryline());
+
+        QuestCatalogEntry.TypeEnum baseType = base.getType();
+        if (baseType != null) {
+            details.type(QuestDetails.TypeEnum.fromValue(baseType.getValue()));
+        }
+
+        QuestCatalogEntry.DifficultyEnum baseDifficulty = base.getDifficulty();
+        if (baseDifficulty != null) {
+            details.difficulty(QuestDetails.DifficultyEnum.fromValue(baseDifficulty.getValue()));
+        }
+
+        if (base.getFaction() != null && base.getFaction().isPresent()) {
+            details.faction(base.getFaction().get());
+        }
+
+        if (base.getTags() != null) {
+            details.tags(new ArrayList<>(base.getTags()));
+        }
+
+        QuestCatalogEntryRewardsSummary baseSummary = base.getRewardsSummary();
+        if (baseSummary != null) {
+            details.rewardsSummary(new QuestCatalogEntryRewardsSummary()
+                .experience(baseSummary.getExperience())
+                .eddies(baseSummary.getEddies())
+                .itemsCount(baseSummary.getItemsCount()));
+        }
+
+        details.completionRate(base.getCompletionRate());
+        details.averageRating(base.getAverageRating());
+
+        List<QuestDetailsAllOfObjectives> objectives = readValue(entity.getObjectivesJson(), QUEST_DETAILS_OBJECTIVES_TYPE);
+        if (objectives != null) {
+            details.objectives(objectives);
+        }
+
+        List<QuestDetailsAllOfKeyNpcs> keyNpcs = readValue(entity.getKeyNpcsJson(), QUEST_DETAILS_KEY_NPCS_TYPE);
+        if (keyNpcs != null) {
+            details.keyNpcs(keyNpcs);
+        }
+
+        List<String> locations = readValue(entity.getLocationsJson(), STRING_LIST_TYPE);
+        if (locations != null) {
+            details.locations(locations);
+        }
+
+        List<String> prerequisites = readValue(entity.getPrerequisitesJson(), STRING_LIST_TYPE);
+        if (prerequisites != null) {
+            details.prerequisites(prerequisites);
+        }
+
+        List<String> unlocks = readValue(entity.getUnlocksJson(), STRING_LIST_TYPE);
+        if (unlocks != null) {
+            details.unlocks(unlocks);
+        }
+
+        QuestDetailsAllOfRewardsDetailed rewardsDetailed = readValue(entity.getRewardsDetailedJson(), QUEST_DETAILS_REWARDS_TYPE);
+        if (rewardsDetailed != null) {
+            details.rewardsDetailed(rewardsDetailed);
+        }
+
+        return details;
+    }
+
+    private QuestLootTable toQuestLootTable(QuestCatalogEntryEntity entity) {
+        QuestLootTable table = new QuestLootTable()
+            .questId(entity.getQuestId());
+
+        Map<String, Object> json = readValue(entity.getLootTableJson(), STRING_OBJECT_MAP_TYPE);
+        if (json == null || json.isEmpty()) {
+            return table;
+        }
+
+        List<Map<String, Object>> guaranteed = castToListOfMap(json.get("guaranteed_loot"));
+        if (guaranteed != null) {
+            List<QuestLootTableGuaranteedLootInner> guaranteedLoot = guaranteed.stream()
+                .map(item -> new QuestLootTableGuaranteedLootInner()
+                    .itemId(parseUuid(item.get("item_id")))
+                    .quantity(((Number) item.getOrDefault("quantity", 1)).intValue()))
+                .collect(Collectors.toList());
+            table.guaranteedLoot(guaranteedLoot);
+        }
+
+        List<Map<String, Object>> random = castToListOfMap(json.get("random_loot"));
+        if (random != null) {
+            List<QuestLootTableRandomLootInner> randomLoot = random.stream()
+                .map(item -> {
+                    Map<String, Object> quantityMap = toMap(item.get("quantity_range"));
+                    QuestLootTableRandomLootInnerQuantityRange range = new QuestLootTableRandomLootInnerQuantityRange()
+                        .min(((Number) quantityMap.getOrDefault("min", 1)).intValue())
+                        .max(((Number) quantityMap.getOrDefault("max", quantityMap.getOrDefault("min", 1))).intValue());
+                    return new QuestLootTableRandomLootInner()
+                        .itemId(parseUuid(item.get("item_id")))
+                        .dropChance(((Number) item.getOrDefault("drop_chance", 0)).floatValue())
+                        .quantityRange(range);
+                })
+                .collect(Collectors.toList());
+            table.randomLoot(randomLoot);
+        }
+
+        return table;
+    }
+
+    private QuestSearchResult toQuestSearchResult(QuestCatalogEntryEntity entity, String query) {
+        QuestCatalogEntry base = toQuestCatalogEntry(entity);
+        QuestSearchResult result = new QuestSearchResult()
+            .questId(base.getQuestId())
+            .title(base.getTitle())
+            .description(base.getDescription())
+            .period(base.getPeriod())
+            .levelRequirement(base.getLevelRequirement())
+            .estimatedTimeMinutes(base.getEstimatedTimeMinutes())
+            .completionRate(base.getCompletionRate())
+            .averageRating(base.getAverageRating())
+            .highlightedText(extractHighlight(entity, query));
+
+        QuestCatalogEntry.TypeEnum searchType = base.getType();
+        if (searchType != null) {
+            result.type(QuestSearchResult.TypeEnum.fromValue(searchType.getValue()));
+        }
+        QuestCatalogEntry.DifficultyEnum searchDifficulty = base.getDifficulty();
+        if (searchDifficulty != null) {
+            result.difficulty(QuestSearchResult.DifficultyEnum.fromValue(searchDifficulty.getValue()));
+        }
+        if (base.getFaction() != null && base.getFaction().isPresent()) {
+            result.faction(base.getFaction().get());
+        }
+        if (base.getTags() != null) {
+            result.tags(new ArrayList<>(base.getTags()));
+        }
+        QuestCatalogEntryRewardsSummary searchSummary = base.getRewardsSummary();
+        if (searchSummary != null) {
+            result.rewardsSummary(new QuestCatalogEntryRewardsSummary()
+                .experience(searchSummary.getExperience())
+                .eddies(searchSummary.getEddies())
+                .itemsCount(searchSummary.getItemsCount()));
+        }
+
+        String lowerQuery = query.toLowerCase(Locale.ROOT);
+        float score = 60f;
+        if (StringUtils.hasText(entity.getTitle()) && entity.getTitle().toLowerCase(Locale.ROOT).contains(lowerQuery)) {
+            score += 25f;
+        } else if (StringUtils.hasText(entity.getDescription()) && entity.getDescription().toLowerCase(Locale.ROOT).contains(lowerQuery)) {
+            score += 15f;
+        } else if (StringUtils.hasText(entity.getFullDescription()) && entity.getFullDescription().toLowerCase(Locale.ROOT).contains(lowerQuery)) {
+            score += 10f;
+        } else {
+            score += 5f;
+        }
+        if (Boolean.TRUE.equals(entity.getHasCombat())) {
+            score += 5f;
+        }
+        if (Boolean.TRUE.equals(entity.getHasRomance())) {
+            score += 3f;
+        }
+        score = Math.min(100f, score);
+        result.matchScore(score);
+        return result;
+    }
+
+    private String extractHighlight(QuestCatalogEntryEntity entity, String query) {
+        String lowerQuery = query.toLowerCase(Locale.ROOT);
+        List<String> sources = new ArrayList<>();
+        if (StringUtils.hasText(entity.getDescription())) {
+            sources.add(entity.getDescription());
+        }
+        if (StringUtils.hasText(entity.getFullDescription())) {
+            sources.add(entity.getFullDescription());
+        }
+        if (StringUtils.hasText(entity.getStoryline())) {
+            sources.add(entity.getStoryline());
+        }
+        for (String source : sources) {
+            int idx = source.toLowerCase(Locale.ROOT).indexOf(lowerQuery);
+            if (idx >= 0) {
+                int start = Math.max(0, idx - 40);
+                int end = Math.min(source.length(), idx + query.length() + 40);
+                return source.substring(start, end) + (end < source.length() ? "…" : "");
+            }
+        }
+        return sources.stream().findFirst().map(text -> text.length() > 80 ? text.substring(0, 77) + "…" : text).orElse("Совпадений не найдено");
+    }
+
+    private GetQuestRecommendations200ResponseRecommendationsInner buildRecommendation(QuestCatalogEntryEntity entity, int characterLevel) {
+        QuestCatalogEntry quest = toQuestCatalogEntry(entity);
+        List<String> reasons = new ArrayList<>();
+
+        if (entity.getLevelRequirement() != null) {
+            int diff = Math.abs(entity.getLevelRequirement() - characterLevel);
+            reasons.add(diff <= 2 ? "Уровень квеста близок к уровню персонажа" : "Квест рассчитан на другой уровень, но может быть интересен");
+        } else {
+            reasons.add("Квест доступен для любого уровня");
+        }
+
+        if (Boolean.TRUE.equals(entity.getHasCombat())) {
+            reasons.add("Содержит боевые столкновения");
+        }
+        if (Boolean.TRUE.equals(entity.getHasRomance())) {
+            reasons.add("Есть романтическая линия");
+        }
+        if (Boolean.TRUE.equals(entity.getHasDialogueTree())) {
+            reasons.add("Включает разветвленные диалоги");
+        }
+
+        float score = 60f;
+        if (entity.getLevelRequirement() != null) {
+            int diff = Math.abs(entity.getLevelRequirement() - characterLevel);
+            score += Math.max(0, 20 - diff * 3);
+        }
+        score += Boolean.TRUE.equals(entity.getHasCombat()) ? 5f : 0f;
+        score += Boolean.TRUE.equals(entity.getHasRomance()) ? 5f : 0f;
+        score += Boolean.TRUE.equals(entity.getHasDialogueTree()) ? 5f : 0f;
+        if (entity.getAverageRating() != null) {
+            score += Math.min(10f, safeBigDecimalToFloat(entity.getAverageRating()) * 2f);
+        }
+        score = Math.max(10f, Math.min(score, 100f));
+
+        return new GetQuestRecommendations200ResponseRecommendationsInner()
+            .quest(quest)
+            .matchScore(score)
+            .reasons(reasons);
+    }
+
+    private QuestChain toQuestChain(String storyline, List<QuestCatalogEntryEntity> quests) {
+        List<QuestCatalogEntryEntity> sorted = quests.stream()
+            .sorted(Comparator.comparing(entity -> Optional.ofNullable(entity.getLevelRequirement()).orElse(0)))
+            .collect(Collectors.toList());
+
+        List<QuestChainQuestsInner> questItems = new ArrayList<>();
+        int index = 0;
+        for (QuestCatalogEntryEntity entity : sorted) {
+            questItems.add(new QuestChainQuestsInner()
+                .questId(entity.getQuestId())
+                .title(entity.getTitle())
+                .order(index++)
+                .optional(Boolean.FALSE));
+        }
+
+        Map<String, Object> rewards = aggregateRewards(sorted);
+
+        return new QuestChain()
+            .chainId(slugify(storyline))
+            .name(storyline)
+            .description(sorted.stream().findFirst().map(QuestCatalogEntryEntity::getDescription).orElse(null))
+            .quests(questItems)
+            .totalRewards(rewards.isEmpty() ? null : rewards);
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<Map<String, Object>> castToListOfMap(Object value) {
+        if (value instanceof List<?> list) {
+            return list.stream()
+                .map(item -> {
+                    if (item instanceof Map<?, ?> map) {
+                        return (Map<String, Object>) map;
+                    }
+                    if (item instanceof String str) {
+                        Map<String, Object> result = new LinkedHashMap<>();
+                        result.put("item_id", str);
+                        result.put("quantity", 1);
+                        return result;
+                    }
+                    return null;
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    private QuestCatalogEntryRewardsSummary toRewardsSummary(String json) {
+        if (!StringUtils.hasText(json)) {
+            return null;
+        }
+        Map<String, Integer> map = readValue(json, REWARDS_SUMMARY_MAP_TYPE);
+        if (map == null) {
+            return null;
+        }
+        return new QuestCatalogEntryRewardsSummary()
+            .experience(map.getOrDefault("experience", 0))
+            .eddies(map.getOrDefault("eddies", 0))
+            .itemsCount(map.getOrDefault("items_count", 0));
+    }
+
+    private float safeBigDecimalToFloat(BigDecimal value) {
+        return value == null ? 0f : value.setScale(2, RoundingMode.HALF_UP).floatValue();
+    }
+
+    private Map<String, Object> aggregateRewards(List<QuestCatalogEntryEntity> entries) {
+        int totalExperience = 0;
+        int totalEddies = 0;
+        int totalItems = 0;
+        for (QuestCatalogEntryEntity entity : entries) {
+            QuestCatalogEntryRewardsSummary summary = toRewardsSummary(entity.getRewardsSummaryJson());
+            if (summary != null) {
+                totalExperience += Optional.ofNullable(summary.getExperience()).orElse(0);
+                totalEddies += Optional.ofNullable(summary.getEddies()).orElse(0);
+                totalItems += Optional.ofNullable(summary.getItemsCount()).orElse(0);
+            }
+        }
+        Map<String, Object> rewards = new LinkedHashMap<>();
+        if (totalExperience > 0) {
+            rewards.put("experience", totalExperience);
+        }
+        if (totalEddies > 0) {
+            rewards.put("eddies", totalEddies);
+        }
+        if (totalItems > 0) {
+            rewards.put("items_count", totalItems);
+        }
+        return rewards;
+    }
+
+    private String slugify(String value) {
+        if (!StringUtils.hasText(value)) {
+            return UUID.randomUUID().toString();
+        }
+        return value.trim().toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]+", "-").replaceAll("^-|-$", "");
+    }
+
+    private UUID parseUuid(Object value) {
+        if (value == null) {
+            return null;
+        }
+        String text = value.toString();
+        try {
+            return UUID.fromString(text);
+        } catch (IllegalArgumentException ex) {
+            return UUID.nameUUIDFromBytes(text.getBytes(StandardCharsets.UTF_8));
+        }
+    }
+
+    private String normalizeFilter(@Nullable String value) {
+        if (value == null) {
+            return null;
+        }
+        String trimmed = value.trim();
+        return StringUtils.hasText(trimmed) ? trimmed.toLowerCase(Locale.ROOT) : null;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<String, Object> toMap(Object value) {
+        if (value instanceof Map<?, ?> map) {
+            return (Map<String, Object>) map;
+        }
+        return Collections.emptyMap();
+    }
+
+    @NonNull
     private Specification<FactionQuestEntity> buildFactionQuestSpecification(String faction, Integer minReputation, Integer playerLevelMin) {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
@@ -1079,7 +1797,19 @@ public class NarrativeServiceImpl implements NarrativeService {
         return value > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) value;
     }
 
-    private <T> T readValue(String json, Class<T> type) {
+    private <T> T readValue(@Nullable String json, TypeReference<T> typeReference) {
+        if (!StringUtils.hasText(json)) {
+            return null;
+        }
+        try {
+            return objectMapper.readValue(json, typeReference);
+        } catch (JsonProcessingException ex) {
+            log.warn("Failed to read JSON value for type {}: {}", typeReference.getType().getTypeName(), ex.getMessage());
+            return null;
+        }
+    }
+
+    private <T> T readValue(@Nullable String json, Class<T> type) {
         if (!StringUtils.hasText(json)) {
             return null;
         }

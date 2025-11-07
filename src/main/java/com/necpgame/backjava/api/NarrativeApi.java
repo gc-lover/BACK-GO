@@ -9,25 +9,30 @@ import com.necpgame.backjava.model.CompleteQuestRequest;
 import com.necpgame.backjava.model.DialogueChoiceRequest;
 import com.necpgame.backjava.model.DialogueChoiceResult;
 import com.necpgame.backjava.model.DialogueNode;
+import com.necpgame.backjava.model.DialogueTree;
 import com.necpgame.backjava.model.Error;
 import com.necpgame.backjava.model.FactionQuestDetailed;
 import com.necpgame.backjava.model.GetActiveQuests200Response;
 import com.necpgame.backjava.model.GetAvailableFactionQuests200Response;
 import com.necpgame.backjava.model.GetFactionQuestProgress200Response;
+import com.necpgame.backjava.model.GetQuestCatalog200Response;
 import com.necpgame.backjava.model.GetQuestBranches200Response;
+import com.necpgame.backjava.model.GetQuestChains200Response;
 import com.necpgame.backjava.model.GetQuestEndings200Response;
+import com.necpgame.backjava.model.GetQuestRecommendations200Response;
 import com.necpgame.backjava.model.ListFactionQuests200Response;
 import com.necpgame.backjava.model.QuestCompletionResult;
+import com.necpgame.backjava.model.QuestDetails;
 import com.necpgame.backjava.model.QuestInstance;
+import com.necpgame.backjava.model.QuestLootTable;
+import com.necpgame.backjava.model.SearchQuests200Response;
 import com.necpgame.backjava.model.SkillCheckRequest;
 import com.necpgame.backjava.model.SkillCheckResult;
 import com.necpgame.backjava.model.StartQuestRequest;
 import java.util.UUID;
-import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -41,13 +46,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.lang.Nullable;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
@@ -57,10 +60,286 @@ import jakarta.annotation.Generated;
 @Tag(name = "Quest Branches", description = "Ветвления квестов")
 @Tag(name = "Quest Endings", description = "Концовки квестов")
 @Tag(name = "Quest Execution", description = "Выполнение квестов")
+@Tag(name = "Quest Catalog", description = "Каталог квестов")
+@Tag(name = "Quest Search", description = "Поиск квестов")
+@Tag(name = "Quest Recommendations", description = "Рекомендации квестов")
 public interface NarrativeApi {
 
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
+    }
+
+    String PATH_GET_QUEST_CATALOG = "/narrative/quest-catalog";
+
+    @Operation(
+        operationId = "getQuestCatalog",
+        summary = "Получить каталог квестов",
+        tags = { "Quest Catalog" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Каталог квестов", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = GetQuestCatalog200Response.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = NarrativeApi.PATH_GET_QUEST_CATALOG,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<GetQuestCatalog200Response> getQuestCatalog(
+        @Parameter(name = "type", in = ParameterIn.QUERY) @Valid @RequestParam(value = "type", required = false) @Nullable String type,
+        @Parameter(name = "period", description = "Временной период", in = ParameterIn.QUERY) @Valid @RequestParam(value = "period", required = false) @Nullable String period,
+        @Parameter(name = "difficulty", in = ParameterIn.QUERY) @Valid @RequestParam(value = "difficulty", required = false) @Nullable String difficulty,
+        @Parameter(name = "faction", in = ParameterIn.QUERY) @Valid @RequestParam(value = "faction", required = false) @Nullable String faction,
+        @Parameter(name = "min_level", in = ParameterIn.QUERY) @Valid @RequestParam(value = "min_level", required = false) @Nullable Integer minLevel,
+        @Parameter(name = "max_level", in = ParameterIn.QUERY) @Valid @RequestParam(value = "max_level", required = false) @Nullable Integer maxLevel,
+        @Parameter(name = "has_romance", description = "Есть ли романтические элементы", in = ParameterIn.QUERY) @Valid @RequestParam(value = "has_romance", required = false) @Nullable Boolean hasRomance,
+        @Parameter(name = "has_combat", in = ParameterIn.QUERY) @Valid @RequestParam(value = "has_combat", required = false) @Nullable Boolean hasCombat,
+        @Parameter(name = "estimated_time_min", description = "Минимальное время прохождения (минуты)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "estimated_time_min", required = false) @Nullable Integer estimatedTimeMin,
+        @Parameter(name = "estimated_time_max", in = ParameterIn.QUERY) @Valid @RequestParam(value = "estimated_time_max", required = false) @Nullable Integer estimatedTimeMax,
+        @Min(1) @Parameter(name = "page", description = "Номер страницы (начинается с 1)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+        @Min(1) @Max(100) @Parameter(name = "page_size", description = "Количество элементов на странице", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page_size", required = false, defaultValue = "20") Integer pageSize
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType : MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"data\" : [ { \"estimated_time_minutes\" : 6, \"period\" : \"2060-2077\", \"rewards_summary\" : { \"items_count\" : 5, \"eddies\" : 5, \"experience\" : 1 }, \"description\" : \"description\", \"average_rating\" : 7.0614014, \"title\" : \"title\", \"type\" : \"MAIN\", \"tags\" : [ \"combat\", \"hacking\", \"social\", \"romance\" ], \"difficulty\" : \"EASY\", \"completion_rate\" : 2.302136, \"faction\" : \"faction\", \"quest_id\" : \"quest_id\", \"level_requirement\" : 0 }, { \"estimated_time_minutes\" : 6, \"period\" : \"2060-2077\", \"rewards_summary\" : { \"items_count\" : 5, \"eddies\" : 5, \"experience\" : 1 }, \"description\" : \"description\", \"average_rating\" : 7.0614014, \"title\" : \"title\", \"type\" : \"MAIN\", \"tags\" : [ \"combat\", \"hacking\", \"social\", \"romance\" ], \"difficulty\" : \"EASY\", \"completion_rate\" : 2.302136, \"faction\" : \"faction\", \"quest_id\" : \"quest_id\", \"level_requirement\" : 0 } ], \"meta\" : { \"total\" : 156, \"has_next\" : true, \"page\" : 1, \"total_pages\" : 8, \"has_prev\" : false, \"page_size\" : 20 }, \"filters_applied\" : {} }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    String PATH_SEARCH_QUESTS = "/narrative/quest-catalog/search";
+
+    @Operation(
+        operationId = "searchQuests",
+        summary = "Поиск квестов",
+        tags = { "Quest Search" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Результаты поиска", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SearchQuests200Response.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = NarrativeApi.PATH_SEARCH_QUESTS,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<SearchQuests200Response> searchQuests(
+        @NotNull @Parameter(name = "q", description = "Поисковой запрос", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "q", required = true) String q,
+        @Parameter(name = "search_in", description = "Где искать", in = ParameterIn.QUERY) @Valid @RequestParam(value = "search_in", required = false) @Nullable List<String> searchIn,
+        @Min(1) @Parameter(name = "page", description = "Номер страницы (начинается с 1)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+        @Min(1) @Max(100) @Parameter(name = "page_size", description = "Количество элементов на странице", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page_size", required = false, defaultValue = "20") Integer pageSize
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType : MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"data\" : [ { \"estimated_time_minutes\" : 6, \"period\" : \"2060-2077\", \"rewards_summary\" : { \"items_count\" : 5, \"eddies\" : 5, \"experience\" : 1 }, \"description\" : \"description\", \"average_rating\" : 5.962134, \"match_score\" : 5.637377, \"title\" : \"title\", \"type\" : \"MAIN\", \"tags\" : [ \"combat\", \"hacking\", \"social\", \"romance\" ], \"difficulty\" : \"EASY\", \"completion_rate\" : 1.4658129, \"faction\" : \"faction\", \"quest_id\" : \"quest_id\", \"highlighted_text\" : \"highlighted_text\", \"level_requirement\" : 0 }, { \"estimated_time_minutes\" : 6, \"period\" : \"2060-2077\", \"rewards_summary\" : { \"items_count\" : 5, \"eddies\" : 5, \"experience\" : 1 }, \"description\" : \"description\", \"average_rating\" : 5.962134, \"match_score\" : 5.637377, \"title\" : \"title\", \"type\" : \"MAIN\", \"tags\" : [ \"combat\", \"hacking\", \"social\", \"romance\" ], \"difficulty\" : \"EASY\", \"completion_rate\" : 1.4658129, \"faction\" : \"faction\", \"quest_id\" : \"quest_id\", \"highlighted_text\" : \"highlighted_text\", \"level_requirement\" : 0 } ], \"meta\" : { \"total\" : 156, \"has_next\" : true, \"page\" : 1, \"total_pages\" : 8, \"has_prev\" : false, \"page_size\" : 20 } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    String PATH_GET_QUEST_DETAILS = "/narrative/quest-catalog/{quest_id}";
+
+    @Operation(
+        operationId = "getQuestDetails",
+        summary = "Получить полную информацию о квесте",
+        tags = { "Quest Catalog" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Детали квеста", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = QuestDetails.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}")
+                })
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = NarrativeApi.PATH_GET_QUEST_DETAILS,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<QuestDetails> getQuestDetails(
+        @NotNull @Parameter(name = "quest_id", required = true, in = ParameterIn.PATH) @PathVariable("quest_id") String questId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType : MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"rewards_summary\" : { \"items_count\" : 5, \"eddies\" : 5, \"experience\" : 1 }, \"description\" : \"description\", \"key_npcs\" : [ { \"role\" : \"role\", \"npc_id\" : \"npc_id\", \"name\" : \"name\" }, { \"role\" : \"role\", \"npc_id\" : \"npc_id\", \"name\" : \"name\" } ], \"title\" : \"title\", \"type\" : \"MAIN\", \"has_skill_checks\" : true, \"prerequisites\" : [ \"prerequisites\", \"prerequisites\" ], \"endings_count\" : 2, \"has_romance\" : true, \"full_description\" : \"full_description\", \"storyline\" : \"storyline\", \"quest_id\" : \"quest_id\", \"has_dialogue_tree\" : true, \"estimated_time_minutes\" : 6, \"period\" : \"2060-2077\", \"has_combat\" : true, \"average_rating\" : 5.962134, \"tags\" : [ \"combat\", \"hacking\", \"social\", \"romance\" ], \"branches_count\" : 5, \"difficulty\" : \"EASY\", \"completion_rate\" : 1.4658129, \"rewards_detailed\" : { \"reputation\" : { \"key\" : 3 }, \"currency\" : \"{}\", \"experience\" : 7, \"items\" : [ \"{}\", \"{}\" ], \"street_cred\" : 9 }, \"faction\" : \"faction\", \"objectives\" : [ { \"description\" : \"description\", \"optional\" : true, \"objective_id\" : \"objective_id\" }, { \"description\" : \"description\", \"optional\" : true, \"objective_id\" : \"objective_id\" } ], \"locations\" : [ \"locations\", \"locations\" ], \"unlocks\" : [ \"unlocks\", \"unlocks\" ], \"level_requirement\" : 0 }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    String PATH_GET_QUEST_DIALOGUE_TREE = "/narrative/quest-catalog/{quest_id}/dialogue-tree";
+
+    @Operation(
+        operationId = "getQuestDialogueTree",
+        summary = "Получить диалоговое дерево квеста",
+        description = "Для квестов с расширенными диалогами (20-30 узлов)",
+        tags = { "Quest Catalog" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Диалоговое дерево", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = DialogueTree.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}")
+                })
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = NarrativeApi.PATH_GET_QUEST_DIALOGUE_TREE,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<DialogueTree> getQuestDialogueTree(
+        @NotNull @Parameter(name = "quest_id", required = true, in = ParameterIn.PATH) @PathVariable("quest_id") String questId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType : MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"nodes\" : [ { \"speaker\" : \"speaker\", \"text\" : \"text\", \"choices\" : [ { \"leads_to_node\" : \"leads_to_node\", \"skill_check\" : \"{}\", \"text\" : \"text\", \"choice_id\" : \"choice_id\" }, { \"leads_to_node\" : \"leads_to_node\", \"skill_check\" : \"{}\", \"text\" : \"text\", \"choice_id\" : \"choice_id\" } ], \"node_id\" : \"node_id\" }, { \"speaker\" : \"speaker\", \"text\" : \"text\", \"choices\" : [ { \"leads_to_node\" : \"leads_to_node\", \"skill_check\" : \"{}\", \"text\" : \"text\", \"choice_id\" : \"choice_id\" }, { \"leads_to_node\" : \"leads_to_node\", \"skill_check\" : \"{}\", \"text\" : \"text\", \"choice_id\" : \"choice_id\" } ], \"node_id\" : \"node_id\" } ], \"quest_id\" : \"quest_id\", \"total_nodes\" : 25, \"root_node_id\" : \"root_node_id\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    String PATH_GET_QUEST_LOOT_TABLE = "/narrative/quest-catalog/{quest_id}/loot-table";
+
+    @Operation(
+        operationId = "getQuestLootTable",
+        summary = "Получить таблицу лута квеста",
+        tags = { "Quest Catalog" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Таблица лута", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = QuestLootTable.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = NarrativeApi.PATH_GET_QUEST_LOOT_TABLE,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<QuestLootTable> getQuestLootTable(
+        @NotNull @Parameter(name = "quest_id", required = true, in = ParameterIn.PATH) @PathVariable("quest_id") String questId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType : MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"guaranteed_loot\" : [ { \"quantity\" : 0, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" }, { \"quantity\" : 0, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" } ], \"quest_id\" : \"quest_id\", \"random_loot\" : [ { \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"drop_chance\" : 6.0274563, \"quantity_range\" : { \"min\" : 1, \"max\" : 5 } }, { \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"drop_chance\" : 6.0274563, \"quantity_range\" : { \"min\" : 1, \"max\" : 5 } } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    String PATH_GET_QUEST_RECOMMENDATIONS = "/narrative/quest-catalog/recommendations/{character_id}";
+
+    @Operation(
+        operationId = "getQuestRecommendations",
+        summary = "Получить рекомендации квестов для персонажа",
+        description = "AI-подбор квестов на основе стиля игры",
+        tags = { "Quest Recommendations" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Рекомендованные квесты", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = GetQuestRecommendations200Response.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = NarrativeApi.PATH_GET_QUEST_RECOMMENDATIONS,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<GetQuestRecommendations200Response> getQuestRecommendations(
+        @NotNull @Parameter(name = "character_id", required = true, in = ParameterIn.PATH) @PathVariable("character_id") UUID characterId,
+        @Max(50) @Parameter(name = "count", in = ParameterIn.QUERY) @Valid @RequestParam(value = "count", required = false, defaultValue = "10") Integer count
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType : MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"recommendations\" : [ { \"reasons\" : [ \"reasons\", \"reasons\" ], \"match_score\" : 0.8008282, \"quest\" : { \"estimated_time_minutes\" : 6, \"period\" : \"2060-2077\", \"rewards_summary\" : { \"items_count\" : 5, \"eddies\" : 5, \"experience\" : 1 }, \"description\" : \"description\", \"average_rating\" : 7.0614014, \"title\" : \"title\", \"type\" : \"MAIN\", \"tags\" : [ \"combat\", \"hacking\", \"social\", \"romance\" ], \"difficulty\" : \"EASY\", \"completion_rate\" : 2.302136, \"faction\" : \"faction\", \"quest_id\" : \"quest_id\", \"level_requirement\" : 0 } }, { \"reasons\" : [ \"reasons\", \"reasons\" ], \"match_score\" : 0.8008282, \"quest\" : { \"estimated_time_minutes\" : 6, \"period\" : \"2060-2077\", \"rewards_summary\" : { \"items_count\" : 5, \"eddies\" : 5, \"experience\" : 1 }, \"description\" : \"description\", \"average_rating\" : 7.0614014, \"title\" : \"title\", \"type\" : \"MAIN\", \"tags\" : [ \"combat\", \"hacking\", \"social\", \"romance\" ], \"difficulty\" : \"EASY\", \"completion_rate\" : 2.302136, \"faction\" : \"faction\", \"quest_id\" : \"quest_id\", \"level_requirement\" : 0 } } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    String PATH_GET_QUEST_CHAINS = "/narrative/quest-catalog/chains";
+
+    @Operation(
+        operationId = "getQuestChains",
+        summary = "Получить цепочки квестов",
+        tags = { "Quest Catalog" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Цепочки квестов", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = GetQuestChains200Response.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = NarrativeApi.PATH_GET_QUEST_CHAINS,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<GetQuestChains200Response> getQuestChains(
+        @Parameter(name = "faction", in = ParameterIn.QUERY) @Valid @RequestParam(value = "faction", required = false) @Nullable String faction,
+        @Parameter(name = "storyline", in = ParameterIn.QUERY) @Valid @RequestParam(value = "storyline", required = false) @Nullable String storyline
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType : MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"chains\" : [ { \"chain_id\" : \"chain_id\", \"quests\" : [ { \"quest_id\" : \"quest_id\", \"optional\" : true, \"title\" : \"title\", \"order\" : 0 }, { \"quest_id\" : \"quest_id\", \"optional\" : true, \"title\" : \"title\", \"order\" : 0 } ], \"name\" : \"NCPD Detective Story\", \"description\" : \"description\", \"total_rewards\" : \"{}\" }, { \"chain_id\" : \"chain_id\", \"quests\" : [ { \"quest_id\" : \"quest_id\", \"optional\" : true, \"title\" : \"title\", \"order\" : 0 }, { \"quest_id\" : \"quest_id\", \"optional\" : true, \"title\" : \"title\", \"order\" : 0 } ], \"name\" : \"NCPD Detective Story\", \"description\" : \"description\", \"total_rewards\" : \"{}\" } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     String PATH_GET_AVAILABLE_FACTION_QUESTS = "/narrative/faction-quests/character/{character_id}/available";
