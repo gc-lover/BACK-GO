@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("Error_error_details_inner")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T22:49:04.787810800+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 public class ErrorErrorDetailsInner {
 
   private @Nullable String field;

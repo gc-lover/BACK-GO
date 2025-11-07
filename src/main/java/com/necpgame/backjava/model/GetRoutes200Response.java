@@ -4,7 +4,11 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.necpgame.backjava.model.ErrorError;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.necpgame.backjava.model.Route;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -17,43 +21,42 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Error
+ * GetRoutes200Response
  */
 
+@JsonTypeName("getRoutes_200_response")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
-public class Error {
+public class GetRoutes200Response {
 
-  private ErrorError error;
+  @Valid
+  private List<@Valid Route> routes = new ArrayList<>();
 
-  public Error() {
-    super();
+  public GetRoutes200Response routes(List<@Valid Route> routes) {
+    this.routes = routes;
+    return this;
   }
 
-  /**
-   * Constructor with only required parameters
-   */
-  public Error(ErrorError error) {
-    this.error = error;
-  }
-
-  public Error error(ErrorError error) {
-    this.error = error;
+  public GetRoutes200Response addRoutesItem(Route routesItem) {
+    if (this.routes == null) {
+      this.routes = new ArrayList<>();
+    }
+    this.routes.add(routesItem);
     return this;
   }
 
   /**
-   * Get error
-   * @return error
+   * Get routes
+   * @return routes
    */
-  @NotNull @Valid 
-  @Schema(name = "error", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("error")
-  public ErrorError getError() {
-    return error;
+  @Valid 
+  @Schema(name = "routes", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("routes")
+  public List<@Valid Route> getRoutes() {
+    return routes;
   }
 
-  public void setError(ErrorError error) {
-    this.error = error;
+  public void setRoutes(List<@Valid Route> routes) {
+    this.routes = routes;
   }
 
   @Override
@@ -64,20 +67,20 @@ public class Error {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Error error = (Error) o;
-    return Objects.equals(this.error, error.error);
+    GetRoutes200Response getRoutes200Response = (GetRoutes200Response) o;
+    return Objects.equals(this.routes, getRoutes200Response.routes);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(error);
+    return Objects.hash(routes);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Error {\n");
-    sb.append("    error: ").append(toIndentedString(error)).append("\n");
+    sb.append("class GetRoutes200Response {\n");
+    sb.append("    routes: ").append(toIndentedString(routes)).append("\n");
     sb.append("}");
     return sb.toString();
   }

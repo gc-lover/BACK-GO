@@ -5,10 +5,10 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.necpgame.backjava.model.ErrorErrorDetailsInner;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import com.necpgame.backjava.model.ErrorErrorDetailsInner;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -25,7 +25,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("Error_error")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T22:49:04.787810800+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 public class ErrorError {
 
   private String code;
