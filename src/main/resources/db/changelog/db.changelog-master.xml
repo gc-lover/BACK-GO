@@ -114,4 +114,7 @@
     <!-- Notification System -->
     <include file="db/changelog/changes/068-create-notifications-table.xml"/>
 
+    <!-- Achievement System -->
+    <include file="db/changelog/changes/069-create-achievement-tables.xml"/>
+
 </databaseChangeLog>
