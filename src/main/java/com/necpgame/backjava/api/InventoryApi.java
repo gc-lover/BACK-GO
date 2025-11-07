@@ -5,30 +5,13 @@
  */
 package com.necpgame.backjava.api;
 
-import com.necpgame.backjava.model.AutoSortRequest;
-import com.necpgame.backjava.model.CleanupRequest;
-import com.necpgame.backjava.model.Container;
+import com.necpgame.backjava.model.CharacterInventory;
+import com.necpgame.backjava.model.DropItemRequest;
+import com.necpgame.backjava.model.EquipItemRequest;
 import com.necpgame.backjava.model.Error;
-import com.necpgame.backjava.model.Inventory;
-import com.necpgame.backjava.model.InventoryError;
-import com.necpgame.backjava.model.InventoryFiltersResponse;
-import com.necpgame.backjava.model.InventoryHistoryResponse;
-import com.necpgame.backjava.model.ItemConsumeRequest;
-import com.necpgame.backjava.model.ItemDropRequest;
-import com.necpgame.backjava.model.ItemEquipRequest;
-import com.necpgame.backjava.model.ItemMergeRequest;
-import com.necpgame.backjava.model.ItemMoveRequest;
-import com.necpgame.backjava.model.ItemOperationResult;
-import com.necpgame.backjava.model.ItemPickupRequest;
-import com.necpgame.backjava.model.ItemSplitRequest;
-import com.necpgame.backjava.model.ItemTemplate;
-import com.necpgame.backjava.model.ItemUnequipRequest;
-import org.springframework.lang.Nullable;
-import com.necpgame.backjava.model.Reservation;
-import com.necpgame.backjava.model.ReservationReleaseRequest;
-import com.necpgame.backjava.model.ReservationRequest;
-import com.necpgame.backjava.model.StashTransferRequest;
-import com.necpgame.backjava.model.WeightInfo;
+import com.necpgame.backjava.model.PickupItem200Response;
+import com.necpgame.backjava.model.PickupItemRequest;
+import com.necpgame.backjava.model.UseItemRequest;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -41,12 +24,9 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.Valid;
@@ -56,1227 +36,261 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-08T01:32:53.047924700+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
 @Validated
-@Tag(name = "Inventory", description = "Общая информация и контейнеры")
+@Tag(name = "Inventory", description = "Управление инвентарем")
 public interface InventoryApi {
 
-    default Optional<NativeWebRequest> getRequest() {
-        return Optional.empty();
-    }
-
-    String PATH_INVENTORY_PLAYERS_PLAYER_ID_AUTO_SORT_POST = "/inventory/players/{playerId}/auto-sort";
+    String PATH_DROP_ITEM = "/inventory/{character_id}/drop";
     /**
-     * POST /inventory/players/{playerId}/auto-sort : Автоматическая сортировка инвентаря
+     * POST /inventory/{character_id}/drop : Выбросить предмет
+     * Удаляет предмет из инвентаря. Создает предмет в мире (если не уничтожен). 
      *
-     * @param playerId Идентификатор игрока/персонажа (required)
-     * @param autoSortRequest  (required)
-     * @return Сортировка запущена (status code 202)
-     *         or Функция отключена (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     * @param characterId  (required)
+     * @param dropItemRequest  (required)
+     * @return Предмет выброшен (status code 200)
      */
     @Operation(
-        operationId = "inventoryPlayersPlayerIdAutoSortPost",
-        summary = "Автоматическая сортировка инвентаря",
+        operationId = "dropItem",
+        summary = "Выбросить предмет",
+        description = "Удаляет предмет из инвентаря. Создает предмет в мире (если не уничтожен). ",
         tags = { "Inventory" },
         responses = {
-            @ApiResponse(responseCode = "202", description = "Сортировка запущена"),
-            @ApiResponse(responseCode = "400", description = "Функция отключена", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
-                    )
-                })
-
+            @ApiResponse(responseCode = "200", description = "Предмет выброшен", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             })
         },
         security = {
-            @SecurityRequirement(name = "BearerAuth")
+            @SecurityRequirement(name = "bearerAuth")
         }
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_AUTO_SORT_POST,
+        value = InventoryApi.PATH_DROP_ITEM,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<Void> inventoryPlayersPlayerIdAutoSortPost(
-        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
-        @Parameter(name = "AutoSortRequest", description = "", required = true) @Valid @RequestBody AutoSortRequest autoSortRequest
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
+    ResponseEntity<Object> dropItem(
+        @NotNull @Parameter(name = "character_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("character_id") String characterId,
+        @Parameter(name = "DropItemRequest", description = "", required = true) @Valid @RequestBody DropItemRequest dropItemRequest
+    );
 
 
-    String PATH_INVENTORY_PLAYERS_PLAYER_ID_CLEANUP_POST = "/inventory/players/{playerId}/cleanup";
+    String PATH_EQUIP_ITEM = "/inventory/{character_id}/equip";
     /**
-     * POST /inventory/players/{playerId}/cleanup : Удалить предметы класса junk
+     * POST /inventory/{character_id}/equip : Экипировать предмет
+     * Экипирует предмет в слот. Weapon, armor, implant, cyberware. 
      *
-     * @param playerId Идентификатор игрока/персонажа (required)
-     * @param cleanupRequest  (required)
-     * @return Очистка выполнена (status code 200)
-     *         or Нет прав или предметов (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     */
-    @Operation(
-        operationId = "inventoryPlayersPlayerIdCleanupPost",
-        summary = "Удалить предметы класса junk",
-        tags = { "Inventory" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Очистка выполнена"),
-            @ApiResponse(responseCode = "400", description = "Нет прав или предметов", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
-                    )
-                })
-
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_CLEANUP_POST,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Void> inventoryPlayersPlayerIdCleanupPost(
-        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
-        @Parameter(name = "CleanupRequest", description = "", required = true) @Valid @RequestBody CleanupRequest cleanupRequest
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_INVENTORY_PLAYERS_PLAYER_ID_CONTAINERS_CONTAINER_ID_GET = "/inventory/players/{playerId}/containers/{containerId}";
-    /**
-     * GET /inventory/players/{playerId}/containers/{containerId} : Получить содержимое контейнера
-     *
-     * @param playerId Идентификатор игрока/персонажа (required)
-     * @param containerId Идентификатор контейнера инвентаря (required)
-     * @return Контейнер и слоты (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     */
-    @Operation(
-        operationId = "inventoryPlayersPlayerIdContainersContainerIdGet",
-        summary = "Получить содержимое контейнера",
-        tags = { "Inventory" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Контейнер и слоты", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Container.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
-                    )
-                })
-
-            }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
-                    )
-                })
-
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_CONTAINERS_CONTAINER_ID_GET,
-        produces = { "application/json" }
-    )
-    default ResponseEntity<Container> inventoryPlayersPlayerIdContainersContainerIdGet(
-        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
-        @NotNull @Parameter(name = "containerId", description = "Идентификатор контейнера инвентаря", required = true, in = ParameterIn.PATH) @PathVariable("containerId") String containerId
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"capacityWeight\" : 6.027456183070403, \"slots\" : [ { \"item\" : { \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 5, \"durability\" : { \"current\" : 7, \"max\" : 9 }, \"weight\" : 2.3021358869347655, \"type\" : \"type\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"itemId\" : \"itemId\", \"stackSize\" : 5, \"boundType\" : \"NONE\", \"stats\" : { \"key\" : \"\" }, \"name\" : \"name\", \"rarity\" : \"rarity\" }, \"metadata\" : { \"key\" : \"\" }, \"index\" : 1, \"slotId\" : \"slotId\", \"locked\" : true }, { \"item\" : { \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 5, \"durability\" : { \"current\" : 7, \"max\" : 9 }, \"weight\" : 2.3021358869347655, \"type\" : \"type\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"itemId\" : \"itemId\", \"stackSize\" : 5, \"boundType\" : \"NONE\", \"stats\" : { \"key\" : \"\" }, \"name\" : \"name\", \"rarity\" : \"rarity\" }, \"metadata\" : { \"key\" : \"\" }, \"index\" : 1, \"slotId\" : \"slotId\", \"locked\" : true } ], \"name\" : \"name\", \"capacitySlots\" : 0, \"filters\" : [ \"filters\", \"filters\" ], \"containerId\" : \"containerId\", \"type\" : \"BACKPACK\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_INVENTORY_PLAYERS_PLAYER_ID_FILTERS_GET = "/inventory/players/{playerId}/filters";
-    /**
-     * GET /inventory/players/{playerId}/filters : Активные фильтры и пресеты
-     *
-     * @param playerId Идентификатор игрока/персонажа (required)
-     * @return Фильтры инвентаря (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     */
-    @Operation(
-        operationId = "inventoryPlayersPlayerIdFiltersGet",
-        summary = "Активные фильтры и пресеты",
-        tags = { "Inventory" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Фильтры инвентаря", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryFiltersResponse.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
-                    )
-                })
-
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_FILTERS_GET,
-        produces = { "application/json" }
-    )
-    default ResponseEntity<InventoryFiltersResponse> inventoryPlayersPlayerIdFiltersGet(
-        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"presets\" : [ { \"name\" : \"name\", \"filters\" : [ \"filters\", \"filters\" ], \"presetId\" : \"presetId\" }, { \"name\" : \"name\", \"filters\" : [ \"filters\", \"filters\" ], \"presetId\" : \"presetId\" } ], \"activeFilters\" : [ \"activeFilters\", \"activeFilters\" ] }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_INVENTORY_PLAYERS_PLAYER_ID_GET = "/inventory/players/{playerId}";
-    /**
-     * GET /inventory/players/{playerId} : Получить состояние инвентаря игрока
-     *
-     * @param playerId Идентификатор игрока/персонажа (required)
-     * @return Инвентарь и контейнеры (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
-     */
-    @Operation(
-        operationId = "inventoryPlayersPlayerIdGet",
-        summary = "Получить состояние инвентаря игрока",
-        tags = { "Inventory" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Инвентарь и контейнеры", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Inventory.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
-                    )
-                })
-
-            }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
-                    )
-                })
-
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_GET,
-        produces = { "application/json" }
-    )
-    default ResponseEntity<Inventory> inventoryPlayersPlayerIdGet(
-        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"capacityModifiers\" : [ \"capacityModifiers\", \"capacityModifiers\" ], \"weight\" : { \"current\" : 3.616076749251911, \"penalty\" : \"penalty\", \"encumbrancePercent\" : 4.145608029883936, \"modifiers\" : [ \"modifiers\", \"modifiers\" ], \"capacity\" : 2.027123023002322 }, \"containers\" : [ { \"capacityWeight\" : 6.027456183070403, \"slots\" : [ { \"item\" : { \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 5, \"durability\" : { \"current\" : 7, \"max\" : 9 }, \"weight\" : 2.3021358869347655, \"type\" : \"type\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"itemId\" : \"itemId\", \"stackSize\" : 5, \"boundType\" : \"NONE\", \"stats\" : { \"key\" : \"\" }, \"name\" : \"name\", \"rarity\" : \"rarity\" }, \"metadata\" : { \"key\" : \"\" }, \"index\" : 1, \"slotId\" : \"slotId\", \"locked\" : true }, { \"item\" : { \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 5, \"durability\" : { \"current\" : 7, \"max\" : 9 }, \"weight\" : 2.3021358869347655, \"type\" : \"type\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"itemId\" : \"itemId\", \"stackSize\" : 5, \"boundType\" : \"NONE\", \"stats\" : { \"key\" : \"\" }, \"name\" : \"name\", \"rarity\" : \"rarity\" }, \"metadata\" : { \"key\" : \"\" }, \"index\" : 1, \"slotId\" : \"slotId\", \"locked\" : true } ], \"name\" : \"name\", \"capacitySlots\" : 0, \"filters\" : [ \"filters\", \"filters\" ], \"containerId\" : \"containerId\", \"type\" : \"BACKPACK\" }, { \"capacityWeight\" : 6.027456183070403, \"slots\" : [ { \"item\" : { \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 5, \"durability\" : { \"current\" : 7, \"max\" : 9 }, \"weight\" : 2.3021358869347655, \"type\" : \"type\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"itemId\" : \"itemId\", \"stackSize\" : 5, \"boundType\" : \"NONE\", \"stats\" : { \"key\" : \"\" }, \"name\" : \"name\", \"rarity\" : \"rarity\" }, \"metadata\" : { \"key\" : \"\" }, \"index\" : 1, \"slotId\" : \"slotId\", \"locked\" : true }, { \"item\" : { \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 5, \"durability\" : { \"current\" : 7, \"max\" : 9 }, \"weight\" : 2.3021358869347655, \"type\" : \"type\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"itemId\" : \"itemId\", \"stackSize\" : 5, \"boundType\" : \"NONE\", \"stats\" : { \"key\" : \"\" }, \"name\" : \"name\", \"rarity\" : \"rarity\" }, \"metadata\" : { \"key\" : \"\" }, \"index\" : 1, \"slotId\" : \"slotId\", \"locked\" : true } ], \"name\" : \"name\", \"capacitySlots\" : 0, \"filters\" : [ \"filters\", \"filters\" ], \"containerId\" : \"containerId\", \"type\" : \"BACKPACK\" } ], \"overloaded\" : true, \"playerId\" : \"playerId\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_INVENTORY_PLAYERS_PLAYER_ID_HISTORY_GET = "/inventory/players/{playerId}/history";
-    /**
-     * GET /inventory/players/{playerId}/history : Журнал операций с инвентарём
-     *
-     * @param playerId Идентификатор игрока/персонажа (required)
-     * @param event  (optional)
-     * @param page Номер страницы (начинается с 1) (optional, default to 1)
-     * @param pageSize Количество элементов на странице (optional, default to 20)
-     * @return История инвентаря (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     */
-    @Operation(
-        operationId = "inventoryPlayersPlayerIdHistoryGet",
-        summary = "Журнал операций с инвентарём",
-        tags = { "Inventory" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "История инвентаря", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryHistoryResponse.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
-                    )
-                })
-
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_HISTORY_GET,
-        produces = { "application/json" }
-    )
-    default ResponseEntity<InventoryHistoryResponse> inventoryPlayersPlayerIdHistoryGet(
-        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
-        @Parameter(name = "event", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "event", required = false) @Nullable String event,
-        @Min(value = 1) @Parameter(name = "page", description = "Номер страницы (начинается с 1)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-        @Min(value = 1) @Max(value = 100) @Parameter(name = "page_size", description = "Количество элементов на странице", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page_size", required = false, defaultValue = "20") Integer pageSize
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"entries\" : [ { \"relatedEntity\" : \"relatedEntity\", \"delta\" : [ { \"itemInstanceId\" : \"itemInstanceId\", \"quantity\" : 0 }, { \"itemInstanceId\" : \"itemInstanceId\", \"quantity\" : 0 } ], \"source\" : \"source\", \"event\" : \"event\", \"entryId\" : \"entryId\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" }, { \"relatedEntity\" : \"relatedEntity\", \"delta\" : [ { \"itemInstanceId\" : \"itemInstanceId\", \"quantity\" : 0 }, { \"itemInstanceId\" : \"itemInstanceId\", \"quantity\" : 0 } ], \"source\" : \"source\", \"event\" : \"event\", \"entryId\" : \"entryId\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" } ], \"pagination\" : { \"total\" : 156, \"has_next\" : true, \"page\" : 1, \"total_pages\" : 8, \"has_prev\" : false, \"page_size\" : 20 } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_CONSUME_POST = "/inventory/players/{playerId}/items/consume";
-    /**
-     * POST /inventory/players/{playerId}/items/consume : Использовать потребляемый предмет
-     *
-     * @param playerId Идентификатор игрока/персонажа (required)
-     * @param itemConsumeRequest  (required)
-     * @return Предмет использован (status code 200)
-     *         or Нельзя использовать (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     */
-    @Operation(
-        operationId = "inventoryPlayersPlayerIdItemsConsumePost",
-        summary = "Использовать потребляемый предмет",
-        tags = { "Items" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Предмет использован"),
-            @ApiResponse(responseCode = "400", description = "Нельзя использовать", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
-                    )
-                })
-
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_CONSUME_POST,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Void> inventoryPlayersPlayerIdItemsConsumePost(
-        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
-        @Parameter(name = "ItemConsumeRequest", description = "", required = true) @Valid @RequestBody ItemConsumeRequest itemConsumeRequest
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_DROP_POST = "/inventory/players/{playerId}/items/drop";
-    /**
-     * POST /inventory/players/{playerId}/items/drop : Сбросить предмет в мир
-     *
-     * @param playerId Идентификатор игрока/персонажа (required)
-     * @param itemDropRequest  (required)
-     * @return Предмет удалён (status code 200)
-     *         or Предмет не найден или зарезервирован (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     */
-    @Operation(
-        operationId = "inventoryPlayersPlayerIdItemsDropPost",
-        summary = "Сбросить предмет в мир",
-        tags = { "Items" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Предмет удалён"),
-            @ApiResponse(responseCode = "400", description = "Предмет не найден или зарезервирован", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
-                    )
-                })
-
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_DROP_POST,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Void> inventoryPlayersPlayerIdItemsDropPost(
-        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
-        @Parameter(name = "ItemDropRequest", description = "", required = true) @Valid @RequestBody ItemDropRequest itemDropRequest
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_EQUIP_POST = "/inventory/players/{playerId}/items/equip";
-    /**
-     * POST /inventory/players/{playerId}/items/equip : Экипировать предмет
-     *
-     * @param playerId Идентификатор игрока/персонажа (required)
-     * @param itemEquipRequest  (required)
+     * @param characterId  (required)
+     * @param equipItemRequest  (required)
      * @return Предмет экипирован (status code 200)
-     *         or Требования не выполнены (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
      */
     @Operation(
-        operationId = "inventoryPlayersPlayerIdItemsEquipPost",
+        operationId = "equipItem",
         summary = "Экипировать предмет",
+        description = "Экипирует предмет в слот. Weapon, armor, implant, cyberware. ",
         tags = { "Equipment" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Предмет экипирован"),
-            @ApiResponse(responseCode = "400", description = "Требования не выполнены", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
-                    )
-                })
-
+            @ApiResponse(responseCode = "200", description = "Предмет экипирован", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             })
         },
         security = {
-            @SecurityRequirement(name = "BearerAuth")
+            @SecurityRequirement(name = "bearerAuth")
         }
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_EQUIP_POST,
+        value = InventoryApi.PATH_EQUIP_ITEM,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<Void> inventoryPlayersPlayerIdItemsEquipPost(
-        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
-        @Parameter(name = "ItemEquipRequest", description = "", required = true) @Valid @RequestBody ItemEquipRequest itemEquipRequest
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
+    ResponseEntity<Object> equipItem(
+        @NotNull @Parameter(name = "character_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("character_id") String characterId,
+        @Parameter(name = "EquipItemRequest", description = "", required = true) @Valid @RequestBody EquipItemRequest equipItemRequest
+    );
 
 
-    String PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_MERGE_POST = "/inventory/players/{playerId}/items/merge";
+    String PATH_GET_BANK_STORAGE = "/inventory/bank/{player_id}";
     /**
-     * POST /inventory/players/{playerId}/items/merge : Объединить стеки
+     * GET /inventory/bank/{player_id} : Получить банковское хранилище
+     * Возвращает содержимое bank storage. Shared между всеми персонажами игрока (100 слотов). 
      *
-     * @param playerId Идентификатор игрока/персонажа (required)
-     * @param itemMergeRequest  (required)
-     * @return Стеки объединены (status code 200)
-     *         or Объединение невозможно (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     * @param playerId  (required)
+     * @return Банковское хранилище (status code 200)
      */
     @Operation(
-        operationId = "inventoryPlayersPlayerIdItemsMergePost",
-        summary = "Объединить стеки",
-        tags = { "Items" },
+        operationId = "getBankStorage",
+        summary = "Получить банковское хранилище",
+        description = "Возвращает содержимое bank storage. Shared между всеми персонажами игрока (100 слотов). ",
+        tags = { "Bank" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Стеки объединены"),
-            @ApiResponse(responseCode = "400", description = "Объединение невозможно", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
-                    )
-                })
-
+            @ApiResponse(responseCode = "200", description = "Банковское хранилище", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             })
         },
         security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_MERGE_POST,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Void> inventoryPlayersPlayerIdItemsMergePost(
-        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
-        @Parameter(name = "ItemMergeRequest", description = "", required = true) @Valid @RequestBody ItemMergeRequest itemMergeRequest
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_MOVE_POST = "/inventory/players/{playerId}/items/move";
-    /**
-     * POST /inventory/players/{playerId}/items/move : Переместить предмет
-     *
-     * @param playerId Идентификатор игрока/персонажа (required)
-     * @param itemMoveRequest  (required)
-     * @return Предмет перемещён (status code 200)
-     *         or Конфликт контейнеров (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     */
-    @Operation(
-        operationId = "inventoryPlayersPlayerIdItemsMovePost",
-        summary = "Переместить предмет",
-        tags = { "Items" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Предмет перемещён"),
-            @ApiResponse(responseCode = "400", description = "Конфликт контейнеров", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
-                    )
-                })
-
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_MOVE_POST,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Void> inventoryPlayersPlayerIdItemsMovePost(
-        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
-        @Parameter(name = "ItemMoveRequest", description = "", required = true) @Valid @RequestBody ItemMoveRequest itemMoveRequest
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_PICKUP_POST = "/inventory/players/{playerId}/items/pickup";
-    /**
-     * POST /inventory/players/{playerId}/items/pickup : Подобрать предмет и добавить в инвентарь
-     *
-     * @param playerId Идентификатор игрока/персонажа (required)
-     * @param itemPickupRequest  (required)
-     * @return Предмет добавлен (status code 200)
-     *         or Нет места или вес превышен (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     */
-    @Operation(
-        operationId = "inventoryPlayersPlayerIdItemsPickupPost",
-        summary = "Подобрать предмет и добавить в инвентарь",
-        tags = { "Items" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Предмет добавлен", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ItemOperationResult.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Нет места или вес превышен", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
-                    )
-                })
-
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_PICKUP_POST,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<ItemOperationResult> inventoryPlayersPlayerIdItemsPickupPost(
-        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
-        @Parameter(name = "ItemPickupRequest", description = "", required = true) @Valid @RequestBody ItemPickupRequest itemPickupRequest
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"item\" : { \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 5, \"durability\" : { \"current\" : 7, \"max\" : 9 }, \"weight\" : 2.3021358869347655, \"type\" : \"type\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"itemId\" : \"itemId\", \"stackSize\" : 5, \"boundType\" : \"NONE\", \"stats\" : { \"key\" : \"\" }, \"name\" : \"name\", \"rarity\" : \"rarity\" }, \"weight\" : { \"current\" : 3.616076749251911, \"penalty\" : \"penalty\", \"encumbrancePercent\" : 4.145608029883936, \"modifiers\" : [ \"modifiers\", \"modifiers\" ], \"capacity\" : 2.027123023002322 }, \"slotId\" : \"slotId\", \"containerId\" : \"containerId\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_SPLIT_POST = "/inventory/players/{playerId}/items/split";
-    /**
-     * POST /inventory/players/{playerId}/items/split : Разделить стек предметов
-     *
-     * @param playerId Идентификатор игрока/персонажа (required)
-     * @param itemSplitRequest  (required)
-     * @return Стек разделён (status code 200)
-     *         or Недостаточное количество или место (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     */
-    @Operation(
-        operationId = "inventoryPlayersPlayerIdItemsSplitPost",
-        summary = "Разделить стек предметов",
-        tags = { "Items" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Стек разделён"),
-            @ApiResponse(responseCode = "400", description = "Недостаточное количество или место", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
-                    )
-                })
-
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_SPLIT_POST,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Void> inventoryPlayersPlayerIdItemsSplitPost(
-        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
-        @Parameter(name = "ItemSplitRequest", description = "", required = true) @Valid @RequestBody ItemSplitRequest itemSplitRequest
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_UNEQUIP_POST = "/inventory/players/{playerId}/items/unequip";
-    /**
-     * POST /inventory/players/{playerId}/items/unequip : Снять предмет
-     *
-     * @param playerId Идентификатор игрока/персонажа (required)
-     * @param itemUnequipRequest  (required)
-     * @return Предмет снят (status code 200)
-     *         or Нет места в контейнере (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     */
-    @Operation(
-        operationId = "inventoryPlayersPlayerIdItemsUnequipPost",
-        summary = "Снять предмет",
-        tags = { "Equipment" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Предмет снят"),
-            @ApiResponse(responseCode = "400", description = "Нет места в контейнере", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
-                    )
-                })
-
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_UNEQUIP_POST,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Void> inventoryPlayersPlayerIdItemsUnequipPost(
-        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
-        @Parameter(name = "ItemUnequipRequest", description = "", required = true) @Valid @RequestBody ItemUnequipRequest itemUnequipRequest
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_INVENTORY_PLAYERS_PLAYER_ID_RELEASE_POST = "/inventory/players/{playerId}/release";
-    /**
-     * POST /inventory/players/{playerId}/release : Снять резерв предметов
-     *
-     * @param playerId Идентификатор игрока/персонажа (required)
-     * @param reservationReleaseRequest  (required)
-     * @return Резерв снят (status code 200)
-     *         or Резерв не найден (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     */
-    @Operation(
-        operationId = "inventoryPlayersPlayerIdReleasePost",
-        summary = "Снять резерв предметов",
-        tags = { "Reserve" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Резерв снят"),
-            @ApiResponse(responseCode = "400", description = "Резерв не найден", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
-                    )
-                })
-
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_RELEASE_POST,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Void> inventoryPlayersPlayerIdReleasePost(
-        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
-        @Parameter(name = "ReservationReleaseRequest", description = "", required = true) @Valid @RequestBody ReservationReleaseRequest reservationReleaseRequest
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_INVENTORY_PLAYERS_PLAYER_ID_RESERVE_POST = "/inventory/players/{playerId}/reserve";
-    /**
-     * POST /inventory/players/{playerId}/reserve : Зарезервировать предметы
-     *
-     * @param playerId Идентификатор игрока/персонажа (required)
-     * @param reservationRequest  (required)
-     * @return Резерв создан (status code 201)
-     *         or Конфликт резерва (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     */
-    @Operation(
-        operationId = "inventoryPlayersPlayerIdReservePost",
-        summary = "Зарезервировать предметы",
-        tags = { "Reserve" },
-        responses = {
-            @ApiResponse(responseCode = "201", description = "Резерв создан", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Reservation.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Конфликт резерва", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
-                    )
-                })
-
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_RESERVE_POST,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Reservation> inventoryPlayersPlayerIdReservePost(
-        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
-        @Parameter(name = "ReservationRequest", description = "", required = true) @Valid @RequestBody ReservationRequest reservationRequest
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"reservationId\" : \"reservationId\", \"context\" : \"context\", \"items\" : [ { \"itemInstanceId\" : \"itemInstanceId\", \"quantity\" : 0 }, { \"itemInstanceId\" : \"itemInstanceId\", \"quantity\" : 0 } ], \"referenceId\" : \"referenceId\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"status\" : \"ACTIVE\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_INVENTORY_PLAYERS_PLAYER_ID_STASH_TRANSFER_POST = "/inventory/players/{playerId}/stash/transfer";
-    /**
-     * POST /inventory/players/{playerId}/stash/transfer : Перемещение между backpack и stash/bank
-     *
-     * @param playerId Идентификатор игрока/персонажа (required)
-     * @param stashTransferRequest  (required)
-     * @return Перемещение выполнено (status code 200)
-     *         or Лимит банка или нет места (status code 400)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     */
-    @Operation(
-        operationId = "inventoryPlayersPlayerIdStashTransferPost",
-        summary = "Перемещение между backpack и stash/bank",
-        tags = { "Inventory" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Перемещение выполнено"),
-            @ApiResponse(responseCode = "400", description = "Лимит банка или нет места", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
-                    )
-                })
-
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_STASH_TRANSFER_POST,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Void> inventoryPlayersPlayerIdStashTransferPost(
-        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
-        @Parameter(name = "StashTransferRequest", description = "", required = true) @Valid @RequestBody StashTransferRequest stashTransferRequest
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_INVENTORY_PLAYERS_PLAYER_ID_WEIGHT_GET = "/inventory/players/{playerId}/weight";
-    /**
-     * GET /inventory/players/{playerId}/weight : Получить информацию о весе
-     *
-     * @param playerId Идентификатор игрока/персонажа (required)
-     * @return Вес и лимиты (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     */
-    @Operation(
-        operationId = "inventoryPlayersPlayerIdWeightGet",
-        summary = "Получить информацию о весе",
-        tags = { "Weight" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Вес и лимиты", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = WeightInfo.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
-                    )
-                })
-
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
+            @SecurityRequirement(name = "bearerAuth")
         }
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_WEIGHT_GET,
+        value = InventoryApi.PATH_GET_BANK_STORAGE,
         produces = { "application/json" }
     )
-    default ResponseEntity<WeightInfo> inventoryPlayersPlayerIdWeightGet(
-        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"current\" : 3.616076749251911, \"penalty\" : \"penalty\", \"encumbrancePercent\" : 4.145608029883936, \"modifiers\" : [ \"modifiers\", \"modifiers\" ], \"capacity\" : 2.027123023002322 }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
+    ResponseEntity<Object> getBankStorage(
+        @NotNull @Parameter(name = "player_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("player_id") String playerId
+    );
 
 
-    String PATH_INVENTORY_TEMPLATES_ITEMS_ITEM_ID_GET = "/inventory/templates/items/{itemId}";
+    String PATH_GET_EQUIPMENT = "/inventory/{character_id}/equipment";
     /**
-     * GET /inventory/templates/items/{itemId} : Получить метаданные предмета
+     * GET /inventory/{character_id}/equipment : Получить экипировку
+     * Возвращает экипированные предметы. Weapons, armor, implants, cyberware. 
      *
-     * @param itemId Идентификатор шаблона предмета (required)
-     * @return Метаданные предмета (status code 200)
-     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or Запрошенный ресурс не найден.  (status code 404)
+     * @param characterId  (required)
+     * @return Экипировка персонажа (status code 200)
      */
     @Operation(
-        operationId = "inventoryTemplatesItemsItemIdGet",
-        summary = "Получить метаданные предмета",
+        operationId = "getEquipment",
+        summary = "Получить экипировку",
+        description = "Возвращает экипированные предметы. Weapons, armor, implants, cyberware. ",
+        tags = { "Equipment" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Экипировка персонажа", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = InventoryApi.PATH_GET_EQUIPMENT,
+        produces = { "application/json" }
+    )
+    ResponseEntity<Object> getEquipment(
+        @NotNull @Parameter(name = "character_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("character_id") String characterId
+    );
+
+
+    String PATH_GET_INVENTORY = "/inventory/{character_id}";
+    /**
+     * GET /inventory/{character_id} : Получить инвентарь персонажа
+     * Возвращает содержимое инвентаря. Включает слоты, предметы, вес, лимиты. 
+     *
+     * @param characterId  (required)
+     * @return Инвентарь персонажа (status code 200)
+     */
+    @Operation(
+        operationId = "getInventory",
+        summary = "Получить инвентарь персонажа",
+        description = "Возвращает содержимое инвентаря. Включает слоты, предметы, вес, лимиты. ",
         tags = { "Inventory" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Метаданные предмета", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ItemTemplate.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+            @ApiResponse(responseCode = "200", description = "Инвентарь персонажа", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CharacterInventory.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
-                    )
-                })
-
-            }),
-            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"character_id\":\"char_123\",\"slots_total\":50,\"slots_used\":32,\"weight_current\":45.5,\"weight_max\":100.0,\"is_overencumbered\":false,\"items\":[{\"item_id\":\"item_001\",\"name\":\"Legendary Katana\",\"slot\":5,\"stack_size\":1,\"durability\":95,\"is_equipped\":false},{\"item_id\":\"item_002\",\"name\":\"Health Stim\",\"slot\":10,\"stack_size\":15,\"durability\":100}]}"
                     )
                 })
 
             })
         },
         security = {
-            @SecurityRequirement(name = "BearerAuth")
+            @SecurityRequirement(name = "bearerAuth")
         }
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = InventoryApi.PATH_INVENTORY_TEMPLATES_ITEMS_ITEM_ID_GET,
+        value = InventoryApi.PATH_GET_INVENTORY,
         produces = { "application/json" }
     )
-    default ResponseEntity<ItemTemplate> inventoryTemplatesItemsItemIdGet(
-        @NotNull @Parameter(name = "itemId", description = "Идентификатор шаблона предмета", required = true, in = ParameterIn.PATH) @PathVariable("itemId") String itemId
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"allowedSlots\" : [ \"allowedSlots\", \"allowedSlots\" ], \"itemId\" : \"itemId\", \"name\" : \"name\", \"description\" : \"description\", \"weight\" : 0.8008281904610115, \"baseStats\" : { \"key\" : \"\" }, \"rarity\" : \"rarity\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    ResponseEntity<CharacterInventory> getInventory(
+        @NotNull @Parameter(name = "character_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("character_id") String characterId
+    );
 
-    }
+
+    String PATH_PICKUP_ITEM = "/inventory/{character_id}/pickup";
+    /**
+     * POST /inventory/{character_id}/pickup : Подобрать предмет
+     * Добавляет предмет в инвентарь. Проверяет свободные слоты и вес. 
+     *
+     * @param characterId  (required)
+     * @param pickupItemRequest  (required)
+     * @return Предмет подобран (status code 200)
+     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
+     */
+    @Operation(
+        operationId = "pickupItem",
+        summary = "Подобрать предмет",
+        description = "Добавляет предмет в инвентарь. Проверяет свободные слоты и вес. ",
+        tags = { "Inventory" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Предмет подобран", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = PickupItem200Response.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = InventoryApi.PATH_PICKUP_ITEM,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    ResponseEntity<PickupItem200Response> pickupItem(
+        @NotNull @Parameter(name = "character_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("character_id") String characterId,
+        @Parameter(name = "PickupItemRequest", description = "", required = true) @Valid @RequestBody PickupItemRequest pickupItemRequest
+    );
+
+
+    String PATH_USE_ITEM = "/inventory/{character_id}/use";
+    /**
+     * POST /inventory/{character_id}/use : Использовать предмет
+     * Использует consumable предмет (stim, ammo, etc.). Применяет эффект, уменьшает quantity. 
+     *
+     * @param characterId  (required)
+     * @param useItemRequest  (required)
+     * @return Предмет использован (status code 200)
+     */
+    @Operation(
+        operationId = "useItem",
+        summary = "Использовать предмет",
+        description = "Использует consumable предмет (stim, ammo, etc.). Применяет эффект, уменьшает quantity. ",
+        tags = { "Inventory" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Предмет использован", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = InventoryApi.PATH_USE_ITEM,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    ResponseEntity<Object> useItem(
+        @NotNull @Parameter(name = "character_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("character_id") String characterId,
+        @Parameter(name = "UseItemRequest", description = "", required = true) @Valid @RequestBody UseItemRequest useItemRequest
+    );
 
 }
+

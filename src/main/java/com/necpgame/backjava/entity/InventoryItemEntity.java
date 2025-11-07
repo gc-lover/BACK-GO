@@ -48,6 +48,9 @@ public class InventoryItemEntity {
     @Column(name = "stackable", nullable = false)
     private Boolean stackable = false;
 
+    @Column(name = "max_stack_size")
+    private Integer maxStackSize = 1;
+
     @Column(name = "rarity", nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
     private ItemRarity rarity = ItemRarity.COMMON;
@@ -88,6 +91,18 @@ public class InventoryItemEntity {
     // Bonuses when equipped (JSON)
     @Column(name = "equip_bonuses", length = 1000)
     private String equipBonuses;
+
+    @Column(name = "bind_on_pickup", nullable = false)
+    private Boolean bindOnPickup = false;
+
+    @Column(name = "bind_on_equip", nullable = false)
+    private Boolean bindOnEquip = false;
+
+    @Column(name = "has_durability", nullable = false)
+    private Boolean hasDurability = false;
+
+    @Column(name = "base_durability")
+    private Integer baseDurability;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

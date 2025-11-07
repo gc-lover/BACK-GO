@@ -8,7 +8,9 @@ import com.necpgame.backjava.mapper.CharacterAppearanceMapperMS;
 import com.necpgame.backjava.mapper.CharacterMapperMS;
 import com.necpgame.backjava.model.*;
 import com.necpgame.backjava.repository.*;
+import com.necpgame.backjava.repository.LoreCharacterCategoryRepository;
 import com.necpgame.backjava.service.CharactersService;
+import com.necpgame.backjava.service.mapper.LoreMapper;
 import com.necpgame.backjava.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +41,20 @@ public class CharactersServiceImpl implements CharactersService {
     private final CityRepository cityRepository;
     private final CharacterMapperMS characterMapper;
     private final CharacterAppearanceMapperMS appearanceMapper;
+    private final LoreCharacterCategoryRepository loreCharacterCategoryRepository;
+    private final LoreMapper loreMapper;
+    @Override
+    @Transactional(readOnly = true)
+    public GetCharacterCategories200Response getCharacterCategories() {
+        var categories = loreCharacterCategoryRepository.findAll().stream()
+            .map(loreMapper::toCharacterCategory)
+            .collect(Collectors.toList());
+
+        GetCharacterCategories200Response response = new GetCharacterCategories200Response();
+        response.setCategories(categories);
+        return response;
+    }
+
     
     /**
      * РЎРїРёСЃРѕРє РїРµСЂСЃРѕРЅР°Р¶РµР№ С‚РµРєСѓС‰РµРіРѕ РёРіСЂРѕРєР°

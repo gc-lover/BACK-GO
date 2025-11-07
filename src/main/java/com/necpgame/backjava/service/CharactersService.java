@@ -3,6 +3,7 @@ package com.necpgame.backjava.service;
 import com.necpgame.backjava.model.CreateCharacter201Response;
 import com.necpgame.backjava.model.CreateCharacterRequest;
 import com.necpgame.backjava.model.DeleteCharacter200Response;
+import com.necpgame.backjava.model.GetCharacterCategories200Response;
 import com.necpgame.backjava.model.Error;
 import com.necpgame.backjava.model.GetCharacterClasses200Response;
 import com.necpgame.backjava.model.GetCharacterOrigins200Response;
@@ -18,6 +19,8 @@ import org.springframework.validation.annotation.Validated;
  */
 @Validated
 public interface CharactersService {
+
+    GetCharacterCategories200Response getCharacterCategories();
 
     /**
      * POST /characters : РЎРѕР·РґР°РЅРёРµ РЅРѕРІРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°

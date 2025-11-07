@@ -46,5 +46,8 @@ public interface CharacterEquipmentRepository extends JpaRepository<CharacterEqu
      */
     @Query("SELECT ce FROM CharacterEquipmentEntity ce WHERE ce.characterId = :characterId AND ce.itemId = :itemId")
     Optional<CharacterEquipmentEntity> findByCharacterIdAndItemId(UUID characterId, String itemId);
+
+    @Query("SELECT ce FROM CharacterEquipmentEntity ce WHERE ce.characterId = :characterId AND ce.inventoryItemId = :inventoryItemId")
+    Optional<CharacterEquipmentEntity> findByCharacterIdAndInventoryItemId(UUID characterId, UUID inventoryItemId);
 }
 

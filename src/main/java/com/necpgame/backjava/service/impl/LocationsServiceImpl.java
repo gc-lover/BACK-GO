@@ -1,96 +1,161 @@
 package com.necpgame.backjava.service.impl;
 
-import com.necpgame.backjava.model.*;
-import com.necpgame.backjava.repository.*;
+import com.necpgame.backjava.entity.LoreLocationEntity;
+import com.necpgame.backjava.entity.enums.LoreLocationType;
+import com.necpgame.backjava.model.GetConnectedLocations200Response;
+import com.necpgame.backjava.model.GetLocationActions200Response;
+import com.necpgame.backjava.model.GetLocations200Response;
+import com.necpgame.backjava.model.ListLocations200Response;
+import com.necpgame.backjava.model.Location;
+import com.necpgame.backjava.model.LocationDetailed;
+import com.necpgame.backjava.model.LocationDetails;
+import com.necpgame.backjava.model.PaginationMeta;
+import com.necpgame.backjava.model.TravelRequest;
+import com.necpgame.backjava.model.TravelResponse;
+import com.necpgame.backjava.repository.LoreLocationRepository;
 import com.necpgame.backjava.repository.specification.LoreLocationSpecifications;
 import com.necpgame.backjava.service.LocationsService;
+import com.necpgame.backjava.service.mapper.LoreMapper;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
-import com.necpgame.backjava.model.LoreLocationType;
-import com.necpgame.backjava.model.LoreLocationEntity;
+import org.springframework.web.server.ResponseStatusException;
 
-/**
- * Р РµР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІРёСЃР° РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РёРіСЂРѕРІС‹РјРё Р»РѕРєР°С†РёСЏРјРё.
- * 
- * РСЃС‚РѕС‡РЅРёРє: API-SWAGGER/api/v1/locations/locations.yaml
- */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class LocationsServiceImpl implements LocationsService {
-    
-    private final GameLocationRepository gameLocationRepository;
-    private final CharacterLocationRepository characterLocationRepository;
-    
+
+    private static final int DEFAULT_PAGE = 1;
+    private static final int DEFAULT_PAGE_SIZE = 20;
+    private static final int MAX_PAGE_SIZE = 100;
+
+    private final LoreLocationRepository loreLocationRepository;
+    private final LoreMapper loreMapper;
+
     @Override
     @Transactional(readOnly = true)
     public GetLocations200Response getLocations(UUID characterId, String region, String dangerLevel, Integer minLevel) {
-        log.info("Getting locations for character: {} (region: {}, dangerLevel: {}, minLevel: {})", 
-                 characterId, region, dangerLevel, minLevel);
-        
-        Specification<LoreLocationEntity> specification = Specification.where(null);
+        log.info("getLocations characterId={} region={} dangerLevel={} minLevel={}", characterId, region, dangerLevel, minLevel);
+        return new GetLocations200Response().locations(List.of()).total(0);
+    }
 
+    @Override
+    @Transactional(readOnly = true)
+    public LocationDetails getLocationDetails(String locationId, UUID characterId) {
+        log.info("getLocationDetails locationId={} characterId={}", locationId, characterId);
+        return new LocationDetails();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public LocationDetails getCurrentLocation(UUID characterId) {
+        log.info("getCurrentLocation characterId={}", characterId);
+        return new LocationDetails();
+    }
+
+    @Override
+    @Transactional
+    public TravelResponse travelToLocation(TravelRequest request) {
+        log.info("travelToLocation request={}", request);
+        return new TravelResponse();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public GetLocationActions200Response getLocationActions(String locationId, UUID characterId) {
+        log.info("getLocationActions locationId={} characterId={}", locationId, characterId);
+        return new GetLocationActions200Response();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public GetConnectedLocations200Response getConnectedLocations(String locationId, UUID characterId) {
+        log.info("getConnectedLocations locationId={} characterId={}", locationId, characterId);
+        return new GetConnectedLocations200Response();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ListLocations200Response listLocations(String region, String type, Integer page, Integer pageSize) {
+        int resolvedPage = normalizePage(page);
+        int resolvedSize = normalizePageSize(pageSize);
+
+        Specification<LoreLocationEntity> specification = Specification.where(null);
+        if (StringUtils.hasText(region)) {
+            specification = specification == null
+                    ? LoreLocationSpecifications.hasRegion(region)
+                    : specification.and(LoreLocationSpecifications.hasRegion(region));
+        }
         if (StringUtils.hasText(type)) {
-            LoreLocationType locationType = toLocationType(type);
+            LoreLocationType locationType = parseLocationType(type);
             specification = specification == null
                     ? LoreLocationSpecifications.hasType(locationType)
                     : specification.and(LoreLocationSpecifications.hasType(locationType));
         }
-        if (StringUtils.hasText(region)) {
-            Specification<LoreLocationEntity> regionSpec = LoreLocationSpecifications.hasRegion(region);
-            specification = specification == null ? regionSpec : specification.and(regionSpec);
+
+        Pageable pageable = PageRequest.of(resolvedPage - 1, resolvedSize, Sort.by("name").ascending());
+        Page<LoreLocationEntity> pageResult = loreLocationRepository.findAll(specification, pageable);
+
+        List<Location> data = pageResult.getContent().stream()
+                .map(loreMapper::toLocation)
+                .collect(Collectors.toList());
+
+        PaginationMeta meta = buildPaginationMeta(pageResult, resolvedPage, resolvedSize);
+        return new ListLocations200Response()
+                .data(data)
+                .meta(meta);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public LocationDetailed getLocation(String locationId) {
+        LoreLocationEntity entity = loreLocationRepository.findByExternalId(locationId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Location not found: " + locationId));
+        return loreMapper.toLocationDetailed(entity);
+    }
+
+    private int normalizePage(Integer page) {
+        if (page == null || page < 1) {
+            return DEFAULT_PAGE;
         }
-        return null;
+        return page;
     }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public LocationDetails getLocationDetails(String locationId, UUID characterId) {
-        log.info("Getting location details: {} for character: {}", locationId, characterId);
-        
-        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (Р·Р°РіСЂСѓР·РёС‚СЊ РґРµС‚Р°Р»Рё Р»РѕРєР°С†РёРё)
-        return null;
+
+    private int normalizePageSize(Integer pageSize) {
+        if (pageSize == null || pageSize < 1) {
+            return DEFAULT_PAGE_SIZE;
+        }
+        return Math.min(pageSize, MAX_PAGE_SIZE);
     }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public LocationDetails getCurrentLocation(UUID characterId) {
-        log.info("Getting current location for character: {}", characterId);
-        
-        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (Р·Р°РіСЂСѓР·РёС‚СЊ С‚РµРєСѓС‰СѓСЋ Р»РѕРєР°С†РёСЋ РїРµСЂСЃРѕРЅР°Р¶Р°)
-        return null;
+
+    private PaginationMeta buildPaginationMeta(Page<?> page, int pageNumber, int pageSize) {
+        return new PaginationMeta()
+                .page(pageNumber)
+                .pageSize(pageSize)
+                .total(Math.toIntExact(page.getTotalElements()))
+                .totalPages(page.getTotalPages())
+                .hasNext(page.hasNext())
+                .hasPrev(page.hasPrevious());
     }
-    
-    @Override
-    @Transactional
-    public TravelResponse travelToLocation(TravelRequest request) {
-        log.info("Traveling character {} to location: {}", request.getCharacterId(), request.getTargetLocationId());
-        
-        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (РїРµСЂРµРјРµСЃС‚РёС‚СЊ РїРµСЂСЃРѕРЅР°Р¶Р°, РїСЂРѕРІРµСЂРёС‚СЊ РґРѕСЃС‚СѓРїРЅРѕСЃС‚СЊ)
-        return null;
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public GetLocationActions200Response getLocationActions(String locationId, UUID characterId) {
-        log.info("Getting location actions: {} for character: {}", locationId, characterId);
-        
-        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (Р·Р°РіСЂСѓР·РёС‚СЊ РґРѕСЃС‚СѓРїРЅС‹Рµ РґРµР№СЃС‚РІРёСЏ РІ Р»РѕРєР°С†РёРё)
-        return null;
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public GetConnectedLocations200Response getConnectedLocations(String locationId, UUID characterId) {
-        log.info("Getting connected locations for: {} (character: {})", locationId, characterId);
-        
-        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (Р·Р°РіСЂСѓР·РёС‚СЊ СЃРїРёСЃРѕРє СЃРѕСЃРµРґРЅРёС… Р»РѕРєР°С†РёР№)
-        return null;
+
+    private LoreLocationType parseLocationType(String raw) {
+        try {
+            return LoreLocationType.valueOf(raw.toUpperCase(Locale.ROOT));
+        } catch (IllegalArgumentException ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unsupported location type: " + raw);
+        }
     }
 }

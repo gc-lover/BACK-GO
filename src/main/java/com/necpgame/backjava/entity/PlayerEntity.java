@@ -76,6 +76,9 @@ public class PlayerEntity {
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CharacterSlotEntity> slots = new ArrayList<>();
 
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<PlayerBankSlotEntity> bankSlots = new ArrayList<>();
+
     public void addSlot(CharacterSlotEntity slot) {
         slots.add(slot);
         slot.setPlayer(this);
@@ -83,6 +86,17 @@ public class PlayerEntity {
 
     public void removeSlot(CharacterSlotEntity slot) {
         if (slots.remove(slot)) {
+            slot.setPlayer(null);
+        }
+    }
+
+    public void addBankSlot(PlayerBankSlotEntity slot) {
+        bankSlots.add(slot);
+        slot.setPlayer(this);
+    }
+
+    public void removeBankSlot(PlayerBankSlotEntity slot) {
+        if (bankSlots.remove(slot)) {
             slot.setPlayer(null);
         }
     }

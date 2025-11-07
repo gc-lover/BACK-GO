@@ -110,7 +110,7 @@ public interface SocialVoiceApi {
     )
     @RequestMapping(
         method = RequestMethod.DELETE,
-        value = SocialVoice.PATH_SOCIAL_VOICE_CHANNELS_CHANNEL_ID_DELETE,
+        value = SocialVoiceApi.PATH_SOCIAL_VOICE_CHANNELS_CHANNEL_ID_DELETE,
         produces = { "application/json" }
     )
     default ResponseEntity<Void> socialVoiceChannelsChannelIdDelete(
@@ -203,7 +203,7 @@ public interface SocialVoiceApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = SocialVoice.PATH_SOCIAL_VOICE_CHANNELS_CHANNEL_ID_EVENTS_POST,
+        value = SocialVoiceApi.PATH_SOCIAL_VOICE_CHANNELS_CHANNEL_ID_EVENTS_POST,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
@@ -297,7 +297,7 @@ public interface SocialVoiceApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = SocialVoice.PATH_SOCIAL_VOICE_CHANNELS_CHANNEL_ID_GET,
+        value = SocialVoiceApi.PATH_SOCIAL_VOICE_CHANNELS_CHANNEL_ID_GET,
         produces = { "application/json" }
     )
     default ResponseEntity<VoiceChannel> socialVoiceChannelsChannelIdGet(
@@ -415,7 +415,7 @@ public interface SocialVoiceApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = SocialVoice.PATH_SOCIAL_VOICE_CHANNELS_CHANNEL_ID_JOIN_POST,
+        value = SocialVoiceApi.PATH_SOCIAL_VOICE_CHANNELS_CHANNEL_ID_JOIN_POST,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
@@ -519,7 +519,7 @@ public interface SocialVoiceApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = SocialVoice.PATH_SOCIAL_VOICE_CHANNELS_CHANNEL_ID_LEAVE_POST,
+        value = SocialVoiceApi.PATH_SOCIAL_VOICE_CHANNELS_CHANNEL_ID_LEAVE_POST,
         produces = { "application/json" }
     )
     default ResponseEntity<LeaveVoiceResponse> socialVoiceChannelsChannelIdLeavePost(
@@ -606,7 +606,7 @@ public interface SocialVoiceApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = SocialVoice.PATH_SOCIAL_VOICE_CHANNELS_CHANNEL_ID_PARTICIPANTS_GET,
+        value = SocialVoiceApi.PATH_SOCIAL_VOICE_CHANNELS_CHANNEL_ID_PARTICIPANTS_GET,
         produces = { "application/json" }
     )
     default ResponseEntity<VoiceParticipantList> socialVoiceChannelsChannelIdParticipantsGet(
@@ -694,7 +694,7 @@ public interface SocialVoiceApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = SocialVoice.PATH_SOCIAL_VOICE_CHANNELS_CHANNEL_ID_PARTICIPANTS_PLAYER_ID_DEAFEN_POST,
+        value = SocialVoiceApi.PATH_SOCIAL_VOICE_CHANNELS_CHANNEL_ID_PARTICIPANTS_PLAYER_ID_DEAFEN_POST,
         produces = { "application/json" }
     )
     default ResponseEntity<VoiceParticipant> socialVoiceChannelsChannelIdParticipantsPlayerIdDeafenPost(
@@ -794,7 +794,7 @@ public interface SocialVoiceApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = SocialVoice.PATH_SOCIAL_VOICE_CHANNELS_CHANNEL_ID_PARTICIPANTS_PLAYER_ID_MUTE_POST,
+        value = SocialVoiceApi.PATH_SOCIAL_VOICE_CHANNELS_CHANNEL_ID_PARTICIPANTS_PLAYER_ID_MUTE_POST,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
@@ -900,7 +900,7 @@ public interface SocialVoiceApi {
     )
     @RequestMapping(
         method = RequestMethod.PATCH,
-        value = SocialVoice.PATH_SOCIAL_VOICE_CHANNELS_CHANNEL_ID_PATCH,
+        value = SocialVoiceApi.PATH_SOCIAL_VOICE_CHANNELS_CHANNEL_ID_PATCH,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
@@ -1005,7 +1005,7 @@ public interface SocialVoiceApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = SocialVoice.PATH_SOCIAL_VOICE_CHANNELS_CHANNEL_ID_QUALITY_POST,
+        value = SocialVoiceApi.PATH_SOCIAL_VOICE_CHANNELS_CHANNEL_ID_QUALITY_POST,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
@@ -1094,7 +1094,7 @@ public interface SocialVoiceApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = SocialVoice.PATH_SOCIAL_VOICE_CHANNELS_GET,
+        value = SocialVoiceApi.PATH_SOCIAL_VOICE_CHANNELS_GET,
         produces = { "application/json" }
     )
     default ResponseEntity<VoiceChannelList> socialVoiceChannelsGet(
@@ -1193,7 +1193,7 @@ public interface SocialVoiceApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = SocialVoice.PATH_SOCIAL_VOICE_CHANNELS_POST,
+        value = SocialVoiceApi.PATH_SOCIAL_VOICE_CHANNELS_POST,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
@@ -1278,7 +1278,7 @@ public interface SocialVoiceApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = SocialVoice.PATH_SOCIAL_VOICE_METRICS_GET,
+        value = SocialVoiceApi.PATH_SOCIAL_VOICE_METRICS_GET,
         produces = { "application/json" }
     )
     default ResponseEntity<VoiceMetrics> socialVoiceMetricsGet(
@@ -1362,7 +1362,7 @@ public interface SocialVoiceApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = SocialVoice.PATH_SOCIAL_VOICE_PROXIMITY_UPDATE_POST,
+        value = SocialVoiceApi.PATH_SOCIAL_VOICE_PROXIMITY_UPDATE_POST,
         produces = { "application/json" },
         consumes = { "application/json" }
     )

@@ -30,8 +30,5 @@ public class FactionsController implements FactionsApi {
         return ResponseEntity.ok(response);
     }
 
-    public ResponseEntity<GetFactions200Response> listFactions(String type, String region, Integer page, Integer pageSize) {
-        return ResponseEntity.ok(factionsService.listFactions(type, region, page, pageSize));
-    }
 }
 

@@ -1,6 +1,7 @@
 package com.necpgame.backjava.repository;
 
 import com.necpgame.backjava.entity.CharacterInventoryEntity;
+import com.necpgame.backjava.entity.CharacterInventoryEntity.StorageType;
 import com.necpgame.backjava.entity.InventoryItemEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,14 +23,14 @@ public interface CharacterInventoryRepository extends JpaRepository<CharacterInv
     /**
      * РќР°Р№С‚Рё РІСЃРµ РїСЂРµРґРјРµС‚С‹ РІ РёРЅРІРµРЅС‚Р°СЂРµ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
-    @Query("SELECT ci FROM CharacterInventoryEntity ci WHERE ci.characterId = :characterId ORDER BY ci.slotPosition")
-    List<CharacterInventoryEntity> findByCharacterIdOrderBySlotPosition(UUID characterId);
+    @Query("SELECT ci FROM CharacterInventoryEntity ci WHERE ci.characterId = :characterId AND ci.storageType = :storageType ORDER BY ci.slotPosition")
+    List<CharacterInventoryEntity> findByCharacterIdAndStorageTypeOrderBySlotPosition(UUID characterId, StorageType storageType);
 
     /**
      * РќР°Р№С‚Рё РїСЂРµРґРјРµС‚ РІ РёРЅРІРµРЅС‚Р°СЂРµ РїРµСЂСЃРѕРЅР°Р¶Р°.
      */
-    @Query("SELECT ci FROM CharacterInventoryEntity ci WHERE ci.characterId = :characterId AND ci.itemId = :itemId")
-    Optional<CharacterInventoryEntity> findByCharacterIdAndItemId(UUID characterId, String itemId);
+    @Query("SELECT ci FROM CharacterInventoryEntity ci WHERE ci.characterId = :characterId AND ci.itemId = :itemId AND ci.storageType = :storageType ORDER BY ci.slotPosition")
+    List<CharacterInventoryEntity> findByCharacterIdAndItemIdAndStorageType(UUID characterId, String itemId, StorageType storageType);
 
     /**
      * РџСЂРѕРІРµСЂРёС‚СЊ РµСЃС‚СЊ Р»Рё РїСЂРµРґРјРµС‚ РІ РёРЅРІРµРЅС‚Р°СЂРµ.
@@ -42,8 +43,8 @@ public interface CharacterInventoryRepository extends JpaRepository<CharacterInv
      */
     @Query("SELECT COALESCE(SUM(ii.weight * ci.quantity), 0) FROM CharacterInventoryEntity ci " +
            "JOIN InventoryItemEntity ii ON ci.itemId = ii.id " +
-           "WHERE ci.characterId = :characterId")
-    BigDecimal calculateTotalWeight(UUID characterId);
+           "WHERE ci.characterId = :characterId AND ci.storageType IN (:storageTypes)")
+    BigDecimal calculateTotalWeight(UUID characterId, List<StorageType> storageTypes);
 
     /**
      * РќР°Р№С‚Рё РїСЂРµРґРјРµС‚С‹ РїРѕ РєР°С‚РµРіРѕСЂРёРё РІ РёРЅРІРµРЅС‚Р°СЂРµ РїРµСЂСЃРѕРЅР°Р¶Р°.
@@ -57,5 +58,9 @@ public interface CharacterInventoryRepository extends JpaRepository<CharacterInv
      * РЈРґР°Р»РёС‚СЊ РїСЂРµРґРјРµС‚ РёР· РёРЅРІРµРЅС‚Р°СЂСЏ.
      */
     void deleteByCharacterIdAndItemId(UUID characterId, String itemId);
+
+    Optional<CharacterInventoryEntity> findByIdAndCharacterId(UUID id, UUID characterId);
+
+    Optional<CharacterInventoryEntity> findFirstByCharacterIdAndItemIdAndStorageType(UUID characterId, String itemId, StorageType storageType);
 }
 

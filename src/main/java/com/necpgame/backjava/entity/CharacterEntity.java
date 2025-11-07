@@ -1,13 +1,25 @@
 package com.necpgame.backjava.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import java.time.OffsetDateTime;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.OffsetDateTime;
-import java.util.UUID;
 
 /**
  * Entity РґР»СЏ С‚Р°Р±Р»РёС†С‹ characters - РїРµСЂСЃРѕРЅР°Р¶Рё РёРіСЂРѕРєРѕРІ
@@ -36,6 +48,10 @@ public class CharacterEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", nullable = false)
     private AccountEntity account;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "player_id", nullable = false)
+    private PlayerEntity player;
     
     @Column(name = "name", nullable = false, length = 20)
     private String name;
@@ -74,6 +90,15 @@ public class CharacterEntity {
     
     @Column(name = "last_login")
     private OffsetDateTime lastLogin;
+
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+
+    @Column(name = "deleted_at")
+    private OffsetDateTime deletedAt;
+
+    @Column(name = "restore_deadline")
+    private OffsetDateTime restoreDeadline;
     
     // Enum РґР»СЏ РїРѕР»Р°
     public enum Gender {
