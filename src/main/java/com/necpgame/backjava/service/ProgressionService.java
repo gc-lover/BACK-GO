@@ -1,15 +1,21 @@
 package com.necpgame.backjava.service;
 
 import com.necpgame.backjava.model.AchievementDefinition;
-import com.necpgame.backjava.model.Error;
 import com.necpgame.backjava.model.GetPlayerAchievements200Response;
 import com.necpgame.backjava.model.GetPlayerTitles200Response;
+import com.necpgame.backjava.model.GetSeasonalLeaderboard200Response;
 import com.necpgame.backjava.model.ListAchievements200Response;
+import com.necpgame.backjava.model.LeaderboardResponse;
+import com.necpgame.backjava.model.GuildLeaderboardResponse;
+import com.necpgame.backjava.model.GuildRankResponse;
+import com.necpgame.backjava.model.PlayerRankResponse;
 import org.springframework.lang.Nullable;
 import com.necpgame.backjava.model.ProgressUpdateResult;
 import com.necpgame.backjava.model.SetActiveTitleRequest;
 import java.util.UUID;
 import com.necpgame.backjava.model.UpdateProgressRequest;
+import com.necpgame.backjava.model.UpdateLeaderboardScore200Response;
+import com.necpgame.backjava.model.UpdateScoreRequest;
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -78,5 +84,70 @@ public interface ProgressionService {
      * @return ProgressUpdateResult
      */
     ProgressUpdateResult updateAchievementProgress(UUID playerId, UpdateProgressRequest updateProgressRequest);
+
+    /**
+     * GET /progression/leaderboards/friends/{player_id}/{category} : Получить рейтинг среди друзей
+     *
+     * @param playerId  (required)
+     * @param category  (required)
+     * @return LeaderboardResponse
+     */
+    LeaderboardResponse getFriendLeaderboard(UUID playerId, String category);
+
+    /**
+     * GET /progression/leaderboards/global/{category} : Получить глобальный рейтинг
+     *
+     * @param category  (required)
+     * @param top Количество топ записей (optional, default to 100)
+     * @param offset  (optional, default to 0)
+     * @return LeaderboardResponse
+     */
+    LeaderboardResponse getGlobalLeaderboard(String category, Integer top, Integer offset);
+
+    /**
+     * GET /progression/leaderboards/guilds/{category} : Получить рейтинг гильдий
+     *
+     * @param category  (required)
+     * @param top  (optional, default to 100)
+     * @return GuildLeaderboardResponse
+     */
+    GuildLeaderboardResponse getGuildLeaderboard(String category, Integer top);
+
+    /**
+     * GET /progression/leaderboards/guilds/{category}/guild/{guild_id} : Получить позицию гильдии в рейтинге
+     *
+     * @param category  (required)
+     * @param guildId  (required)
+     * @return GuildRankResponse
+     */
+    GuildRankResponse getGuildRank(String category, UUID guildId);
+
+    /**
+     * GET /progression/leaderboards/global/{category}/player/{player_id} : Получить позицию игрока в глобальном рейтинге
+     *
+     * @param category  (required)
+     * @param playerId  (required)
+     * @return PlayerRankResponse
+     */
+    PlayerRankResponse getPlayerGlobalRank(String category, UUID playerId);
+
+    /**
+     * GET /progression/leaderboards/seasonal/{season_id}/{category} : Получить сезонный рейтинг
+     *
+     * @param seasonId ID сезона (или "current" для текущего) (required)
+     * @param category  (required)
+     * @param top  (optional, default to 100)
+     * @return GetSeasonalLeaderboard200Response
+     */
+    GetSeasonalLeaderboard200Response getSeasonalLeaderboard(String seasonId, String category, Integer top);
+
+    /**
+     * POST /progression/leaderboards/update : Обновить значение в рейтинге
+     * Используется backend системами для обновления рейтингов
+     *
+     * @param updateScoreRequest  (required)
+     * @return UpdateLeaderboardScore200Response
+     */
+    UpdateLeaderboardScore200Response updateLeaderboardScore(UpdateScoreRequest updateScoreRequest);
 }
 

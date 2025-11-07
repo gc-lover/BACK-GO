@@ -117,4 +117,7 @@
     <!-- Achievement System -->
     <include file="db/changelog/changes/069-create-achievement-tables.xml"/>
 
+    <!-- Leaderboard System -->
+    <include file="db/changelog/changes/070-create-leaderboard-tables.xml"/>
+
 </databaseChangeLog>

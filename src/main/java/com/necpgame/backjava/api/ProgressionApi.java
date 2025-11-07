@@ -9,17 +9,21 @@ import com.necpgame.backjava.model.AchievementDefinition;
 import com.necpgame.backjava.model.Error;
 import com.necpgame.backjava.model.GetPlayerAchievements200Response;
 import com.necpgame.backjava.model.GetPlayerTitles200Response;
+import com.necpgame.backjava.model.GetSeasonalLeaderboard200Response;
+import com.necpgame.backjava.model.GuildLeaderboardResponse;
+import com.necpgame.backjava.model.GuildRankResponse;
+import com.necpgame.backjava.model.LeaderboardResponse;
 import com.necpgame.backjava.model.ListAchievements200Response;
 import org.springframework.lang.Nullable;
+import com.necpgame.backjava.model.PlayerRankResponse;
+import com.necpgame.backjava.model.UpdateLeaderboardScore200Response;
 import com.necpgame.backjava.model.ProgressUpdateResult;
 import com.necpgame.backjava.model.SetActiveTitleRequest;
 import java.util.UUID;
 import com.necpgame.backjava.model.UpdateProgressRequest;
-import io.swagger.v3.oas.annotations.ExternalDocumentation;
+import com.necpgame.backjava.model.UpdateScoreRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -31,20 +35,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 @Validated
 @Tag(name = "Achievements", description = "Управление достижениями")
+@Tag(name = "Achievement Progress", description = "Отслеживание прогресса достижений")
+@Tag(name = "Global Leaderboards", description = "Глобальные рейтинги")
+@Tag(name = "Seasonal Leaderboards", description = "Сезонные рейтинги")
+@Tag(name = "Friend Leaderboards", description = "Рейтинги среди друзей")
+@Tag(name = "Guild Leaderboards", description = "Рейтинги гильдий")
 public interface ProgressionApi {
 
     default Optional<NativeWebRequest> getRequest() {
@@ -348,6 +358,349 @@ public interface ProgressionApi {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
                     String exampleString = "{ \"new_progress\" : 6, \"achievement_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"previous_progress\" : 0, \"rewards_granted\" : { \"badge\" : { \"badge_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"name\" : \"name\", \"icon\" : \"https://openapi-generator.tech\" }, \"currency\" : { \"eddies\" : 5000 }, \"experience\" : 1000, \"title\" : { \"color\" : \"#FF0000\", \"name\" : \"Slayer\", \"id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"display_name\" : \"[Slayer] Player_Name\", \"unlocked_at\" : \"2000-01-23T04:56:07.000+00:00\", \"rarity\" : \"COMMON\" }, \"items\" : [ { \"quantity\" : 0, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" }, { \"quantity\" : 0, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" } ] }, \"unlocked\" : true }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GET_FRIEND_LEADERBOARD = "/progression/leaderboards/friends/{player_id}/{category}";
+    /**
+     * GET /progression/leaderboards/friends/{player_id}/{category} : Получить рейтинг среди друзей
+     *
+     * @param playerId  (required)
+     * @param category  (required)
+     * @return Рейтинг среди друзей (status code 200)
+     */
+    @Operation(
+        operationId = "getFriendLeaderboard",
+        summary = "Получить рейтинг среди друзей",
+        tags = { "Friend Leaderboards" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Рейтинг среди друзей", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = LeaderboardResponse.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = ProgressionApi.PATH_GET_FRIEND_LEADERBOARD,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<LeaderboardResponse> getFriendLeaderboard(
+        @NotNull @Parameter(name = "player_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId,
+        @NotNull @Parameter(name = "category", description = "", required = true, in = ParameterIn.PATH) @PathVariable("category") String category
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"entries\" : [ { \"score\" : 50, \"guild\" : { \"guild_name\" : \"guild_name\", \"guild_tag\" : \"guild_tag\", \"guild_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" }, \"player_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"score_display\" : \"Level 50 (10,523,456 eddies)\", \"updated_at\" : \"2000-01-23T04:56:07.000+00:00\", \"active_title\" : \"active_title\", \"rank\" : 1, \"player_name\" : \"player_name\" }, { \"score\" : 50, \"guild\" : { \"guild_name\" : \"guild_name\", \"guild_tag\" : \"guild_tag\", \"guild_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" }, \"player_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"score_display\" : \"Level 50 (10,523,456 eddies)\", \"updated_at\" : \"2000-01-23T04:56:07.000+00:00\", \"active_title\" : \"active_title\", \"rank\" : 1, \"player_name\" : \"player_name\" } ], \"leaderboard_type\" : \"GLOBAL\", \"updated_at\" : \"2000-01-23T04:56:07.000+00:00\", \"category\" : \"category\", \"total_entries\" : 0 }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GET_GLOBAL_LEADERBOARD = "/progression/leaderboards/global/{category}";
+    /**
+     * GET /progression/leaderboards/global/{category} : Получить глобальный рейтинг
+     *
+     * @param category  (required)
+     * @param top Количество топ записей (optional, default to 100)
+     * @param offset  (optional, default to 0)
+     * @return Рейтинг (status code 200)
+     */
+    @Operation(
+        operationId = "getGlobalLeaderboard",
+        summary = "Получить глобальный рейтинг",
+        tags = { "Global Leaderboards" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Рейтинг", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = LeaderboardResponse.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = ProgressionApi.PATH_GET_GLOBAL_LEADERBOARD,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<LeaderboardResponse> getGlobalLeaderboard(
+        @NotNull @Parameter(name = "category", description = "", required = true, in = ParameterIn.PATH) @PathVariable("category") String category,
+        @Max(value = 1000) @Parameter(name = "top", description = "Количество топ записей", in = ParameterIn.QUERY) @Valid @RequestParam(value = "top", required = false, defaultValue = "100") Integer top,
+        @Parameter(name = "offset", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"entries\" : [ { \"score\" : 50, \"guild\" : { \"guild_name\" : \"guild_name\", \"guild_tag\" : \"guild_tag\", \"guild_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" }, \"player_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"score_display\" : \"Level 50 (10,523,456 eddies)\", \"updated_at\" : \"2000-01-23T04:56:07.000+00:00\", \"active_title\" : \"active_title\", \"rank\" : 1, \"player_name\" : \"player_name\" }, { \"score\" : 50, \"guild\" : { \"guild_name\" : \"guild_name\", \"guild_tag\" : \"guild_tag\", \"guild_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" }, \"player_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"score_display\" : \"Level 50 (10,523,456 eddies)\", \"updated_at\" : \"2000-01-23T04:56:07.000+00:00\", \"active_title\" : \"active_title\", \"rank\" : 1, \"player_name\" : \"player_name\" } ], \"leaderboard_type\" : \"GLOBAL\", \"updated_at\" : \"2000-01-23T04:56:07.000+00:00\", \"category\" : \"category\", \"total_entries\" : 0 }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GET_GUILD_LEADERBOARD = "/progression/leaderboards/guilds/{category}";
+    /**
+     * GET /progression/leaderboards/guilds/{category} : Получить рейтинг гильдий
+     *
+     * @param category  (required)
+     * @param top  (optional, default to 100)
+     * @return Рейтинг гильдий (status code 200)
+     */
+    @Operation(
+        operationId = "getGuildLeaderboard",
+        summary = "Получить рейтинг гильдий",
+        tags = { "Guild Leaderboards" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Рейтинг гильдий", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = GuildLeaderboardResponse.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = ProgressionApi.PATH_GET_GUILD_LEADERBOARD,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<GuildLeaderboardResponse> getGuildLeaderboard(
+        @NotNull @Parameter(name = "category", description = "", required = true, in = ParameterIn.PATH) @PathVariable("category") String category,
+        @Parameter(name = "top", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "top", required = false, defaultValue = "100") Integer top
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"entries\" : [ { \"score\" : 6.027456183070403, \"score_display\" : \"score_display\", \"updated_at\" : \"2000-01-23T04:56:07.000+00:00\", \"guild_name\" : \"guild_name\", \"leader_name\" : \"leader_name\", \"guild_tag\" : \"guild_tag\", \"guild_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"rank\" : 0, \"member_count\" : 1 }, { \"score\" : 6.027456183070403, \"score_display\" : \"score_display\", \"updated_at\" : \"2000-01-23T04:56:07.000+00:00\", \"guild_name\" : \"guild_name\", \"leader_name\" : \"leader_name\", \"guild_tag\" : \"guild_tag\", \"guild_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"rank\" : 0, \"member_count\" : 1 } ], \"updated_at\" : \"2000-01-23T04:56:07.000+00:00\", \"total_guilds\" : 5, \"category\" : \"category\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GET_GUILD_RANK = "/progression/leaderboards/guilds/{category}/guild/{guild_id}";
+    /**
+     * GET /progression/leaderboards/guilds/{category}/guild/{guild_id} : Получить позицию гильдии в рейтинге
+     *
+     * @param category  (required)
+     * @param guildId  (required)
+     * @return Позиция гильдии (status code 200)
+     */
+    @Operation(
+        operationId = "getGuildRank",
+        summary = "Получить позицию гильдии в рейтинге",
+        tags = { "Guild Leaderboards" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Позиция гильдии", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = GuildRankResponse.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = ProgressionApi.PATH_GET_GUILD_RANK,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<GuildRankResponse> getGuildRank(
+        @NotNull @Parameter(name = "category", description = "", required = true, in = ParameterIn.PATH) @PathVariable("category") String category,
+        @NotNull @Parameter(name = "guild_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("guild_id") UUID guildId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"score\" : 6.027456183070403, \"nearby_guilds\" : [ { \"score\" : 6.027456183070403, \"score_display\" : \"score_display\", \"updated_at\" : \"2000-01-23T04:56:07.000+00:00\", \"guild_name\" : \"guild_name\", \"leader_name\" : \"leader_name\", \"guild_tag\" : \"guild_tag\", \"guild_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"rank\" : 0, \"member_count\" : 1 }, { \"score\" : 6.027456183070403, \"score_display\" : \"score_display\", \"updated_at\" : \"2000-01-23T04:56:07.000+00:00\", \"guild_name\" : \"guild_name\", \"leader_name\" : \"leader_name\", \"guild_tag\" : \"guild_tag\", \"guild_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"rank\" : 0, \"member_count\" : 1 } ], \"guild_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"rank\" : 0, \"total_guilds\" : 1, \"category\" : \"category\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GET_PLAYER_GLOBAL_RANK = "/progression/leaderboards/global/{category}/player/{player_id}";
+    /**
+     * GET /progression/leaderboards/global/{category}/player/{player_id} : Получить позицию игрока в глобальном рейтинге
+     *
+     * @param category  (required)
+     * @param playerId  (required)
+     * @return Позиция игрока (status code 200)
+     *         or Запрошенный ресурс не найден.  (status code 404)
+     */
+    @Operation(
+        operationId = "getPlayerGlobalRank",
+        summary = "Получить позицию игрока в глобальном рейтинге",
+        tags = { "Global Leaderboards" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Позиция игрока", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = PlayerRankResponse.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = ProgressionApi.PATH_GET_PLAYER_GLOBAL_RANK,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<PlayerRankResponse> getPlayerGlobalRank(
+        @NotNull @Parameter(name = "category", description = "", required = true, in = ParameterIn.PATH) @PathVariable("category") String category,
+        @NotNull @Parameter(name = "player_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"score\" : 0.8008281904610115, \"player_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"percentile\" : 95.5, \"rank\" : 523, \"total_players\" : 6, \"category\" : \"category\", \"nearby_entries\" : [ { \"score\" : 50, \"guild\" : { \"guild_name\" : \"guild_name\", \"guild_tag\" : \"guild_tag\", \"guild_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" }, \"player_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"score_display\" : \"Level 50 (10,523,456 eddies)\", \"updated_at\" : \"2000-01-23T04:56:07.000+00:00\", \"active_title\" : \"active_title\", \"rank\" : 1, \"player_name\" : \"player_name\" }, { \"score\" : 50, \"guild\" : { \"guild_name\" : \"guild_name\", \"guild_tag\" : \"guild_tag\", \"guild_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" }, \"player_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"score_display\" : \"Level 50 (10,523,456 eddies)\", \"updated_at\" : \"2000-01-23T04:56:07.000+00:00\", \"active_title\" : \"active_title\", \"rank\" : 1, \"player_name\" : \"player_name\" } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GET_SEASONAL_LEADERBOARD = "/progression/leaderboards/seasonal/{season_id}/{category}";
+    /**
+     * GET /progression/leaderboards/seasonal/{season_id}/{category} : Получить сезонный рейтинг
+     *
+     * @param seasonId ID сезона (или "current" для текущего) (required)
+     * @param category  (required)
+     * @param top  (optional, default to 100)
+     * @return Сезонный рейтинг (status code 200)
+     */
+    @Operation(
+        operationId = "getSeasonalLeaderboard",
+        summary = "Получить сезонный рейтинг",
+        tags = { "Seasonal Leaderboards" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Сезонный рейтинг", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = GetSeasonalLeaderboard200Response.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = ProgressionApi.PATH_GET_SEASONAL_LEADERBOARD,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<GetSeasonalLeaderboard200Response> getSeasonalLeaderboard(
+        @NotNull @Parameter(name = "season_id", description = "ID сезона (или \"current\" для текущего)", required = true, in = ParameterIn.PATH) @PathVariable("season_id") String seasonId,
+        @NotNull @Parameter(name = "category", description = "", required = true, in = ParameterIn.PATH) @PathVariable("category") String category,
+        @Parameter(name = "top", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "top", required = false, defaultValue = "100") Integer top
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"entries\" : [ { \"score\" : 50, \"guild\" : { \"guild_name\" : \"guild_name\", \"guild_tag\" : \"guild_tag\", \"guild_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" }, \"player_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"score_display\" : \"Level 50 (10,523,456 eddies)\", \"updated_at\" : \"2000-01-23T04:56:07.000+00:00\", \"active_title\" : \"active_title\", \"rank\" : 1, \"player_name\" : \"player_name\" }, { \"score\" : 50, \"guild\" : { \"guild_name\" : \"guild_name\", \"guild_tag\" : \"guild_tag\", \"guild_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" }, \"player_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"score_display\" : \"Level 50 (10,523,456 eddies)\", \"updated_at\" : \"2000-01-23T04:56:07.000+00:00\", \"active_title\" : \"active_title\", \"rank\" : 1, \"player_name\" : \"player_name\" } ], \"leaderboard_type\" : \"GLOBAL\", \"updated_at\" : \"2000-01-23T04:56:07.000+00:00\", \"season\" : { \"end_date\" : \"2000-01-23T04:56:07.000+00:00\", \"name\" : \"Season 1: Rise of Night City\", \"season_id\" : \"season_id\", \"is_current\" : true, \"start_date\" : \"2000-01-23T04:56:07.000+00:00\" }, \"category\" : \"category\", \"total_entries\" : 0 }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_UPDATE_LEADERBOARD_SCORE = "/progression/leaderboards/update";
+    /**
+     * POST /progression/leaderboards/update : Обновить значение в рейтинге
+     * Используется backend системами для обновления рейтингов
+     *
+     * @param updateScoreRequest  (required)
+     * @return Рейтинг обновлен (status code 200)
+     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
+     */
+    @Operation(
+        operationId = "updateLeaderboardScore",
+        summary = "Обновить значение в рейтинге",
+        description = "Используется backend системами для обновления рейтингов",
+        tags = { "Global Leaderboards" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Рейтинг обновлен", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateLeaderboardScore200Response.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = ProgressionApi.PATH_UPDATE_LEADERBOARD_SCORE,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<UpdateLeaderboardScore200Response> updateLeaderboardScore(
+        @Parameter(name = "UpdateScoreRequest", description = "", required = true) @Valid @RequestBody UpdateScoreRequest updateScoreRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"rank_change\" : 1, \"previous_rank\" : 6, \"new_rank\" : 0 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
