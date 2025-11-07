@@ -1,83 +1,64 @@
-# Скрипт автоматического коммита для агентов
-# Использование: .\autocommit.ps1 [сообщение коммита]
+# Autocommit script for agents
+# Usage: .\autocommit.ps1 [commit message]
 
 param(
-    [string]$CommitMessage = "Автоматический коммит: обновления от агента"
+    [string]$CommitMessage = "Auto commit: agent updates"
 )
 
-# Получаем текущую директорию репозитория
 $RepoRoot = git rev-parse --show-toplevel 2>$null
 if (-not $RepoRoot) {
-    Write-Host "Ошибка: Не найден git репозиторий в текущей директории" -ForegroundColor Red
+    Write-Host "Error: no git repository detected" -ForegroundColor Red
     exit 1
 }
 
 Set-Location $RepoRoot
 
-# Проверяем, есть ли изменения для коммита
 $Status = git status --porcelain
 if (-not $Status) {
-    Write-Host "Нет изменений для коммита" -ForegroundColor Yellow
+    Write-Host "Nothing to commit" -ForegroundColor Yellow
     exit 0
 }
 
-# Добавляем все изменения
-Write-Host "Добавление изменений..." -ForegroundColor Cyan
+Write-Host "Staging changes..." -ForegroundColor Cyan
 git add -A
 
-# Генерируем сообщение коммита, если не указано явно
-if ($CommitMessage -eq "Автоматический коммит: обновления от агента") {
-    # Пытаемся сгенерировать осмысленное сообщение на основе измененных файлов
+if ($CommitMessage -eq "Auto commit: agent updates") {
     $ChangedFiles = git diff --cached --name-only
-    
     if ($ChangedFiles) {
-        $FileTypes = @()
-        $ChangedFiles | ForEach-Object {
-            $ext = [System.IO.Path]::GetExtension($_)
-            if ($ext) { $FileTypes += $ext }
-        }
-        
-        $FileTypes = $FileTypes | Group-Object | Sort-Object Count -Descending | Select-Object -First 3
-        
-        $Types = ($FileTypes | ForEach-Object { $_.Name }) -join ", "
-        
-        # Определяем тип изменений
-        $Action = "Обновление"
+        $Action = "Update"
         if ($ChangedFiles | Where-Object { $_ -match "\.md$" }) {
-            $Action = "Документация"
+            $Action = "Docs"
         } elseif ($ChangedFiles | Where-Object { $_ -match "\.(yaml|yml)$" }) {
-            $Action = "API спецификация"
+            $Action = "API"
         } elseif ($ChangedFiles | Where-Object { $_ -match "\.(java|js|ts|py)$" }) {
-            $Action = "Реализация"
+            $Action = "Code"
         } elseif ($ChangedFiles | Where-Object { $_ -match "rules\.mdc$" }) {
-            $Action = "Обновление правил"
+            $Action = "Rules"
         }
-        
+
         $FileCount = ($ChangedFiles | Measure-Object).Count
-        $CommitMessage = "${Action}: изменения в файлах (${FileCount} файлов)"
+        $CommitMessage = "${Action}: ${FileCount} files"
     }
 }
 
-# Делаем коммит
-Write-Host "Создание коммита: $CommitMessage" -ForegroundColor Cyan
+Write-Host "Creating commit: $CommitMessage" -ForegroundColor Cyan
 $CommitResult = git commit -m $CommitMessage 2>&1
 
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "Ошибка при создании коммита: $CommitResult" -ForegroundColor Red
+    Write-Host "Commit failed: $CommitResult" -ForegroundColor Red
     exit 1
 }
 
-Write-Host "Коммит создан успешно" -ForegroundColor Green
+Write-Host "Commit created" -ForegroundColor Green
 
-# Отправляем изменения
-Write-Host "Отправка изменений в GitHub..." -ForegroundColor Cyan
+Write-Host "Pushing to origin/main..." -ForegroundColor Cyan
 $PushResult = git push origin main 2>&1
 
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "Предупреждение: Не удалось отправить изменения: $PushResult" -ForegroundColor Yellow
-    Write-Host "Изменения закоммичены локально, но не отправлены" -ForegroundColor Yellow
+    Write-Host "Push failed: $PushResult" -ForegroundColor Yellow
+    Write-Host "Changes committed locally" -ForegroundColor Yellow
 } else {
-    Write-Host "Изменения успешно отправлены в GitHub" -ForegroundColor Green
+    Write-Host "Push succeeded" -ForegroundColor Green
 }
 
 exit 0

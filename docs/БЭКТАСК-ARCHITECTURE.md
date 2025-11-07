@@ -417,4 +417,12 @@ BACK-JAVA/
 
 ---
 
+## Roadmap 2025-11 (world-service / economy-service / social-service)
+- **Sprint 2025-11-10 → 2025-11-16:** world-service реализация API-TASK-241 (world-interaction-suite): контроллеры `WorldStateController`, `WorldEventsController`, WebSocket `/ws/world`.
+- **Sprint 2025-11-17 → 2025-11-23:** economy-service расширение `MarketInterventionController` под API-TASK-242 (MFA, симуляции, rollback).
+- **Sprint 2025-11-24 → 2025-11-30:** social-service добавление `SocialResonanceController` и кампаний (API-TASK-243), синхронизация с crisis pipeline.
+- **DevOps:** обновить Kafka topics (`world.state.tick`, `market.intervention.status`, `social.index.changed`) и мониторинг Prometheus/Grafana по SLA из .BRAIN документа.
+
+---
+
 📖 **Навигация:** [БЭКТАСК.MD](./БЭКТАСК.MD) | [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md) | [БЭКТАСК-FAQ.md](./БЭКТАСК-FAQ.md)
