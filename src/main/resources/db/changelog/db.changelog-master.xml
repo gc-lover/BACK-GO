@@ -132,4 +132,7 @@
     <!-- Progression Backend -->
     <include file="db/changelog/changes/074-create-progression-backend-tables.xml"/>
 
+    <!-- Faction Quests -->
+    <include file="db/changelog/changes/075-create-faction-quests-tables.xml"/>
+
 </databaseChangeLog>

@@ -10,7 +10,13 @@ import com.necpgame.backjava.model.DialogueChoiceRequest;
 import com.necpgame.backjava.model.DialogueChoiceResult;
 import com.necpgame.backjava.model.DialogueNode;
 import com.necpgame.backjava.model.Error;
+import com.necpgame.backjava.model.FactionQuestDetailed;
 import com.necpgame.backjava.model.GetActiveQuests200Response;
+import com.necpgame.backjava.model.GetAvailableFactionQuests200Response;
+import com.necpgame.backjava.model.GetFactionQuestProgress200Response;
+import com.necpgame.backjava.model.GetQuestBranches200Response;
+import com.necpgame.backjava.model.GetQuestEndings200Response;
+import com.necpgame.backjava.model.ListFactionQuests200Response;
 import com.necpgame.backjava.model.QuestCompletionResult;
 import com.necpgame.backjava.model.QuestInstance;
 import com.necpgame.backjava.model.SkillCheckRequest;
@@ -36,6 +42,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.lang.Nullable;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -46,11 +53,297 @@ import jakarta.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 @Validated
+@Tag(name = "Faction Quests", description = "Фракционные квесты")
+@Tag(name = "Quest Branches", description = "Ветвления квестов")
+@Tag(name = "Quest Endings", description = "Концовки квестов")
 @Tag(name = "Quest Execution", description = "Выполнение квестов")
 public interface NarrativeApi {
 
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
+    }
+
+    String PATH_GET_AVAILABLE_FACTION_QUESTS = "/narrative/faction-quests/character/{character_id}/available";
+    /**
+     * GET /narrative/faction-quests/character/{character_id}/available : Получить доступные фракционные квесты для персонажа
+     *
+     * @param characterId  (required)
+     * @return Доступные квесты (status code 200)
+     */
+    @Operation(
+        operationId = "getAvailableFactionQuests",
+        summary = "Получить доступные фракционные квесты для персонажа",
+        tags = { "Faction Quests" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Доступные квесты", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = GetAvailableFactionQuests200Response.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = NarrativeApi.PATH_GET_AVAILABLE_FACTION_QUESTS,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<GetAvailableFactionQuests200Response> getAvailableFactionQuests(
+        @NotNull @Parameter(name = "character_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("character_id") UUID characterId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"available_quests\" : [ { \"difficulty\" : \"EASY\", \"endings_count\" : 12, \"estimated_time_minutes\" : 45, \"requirements\" : { \"min_reputation\" : { \"NCPD\" : 50 }, \"required_quests\" : [ \"required_quests\", \"required_quests\" ], \"min_level\" : 0, \"required_items\" : [ \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" ] }, \"faction\" : \"NCPD\", \"description\" : \"description\", \"quest_id\" : \"faction_ncpd_serial_killer\", \"title\" : \"Night City's Most Wanted\", \"category\" : \"Investigation\", \"rewards\" : { \"reputation\" : { \"NCPD\" : 100, \"ARASAKA\" : -50 }, \"currency\" : { \"eddies\" : 5 }, \"experience\" : 6, \"items\" : [ { \"quantity\" : 5, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" }, { \"quantity\" : 5, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" } ], \"street_cred\" : 1 }, \"branches_count\" : 5 }, { \"difficulty\" : \"EASY\", \"endings_count\" : 12, \"estimated_time_minutes\" : 45, \"requirements\" : { \"min_reputation\" : { \"NCPD\" : 50 }, \"required_quests\" : [ \"required_quests\", \"required_quests\" ], \"min_level\" : 0, \"required_items\" : [ \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" ] }, \"faction\" : \"NCPD\", \"description\" : \"description\", \"quest_id\" : \"faction_ncpd_serial_killer\", \"title\" : \"Night City's Most Wanted\", \"category\" : \"Investigation\", \"rewards\" : { \"reputation\" : { \"NCPD\" : 100, \"ARASAKA\" : -50 }, \"currency\" : { \"eddies\" : 5 }, \"experience\" : 6, \"items\" : [ { \"quantity\" : 5, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" }, { \"quantity\" : 5, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" } ], \"street_cred\" : 1 }, \"branches_count\" : 5 } ], \"locked_quests\" : [ { \"requirements\" : { \"min_reputation\" : { \"NCPD\" : 50 }, \"required_quests\" : [ \"required_quests\", \"required_quests\" ], \"min_level\" : 0, \"required_items\" : [ \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" ] }, \"quest\" : { \"difficulty\" : \"EASY\", \"endings_count\" : 12, \"estimated_time_minutes\" : 45, \"requirements\" : { \"min_reputation\" : { \"NCPD\" : 50 }, \"required_quests\" : [ \"required_quests\", \"required_quests\" ], \"min_level\" : 0, \"required_items\" : [ \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" ] }, \"faction\" : \"NCPD\", \"description\" : \"description\", \"quest_id\" : \"faction_ncpd_serial_killer\", \"title\" : \"Night City's Most Wanted\", \"category\" : \"Investigation\", \"rewards\" : { \"reputation\" : { \"NCPD\" : 100, \"ARASAKA\" : -50 }, \"currency\" : { \"eddies\" : 5 }, \"experience\" : 6, \"items\" : [ { \"quantity\" : 5, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" }, { \"quantity\" : 5, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" } ], \"street_cred\" : 1 }, \"branches_count\" : 5 } }, { \"requirements\" : { \"min_reputation\" : { \"NCPD\" : 50 }, \"required_quests\" : [ \"required_quests\", \"required_quests\" ], \"min_level\" : 0, \"required_items\" : [ \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" ] }, \"quest\" : { \"difficulty\" : \"EASY\", \"endings_count\" : 12, \"estimated_time_minutes\" : 45, \"requirements\" : { \"min_reputation\" : { \"NCPD\" : 50 }, \"required_quests\" : [ \"required_quests\", \"required_quests\" ], \"min_level\" : 0, \"required_items\" : [ \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" ] }, \"faction\" : \"NCPD\", \"description\" : \"description\", \"quest_id\" : \"faction_ncpd_serial_killer\", \"title\" : \"Night City's Most Wanted\", \"category\" : \"Investigation\", \"rewards\" : { \"reputation\" : { \"NCPD\" : 100, \"ARASAKA\" : -50 }, \"currency\" : { \"eddies\" : 5 }, \"experience\" : 6, \"items\" : [ { \"quantity\" : 5, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" }, { \"quantity\" : 5, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" } ], \"street_cred\" : 1 }, \"branches_count\" : 5 } } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GET_FACTION_QUEST = "/narrative/faction-quests/{quest_id}";
+    /**
+     * GET /narrative/faction-quests/{quest_id} : Получить детали фракционного квеста
+     *
+     * @param questId  (required)
+     * @return Детали квеста (status code 200)
+     *         or Запрошенный ресурс не найден.  (status code 404)
+     */
+    @Operation(
+        operationId = "getFactionQuest",
+        summary = "Получить детали фракционного квеста",
+        tags = { "Faction Quests" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Детали квеста", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = FactionQuestDetailed.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = NarrativeApi.PATH_GET_FACTION_QUEST,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<FactionQuestDetailed> getFactionQuest(
+        @NotNull @Parameter(name = "quest_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("quest_id") String questId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"estimated_time_minutes\" : 45, \"requirements\" : { \"min_reputation\" : { \"NCPD\" : 50 }, \"required_quests\" : [ \"required_quests\", \"required_quests\" ], \"min_level\" : 0, \"required_items\" : [ \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" ] }, \"description\" : \"description\", \"key_npcs\" : [ { \"role\" : \"role\", \"npc_id\" : \"npc_id\", \"name\" : \"name\" }, { \"role\" : \"role\", \"npc_id\" : \"npc_id\", \"name\" : \"name\" } ], \"title\" : \"Night City's Most Wanted\", \"branches\" : [ { \"requirements\" : { \"skill_checks\" : [ { \"difficulty\" : 0, \"skill\" : \"skill\" }, { \"difficulty\" : 0, \"skill\" : \"skill\" } ], \"choices\" : [ \"choices\", \"choices\" ] }, \"branch_id\" : \"branch_id\", \"name\" : \"Peaceful Resolution\", \"description\" : \"description\", \"consequences\" : { \"reputation_changes\" : { \"key\" : 6 }, \"faction_relations\" : { \"key\" : 1 }, \"unlocks\" : [ \"unlocks\", \"unlocks\" ] }, \"leads_to_endings\" : [ \"leads_to_endings\", \"leads_to_endings\" ] }, { \"requirements\" : { \"skill_checks\" : [ { \"difficulty\" : 0, \"skill\" : \"skill\" }, { \"difficulty\" : 0, \"skill\" : \"skill\" } ], \"choices\" : [ \"choices\", \"choices\" ] }, \"branch_id\" : \"branch_id\", \"name\" : \"Peaceful Resolution\", \"description\" : \"description\", \"consequences\" : { \"reputation_changes\" : { \"key\" : 6 }, \"faction_relations\" : { \"key\" : 1 }, \"unlocks\" : [ \"unlocks\", \"unlocks\" ] }, \"leads_to_endings\" : [ \"leads_to_endings\", \"leads_to_endings\" ] } ], \"branches_count\" : 5, \"difficulty\" : \"EASY\", \"endings_count\" : 12, \"faction\" : \"NCPD\", \"storyline\" : \"storyline\", \"quest_id\" : \"faction_ncpd_serial_killer\", \"locations\" : [ \"locations\", \"locations\" ], \"category\" : \"Investigation\", \"rewards\" : { \"reputation\" : { \"NCPD\" : 100, \"ARASAKA\" : -50 }, \"currency\" : { \"eddies\" : 5 }, \"experience\" : 6, \"items\" : [ { \"quantity\" : 5, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" }, { \"quantity\" : 5, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" } ], \"street_cred\" : 1 } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GET_FACTION_QUEST_PROGRESS = "/narrative/faction-quests/character/{character_id}/progress";
+    /**
+     * GET /narrative/faction-quests/character/{character_id}/progress : Получить прогресс по фракционным квестам
+     *
+     * @param characterId  (required)
+     * @return Прогресс по квестам (status code 200)
+     */
+    @Operation(
+        operationId = "getFactionQuestProgress",
+        summary = "Получить прогресс по фракционным квестам",
+        tags = { "Faction Quests" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Прогресс по квестам", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = GetFactionQuestProgress200Response.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = NarrativeApi.PATH_GET_FACTION_QUEST_PROGRESS,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<GetFactionQuestProgress200Response> getFactionQuestProgress(
+        @NotNull @Parameter(name = "character_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("character_id") UUID characterId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"active_quests\" : [ { \"quest_id\" : \"quest_id\", \"current_branch\" : \"current_branch\", \"objectives\" : [ { \"description\" : \"description\", \"completed\" : true, \"objective_id\" : \"objective_id\" }, { \"description\" : \"description\", \"completed\" : true, \"objective_id\" : \"objective_id\" } ], \"choices_made\" : [ { \"choice_id\" : \"choice_id\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" }, { \"choice_id\" : \"choice_id\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" } ] }, { \"quest_id\" : \"quest_id\", \"current_branch\" : \"current_branch\", \"objectives\" : [ { \"description\" : \"description\", \"completed\" : true, \"objective_id\" : \"objective_id\" }, { \"description\" : \"description\", \"completed\" : true, \"objective_id\" : \"objective_id\" } ], \"choices_made\" : [ { \"choice_id\" : \"choice_id\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" }, { \"choice_id\" : \"choice_id\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" } ] } ], \"completed_quests\" : [ { \"ending_achieved\" : \"ending_achieved\", \"quest_id\" : \"quest_id\", \"completion_date\" : \"2000-01-23T04:56:07.000+00:00\" }, { \"ending_achieved\" : \"ending_achieved\", \"quest_id\" : \"quest_id\", \"completion_date\" : \"2000-01-23T04:56:07.000+00:00\" } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GET_QUEST_BRANCHES = "/narrative/faction-quests/{quest_id}/branches";
+    /**
+     * GET /narrative/faction-quests/{quest_id}/branches : Получить ветвления квеста
+     *
+     * @param questId  (required)
+     * @return Доступные ветвления (status code 200)
+     */
+    @Operation(
+        operationId = "getQuestBranches",
+        summary = "Получить ветвления квеста",
+        tags = { "Quest Branches" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Доступные ветвления", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = GetQuestBranches200Response.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = NarrativeApi.PATH_GET_QUEST_BRANCHES,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<GetQuestBranches200Response> getQuestBranches(
+        @NotNull @Parameter(name = "quest_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("quest_id") String questId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"branches\" : [ { \"requirements\" : { \"skill_checks\" : [ { \"difficulty\" : 0, \"skill\" : \"skill\" }, { \"difficulty\" : 0, \"skill\" : \"skill\" } ], \"choices\" : [ \"choices\", \"choices\" ] }, \"branch_id\" : \"branch_id\", \"name\" : \"Peaceful Resolution\", \"description\" : \"description\", \"consequences\" : { \"reputation_changes\" : { \"key\" : 6 }, \"faction_relations\" : { \"key\" : 1 }, \"unlocks\" : [ \"unlocks\", \"unlocks\" ] }, \"leads_to_endings\" : [ \"leads_to_endings\", \"leads_to_endings\" ] }, { \"requirements\" : { \"skill_checks\" : [ { \"difficulty\" : 0, \"skill\" : \"skill\" }, { \"difficulty\" : 0, \"skill\" : \"skill\" } ], \"choices\" : [ \"choices\", \"choices\" ] }, \"branch_id\" : \"branch_id\", \"name\" : \"Peaceful Resolution\", \"description\" : \"description\", \"consequences\" : { \"reputation_changes\" : { \"key\" : 6 }, \"faction_relations\" : { \"key\" : 1 }, \"unlocks\" : [ \"unlocks\", \"unlocks\" ] }, \"leads_to_endings\" : [ \"leads_to_endings\", \"leads_to_endings\" ] } ], \"current_branch\" : \"current_branch\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GET_QUEST_ENDINGS = "/narrative/faction-quests/{quest_id}/endings";
+    /**
+     * GET /narrative/faction-quests/{quest_id}/endings : Получить возможные концовки квеста
+     * Может быть 12+ концовок в зависимости от выборов
+     *
+     * @param questId  (required)
+     * @return Возможные концовки (status code 200)
+     */
+    @Operation(
+        operationId = "getQuestEndings",
+        summary = "Получить возможные концовки квеста",
+        description = "Может быть 12+ концовок в зависимости от выборов",
+        tags = { "Quest Endings" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Возможные концовки", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = GetQuestEndings200Response.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = NarrativeApi.PATH_GET_QUEST_ENDINGS,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<GetQuestEndings200Response> getQuestEndings(
+        @NotNull @Parameter(name = "quest_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("quest_id") String questId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"endings\" : [ { \"ending_id\" : \"ending_id\", \"description\" : \"description\", \"requirements\" : { \"reputation_min\" : { \"key\" : 6 }, \"branch\" : \"branch\", \"choices\" : [ \"choices\", \"choices\" ] }, \"name\" : \"Justice Served\", \"consequences\" : { \"reputation_impact\" : { \"key\" : 1 }, \"rewards\" : { \"reputation\" : { \"NCPD\" : 100, \"ARASAKA\" : -50 }, \"currency\" : { \"eddies\" : 5 }, \"experience\" : 6, \"items\" : [ { \"quantity\" : 5, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" }, { \"quantity\" : 5, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" } ], \"street_cred\" : 1 }, \"unlocked_content\" : [ \"unlocked_content\", \"unlocked_content\" ], \"faction_relations\" : { \"key\" : 1 } }, \"type\" : \"GOOD\" }, { \"ending_id\" : \"ending_id\", \"description\" : \"description\", \"requirements\" : { \"reputation_min\" : { \"key\" : 6 }, \"branch\" : \"branch\", \"choices\" : [ \"choices\", \"choices\" ] }, \"name\" : \"Justice Served\", \"consequences\" : { \"reputation_impact\" : { \"key\" : 1 }, \"rewards\" : { \"reputation\" : { \"NCPD\" : 100, \"ARASAKA\" : -50 }, \"currency\" : { \"eddies\" : 5 }, \"experience\" : 6, \"items\" : [ { \"quantity\" : 5, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" }, { \"quantity\" : 5, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" } ], \"street_cred\" : 1 }, \"unlocked_content\" : [ \"unlocked_content\", \"unlocked_content\" ], \"faction_relations\" : { \"key\" : 1 } }, \"type\" : \"GOOD\" } ], \"achieved_endings\" : [ \"achieved_endings\", \"achieved_endings\" ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_LIST_FACTION_QUESTS = "/narrative/faction-quests";
+    /**
+     * GET /narrative/faction-quests : Получить список фракционных квестов
+     *
+     * @param faction  (optional)
+     * @param minReputation Минимальная репутация для доступа (optional)
+     * @param playerLevelMin  (optional)
+     * @param page Номер страницы (начинается с 1) (optional, default to 1)
+     * @param pageSize Количество элементов на странице (optional, default to 20)
+     * @return Список фракционных квестов (status code 200)
+     */
+    @Parameters({
+        @Parameter(name = "faction", description = "", in = ParameterIn.QUERY),
+        @Parameter(name = "min_reputation", description = "Минимальная репутация для доступа", in = ParameterIn.QUERY),
+        @Parameter(name = "player_level_min", description = "", in = ParameterIn.QUERY),
+        @Parameter(name = "page", description = "Номер страницы (начинается с 1)", in = ParameterIn.QUERY),
+        @Parameter(name = "page_size", description = "Количество элементов на странице", in = ParameterIn.QUERY)
+    })
+    @Operation(
+        operationId = "listFactionQuests",
+        summary = "Получить список фракционных квестов",
+        tags = { "Faction Quests" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Список фракционных квестов", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ListFactionQuests200Response.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = NarrativeApi.PATH_LIST_FACTION_QUESTS,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<ListFactionQuests200Response> listFactionQuests(
+        @Parameter(name = "faction", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "faction", required = false) @Nullable String faction,
+        @Parameter(name = "min_reputation", description = "Минимальная репутация для доступа", in = ParameterIn.QUERY) @Valid @RequestParam(value = "min_reputation", required = false) @Nullable Integer minReputation,
+        @Parameter(name = "player_level_min", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "player_level_min", required = false) @Nullable Integer playerLevelMin,
+        @Min(value = 1) @Parameter(name = "page", description = "Номер страницы (начинается с 1)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+        @Min(value = 1) @Max(value = 100) @Parameter(name = "page_size", description = "Количество элементов на странице", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page_size", required = false, defaultValue = "20") Integer pageSize
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"data\" : [ { \"difficulty\" : \"EASY\", \"endings_count\" : 12, \"estimated_time_minutes\" : 45, \"requirements\" : { \"min_reputation\" : { \"NCPD\" : 50 }, \"required_quests\" : [ \"required_quests\", \"required_quests\" ], \"min_level\" : 0, \"required_items\" : [ \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" ] }, \"faction\" : \"NCPD\", \"description\" : \"description\", \"quest_id\" : \"faction_ncpd_serial_killer\", \"title\" : \"Night City's Most Wanted\", \"category\" : \"Investigation\", \"rewards\" : { \"reputation\" : { \"NCPD\" : 100, \"ARASAKA\" : -50 }, \"currency\" : { \"eddies\" : 5 }, \"experience\" : 6, \"items\" : [ { \"quantity\" : 5, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" }, { \"quantity\" : 5, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" } ], \"street_cred\" : 1 }, \"branches_count\" : 5 }, { \"difficulty\" : \"EASY\", \"endings_count\" : 12, \"estimated_time_minutes\" : 45, \"requirements\" : { \"min_reputation\" : { \"NCPD\" : 50 }, \"required_quests\" : [ \"required_quests\", \"required_quests\" ], \"min_level\" : 0, \"required_items\" : [ \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"046b6c7f-0b8a-43b9-б35д-6489e6даee91\" ] }, \"faction\" : \"NCPD\", \"description\" : \"description\", \"quest_id\" : \"faction_ncpd_serial_killer\", \"title\" : \"Night City's Most Wanted\", \"category\" : \"Investigation\", \"rewards\" : { \"reputation\" : { \"NCPD\" : 100, \"ARASAKA\" : -50 }, \"currency\" : { \"eddies\" : 5 }, \"experience\" : 6, \"items\" : [ { \"quantity\" : 5, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" }, { \"quantity\" : 5, \"item_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" } ], \"street_cred\" : 1 }, \"branches_count\" : 5 } ], \"meta\" : { \"page_size\" : 20, \"total_pages\" : 8, \"total\" : 156, \"page\" : 1, \"has_next\" : true, \"has_prev\" : false } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
     }
 
     String PATH_ABANDON_QUEST = "/narrative/quest-engine/instances/{instance_id}/abandon";

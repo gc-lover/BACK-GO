@@ -5,7 +5,13 @@ import com.necpgame.backjava.model.CompleteQuestRequest;
 import com.necpgame.backjava.model.DialogueChoiceRequest;
 import com.necpgame.backjava.model.DialogueChoiceResult;
 import com.necpgame.backjava.model.DialogueNode;
+import com.necpgame.backjava.model.FactionQuestDetailed;
 import com.necpgame.backjava.model.GetActiveQuests200Response;
+import com.necpgame.backjava.model.GetAvailableFactionQuests200Response;
+import com.necpgame.backjava.model.GetFactionQuestProgress200Response;
+import com.necpgame.backjava.model.GetQuestBranches200Response;
+import com.necpgame.backjava.model.GetQuestEndings200Response;
+import com.necpgame.backjava.model.ListFactionQuests200Response;
 import com.necpgame.backjava.model.QuestCompletionResult;
 import com.necpgame.backjava.model.QuestInstance;
 import com.necpgame.backjava.model.SkillCheckRequest;
@@ -23,6 +29,42 @@ import org.springframework.web.bind.annotation.RestController;
 public class NarrativeController implements NarrativeApi {
 
     private final NarrativeService narrativeService;
+
+    @Override
+    public ResponseEntity<ListFactionQuests200Response> listFactionQuests(String faction, Integer minReputation, Integer playerLevelMin, Integer page, Integer pageSize) {
+        ListFactionQuests200Response response = narrativeService.listFactionQuests(faction, minReputation, playerLevelMin, page, pageSize);
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<FactionQuestDetailed> getFactionQuest(String questId) {
+        FactionQuestDetailed quest = narrativeService.getFactionQuest(questId);
+        return ResponseEntity.ok(quest);
+    }
+
+    @Override
+    public ResponseEntity<GetQuestBranches200Response> getQuestBranches(String questId) {
+        GetQuestBranches200Response response = narrativeService.getQuestBranches(questId);
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<GetQuestEndings200Response> getQuestEndings(String questId) {
+        GetQuestEndings200Response response = narrativeService.getQuestEndings(questId);
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<GetAvailableFactionQuests200Response> getAvailableFactionQuests(UUID characterId) {
+        GetAvailableFactionQuests200Response response = narrativeService.getAvailableFactionQuests(characterId);
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<GetFactionQuestProgress200Response> getFactionQuestProgress(UUID characterId) {
+        GetFactionQuestProgress200Response response = narrativeService.getFactionQuestProgress(characterId);
+        return ResponseEntity.ok(response);
+    }
 
     @Override
     public ResponseEntity<Void> abandonQuest(UUID instanceId) {

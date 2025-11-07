@@ -4,8 +4,13 @@ import com.necpgame.backjava.model.CompleteQuestRequest;
 import com.necpgame.backjava.model.DialogueChoiceRequest;
 import com.necpgame.backjava.model.DialogueChoiceResult;
 import com.necpgame.backjava.model.DialogueNode;
-import com.necpgame.backjava.model.Error;
+import com.necpgame.backjava.model.FactionQuestDetailed;
 import com.necpgame.backjava.model.GetActiveQuests200Response;
+import com.necpgame.backjava.model.GetAvailableFactionQuests200Response;
+import com.necpgame.backjava.model.GetFactionQuestProgress200Response;
+import com.necpgame.backjava.model.GetQuestBranches200Response;
+import com.necpgame.backjava.model.GetQuestEndings200Response;
+import com.necpgame.backjava.model.ListFactionQuests200Response;
 import com.necpgame.backjava.model.QuestCompletionResult;
 import com.necpgame.backjava.model.QuestInstance;
 import com.necpgame.backjava.model.SkillCheckRequest;
@@ -22,6 +27,59 @@ import org.springframework.validation.annotation.Validated;
  */
 @Validated
 public interface NarrativeService {
+
+    /**
+     * GET /narrative/faction-quests : Получить список фракционных квестов
+     *
+     * @param faction  (optional)
+     * @param minReputation Минимальная репутация для доступа (optional)
+     * @param playerLevelMin  (optional)
+     * @param page Номер страницы (начинается с 1) (optional, default to 1)
+     * @param pageSize Количество элементов на странице (optional, default to 20)
+     * @return ListFactionQuests200Response
+     */
+    ListFactionQuests200Response listFactionQuests(String faction, Integer minReputation, Integer playerLevelMin, Integer page, Integer pageSize);
+
+    /**
+     * GET /narrative/faction-quests/{quest_id} : Получить детали фракционного квеста
+     *
+     * @param questId  (required)
+     * @return FactionQuestDetailed
+     */
+    FactionQuestDetailed getFactionQuest(String questId);
+
+    /**
+     * GET /narrative/faction-quests/{quest_id}/branches : Получить ветвления квеста
+     *
+     * @param questId  (required)
+     * @return GetQuestBranches200Response
+     */
+    GetQuestBranches200Response getQuestBranches(String questId);
+
+    /**
+     * GET /narrative/faction-quests/{quest_id}/endings : Получить возможные концовки квеста
+     * Может быть 12+ концовок в зависимости от выборов
+     *
+     * @param questId  (required)
+     * @return GetQuestEndings200Response
+     */
+    GetQuestEndings200Response getQuestEndings(String questId);
+
+    /**
+     * GET /narrative/faction-quests/character/{character_id}/available : Получить доступные фракционные квесты для персонажа
+     *
+     * @param characterId  (required)
+     * @return GetAvailableFactionQuests200Response
+     */
+    GetAvailableFactionQuests200Response getAvailableFactionQuests(UUID characterId);
+
+    /**
+     * GET /narrative/faction-quests/character/{character_id}/progress : Получить прогресс по фракционным квестам
+     *
+     * @param characterId  (required)
+     * @return GetFactionQuestProgress200Response
+     */
+    GetFactionQuestProgress200Response getFactionQuestProgress(UUID characterId);
 
     /**
      * POST /narrative/quest-engine/instances/{instance_id}/abandon : Отказаться от квеста

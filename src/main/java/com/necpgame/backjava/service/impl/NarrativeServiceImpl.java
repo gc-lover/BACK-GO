@@ -5,6 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.necpgame.backjava.entity.CharacterFactionQuestProgressEntity;
+import com.necpgame.backjava.entity.CharacterFactionQuestProgressEntity.ProgressStatus;
+import com.necpgame.backjava.entity.FactionQuestBranchEntity;
+import com.necpgame.backjava.entity.FactionQuestEndingEntity;
+import com.necpgame.backjava.entity.FactionQuestEntity;
 import com.necpgame.backjava.entity.QuestDialogueStateEntity;
 import com.necpgame.backjava.entity.QuestEntity;
 import com.necpgame.backjava.entity.QuestInstanceEntity;
@@ -12,22 +17,46 @@ import com.necpgame.backjava.entity.QuestInstanceEntity.QuestStatus;
 import com.necpgame.backjava.entity.QuestObjectiveEntity;
 import com.necpgame.backjava.entity.QuestObjectiveEntity.ObjectiveType;
 import com.necpgame.backjava.entity.QuestSkillCheckResultEntity;
+import com.necpgame.backjava.model.ActiveQuestProgress;
+import com.necpgame.backjava.model.ActiveQuestProgressChoicesMadeInner;
+import com.necpgame.backjava.model.ActiveQuestProgressObjectivesInner;
 import com.necpgame.backjava.model.CompleteQuestRequest;
 import com.necpgame.backjava.model.DialogueChoiceRequest;
 import com.necpgame.backjava.model.DialogueChoiceResult;
 import com.necpgame.backjava.model.DialogueNode;
 import com.necpgame.backjava.model.DialogueOption;
+import com.necpgame.backjava.model.FactionQuest;
+import com.necpgame.backjava.model.FactionQuest.FactionEnum;
+import com.necpgame.backjava.model.FactionQuest.DifficultyEnum;
+import com.necpgame.backjava.model.FactionQuestDetailed;
+import com.necpgame.backjava.model.FactionQuestDetailedAllOfKeyNpcs;
 import com.necpgame.backjava.model.GetActiveQuests200Response;
+import com.necpgame.backjava.model.GetAvailableFactionQuests200Response;
+import com.necpgame.backjava.model.GetAvailableFactionQuests200ResponseLockedQuestsInner;
+import com.necpgame.backjava.model.GetFactionQuestProgress200Response;
+import com.necpgame.backjava.model.GetFactionQuestProgress200ResponseCompletedQuestsInner;
+import com.necpgame.backjava.model.GetQuestBranches200Response;
+import com.necpgame.backjava.model.GetQuestEndings200Response;
+import com.necpgame.backjava.model.ListFactionQuests200Response;
+import com.necpgame.backjava.model.PaginationMeta;
+import com.necpgame.backjava.model.QuestBranch;
 import com.necpgame.backjava.model.QuestCompletionResult;
+import com.necpgame.backjava.model.QuestEnding;
 import com.necpgame.backjava.model.QuestInstance;
 import com.necpgame.backjava.model.QuestInstanceProgressValue;
 import com.necpgame.backjava.model.QuestObjective;
 import com.necpgame.backjava.model.QuestProgress;
+import com.necpgame.backjava.model.QuestRequirements;
 import com.necpgame.backjava.model.QuestRewards;
 import com.necpgame.backjava.model.QuestRewardsItemsInner;
 import com.necpgame.backjava.model.SkillCheckRequest;
 import com.necpgame.backjava.model.SkillCheckResult;
 import com.necpgame.backjava.model.StartQuestRequest;
+import com.necpgame.backjava.repository.CharacterFactionQuestProgressRepository;
+import com.necpgame.backjava.repository.CharacterProgressionRepository;
+import com.necpgame.backjava.repository.FactionQuestBranchRepository;
+import com.necpgame.backjava.repository.FactionQuestEndingRepository;
+import com.necpgame.backjava.repository.FactionQuestRepository;
 import com.necpgame.backjava.repository.QuestDialogueStateRepository;
 import com.necpgame.backjava.repository.QuestInstanceRepository;
 import com.necpgame.backjava.repository.QuestObjectiveRepository;
@@ -35,18 +64,25 @@ import com.necpgame.backjava.repository.QuestRepository;
 import com.necpgame.backjava.repository.QuestSkillCheckResultRepository;
 import com.necpgame.backjava.repository.QuestTemplateDefinitionRepository;
 import com.necpgame.backjava.service.NarrativeService;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
+import jakarta.persistence.criteria.Predicate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -67,6 +103,9 @@ public class NarrativeServiceImpl implements NarrativeService {
     private static final TypeReference<Map<String, Object>> FLAGS_TYPE = new TypeReference<>() {};
     private static final TypeReference<List<String>> STRING_LIST_TYPE = new TypeReference<>() {};
     private static final TypeReference<List<ChoiceRecord>> CHOICE_LIST_TYPE = new TypeReference<>() {};
+    private static final TypeReference<List<FactionQuestDetailedAllOfKeyNpcs>> KEY_NPC_LIST_TYPE = new TypeReference<>() {};
+    private static final TypeReference<List<ActiveQuestProgressChoicesMadeInner>> PROGRESS_CHOICES_LIST_TYPE = new TypeReference<>() {};
+    private static final TypeReference<List<ActiveQuestProgressObjectivesInner>> PROGRESS_OBJECTIVES_LIST_TYPE = new TypeReference<>() {};
 
     private final QuestRepository questRepository;
     private final QuestObjectiveRepository questObjectiveRepository;
@@ -74,10 +113,146 @@ public class NarrativeServiceImpl implements NarrativeService {
     private final QuestDialogueStateRepository dialogueStateRepository;
     private final QuestSkillCheckResultRepository skillCheckResultRepository;
     private final QuestTemplateDefinitionRepository templateDefinitionRepository;
+    private final FactionQuestRepository factionQuestRepository;
+    private final FactionQuestBranchRepository factionQuestBranchRepository;
+    private final FactionQuestEndingRepository factionQuestEndingRepository;
+    private final CharacterFactionQuestProgressRepository characterFactionQuestProgressRepository;
+    private final CharacterProgressionRepository characterProgressionRepository;
     private final ObjectMapper objectMapper;
 
     @Value("${quest.engine.max-active-quests:20}")
     private int maxActiveQuests;
+
+    @Override
+    @Transactional(readOnly = true)
+    public ListFactionQuests200Response listFactionQuests(String faction, Integer minReputation, Integer playerLevelMin, Integer page, Integer pageSize) {
+        Pageable pageable = createPageable(page, pageSize);
+        Specification<FactionQuestEntity> specification = buildFactionQuestSpecification(faction, minReputation, playerLevelMin);
+        Page<FactionQuestEntity> quests = factionQuestRepository.findAll(specification, pageable);
+
+        List<FactionQuest> items = quests.getContent().stream()
+            .map(this::toFactionQuest)
+            .collect(Collectors.toList());
+
+        PaginationMeta meta = new PaginationMeta()
+            .page(quests.getNumber() + 1)
+            .pageSize(quests.getSize())
+            .total(safeLongToInt(quests.getTotalElements()))
+            .totalPages(quests.getTotalPages())
+            .hasNext(quests.hasNext())
+            .hasPrev(quests.hasPrevious());
+
+        return new ListFactionQuests200Response()
+            .data(items)
+            .meta(meta);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public FactionQuestDetailed getFactionQuest(String questId) {
+        String safeQuestId = requireText(questId, "quest_id");
+        FactionQuestEntity quest = factionQuestRepository.findById(safeQuestId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "faction quest not found"));
+        List<FactionQuestBranchEntity> branches = factionQuestBranchRepository.findByQuestIdOrderByBranchId(safeQuestId);
+        return toFactionQuestDetailed(quest, branches);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public GetQuestBranches200Response getQuestBranches(String questId) {
+        String safeQuestId = requireText(questId, "quest_id");
+        if (!factionQuestRepository.existsById(safeQuestId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "faction quest not found");
+        }
+        List<QuestBranch> branches = factionQuestBranchRepository.findByQuestIdOrderByBranchId(safeQuestId).stream()
+            .map(this::toQuestBranch)
+            .collect(Collectors.toList());
+        String currentBranch = characterFactionQuestProgressRepository.findByQuestIdAndStatus(safeQuestId, ProgressStatus.ACTIVE).stream()
+            .map(CharacterFactionQuestProgressEntity::getCurrentBranch)
+            .filter(StringUtils::hasText)
+            .findFirst()
+            .orElse(null);
+        return new GetQuestBranches200Response()
+            .branches(branches)
+            .currentBranch(currentBranch);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public GetQuestEndings200Response getQuestEndings(String questId) {
+        String safeQuestId = requireText(questId, "quest_id");
+        if (!factionQuestRepository.existsById(safeQuestId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "faction quest not found");
+        }
+        List<QuestEnding> endings = factionQuestEndingRepository.findByQuestIdOrderByEndingId(safeQuestId).stream()
+            .map(this::toQuestEnding)
+            .collect(Collectors.toList());
+        List<String> achievedEndings = new ArrayList<>(characterFactionQuestProgressRepository.findByQuestIdAndStatus(safeQuestId, ProgressStatus.COMPLETED).stream()
+            .map(CharacterFactionQuestProgressEntity::getEndingAchieved)
+            .filter(StringUtils::hasText)
+            .collect(Collectors.toCollection(LinkedHashSet::new)));
+        return new GetQuestEndings200Response()
+            .endings(endings)
+            .achievedEndings(achievedEndings);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public GetAvailableFactionQuests200Response getAvailableFactionQuests(UUID characterId) {
+        UUID safeCharacterId = requireId(characterId, "character_id");
+        List<FactionQuestEntity> quests = factionQuestRepository.findAll();
+        Map<String, CharacterFactionQuestProgressEntity> progressMap = characterFactionQuestProgressRepository.findByCharacterId(safeCharacterId).stream()
+            .collect(Collectors.toMap(CharacterFactionQuestProgressEntity::getQuestId, entry -> entry));
+
+        int characterLevel = characterProgressionRepository.findById(safeCharacterId)
+            .map(entity -> entity.getLevel() == null ? 0 : entity.getLevel())
+            .orElse(0);
+
+        List<FactionQuest> available = new ArrayList<>();
+        List<GetAvailableFactionQuests200ResponseLockedQuestsInner> locked = new ArrayList<>();
+
+        for (FactionQuestEntity quest : quests) {
+            FactionQuest questDto = toFactionQuest(quest);
+            CharacterFactionQuestProgressEntity progress = progressMap.get(quest.getQuestId());
+            boolean completed = progress != null && progress.getStatus() == ProgressStatus.COMPLETED;
+            boolean meetsLevel = quest.getMinLevelRequirement() == null || quest.getMinLevelRequirement() <= characterLevel;
+
+            if (!completed && meetsLevel) {
+                available.add(questDto);
+            } else {
+                QuestRequirements requirements = readValue(quest.getRequirementsJson(), QuestRequirements.class);
+                locked.add(new GetAvailableFactionQuests200ResponseLockedQuestsInner()
+                    .quest(questDto)
+                    .requirements(requirements));
+            }
+        }
+
+        return new GetAvailableFactionQuests200Response()
+            .availableQuests(available)
+            .lockedQuests(locked);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public GetFactionQuestProgress200Response getFactionQuestProgress(UUID characterId) {
+        UUID safeCharacterId = requireId(characterId, "character_id");
+        List<CharacterFactionQuestProgressEntity> entries = characterFactionQuestProgressRepository.findByCharacterId(safeCharacterId);
+
+        List<ActiveQuestProgress> active = new ArrayList<>();
+        List<GetFactionQuestProgress200ResponseCompletedQuestsInner> completed = new ArrayList<>();
+
+        for (CharacterFactionQuestProgressEntity entry : entries) {
+            if (entry.getStatus() == ProgressStatus.ACTIVE) {
+                active.add(toActiveQuestProgress(entry));
+            } else if (entry.getStatus() == ProgressStatus.COMPLETED) {
+                completed.add(toCompletedQuestProgress(entry));
+            }
+        }
+
+        return new GetFactionQuestProgress200Response()
+            .activeQuests(active)
+            .completedQuests(completed);
+    }
 
     @Override
     public Void abandonQuest(UUID instanceId) {
@@ -201,7 +376,7 @@ public class NarrativeServiceImpl implements NarrativeService {
 
     @Override
     @SuppressWarnings("null")
-    @Transactional(value = Transactional.TxType.REQUIRED, rollbackOn = Exception.class)
+    @Transactional(readOnly = true)
     public GetActiveQuests200Response getActiveQuests(UUID characterId) {
         UUID safeCharacterId = requireId(characterId, "character_id");
         List<QuestInstanceEntity> instances = questInstanceRepository.findByCharacterIdAndStatus(safeCharacterId, QuestStatus.ACTIVE);
@@ -222,7 +397,7 @@ public class NarrativeServiceImpl implements NarrativeService {
 
     @Override
     @SuppressWarnings("null")
-    @Transactional(value = Transactional.TxType.REQUIRED, rollbackOn = Exception.class)
+    @Transactional(readOnly = true)
     public DialogueNode getCurrentDialogue(UUID instanceId) {
         UUID questInstanceId = requireId(instanceId, "instance_id");
         QuestInstanceEntity instance = questInstanceRepository.findById(questInstanceId)
@@ -239,7 +414,7 @@ public class NarrativeServiceImpl implements NarrativeService {
 
     @Override
     @SuppressWarnings("null")
-    @Transactional(value = Transactional.TxType.REQUIRED, rollbackOn = Exception.class)
+    @Transactional(readOnly = true)
     public QuestInstance getQuestInstance(UUID instanceId) {
         UUID questInstanceId = requireId(instanceId, "instance_id");
         QuestInstanceEntity instance = questInstanceRepository.findById(questInstanceId)
@@ -773,6 +948,160 @@ public class NarrativeServiceImpl implements NarrativeService {
             current = map.get(part);
         }
         return current;
+    }
+
+    private Pageable createPageable(Integer page, Integer pageSize) {
+        int pageIndex = page == null || page < 1 ? 0 : page - 1;
+        int size = pageSize == null || pageSize < 1 ? 20 : pageSize;
+        return PageRequest.of(pageIndex, size);
+    }
+
+    private Specification<FactionQuestEntity> buildFactionQuestSpecification(String faction, Integer minReputation, Integer playerLevelMin) {
+        return (root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (StringUtils.hasText(faction)) {
+                FactionQuestEntity.Faction factionEnum;
+                try {
+                    factionEnum = FactionQuestEntity.Faction.fromCode(faction);
+                } catch (IllegalArgumentException ex) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "unknown faction value");
+                }
+                predicates.add(cb.equal(root.get("faction"), factionEnum));
+            }
+
+            if (minReputation != null) {
+                predicates.add(cb.or(
+                    cb.isNull(root.get("minReputationRequired")),
+                    cb.lessThanOrEqualTo(root.get("minReputationRequired"), minReputation)
+                ));
+            }
+
+            if (playerLevelMin != null) {
+                predicates.add(cb.or(
+                    cb.isNull(root.get("minLevelRequirement")),
+                    cb.lessThanOrEqualTo(root.get("minLevelRequirement"), playerLevelMin)
+                ));
+            }
+
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+    }
+
+    private FactionQuest toFactionQuest(FactionQuestEntity entity) {
+        FactionQuest quest = new FactionQuest()
+            .questId(entity.getQuestId())
+            .title(entity.getTitle())
+            .description(entity.getDescription())
+            .category(entity.getCategory())
+            .branchesCount(entity.getBranchesCount())
+            .endingsCount(entity.getEndingsCount())
+            .estimatedTimeMinutes(entity.getEstimatedTimeMinutes())
+            .requirements(readValue(entity.getRequirementsJson(), QuestRequirements.class))
+            .rewards(readValue(entity.getRewardsJson(), QuestRewards.class));
+
+        if (entity.getFaction() != null) {
+            quest.setFaction(FactionEnum.fromValue(entity.getFaction().name()));
+        }
+        if (entity.getDifficulty() != null) {
+            quest.setDifficulty(DifficultyEnum.fromValue(entity.getDifficulty().name()));
+        }
+        return quest;
+    }
+
+    private FactionQuestDetailed toFactionQuestDetailed(FactionQuestEntity entity,
+                                                        List<FactionQuestBranchEntity> branches) {
+        FactionQuest base = toFactionQuest(entity);
+        FactionQuestDetailed detailed = new FactionQuestDetailed()
+            .questId(base.getQuestId())
+            .title(base.getTitle())
+            .description(base.getDescription())
+            .category(base.getCategory())
+            .branchesCount(base.getBranchesCount())
+            .endingsCount(base.getEndingsCount())
+            .estimatedTimeMinutes(base.getEstimatedTimeMinutes())
+            .requirements(base.getRequirements())
+            .rewards(base.getRewards())
+            .storyline(entity.getStoryline())
+            .branches(branches.stream().map(this::toQuestBranch).collect(Collectors.toList()));
+
+        FactionQuest.FactionEnum faction = base.getFaction();
+        if (faction != null) {
+            detailed.setFaction(FactionQuestDetailed.FactionEnum.fromValue(faction.getValue()));
+        }
+        FactionQuest.DifficultyEnum difficulty = base.getDifficulty();
+        if (difficulty != null) {
+            detailed.setDifficulty(FactionQuestDetailed.DifficultyEnum.fromValue(difficulty.getValue()));
+        }
+
+        detailed.setKeyNpcs(new ArrayList<>(readList(entity.getKeyNpcsJson(), KEY_NPC_LIST_TYPE)));
+        detailed.setLocations(new ArrayList<>(readList(entity.getLocationsJson(), STRING_LIST_TYPE)));
+
+        return detailed;
+    }
+
+    private QuestBranch toQuestBranch(FactionQuestBranchEntity entity) {
+        QuestBranch branch = readValue(entity.getBranchPayload(), QuestBranch.class);
+        if (branch == null) {
+            branch = new QuestBranch();
+        }
+        branch.setBranchId(entity.getBranchId());
+        return branch;
+    }
+
+    private QuestEnding toQuestEnding(FactionQuestEndingEntity entity) {
+        QuestEnding ending = readValue(entity.getEndingPayload(), QuestEnding.class);
+        if (ending == null) {
+            ending = new QuestEnding();
+        }
+        ending.setEndingId(entity.getEndingId());
+        return ending;
+    }
+
+    private ActiveQuestProgress toActiveQuestProgress(CharacterFactionQuestProgressEntity entry) {
+        ActiveQuestProgress progress = new ActiveQuestProgress()
+            .questId(entry.getQuestId())
+            .currentBranch(entry.getCurrentBranch());
+
+        progress.setChoicesMade(new ArrayList<>(readList(entry.getChoicesJson(), PROGRESS_CHOICES_LIST_TYPE)));
+        progress.setObjectives(new ArrayList<>(readList(entry.getObjectivesJson(), PROGRESS_OBJECTIVES_LIST_TYPE)));
+        return progress;
+    }
+
+    private GetFactionQuestProgress200ResponseCompletedQuestsInner toCompletedQuestProgress(CharacterFactionQuestProgressEntity entry) {
+        return new GetFactionQuestProgress200ResponseCompletedQuestsInner()
+            .questId(entry.getQuestId())
+            .endingAchieved(entry.getEndingAchieved())
+            .completionDate(entry.getCompletionDate());
+    }
+
+    private int safeLongToInt(long value) {
+        return value > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) value;
+    }
+
+    private <T> T readValue(String json, Class<T> type) {
+        if (!StringUtils.hasText(json)) {
+            return null;
+        }
+        try {
+            return objectMapper.readValue(json, type);
+        } catch (JsonProcessingException ex) {
+            log.warn("Failed to parse {}: {}", type.getSimpleName(), ex.getMessage());
+            return null;
+        }
+    }
+
+    private <T> List<T> readList(String json, TypeReference<List<T>> typeReference) {
+        if (!StringUtils.hasText(json)) {
+            return Collections.emptyList();
+        }
+        try {
+            List<T> values = objectMapper.readValue(json, typeReference);
+            return values == null ? Collections.emptyList() : values;
+        } catch (JsonProcessingException ex) {
+            log.warn("Failed to parse list payload: {}", ex.getMessage());
+            return Collections.emptyList();
+        }
     }
 
     private QuestCompletionResult buildCompletionResult(QuestInstanceEntity instance, QuestTemplateDefinition definition) {
