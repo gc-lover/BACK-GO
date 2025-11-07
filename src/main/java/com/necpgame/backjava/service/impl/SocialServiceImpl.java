@@ -1,7 +1,12 @@
 package com.necpgame.backjava.service.impl;
 
+import com.necpgame.backjava.entity.GuildEntity;
+import com.necpgame.backjava.entity.GuildMemberEntity;
+import com.necpgame.backjava.entity.GuildMemberId;
 import com.necpgame.backjava.model.*;
 import com.necpgame.backjava.repository.FriendshipRepository;
+import com.necpgame.backjava.repository.GuildMemberRepository;
+import com.necpgame.backjava.repository.GuildRepository;
 import com.necpgame.backjava.repository.PartyRepository;
 import com.necpgame.backjava.service.SocialService;
 import lombok.RequiredArgsConstructor;
@@ -9,8 +14,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Реализация сервиса социальных механик (Party System)
@@ -24,6 +35,86 @@ public class SocialServiceImpl implements SocialService {
 
     private final PartyRepository partyRepository;
     private final FriendshipRepository friendshipRepository;
+    private final GuildRepository guildRepository;
+    private final GuildMemberRepository guildMemberRepository;
+
+    @Override
+    public Guild createGuild(CreateGuildRequest request) {
+        log.info("Creating guild {} with tag {}", request.getName(), request.getTag());
+        GuildEntity entity = GuildEntity.builder()
+            .name(request.getName())
+            .tag(request.getTag())
+            .level(1)
+            .build();
+        GuildEntity savedGuild = guildRepository.save(entity);
+        UUID founderId = parseUuidSafe(request.getFounderCharacterId());
+        if (founderId != null) {
+            GuildMemberEntity member = GuildMemberEntity.builder()
+                .id(GuildMemberId.builder()
+                    .guildId(savedGuild.getId())
+                    .characterId(founderId)
+                    .build())
+                .rank("LEADER")
+                .joinedAt(OffsetDateTime.now())
+                .build();
+            guildMemberRepository.save(member);
+        }
+        long members = guildMemberRepository.countByIdGuildId(savedGuild.getId());
+        return toGuild(savedGuild, members);
+    }
+
+    @Override
+    public GuildDetails getGuild(String guildId) {
+        log.info("Fetching guild {}", guildId);
+        UUID id = parseUuidSafe(guildId);
+        if (id == null) {
+            return new GuildDetails();
+        }
+        Optional<GuildEntity> guildOpt = guildRepository.findById(id);
+        if (guildOpt.isEmpty()) {
+            return new GuildDetails();
+        }
+        List<GuildMemberEntity> members = guildMemberRepository.findByIdGuildId(id);
+        return toGuildDetails(guildOpt.get(), members);
+    }
+
+    @Override
+    public Object inviteToGuild(String guildId, InviteToGuildRequest inviteToGuildRequest) {
+        log.info("Inviting {} to guild {}", inviteToGuildRequest != null ? inviteToGuildRequest.getInviteeCharacterName() : "unknown", guildId);
+        return Map.of("status", "pending");
+    }
+
+    @Override
+    public Object joinGuild(String guildId, JoinGuildRequest joinGuildRequest) {
+        UUID gId = parseUuidSafe(guildId);
+        UUID characterId = joinGuildRequest != null ? parseUuidSafe(joinGuildRequest.getCharacterId()) : null;
+        if (gId != null && characterId != null) {
+            GuildMemberEntity member = GuildMemberEntity.builder()
+                .id(GuildMemberId.builder()
+                    .guildId(gId)
+                    .characterId(characterId)
+                    .build())
+                .rank("MEMBER")
+                .joinedAt(OffsetDateTime.now())
+                .build();
+            guildMemberRepository.save(member);
+        }
+        return Map.of("status", "pending");
+    }
+
+    @Override
+    public Object leaveGuild(String guildId, JoinGuildRequest joinGuildRequest) {
+        UUID gId = parseUuidSafe(guildId);
+        UUID characterId = joinGuildRequest != null ? parseUuidSafe(joinGuildRequest.getCharacterId()) : null;
+        if (gId != null && characterId != null) {
+            GuildMemberId id = GuildMemberId.builder()
+                .guildId(gId)
+                .characterId(characterId)
+                .build();
+            guildMemberRepository.deleteById(id);
+        }
+        return Map.of("status", "pending");
+    }
 
     @Override
     public Party createParty(CreatePartyRequest request) {
@@ -102,6 +193,50 @@ public class SocialServiceImpl implements SocialService {
         log.info("Player {} sending friend request to {}", requester, target);
 
         return Map.of("status", "pending");
+    }
+
+    private UUID parseUuidSafe(String value) {
+        if (value == null || value.isBlank()) {
+            return null;
+        }
+        try {
+            return UUID.fromString(value);
+        } catch (IllegalArgumentException ex) {
+            log.warn("Invalid UUID provided: {}", value);
+            return null;
+        }
+    }
+
+    private Guild toGuild(GuildEntity entity, long memberCount) {
+        return new Guild()
+            .guildId(entity.getId() != null ? entity.getId().toString() : null)
+            .name(entity.getName())
+            .tag(entity.getTag())
+            .level(entity.getLevel())
+            .memberCount((int) Math.min(memberCount, Integer.MAX_VALUE))
+            .createdAt(entity.getCreatedAt());
+    }
+
+    private GuildDetails toGuildDetails(GuildEntity entity, List<GuildMemberEntity> members) {
+        long memberCount = guildMemberRepository.countByIdGuildId(entity.getId());
+        GuildDetails details = new GuildDetails()
+            .guildId(entity.getId() != null ? entity.getId().toString() : null)
+            .name(entity.getName())
+            .tag(entity.getTag())
+            .level(entity.getLevel())
+            .memberCount((int) Math.min(memberCount, Integer.MAX_VALUE))
+            .createdAt(entity.getCreatedAt());
+
+        List<Object> memberDtos = new ArrayList<>();
+        for (GuildMemberEntity member : members) {
+            Map<String, Object> payload = new HashMap<>();
+            payload.put("character_id", member.getId().getCharacterId().toString());
+            payload.put("rank", member.getRank());
+            payload.put("joined_at", member.getJoinedAt());
+            memberDtos.add(payload);
+        }
+        details.setMembers(memberDtos);
+        return details;
     }
 }
 

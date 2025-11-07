@@ -14,6 +14,31 @@ public class SocialController implements SocialApi {
     private final SocialService socialService;
 
     @Override
+    public ResponseEntity<Guild> createGuild(CreateGuildRequest createGuildRequest) {
+        return ResponseEntity.ok(socialService.createGuild(createGuildRequest));
+    }
+
+    @Override
+    public ResponseEntity<GuildDetails> getGuild(String guildId) {
+        return ResponseEntity.ok(socialService.getGuild(guildId));
+    }
+
+    @Override
+    public ResponseEntity<Object> inviteToGuild(String guildId, InviteToGuildRequest inviteToGuildRequest) {
+        return ResponseEntity.ok(socialService.inviteToGuild(guildId, inviteToGuildRequest));
+    }
+
+    @Override
+    public ResponseEntity<Object> joinGuild(String guildId, JoinGuildRequest joinGuildRequest) {
+        return ResponseEntity.ok(socialService.joinGuild(guildId, joinGuildRequest));
+    }
+
+    @Override
+    public ResponseEntity<Object> leaveGuild(String guildId, JoinGuildRequest joinGuildRequest) {
+        return ResponseEntity.ok(socialService.leaveGuild(guildId, joinGuildRequest));
+    }
+
+    @Override
     public ResponseEntity<Party> createParty(CreatePartyRequest createPartyRequest) {
         return ResponseEntity.ok(socialService.createParty(createPartyRequest));
     }

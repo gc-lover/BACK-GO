@@ -108,4 +108,7 @@
     <!-- Mail System -->
     <include file="db/changelog/changes/066-create-mail-messages-table.xml"/>
 
+    <!-- Guild System -->
+    <include file="db/changelog/changes/067-create-guild-tables.xml"/>
+
 </databaseChangeLog>

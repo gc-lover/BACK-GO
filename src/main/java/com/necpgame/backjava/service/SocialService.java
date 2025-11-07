@@ -1,9 +1,14 @@
 package com.necpgame.backjava.service;
 
 import com.necpgame.backjava.model.BlockPlayerRequest;
+import com.necpgame.backjava.model.CreateGuildRequest;
 import com.necpgame.backjava.model.CreatePartyRequest;
 import com.necpgame.backjava.model.GetFriends200Response;
+import com.necpgame.backjava.model.Guild;
+import com.necpgame.backjava.model.GuildDetails;
+import com.necpgame.backjava.model.InviteToGuildRequest;
 import com.necpgame.backjava.model.InviteToPartyRequest;
+import com.necpgame.backjava.model.JoinGuildRequest;
 import com.necpgame.backjava.model.JoinPartyRequest;
 import com.necpgame.backjava.model.Party;
 import com.necpgame.backjava.model.PartyDetails;
@@ -18,6 +23,54 @@ import org.springframework.validation.annotation.Validated;
  */
 @Validated
 public interface SocialService {
+
+    /**
+     * POST /social/guilds/create : Создать гильдию
+     * Создает новую гильдию. Требует минимальный уровень и стоимость. 
+     *
+     * @param createGuildRequest  (required)
+     * @return Guild
+     */
+    Guild createGuild(CreateGuildRequest createGuildRequest);
+
+    /**
+     * GET /social/guilds/{guild_id} : Получить информацию о гильдии
+     * Возвращает детали гильдии, участников, звания
+     *
+     * @param guildId  (required)
+     * @return GuildDetails
+     */
+    GuildDetails getGuild(String guildId);
+
+    /**
+     * POST /social/guilds/{guild_id}/invite : Пригласить в гильдию
+     * Отправляет приглашение в гильдию. Требует право INVITE_MEMBERS. 
+     *
+     * @param guildId  (required)
+     * @param inviteToGuildRequest  (required)
+     * @return Object
+     */
+    Object inviteToGuild(String guildId, InviteToGuildRequest inviteToGuildRequest);
+
+    /**
+     * POST /social/guilds/{guild_id}/join : Вступить в гильдию
+     * Принимает приглашение и вступает в гильдию
+     *
+     * @param guildId  (required)
+     * @param joinGuildRequest  (required)
+     * @return Object
+     */
+    Object joinGuild(String guildId, JoinGuildRequest joinGuildRequest);
+
+    /**
+     * POST /social/guilds/{guild_id}/leave : Покинуть гильдию
+     * Покидает гильдию
+     *
+     * @param guildId  (required)
+     * @param joinGuildRequest  (required)
+     * @return Object
+     */
+    Object leaveGuild(String guildId, JoinGuildRequest joinGuildRequest);
 
     /**
      * POST /social/party/create : Создать группу

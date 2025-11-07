@@ -6,9 +6,14 @@
 package com.necpgame.backjava.api;
 
 import com.necpgame.backjava.model.BlockPlayerRequest;
+import com.necpgame.backjava.model.CreateGuildRequest;
 import com.necpgame.backjava.model.CreatePartyRequest;
 import com.necpgame.backjava.model.GetFriends200Response;
+import com.necpgame.backjava.model.Guild;
+import com.necpgame.backjava.model.GuildDetails;
+import com.necpgame.backjava.model.InviteToGuildRequest;
 import com.necpgame.backjava.model.InviteToPartyRequest;
+import com.necpgame.backjava.model.JoinGuildRequest;
 import com.necpgame.backjava.model.JoinPartyRequest;
 import com.necpgame.backjava.model.Party;
 import com.necpgame.backjava.model.PartyDetails;
@@ -37,10 +42,166 @@ import jakarta.annotation.Generated;
 @Validated
 @Tag(name = "Friends", description = "Система друзей")
 @Tag(name = "Party", description = "Система групп")
+@Tag(name = "Guilds", description = "Система гильдий")
 public interface SocialApi {
 
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
+    }
+
+    String PATH_CREATE_GUILD = "/social/guilds/create";
+    @Operation(
+        operationId = "createGuild",
+        summary = "Создать гильдию",
+        description = "Создает новую гильдию. Требует минимальный уровень и стоимость. ",
+        tags = { "Guilds" },
+        responses = {
+            @ApiResponse(responseCode = "201", description = "Гильдия создана", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Guild.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = SocialApi.PATH_CREATE_GUILD,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Guild> createGuild(
+        @Parameter(name = "CreateGuildRequest", description = "", required = true) @Valid @RequestBody CreateGuildRequest createGuildRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"level\" : 0, \"guild_id\" : \"guild_id\", \"name\" : \"name\", \"created_at\" : \"2000-01-23T04:56:07.000+00:00\", \"tag\" : \"tag\", \"member_count\" : 6 }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    String PATH_GET_GUILD = "/social/guilds/{guild_id}";
+    @Operation(
+        operationId = "getGuild",
+        summary = "Получить информацию о гильдии",
+        description = "Возвращает детали гильдии, участников, звания",
+        tags = { "Guilds" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Информация о гильдии", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = GuildDetails.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = SocialApi.PATH_GET_GUILD,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<GuildDetails> getGuild(
+        @NotNull @Parameter(name = "guild_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("guild_id") String guildId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"level\" : 0, \"members\" : [ \"{}\", \"{}\" ], \"guild_id\" : \"guild_id\", \"name\" : \"name\", \"created_at\" : \"2000-01-23T04:56:07.000+00:00\", \"tag\" : \"tag\", \"member_count\" : 6 }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    String PATH_INVITE_TO_GUILD = "/social/guilds/{guild_id}/invite";
+    @Operation(
+        operationId = "inviteToGuild",
+        summary = "Пригласить в гильдию",
+        description = "Отправляет приглашение в гильдию. Требует право INVITE_MEMBERS. ",
+        tags = { "Guilds" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Приглашение отправлено", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = SocialApi.PATH_INVITE_TO_GUILD,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Object> inviteToGuild(
+        @NotNull @Parameter(name = "guild_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("guild_id") String guildId,
+        @Parameter(name = "InviteToGuildRequest", description = "", required = true) @Valid @RequestBody InviteToGuildRequest inviteToGuildRequest
+    ) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    String PATH_JOIN_GUILD = "/social/guilds/{guild_id}/join";
+    @Operation(
+        operationId = "joinGuild",
+        summary = "Вступить в гильдию",
+        description = "Принимает приглашение и вступает в гильдию",
+        tags = { "Guilds" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Вступил в гильдию", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = SocialApi.PATH_JOIN_GUILD,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Object> joinGuild(
+        @NotNull @Parameter(name = "guild_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("guild_id") String guildId,
+        @Parameter(name = "JoinGuildRequest", description = "", required = true) @Valid @RequestBody JoinGuildRequest joinGuildRequest
+    ) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    String PATH_LEAVE_GUILD = "/social/guilds/{guild_id}/leave";
+    @Operation(
+        operationId = "leaveGuild",
+        summary = "Покинуть гильдию",
+        description = "Покидает гильдию",
+        tags = { "Guilds" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Покинул гильдию", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "bearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = SocialApi.PATH_LEAVE_GUILD,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Object> leaveGuild(
+        @NotNull @Parameter(name = "guild_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("guild_id") String guildId,
+        @Parameter(name = "JoinGuildRequest", description = "", required = true) @Valid @RequestBody JoinGuildRequest joinGuildRequest
+    ) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     String PATH_ACCEPT_FRIEND_REQUEST = "/social/friends/request/{request_id}/accept";
