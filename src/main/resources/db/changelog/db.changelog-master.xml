@@ -154,4 +154,8 @@
     <include file="db/changelog/changes/085-create-crafting-sessions-table.xml"/>
     <include file="db/changelog/changes/086-seed-crafting-data.xml"/>
 
+    <!-- Trading Guilds -->
+    <include file="db/changelog/changes/087-create-trading-guilds-tables.xml"/>
+    <include file="db/changelog/changes/088-seed-trading-guilds-data.xml"/>
+
 </databaseChangeLog>

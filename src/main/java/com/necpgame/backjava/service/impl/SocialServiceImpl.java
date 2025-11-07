@@ -40,14 +40,15 @@ public class SocialServiceImpl implements SocialService {
 
     @Override
     public Guild createGuild(CreateGuildRequest request) {
-        log.info("Creating guild {} with tag {}", request.getName(), request.getTag());
+        String tag = generateTag(request.getName());
+        log.info("Creating guild {} with generated tag {}", request.getName(), tag);
         GuildEntity entity = GuildEntity.builder()
             .name(request.getName())
-            .tag(request.getTag())
+            .tag(tag)
             .level(1)
             .build();
         GuildEntity savedGuild = guildRepository.save(entity);
-        UUID founderId = parseUuidSafe(request.getFounderCharacterId());
+        UUID founderId = request.getCharacterId();
         if (founderId != null) {
             GuildMemberEntity member = GuildMemberEntity.builder()
                 .id(GuildMemberId.builder()
@@ -205,6 +206,17 @@ public class SocialServiceImpl implements SocialService {
             log.warn("Invalid UUID provided: {}", value);
             return null;
         }
+    }
+
+    private String generateTag(String name) {
+        if (name == null || name.isBlank()) {
+            return "GUILD";
+        }
+        String simplified = name.replaceAll("[^A-Za-z0-9]", "").toUpperCase();
+        if (simplified.isEmpty()) {
+            simplified = "GUILD";
+        }
+        return simplified.length() > 4 ? simplified.substring(0, 4) : simplified;
     }
 
     private Guild toGuild(GuildEntity entity, long memberCount) {

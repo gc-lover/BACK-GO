@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.necpgame.backjava.entity.TradingGuildBankTransactionEntity;
-import com.necpgame.backjava.entity.TradingGuildDistributionEntity;
 import com.necpgame.backjava.entity.TradingGuildEntity;
 import com.necpgame.backjava.entity.TradingGuildMemberEntity;
 import com.necpgame.backjava.entity.TradingGuildMemberId;
@@ -21,7 +20,6 @@ import com.necpgame.backjava.model.GuildTreasury;
 import com.necpgame.backjava.model.GuildTreasuryAssetsInner;
 import com.necpgame.backjava.model.TreasuryTransaction;
 import com.necpgame.backjava.repository.TradingGuildBankTransactionRepository;
-import com.necpgame.backjava.repository.TradingGuildDistributionRepository;
 import com.necpgame.backjava.repository.TradingGuildMemberRepository;
 import com.necpgame.backjava.repository.TradingGuildRepository;
 import com.necpgame.backjava.repository.TradingGuildTreasuryRepository;
@@ -38,6 +36,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.math.RoundingMode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -60,7 +59,6 @@ public class GuildTreasuryServiceImpl implements GuildTreasuryService {
     private final TradingGuildTreasuryRepository tradingGuildTreasuryRepository;
     private final TradingGuildBankTransactionRepository tradingGuildBankTransactionRepository;
     private final TradingGuildMemberRepository tradingGuildMemberRepository;
-    private final TradingGuildDistributionRepository tradingGuildDistributionRepository;
     private final ObjectMapper objectMapper;
 
     @Override
@@ -203,17 +201,6 @@ public class GuildTreasuryServiceImpl implements GuildTreasuryService {
         tradingGuildTreasuryRepository.save(treasury);
 
         UUID distributionId = UUID.randomUUID();
-        TradingGuildDistributionEntity distributionEntity = TradingGuildDistributionEntity.builder()
-            .id(distributionId)
-            .guildId(guildId)
-            .distributionType(distributionType)
-            .totalAmount(BigDecimal.valueOf(distributedSum))
-            .detailsJson(writeDistributionDetails(distributions))
-            .createdBy(null)
-            .createdAt(Instant.now())
-            .build();
-        tradingGuildDistributionRepository.save(distributionEntity);
-
         TradingGuildBankTransactionEntity transaction = TradingGuildBankTransactionEntity.builder()
             .id(UUID.randomUUID())
             .guildId(guildId)
@@ -296,7 +283,8 @@ public class GuildTreasuryServiceImpl implements GuildTreasuryService {
         DistributeProfitsRequest request,
         List<TradingGuildMemberEntity> members
     ) {
-        if (request.getCustomDistributions() == null || request.getCustomDistributions().isEmpty()) {
+        if (request.getCustomDistributions() == null || !request.getCustomDistributions().isPresent()
+            || request.getCustomDistributions().get().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "custom_distributions is required for CUSTOM type");
         }
         List<DistributeProfits200ResponseDistributionsInner> items = request.getCustomDistributions().get();
@@ -349,9 +337,9 @@ public class GuildTreasuryServiceImpl implements GuildTreasuryService {
         BigDecimal distributed = BigDecimal.ZERO;
         for (int i = 0; i < members.size(); i++) {
             TradingGuildMemberEntity member = members.get(i);
-            BigDecimal ratio = member.getContributionTotal().divide(totalContributions, 6, BigDecimal.ROUND_HALF_UP);
+            BigDecimal ratio = member.getContributionTotal().divide(totalContributions, 6, RoundingMode.HALF_UP);
             BigDecimal share = ratio.multiply(BigDecimal.valueOf(totalAmount));
-            int amount = share.setScale(0, BigDecimal.ROUND_DOWN).intValue();
+            int amount = share.setScale(0, RoundingMode.DOWN).intValue();
             distributed = distributed.add(BigDecimal.valueOf(amount));
             result.add(new DistributeProfits200ResponseDistributionsInner()
                 .characterId(member.getId().getCharacterId())
