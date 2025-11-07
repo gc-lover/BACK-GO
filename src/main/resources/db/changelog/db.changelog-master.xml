@@ -123,4 +123,7 @@
     <!-- Reset System -->
     <include file="db/changelog/changes/071-create-reset-system-tables.xml"/>
 
+    <!-- Quest Engine -->
+    <include file="db/changelog/changes/072-create-quest-engine-tables.xml"/>
+
 </databaseChangeLog>
