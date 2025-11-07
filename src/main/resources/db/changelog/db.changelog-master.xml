@@ -176,4 +176,8 @@
     <include file="db/changelog/changes/096-create-investments-tables.xml"/>
     <include file="db/changelog/changes/097-seed-investments-data.xml"/>
 
+    <!-- Narrative Tools -->
+    <include file="db/changelog/changes/098-create-narrative-tools-tables.xml"/>
+    <include file="db/changelog/changes/099-seed-narrative-tools-data.xml"/>
+
 </databaseChangeLog>
