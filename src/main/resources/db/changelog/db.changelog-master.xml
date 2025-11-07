@@ -129,4 +129,7 @@
     <!-- Combat Session v2 -->
     <include file="db/changelog/changes/073-create-combat-session-instances.xml"/>
 
+    <!-- Progression Backend -->
+    <include file="db/changelog/changes/074-create-progression-backend-tables.xml"/>
+
 </databaseChangeLog>

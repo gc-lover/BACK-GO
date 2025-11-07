@@ -15,135 +15,126 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.*;
 import jakarta.annotation.Generated;
 
-/**
- * Skill
- */
-
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T21:21:38.856812200+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 public class Skill {
 
-  private String id;
+  private @Nullable String skillId;
 
-  private String name;
+  private @Nullable String name;
 
-  private Integer level;
+  private @Nullable Integer level;
 
-  private Integer experience;
+  private @Nullable Integer experience;
 
-  private Integer maxLevel = 20;
+  private @Nullable Integer experienceToNextLevel;
 
-  public Skill() {
-    super();
-  }
+  private @Nullable Float progressPercentage;
 
-  /**
-   * Constructor with only required parameters
-   */
-  public Skill(String id, String name, Integer level, Integer experience) {
-    this.id = id;
-    this.name = name;
-    this.level = level;
-    this.experience = experience;
-  }
+  private @Nullable String attributeDependency;
 
-  public Skill id(String id) {
-    this.id = id;
+  public Skill skillId(@Nullable String skillId) {
+    this.skillId = skillId;
     return this;
   }
 
-  /**
-   * Get id
-   * @return id
-   */
-  @NotNull 
-  @Schema(name = "id", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("id")
-  public String getId() {
-    return id;
+  @Schema(name = "skill_id", example = "STEALTH", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("skill_id")
+  public @Nullable String getSkillId() {
+    return skillId;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setSkillId(@Nullable String skillId) {
+    this.skillId = skillId;
   }
 
-  public Skill name(String name) {
+  public Skill name(@Nullable String name) {
     this.name = name;
     return this;
   }
 
-  /**
-   * Get name
-   * @return name
-   */
-  @NotNull 
-  @Schema(name = "name", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "name", example = "Stealth", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("name")
-  public String getName() {
+  public @Nullable String getName() {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(@Nullable String name) {
     this.name = name;
   }
 
-  public Skill level(Integer level) {
+  public Skill level(@Nullable Integer level) {
     this.level = level;
     return this;
   }
 
-  /**
-   * Get level
-   * @return level
-   */
-  @NotNull 
-  @Schema(name = "level", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "level", example = "8", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("level")
-  public Integer getLevel() {
+  public @Nullable Integer getLevel() {
     return level;
   }
 
-  public void setLevel(Integer level) {
+  public void setLevel(@Nullable Integer level) {
     this.level = level;
   }
 
-  public Skill experience(Integer experience) {
+  public Skill experience(@Nullable Integer experience) {
     this.experience = experience;
     return this;
   }
 
-  /**
-   * Get experience
-   * @return experience
-   */
-  @NotNull 
-  @Schema(name = "experience", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "experience", example = "3500", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("experience")
-  public Integer getExperience() {
+  public @Nullable Integer getExperience() {
     return experience;
   }
 
-  public void setExperience(Integer experience) {
+  public void setExperience(@Nullable Integer experience) {
     this.experience = experience;
   }
 
-  public Skill maxLevel(Integer maxLevel) {
-    this.maxLevel = maxLevel;
+  public Skill experienceToNextLevel(@Nullable Integer experienceToNextLevel) {
+    this.experienceToNextLevel = experienceToNextLevel;
     return this;
   }
 
-  /**
-   * Get maxLevel
-   * @return maxLevel
-   */
-  
-  @Schema(name = "maxLevel", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("maxLevel")
-  public Integer getMaxLevel() {
-    return maxLevel;
+  @Schema(name = "experience_to_next_level", example = "4000", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("experience_to_next_level")
+  public @Nullable Integer getExperienceToNextLevel() {
+    return experienceToNextLevel;
   }
 
-  public void setMaxLevel(Integer maxLevel) {
-    this.maxLevel = maxLevel;
+  public void setExperienceToNextLevel(@Nullable Integer experienceToNextLevel) {
+    this.experienceToNextLevel = experienceToNextLevel;
+  }
+
+  public Skill progressPercentage(@Nullable Float progressPercentage) {
+    this.progressPercentage = progressPercentage;
+    return this;
+  }
+
+  @Schema(name = "progress_percentage", example = "87.5", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("progress_percentage")
+  public @Nullable Float getProgressPercentage() {
+    return progressPercentage;
+  }
+
+  public void setProgressPercentage(@Nullable Float progressPercentage) {
+    this.progressPercentage = progressPercentage;
+  }
+
+  public Skill attributeDependency(@Nullable String attributeDependency) {
+    this.attributeDependency = attributeDependency;
+    return this;
+  }
+
+  @Schema(name = "attribute_dependency", example = "COOL", description = "От какого атрибута зависит", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("attribute_dependency")
+  public @Nullable String getAttributeDependency() {
+    return attributeDependency;
+  }
+
+  public void setAttributeDependency(@Nullable String attributeDependency) {
+    this.attributeDependency = attributeDependency;
   }
 
   @Override
@@ -155,35 +146,35 @@ public class Skill {
       return false;
     }
     Skill skill = (Skill) o;
-    return Objects.equals(this.id, skill.id) &&
+    return Objects.equals(this.skillId, skill.skillId) &&
         Objects.equals(this.name, skill.name) &&
         Objects.equals(this.level, skill.level) &&
         Objects.equals(this.experience, skill.experience) &&
-        Objects.equals(this.maxLevel, skill.maxLevel);
+        Objects.equals(this.experienceToNextLevel, skill.experienceToNextLevel) &&
+        Objects.equals(this.progressPercentage, skill.progressPercentage) &&
+        Objects.equals(this.attributeDependency, skill.attributeDependency);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, level, experience, maxLevel);
+    return Objects.hash(skillId, name, level, experience, experienceToNextLevel, progressPercentage, attributeDependency);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Skill {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    skillId: ").append(toIndentedString(skillId)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    level: ").append(toIndentedString(level)).append("\n");
     sb.append("    experience: ").append(toIndentedString(experience)).append("\n");
-    sb.append("    maxLevel: ").append(toIndentedString(maxLevel)).append("\n");
+    sb.append("    experienceToNextLevel: ").append(toIndentedString(experienceToNextLevel)).append("\n");
+    sb.append("    progressPercentage: ").append(toIndentedString(progressPercentage)).append("\n");
+    sb.append("    attributeDependency: ").append(toIndentedString(attributeDependency)).append("\n");
     sb.append("}");
     return sb.toString();
   }
 
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
   private String toIndentedString(Object o) {
     if (o == null) {
       return "null";

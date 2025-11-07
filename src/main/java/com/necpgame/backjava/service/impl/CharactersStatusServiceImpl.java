@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,22 +82,20 @@ public class CharactersStatusServiceImpl implements CharactersStatusService {
         
         List<Skill> skills = new ArrayList<>();
         for (CharacterSkillEntity cs : characterSkills) {
-            Skill skill = new Skill();
-            skill.setId(cs.getSkillId());
-            
-            // Get skill details from СЃРїСЂР°РІРѕС‡РЅРёРє
+            Skill skill = new Skill()
+                .skillId(cs.getSkillId())
+                .level(cs.getLevel())
+                .experience(cs.getExperience());
+
             SkillEntity skillEntity = skillRepository.findById(cs.getSkillId()).orElse(null);
             if (skillEntity != null) {
                 skill.setName(skillEntity.getName());
-                skill.setMaxLevel(skillEntity.getMaxLevel());
+                skill.setAttributeDependency(resolveAttributeDependency(skillEntity.getCategory()));
             } else {
                 skill.setName(cs.getSkillId());
-                skill.setMaxLevel(20);
+                skill.setAttributeDependency("BODY");
             }
-            
-            skill.setLevel(cs.getLevel());
-            skill.setExperience(cs.getExperience());
-            
+
             skills.add(skill);
         }
         
@@ -146,6 +145,19 @@ public class CharactersStatusServiceImpl implements CharactersStatusService {
         
         // Return updated status
         return getCharacterStatus(characterId);
+    }
+
+    private String resolveAttributeDependency(String category) {
+        if (!StringUtils.hasText(category)) {
+            return "BODY";
+        }
+        return switch (category.toLowerCase()) {
+            case "technical" -> "TECHNICAL_ABILITY";
+            case "intelligence" -> "INTELLIGENCE";
+            case "stealth" -> "COOL";
+            case "reflex" -> "REFLEXES";
+            default -> "BODY";
+        };
     }
 }
 
