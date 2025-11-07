@@ -105,4 +105,7 @@
     <!-- Friend System -->
     <include file="db/changelog/changes/065-create-friendships-table.xml"/>
 
+    <!-- Mail System -->
+    <include file="db/changelog/changes/066-create-mail-messages-table.xml"/>
+
 </databaseChangeLog>
