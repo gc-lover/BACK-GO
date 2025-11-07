@@ -120,4 +120,7 @@
     <!-- Leaderboard System -->
     <include file="db/changelog/changes/070-create-leaderboard-tables.xml"/>
 
+    <!-- Reset System -->
+    <include file="db/changelog/changes/071-create-reset-system-tables.xml"/>
+
 </databaseChangeLog>

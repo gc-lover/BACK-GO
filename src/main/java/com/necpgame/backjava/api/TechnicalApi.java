@@ -5,16 +5,23 @@
  */
 package com.necpgame.backjava.api;
 
+import com.necpgame.backjava.model.Error;
 import com.necpgame.backjava.model.GetNotifications200Response;
+import com.necpgame.backjava.model.GetResetHistory200Response;
 import com.necpgame.backjava.model.MarkAllNotificationsReadRequest;
+import com.necpgame.backjava.model.PlayerResetStatus;
+import com.necpgame.backjava.model.ResetExecutionResult;
+import com.necpgame.backjava.model.ResetSchedule;
+import com.necpgame.backjava.model.ResetStatusResponse;
+import com.necpgame.backjava.model.ResetTypeStatus;
 import org.springframework.lang.Nullable;
 import com.necpgame.backjava.model.SendNotification200Response;
 import com.necpgame.backjava.model.SendNotificationRequest;
-import io.swagger.v3.oas.annotations.ExternalDocumentation;
+import com.necpgame.backjava.model.TriggerResetRequest;
+import java.util.UUID;
+import com.necpgame.backjava.model.UpdateScheduleRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,18 +35,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 @Validated
 @Tag(name = "Notifications", description = "Система уведомлений")
+@Tag(name = "Reset Status", description = "Статус сбросов")
+@Tag(name = "Reset Schedule", description = "Расписание сбросов")
+@Tag(name = "Reset Administration", description = "Администрирование сбросов")
 public interface TechnicalApi {
 
     default Optional<NativeWebRequest> getRequest() {
@@ -204,6 +211,363 @@ public interface TechnicalApi {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
                     String exampleString = "{ \"notification_id\" : \"notification_id\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GET_PLAYER_RESET_STATUS = "/technical/resets/player/{player_id}";
+    /**
+     * GET /technical/resets/player/{player_id} : Получить статус сбросов для игрока
+     * Что было сброшено, что доступно для сброса
+     *
+     * @param playerId  (required)
+     * @return Статус сбросов игрока (status code 200)
+     *         or Запрошенный ресурс не найден.  (status code 404)
+     */
+    @Operation(
+        operationId = "getPlayerResetStatus",
+        summary = "Получить статус сбросов для игрока",
+        description = "Что было сброшено, что доступно для сброса",
+        tags = { "Reset Status" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Статус сбросов игрока", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = PlayerResetStatus.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = TechnicalApi.PATH_GET_PLAYER_RESET_STATUS,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<PlayerResetStatus> getPlayerResetStatus(
+        @NotNull @Parameter(name = "player_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("player_id") UUID playerId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"player_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"daily\" : { \"quests\" : { \"available_slots\" : 5, \"completed_today\" : 3 }, \"instances\" : [ { \"resets_at\" : \"2000-01-23T04:56:07.000+00:00\", \"attempts_used\" : 1, \"instance_id\" : \"instance_id\", \"max_attempts\" : 5, \"name\" : \"name\" }, { \"resets_at\" : \"2000-01-23T04:56:07.000+00:00\", \"attempts_used\" : 1, \"instance_id\" : \"instance_id\", \"max_attempts\" : 5, \"name\" : \"name\" } ], \"bonuses\" : { \"daily_login_claimed\" : true, \"first_win_claimed\" : true }, \"limits\" : { \"crafting_slots\" : { \"max\" : 6, \"used\" : 0 }, \"auction_posts\" : { \"max\" : 6, \"used\" : 0 } } }, \"last_daily_reset\" : \"2000-01-23T04:56:07.000+00:00\", \"weekly\" : { \"quests\" : { \"available_slots\" : 5, \"completed_today\" : 3 }, \"instances\" : [ { \"resets_at\" : \"2000-01-23T04:56:07.000+00:00\", \"attempts_used\" : 1, \"instance_id\" : \"instance_id\", \"max_attempts\" : 5, \"name\" : \"name\" }, { \"resets_at\" : \"2000-01-23T04:56:07.000+00:00\", \"attempts_used\" : 1, \"instance_id\" : \"instance_id\", \"max_attempts\" : 5, \"name\" : \"name\" } ], \"bonuses\" : { \"daily_login_claimed\" : true, \"first_win_claimed\" : true }, \"limits\" : { \"crafting_slots\" : { \"max\" : 6, \"used\" : 0 }, \"auction_posts\" : { \"max\" : 6, \"used\" : 0 } } }, \"last_weekly_reset\" : \"2000-01-23T04:56:07.000+00:00\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GET_RESET_HISTORY = "/technical/resets/history";
+    /**
+     * GET /technical/resets/history : Получить историю сбросов
+     *
+     * @param resetType  (optional)
+     * @param days За сколько дней показать историю (optional, default to 7)
+     * @return История сбросов (status code 200)
+     */
+    @Operation(
+        operationId = "getResetHistory",
+        summary = "Получить историю сбросов",
+        tags = { "Reset Status" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "История сбросов", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = GetResetHistory200Response.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = TechnicalApi.PATH_GET_RESET_HISTORY,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<GetResetHistory200Response> getResetHistory(
+        @Parameter(name = "reset_type", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "reset_type", required = false) @Nullable String resetType,
+        @Max(value = 90) @Parameter(name = "days", description = "За сколько дней показать историю", in = ParameterIn.QUERY) @Valid @RequestParam(value = "days", required = false, defaultValue = "7") Integer days
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"history\" : [ { \"reset_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"success\" : true, \"affected_players\" : 0, \"triggered_by\" : \"SCHEDULED\", \"execution_duration_ms\" : 6, \"reset_type\" : \"DAILY\", \"execution_time\" : \"2000-01-23T04:56:07.000+00:00\" }, { \"reset_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"success\" : true, \"affected_players\" : 0, \"triggered_by\" : \"SCHEDULED\", \"execution_duration_ms\" : 6, \"reset_type\" : \"DAILY\", \"execution_time\" : \"2000-01-23T04:56:07.000+00:00\" } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GET_RESET_SCHEDULE = "/technical/resets/schedule";
+    /**
+     * GET /technical/resets/schedule : Получить расписание всех сбросов
+     *
+     * @return Расписание сбросов (status code 200)
+     */
+    @Operation(
+        operationId = "getResetSchedule",
+        summary = "Получить расписание всех сбросов",
+        tags = { "Reset Schedule" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Расписание сбросов", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ResetSchedule.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = TechnicalApi.PATH_GET_RESET_SCHEDULE,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<ResetSchedule> getResetSchedule(
+        
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"daily\" : { \"items_to_reset\" : [ \"quests\", \"limits\", \"bonuses\", \"vendors\", \"instances\" ], \"cron_expression\" : \"0 0 * * *\", \"timezone\" : \"UTC\", \"enabled\" : true }, \"monthly\" : { \"items_to_reset\" : [ \"quests\", \"limits\", \"bonuses\", \"vendors\", \"instances\" ], \"cron_expression\" : \"0 0 * * *\", \"timezone\" : \"UTC\", \"enabled\" : true }, \"weekly\" : { \"items_to_reset\" : [ \"quests\", \"limits\", \"bonuses\", \"vendors\", \"instances\" ], \"cron_expression\" : \"0 0 * * *\", \"timezone\" : \"UTC\", \"enabled\" : true } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GET_RESET_STATUS = "/technical/resets/status";
+    /**
+     * GET /technical/resets/status : Получить статус всех сбросов
+     * Когда был последний сброс и когда будет следующий
+     *
+     * @return Статус сбросов (status code 200)
+     */
+    @Operation(
+        operationId = "getResetStatus",
+        summary = "Получить статус всех сбросов",
+        description = "Когда был последний сброс и когда будет следующий",
+        tags = { "Reset Status" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Статус сбросов", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ResetStatusResponse.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = TechnicalApi.PATH_GET_RESET_STATUS,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<ResetStatusResponse> getResetStatus(
+        
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"server_time\" : \"2000-01-23T04:56:07.000+00:00\", \"daily\" : { \"last_reset\" : \"2077-06-01T00:00:00Z\", \"reset_items\" : [ \"daily_quests\", \"daily_limits\", \"vendor_inventory\" ], \"next_reset\" : \"2077-06-02T00:00:00Z\", \"time_until_reset\" : \"5 hours 30 minutes\", \"time_until_reset_seconds\" : 19800, \"reset_type\" : \"DAILY\" }, \"monthly\" : { \"last_reset\" : \"2077-06-01T00:00:00Z\", \"reset_items\" : [ \"daily_quests\", \"daily_limits\", \"vendor_inventory\" ], \"next_reset\" : \"2077-06-02T00:00:00Z\", \"time_until_reset\" : \"5 hours 30 minutes\", \"time_until_reset_seconds\" : 19800, \"reset_type\" : \"DAILY\" }, \"weekly\" : { \"last_reset\" : \"2077-06-01T00:00:00Z\", \"reset_items\" : [ \"daily_quests\", \"daily_limits\", \"vendor_inventory\" ], \"next_reset\" : \"2077-06-02T00:00:00Z\", \"time_until_reset\" : \"5 hours 30 minutes\", \"time_until_reset_seconds\" : 19800, \"reset_type\" : \"DAILY\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GET_RESET_TYPE_STATUS = "/technical/resets/status/{reset_type}";
+    /**
+     * GET /technical/resets/status/{reset_type} : Получить статус конкретного типа сброса
+     *
+     * @param resetType  (required)
+     * @return Статус сброса (status code 200)
+     */
+    @Operation(
+        operationId = "getResetTypeStatus",
+        summary = "Получить статус конкретного типа сброса",
+        tags = { "Reset Status" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Статус сброса", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ResetTypeStatus.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = TechnicalApi.PATH_GET_RESET_TYPE_STATUS,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<ResetTypeStatus> getResetTypeStatus(
+        @NotNull @Parameter(name = "reset_type", description = "", required = true, in = ParameterIn.PATH) @PathVariable("reset_type") String resetType
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"last_reset\" : \"2077-06-01T00:00:00Z\", \"reset_items\" : [ \"daily_quests\", \"daily_limits\", \"vendor_inventory\" ], \"next_reset\" : \"2077-06-02T00:00:00Z\", \"time_until_reset\" : \"5 hours 30 minutes\", \"time_until_reset_seconds\" : 19800, \"reset_type\" : \"DAILY\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_TRIGGER_RESET = "/technical/resets/admin/trigger";
+    /**
+     * POST /technical/resets/admin/trigger : Принудительно запустить сброс
+     * Только для администраторов. Запускает сброс вручную.
+     *
+     * @param triggerResetRequest  (required)
+     * @return Сброс запущен (status code 200)
+     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
+     *         or У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно.  (status code 403)
+     */
+    @Operation(
+        operationId = "triggerReset",
+        summary = "Принудительно запустить сброс",
+        description = "Только для администраторов. Запускает сброс вручную.",
+        tags = { "Reset Administration" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Сброс запущен", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ResetExecutionResult.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                    )
+                })
+
+            }),
+            @ApiResponse(responseCode = "403", description = "У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"Недостаточно прав для выполнения операции\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = TechnicalApi.PATH_TRIGGER_RESET,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<ResetExecutionResult> triggerReset(
+        @Parameter(name = "TriggerResetRequest", description = "", required = true) @Valid @RequestBody TriggerResetRequest triggerResetRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"items_reset\" : [ \"items_reset\", \"items_reset\" ], \"reset_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"affected_players\" : 0, \"execution_duration_ms\" : 6, \"reset_type\" : \"reset_type\", \"errors\" : [ { \"error_message\" : \"error_message\", \"player_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" }, { \"error_message\" : \"error_message\", \"player_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" } ], \"execution_time\" : \"2000-01-23T04:56:07.000+00:00\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_UPDATE_RESET_SCHEDULE = "/technical/resets/admin/schedule";
+    /**
+     * PUT /technical/resets/admin/schedule : Обновить расписание сброса
+     * Только для администраторов
+     *
+     * @param updateScheduleRequest  (required)
+     * @return Расписание обновлено (status code 200)
+     *         or У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно.  (status code 403)
+     */
+    @Operation(
+        operationId = "updateResetSchedule",
+        summary = "Обновить расписание сброса",
+        description = "Только для администраторов",
+        tags = { "Reset Administration" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Расписание обновлено"),
+            @ApiResponse(responseCode = "403", description = "У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"Недостаточно прав для выполнения операции\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.PUT,
+        value = TechnicalApi.PATH_UPDATE_RESET_SCHEDULE,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> updateResetSchedule(
+        @Parameter(name = "UpdateScheduleRequest", description = "", required = true) @Valid @RequestBody UpdateScheduleRequest updateScheduleRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
