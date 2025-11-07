@@ -30,3 +30,4 @@ public class NarrativeToolsServiceImpl implements NarrativeToolsService {
         throw error();
     }
 }
+
