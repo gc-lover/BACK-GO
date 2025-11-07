@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("generateLoot_request_position")
-
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 public class GenerateLootRequestPosition {
 
   private @Nullable BigDecimal x;

@@ -5,19 +5,30 @@
  */
 package com.necpgame.backjava.api;
 
-import com.necpgame.backjava.model.DropItem200Response;
-import com.necpgame.backjava.model.EquipItem200Response;
-import com.necpgame.backjava.model.EquipRequest;
+import com.necpgame.backjava.model.AutoSortRequest;
+import com.necpgame.backjava.model.CleanupRequest;
+import com.necpgame.backjava.model.Container;
 import com.necpgame.backjava.model.Error;
-import com.necpgame.backjava.model.GetEquipment200Response;
-import com.necpgame.backjava.model.InventoryResponse;
-import com.necpgame.backjava.model.ItemCategory;
+import com.necpgame.backjava.model.Inventory;
+import com.necpgame.backjava.model.InventoryError;
+import com.necpgame.backjava.model.InventoryFiltersResponse;
+import com.necpgame.backjava.model.InventoryHistoryResponse;
+import com.necpgame.backjava.model.ItemConsumeRequest;
+import com.necpgame.backjava.model.ItemDropRequest;
+import com.necpgame.backjava.model.ItemEquipRequest;
+import com.necpgame.backjava.model.ItemMergeRequest;
+import com.necpgame.backjava.model.ItemMoveRequest;
+import com.necpgame.backjava.model.ItemOperationResult;
+import com.necpgame.backjava.model.ItemPickupRequest;
+import com.necpgame.backjava.model.ItemSplitRequest;
+import com.necpgame.backjava.model.ItemTemplate;
+import com.necpgame.backjava.model.ItemUnequipRequest;
 import org.springframework.lang.Nullable;
-import java.util.UUID;
-import com.necpgame.backjava.model.UnequipItem200Response;
-import com.necpgame.backjava.model.UnequipItemRequest;
-import com.necpgame.backjava.model.UseItem200Response;
-import com.necpgame.backjava.model.UseItemRequest;
+import com.necpgame.backjava.model.Reservation;
+import com.necpgame.backjava.model.ReservationReleaseRequest;
+import com.necpgame.backjava.model.ReservationRequest;
+import com.necpgame.backjava.model.StashTransferRequest;
+import com.necpgame.backjava.model.WeightInfo;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -45,176 +56,39 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:50:45.778329200+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 @Validated
-@Tag(name = "Inventory", description = "the Inventory API")
+@Tag(name = "Inventory", description = "Общая информация и контейнеры")
 public interface InventoryApi {
 
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
 
-    String PATH_DROP_ITEM = "/inventory/drop";
+    String PATH_INVENTORY_PLAYERS_PLAYER_ID_AUTO_SORT_POST = "/inventory/players/{playerId}/auto-sort";
     /**
-     * DELETE /inventory/drop : Р’С‹Р±СЂРѕСЃРёС‚СЊ РїСЂРµРґРјРµС‚
-     * РЈРґР°Р»СЏРµС‚ РїСЂРµРґРјРµС‚ РёР· РёРЅРІРµРЅС‚Р°СЂСЏ РїРµСЂСЃРѕРЅР°Р¶Р° (РІС‹Р±СЂР°СЃС‹РІР°РµС‚).  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РїСЂРµРґРјРµС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂРµ - РџСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ РїСЂРµРґРјРµС‚ РЅРµ СЌРєРёРїРёСЂРѕРІР°РЅ - РџСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ РїСЂРµРґРјРµС‚ РЅРµ РєРІРµСЃС‚РѕРІС‹Р№ (РЅРµР»СЊР·СЏ РІС‹Р±СЂРѕСЃРёС‚СЊ) - РЈРґР°Р»СЏРµС‚ РїСЂРµРґРјРµС‚ (РёР»Рё СѓРјРµРЅСЊС€Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ, РµСЃР»Рё stackable)  **РСЃС‚РѕС‡РЅРёРє:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Р Р°Р·РґРµР» 3.1) 
+     * POST /inventory/players/{playerId}/auto-sort : Автоматическая сортировка инвентаря
      *
-     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р° (required)
-     * @param itemId ID РїСЂРµРґРјРµС‚Р° РґР»СЏ РІС‹Р±СЂР°СЃС‹РІР°РЅРёСЏ (required)
-     * @param quantity РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРµРґРјРµС‚РѕРІ РґР»СЏ РІС‹Р±СЂР°СЃС‹РІР°РЅРёСЏ (РґР»СЏ stackable) (optional, default to 1)
-     * @return РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ РІС‹Р±СЂРѕС€РµРЅ (status code 200)
-     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
-     *         or РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ.  (status code 403)
-     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
-     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     * @param playerId Идентификатор игрока/персонажа (required)
+     * @param autoSortRequest  (required)
+     * @return Сортировка запущена (status code 202)
+     *         or Функция отключена (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
      */
     @Operation(
-        operationId = "dropItem",
-        summary = "Р’С‹Р±СЂРѕСЃРёС‚СЊ РїСЂРµРґРјРµС‚",
-        description = "РЈРґР°Р»СЏРµС‚ РїСЂРµРґРјРµС‚ РёР· РёРЅРІРµРЅС‚Р°СЂСЏ РїРµСЂСЃРѕРЅР°Р¶Р° (РІС‹Р±СЂР°СЃС‹РІР°РµС‚).  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РїСЂРµРґРјРµС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂРµ - РџСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ РїСЂРµРґРјРµС‚ РЅРµ СЌРєРёРїРёСЂРѕРІР°РЅ - РџСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ РїСЂРµРґРјРµС‚ РЅРµ РєРІРµСЃС‚РѕРІС‹Р№ (РЅРµР»СЊР·СЏ РІС‹Р±СЂРѕСЃРёС‚СЊ) - РЈРґР°Р»СЏРµС‚ РїСЂРµРґРјРµС‚ (РёР»Рё СѓРјРµРЅСЊС€Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ, РµСЃР»Рё stackable)  **РСЃС‚РѕС‡РЅРёРє:** `.BRAIN/05-technical/ui-main-game.md` (Р Р°Р·РґРµР» 3.1) ",
+        operationId = "inventoryPlayersPlayerIdAutoSortPost",
+        summary = "Автоматическая сортировка инвентаря",
         tags = { "Inventory" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ РІС‹Р±СЂРѕС€РµРЅ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = DropItem200Response.class))
+            @ApiResponse(responseCode = "202", description = "Сортировка запущена"),
+            @ApiResponse(responseCode = "400", description = "Функция отключена", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
             }),
-            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
-                    )
-                })
-
-            }),
-            @ApiResponse(responseCode = "403", description = "РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё\",\"details\":[]}}"
-                    )
-                })
-
-            }),
-            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
-                    )
-                })
-
-            }),
-            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
-                    )
-                })
-
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.DELETE,
-        value = InventoryApi.PATH_DROP_ITEM,
-        produces = { "application/json" }
-    )
-    default ResponseEntity<DropItem200Response> dropItem(
-        @NotNull @Parameter(name = "characterId", description = "ID РїРµСЂСЃРѕРЅР°Р¶Р°", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "characterId", required = true) UUID characterId,
-        @NotNull @Parameter(name = "itemId", description = "ID РїСЂРµРґРјРµС‚Р° РґР»СЏ РІС‹Р±СЂР°СЃС‹РІР°РЅРёСЏ", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "itemId", required = true) String itemId,
-        @Min(value = 1) @Parameter(name = "quantity", description = "РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРµРґРјРµС‚РѕРІ РґР»СЏ РІС‹Р±СЂР°СЃС‹РІР°РЅРёСЏ (РґР»СЏ stackable)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer quantity
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"success\" : true, \"message\" : \"РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ РІС‹Р±СЂРѕС€РµРЅ\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_EQUIP_ITEM = "/inventory/equip";
-    /**
-     * POST /inventory/equip : Р­РєРёРїРёСЂРѕРІР°С‚СЊ РїСЂРµРґРјРµС‚
-     * Р­РєРёРїРёСЂСѓРµС‚ РїСЂРµРґРјРµС‚ РёР· РёРЅРІРµРЅС‚Р°СЂСЏ РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёР№ СЃР»РѕС‚ СЌРєРёРїРёСЂРѕРІРєРё.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РїСЂРµРґРјРµС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂРµ - РџСЂРѕРІРµСЂСЏРµС‚ С‚СЂРµР±РѕРІР°РЅРёСЏ РґР»СЏ СЌРєРёРїРёСЂРѕРІРєРё (СѓСЂРѕРІРµРЅСЊ, С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё) - Р•СЃР»Рё СЃР»РѕС‚ Р·Р°РЅСЏС‚ - Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё СЃРЅРёРјР°РµС‚ С‚РµРєСѓС‰РёР№ РїСЂРµРґРјРµС‚ - РџСЂРёРјРµРЅСЏРµС‚ Р±РѕРЅСѓСЃС‹ РѕС‚ РЅРѕРІРѕРіРѕ РїСЂРµРґРјРµС‚Р°  **РСЃС‚РѕС‡РЅРёРє:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Р Р°Р·РґРµР» 3.1) 
-     *
-     * @param equipRequest  (required)
-     * @return РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ СЌРєРёРїРёСЂРѕРІР°РЅ (status code 200)
-     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
-     *         or РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ.  (status code 403)
-     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
-     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
-     */
-    @Operation(
-        operationId = "equipItem",
-        summary = "Р­РєРёРїРёСЂРѕРІР°С‚СЊ РїСЂРµРґРјРµС‚",
-        description = "Р­РєРёРїРёСЂСѓРµС‚ РїСЂРµРґРјРµС‚ РёР· РёРЅРІРµРЅС‚Р°СЂСЏ РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёР№ СЃР»РѕС‚ СЌРєРёРїРёСЂРѕРІРєРё.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РїСЂРµРґРјРµС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂРµ - РџСЂРѕРІРµСЂСЏРµС‚ С‚СЂРµР±РѕРІР°РЅРёСЏ РґР»СЏ СЌРєРёРїРёСЂРѕРІРєРё (СѓСЂРѕРІРµРЅСЊ, С…Р°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё) - Р•СЃР»Рё СЃР»РѕС‚ Р·Р°РЅСЏС‚ - Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё СЃРЅРёРјР°РµС‚ С‚РµРєСѓС‰РёР№ РїСЂРµРґРјРµС‚ - РџСЂРёРјРµРЅСЏРµС‚ Р±РѕРЅСѓСЃС‹ РѕС‚ РЅРѕРІРѕРіРѕ РїСЂРµРґРјРµС‚Р°  **РСЃС‚РѕС‡РЅРёРє:** `.BRAIN/05-technical/ui-main-game.md` (Р Р°Р·РґРµР» 3.1) ",
-        tags = { "Inventory", "Equipment" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ СЌРєРёРїРёСЂРѕРІР°РЅ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = EquipItem200Response.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
-                    )
-                })
-
-            }),
-            @ApiResponse(responseCode = "403", description = "РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё\",\"details\":[]}}"
-                    )
-                })
-
-            }),
-            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
-                    )
-                })
-
-            }),
-            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
                     )
                 })
 
@@ -226,37 +100,23 @@ public interface InventoryApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = InventoryApi.PATH_EQUIP_ITEM,
+        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_AUTO_SORT_POST,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<EquipItem200Response> equipItem(
-        @Parameter(name = "EquipRequest", description = "", required = true) @Valid @RequestBody EquipRequest equipRequest
+    default ResponseEntity<Void> inventoryPlayersPlayerIdAutoSortPost(
+        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
+        @Parameter(name = "AutoSortRequest", description = "", required = true) @Valid @RequestBody AutoSortRequest autoSortRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"success\" : true, \"equipment\" : { \"slotName\" : \"РћСЃРЅРѕРІРЅРѕРµ РѕСЂСѓР¶РёРµ\", \"item\" : { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРёСЃС‚РѕР»РµС‚ РєР°Р»РёР±СЂР° 10РјРј\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" }, \"slotType\" : \"weapon_primary\", \"isEmpty\" : false, \"bonuses\" : { \"damage\" : 25, \"accuracy\" : 10 } }, \"unequippedItem\" : { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРёСЃС‚РѕР»РµС‚ РєР°Р»РёР±СЂР° 10РјРј\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" }, \"message\" : \"РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ СЌРєРёРїРёСЂРѕРІР°РЅ\" }";
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -267,39 +127,100 @@ public interface InventoryApi {
     }
 
 
-    String PATH_GET_EQUIPMENT = "/inventory/equipment";
+    String PATH_INVENTORY_PLAYERS_PLAYER_ID_CLEANUP_POST = "/inventory/players/{playerId}/cleanup";
     /**
-     * GET /inventory/equipment : РџРѕР»СѓС‡РёС‚СЊ СЌРєРёРїРёСЂРѕРІРєСѓ РїРµСЂСЃРѕРЅР°Р¶Р°
-     * Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰СѓСЋ СЌРєРёРїРёСЂРѕРІРєСѓ РїРµСЂСЃРѕРЅР°Р¶Р° (РІСЃРµ СЃР»РѕС‚С‹ СЃ РїСЂРµРґРјРµС‚Р°РјРё).  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - Р’РѕР·РІСЂР°С‰Р°РµС‚ РІСЃРµ СЃР»РѕС‚С‹ СЌРєРёРїРёСЂРѕРІРєРё - РџРѕРєР°Р·С‹РІР°РµС‚ РєР°РєРёРµ СЃР»РѕС‚С‹ Р·Р°РЅСЏС‚С‹ Рё РєР°РєРёРµ СЃРІРѕР±РѕРґРЅС‹ - Р’РѕР·РІСЂР°С‰Р°РµС‚ Р±РѕРЅСѓСЃС‹ РѕС‚ СЌРєРёРїРёСЂРѕРІР°РЅРЅС‹С… РїСЂРµРґРјРµС‚РѕРІ  **РСЃС‚РѕС‡РЅРёРє:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Р Р°Р·РґРµР» 3.1) 
+     * POST /inventory/players/{playerId}/cleanup : Удалить предметы класса junk
      *
-     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р° (required)
-     * @return Р­РєРёРїРёСЂРѕРІРєР° РїРµСЂСЃРѕРЅР°Р¶Р° (status code 200)
-     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
-     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     * @param playerId Идентификатор игрока/персонажа (required)
+     * @param cleanupRequest  (required)
+     * @return Очистка выполнена (status code 200)
+     *         or Нет прав или предметов (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
      */
     @Operation(
-        operationId = "getEquipment",
-        summary = "РџРѕР»СѓС‡РёС‚СЊ СЌРєРёРїРёСЂРѕРІРєСѓ РїРµСЂСЃРѕРЅР°Р¶Р°",
-        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰СѓСЋ СЌРєРёРїРёСЂРѕРІРєСѓ РїРµСЂСЃРѕРЅР°Р¶Р° (РІСЃРµ СЃР»РѕС‚С‹ СЃ РїСЂРµРґРјРµС‚Р°РјРё).  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - Р’РѕР·РІСЂР°С‰Р°РµС‚ РІСЃРµ СЃР»РѕС‚С‹ СЌРєРёРїРёСЂРѕРІРєРё - РџРѕРєР°Р·С‹РІР°РµС‚ РєР°РєРёРµ СЃР»РѕС‚С‹ Р·Р°РЅСЏС‚С‹ Рё РєР°РєРёРµ СЃРІРѕР±РѕРґРЅС‹ - Р’РѕР·РІСЂР°С‰Р°РµС‚ Р±РѕРЅСѓСЃС‹ РѕС‚ СЌРєРёРїРёСЂРѕРІР°РЅРЅС‹С… РїСЂРµРґРјРµС‚РѕРІ  **РСЃС‚РѕС‡РЅРёРє:** `.BRAIN/05-technical/ui-main-game.md` (Р Р°Р·РґРµР» 3.1) ",
-        tags = { "Inventory", "Equipment" },
+        operationId = "inventoryPlayersPlayerIdCleanupPost",
+        summary = "Удалить предметы класса junk",
+        tags = { "Inventory" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Р­РєРёРїРёСЂРѕРІРєР° РїРµСЂСЃРѕРЅР°Р¶Р°", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = GetEquipment200Response.class))
+            @ApiResponse(responseCode = "200", description = "Очистка выполнена"),
+            @ApiResponse(responseCode = "400", description = "Нет прав или предметов", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_CLEANUP_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> inventoryPlayersPlayerIdCleanupPost(
+        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
+        @Parameter(name = "CleanupRequest", description = "", required = true) @Valid @RequestBody CleanupRequest cleanupRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_INVENTORY_PLAYERS_PLAYER_ID_CONTAINERS_CONTAINER_ID_GET = "/inventory/players/{playerId}/containers/{containerId}";
+    /**
+     * GET /inventory/players/{playerId}/containers/{containerId} : Получить содержимое контейнера
+     *
+     * @param playerId Идентификатор игрока/персонажа (required)
+     * @param containerId Идентификатор контейнера инвентаря (required)
+     * @return Контейнер и слоты (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     *         or Запрошенный ресурс не найден.  (status code 404)
+     */
+    @Operation(
+        operationId = "inventoryPlayersPlayerIdContainersContainerIdGet",
+        summary = "Получить содержимое контейнера",
+        tags = { "Inventory" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Контейнер и слоты", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Container.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
+            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
@@ -311,26 +232,27 @@ public interface InventoryApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = InventoryApi.PATH_GET_EQUIPMENT,
+        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_CONTAINERS_CONTAINER_ID_GET,
         produces = { "application/json" }
     )
-    default ResponseEntity<GetEquipment200Response> getEquipment(
-        @NotNull @Parameter(name = "characterId", description = "ID РїРµСЂСЃРѕРЅР°Р¶Р°", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "characterId", required = true) UUID characterId
+    default ResponseEntity<Container> inventoryPlayersPlayerIdContainersContainerIdGet(
+        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
+        @NotNull @Parameter(name = "containerId", description = "Идентификатор контейнера инвентаря", required = true, in = ParameterIn.PATH) @PathVariable("containerId") String containerId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"slots\" : [ { \"slotName\" : \"РћСЃРЅРѕРІРЅРѕРµ РѕСЂСѓР¶РёРµ\", \"item\" : { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРёСЃС‚РѕР»РµС‚ РєР°Р»РёР±СЂР° 10РјРј\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" }, \"slotType\" : \"weapon_primary\", \"isEmpty\" : false, \"bonuses\" : { \"damage\" : 25, \"accuracy\" : 10 } }, { \"slotName\" : \"РћСЃРЅРѕРІРЅРѕРµ РѕСЂСѓР¶РёРµ\", \"item\" : { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРёСЃС‚РѕР»РµС‚ РєР°Р»РёР±СЂР° 10РјРј\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" }, \"slotType\" : \"weapon_primary\", \"isEmpty\" : false, \"bonuses\" : { \"damage\" : 25, \"accuracy\" : 10 } } ], \"totalBonuses\" : { \"health\" : 50, \"armor\" : 25, \"damage\" : 15 } }";
+                    String exampleString = "{ \"capacityWeight\" : 6.027456183070403, \"slots\" : [ { \"item\" : { \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 5, \"durability\" : { \"current\" : 7, \"max\" : 9 }, \"weight\" : 2.3021358869347655, \"type\" : \"type\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"itemId\" : \"itemId\", \"stackSize\" : 5, \"boundType\" : \"NONE\", \"stats\" : { \"key\" : \"\" }, \"name\" : \"name\", \"rarity\" : \"rarity\" }, \"metadata\" : { \"key\" : \"\" }, \"index\" : 1, \"slotId\" : \"slotId\", \"locked\" : true }, { \"item\" : { \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 5, \"durability\" : { \"current\" : 7, \"max\" : 9 }, \"weight\" : 2.3021358869347655, \"type\" : \"type\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"itemId\" : \"itemId\", \"stackSize\" : 5, \"boundType\" : \"NONE\", \"stats\" : { \"key\" : \"\" }, \"name\" : \"name\", \"rarity\" : \"rarity\" }, \"metadata\" : { \"key\" : \"\" }, \"index\" : 1, \"slotId\" : \"slotId\", \"locked\" : true } ], \"name\" : \"name\", \"capacitySlots\" : 0, \"filters\" : [ \"filters\", \"filters\" ], \"containerId\" : \"containerId\", \"type\" : \"BACKPACK\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -341,40 +263,27 @@ public interface InventoryApi {
     }
 
 
-    String PATH_GET_INVENTORY = "/inventory";
+    String PATH_INVENTORY_PLAYERS_PLAYER_ID_FILTERS_GET = "/inventory/players/{playerId}/filters";
     /**
-     * GET /inventory : РџРѕР»СѓС‡РёС‚СЊ РёРЅРІРµРЅС‚Р°СЂСЊ РїРµСЂСЃРѕРЅР°Р¶Р°
-     * Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРЅРІРµРЅС‚Р°СЂСЊ РїРµСЂСЃРѕРЅР°Р¶Р° СЃРѕ РІСЃРµРјРё РїСЂРµРґРјРµС‚Р°РјРё, РІРµСЃРѕРј Рё Р»РёРјРёС‚РѕРј.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - Р’РѕР·РІСЂР°С‰Р°РµС‚ РІСЃРµ РїСЂРµРґРјРµС‚С‹ РІ РёРЅРІРµРЅС‚Р°СЂРµ - Р“СЂСѓРїРїРёСЂСѓРµС‚ РїСЂРµРґРјРµС‚С‹ РїРѕ РєР°С‚РµРіРѕСЂРёСЏРј - РЎРєР»Р°РґС‹РІР°РµС‚ stackable РїСЂРµРґРјРµС‚С‹ - РџРѕРєР°Р·С‹РІР°РµС‚ С‚РµРєСѓС‰РёР№ РІРµСЃ Рё Р»РёРјРёС‚  **РСЃС‚РѕС‡РЅРёРє:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Р Р°Р·РґРµР» 3.1) 
+     * GET /inventory/players/{playerId}/filters : Активные фильтры и пресеты
      *
-     * @param characterId ID РїРµСЂСЃРѕРЅР°Р¶Р° (required)
-     * @param category Р¤РёР»СЊС‚СЂ РїРѕ РєР°С‚РµРіРѕСЂРёРё РїСЂРµРґРјРµС‚РѕРІ (optional)
-     * @return РРЅРІРµРЅС‚Р°СЂСЊ РїРµСЂСЃРѕРЅР°Р¶Р° (status code 200)
-     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
-     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     * @param playerId Идентификатор игрока/персонажа (required)
+     * @return Фильтры инвентаря (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
      */
     @Operation(
-        operationId = "getInventory",
-        summary = "РџРѕР»СѓС‡РёС‚СЊ РёРЅРІРµРЅС‚Р°СЂСЊ РїРµСЂСЃРѕРЅР°Р¶Р°",
-        description = "Р’РѕР·РІСЂР°С‰Р°РµС‚ РёРЅРІРµРЅС‚Р°СЂСЊ РїРµСЂСЃРѕРЅР°Р¶Р° СЃРѕ РІСЃРµРјРё РїСЂРµРґРјРµС‚Р°РјРё, РІРµСЃРѕРј Рё Р»РёРјРёС‚РѕРј.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - Р’РѕР·РІСЂР°С‰Р°РµС‚ РІСЃРµ РїСЂРµРґРјРµС‚С‹ РІ РёРЅРІРµРЅС‚Р°СЂРµ - Р“СЂСѓРїРїРёСЂСѓРµС‚ РїСЂРµРґРјРµС‚С‹ РїРѕ РєР°С‚РµРіРѕСЂРёСЏРј - РЎРєР»Р°РґС‹РІР°РµС‚ stackable РїСЂРµРґРјРµС‚С‹ - РџРѕРєР°Р·С‹РІР°РµС‚ С‚РµРєСѓС‰РёР№ РІРµСЃ Рё Р»РёРјРёС‚  **РСЃС‚РѕС‡РЅРёРє:** `.BRAIN/05-technical/ui-main-game.md` (Р Р°Р·РґРµР» 3.1) ",
+        operationId = "inventoryPlayersPlayerIdFiltersGet",
+        summary = "Активные фильтры и пресеты",
         tags = { "Inventory" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "РРЅРІРµРЅС‚Р°СЂСЊ РїРµСЂСЃРѕРЅР°Р¶Р°", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryResponse.class))
+            @ApiResponse(responseCode = "200", description = "Фильтры инвентаря", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryFiltersResponse.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
-                    )
-                })
-
-            }),
-            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
                     )
                 })
 
@@ -386,27 +295,21 @@ public interface InventoryApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = InventoryApi.PATH_GET_INVENTORY,
+        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_FILTERS_GET,
         produces = { "application/json" }
     )
-    default ResponseEntity<InventoryResponse> getInventory(
-        @NotNull @Parameter(name = "characterId", description = "ID РїРµСЂСЃРѕРЅР°Р¶Р°", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "characterId", required = true) UUID characterId,
-        @Parameter(name = "category", description = "Р¤РёР»СЊС‚СЂ РїРѕ РєР°С‚РµРіРѕСЂРёРё РїСЂРµРґРјРµС‚РѕРІ", in = ParameterIn.QUERY) @Valid @RequestParam(value = "category", required = false) @Nullable ItemCategory category
+    default ResponseEntity<InventoryFiltersResponse> inventoryPlayersPlayerIdFiltersGet(
+        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"currentWeight\" : 45.5, \"maxWeight\" : 100.0, \"categories\" : { \"weapons\" : 3, \"armor\" : 5, \"consumables\" : 10 }, \"items\" : [ { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРёСЃС‚РѕР»РµС‚ РєР°Р»РёР±СЂР° 10РјРј\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" }, { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРёСЃС‚РѕР»РµС‚ РєР°Р»РёР±СЂР° 10РјРј\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" } ] }";
+                    String exampleString = "{ \"presets\" : [ { \"name\" : \"name\", \"filters\" : [ \"filters\", \"filters\" ], \"presetId\" : \"presetId\" }, { \"name\" : \"name\", \"filters\" : [ \"filters\", \"filters\" ], \"presetId\" : \"presetId\" } ], \"activeFilters\" : [ \"activeFilters\", \"activeFilters\" ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -417,164 +320,165 @@ public interface InventoryApi {
     }
 
 
-    String PATH_UNEQUIP_ITEM = "/inventory/unequip";
+    String PATH_INVENTORY_PLAYERS_PLAYER_ID_GET = "/inventory/players/{playerId}";
     /**
-     * POST /inventory/unequip : РЎРЅСЏС‚СЊ СЌРєРёРїРёСЂРѕРІР°РЅРЅС‹Р№ РїСЂРµРґРјРµС‚
-     * РЎРЅРёРјР°РµС‚ РїСЂРµРґРјРµС‚ РёР· СЃР»РѕС‚Р° СЌРєРёРїРёСЂРѕРІРєРё Рё РїРѕРјРµС‰Р°РµС‚ РІ РёРЅРІРµРЅС‚Р°СЂСЊ.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - РџСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ СЃР»РѕС‚ Р·Р°РЅСЏС‚ - РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РјРµСЃС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂРµ (РІРµСЃ) - РЎРЅРёРјР°РµС‚ Р±РѕРЅСѓСЃС‹ РѕС‚ РїСЂРµРґРјРµС‚Р° - РџРѕРјРµС‰Р°РµС‚ РїСЂРµРґРјРµС‚ РІ РёРЅРІРµРЅС‚Р°СЂСЊ  **РСЃС‚РѕС‡РЅРёРє:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Р Р°Р·РґРµР» 3.1) 
+     * GET /inventory/players/{playerId} : Получить состояние инвентаря игрока
      *
-     * @param unequipItemRequest  (required)
-     * @return РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ СЃРЅСЏС‚ (status code 200)
-     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
-     *         or РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ.  (status code 403)
-     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
-     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
+     * @param playerId Идентификатор игрока/персонажа (required)
+     * @return Инвентарь и контейнеры (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     *         or Запрошенный ресурс не найден.  (status code 404)
      */
     @Operation(
-        operationId = "unequipItem",
-        summary = "РЎРЅСЏС‚СЊ СЌРєРёРїРёСЂРѕРІР°РЅРЅС‹Р№ РїСЂРµРґРјРµС‚",
-        description = "РЎРЅРёРјР°РµС‚ РїСЂРµРґРјРµС‚ РёР· СЃР»РѕС‚Р° СЌРєРёРїРёСЂРѕРІРєРё Рё РїРѕРјРµС‰Р°РµС‚ РІ РёРЅРІРµРЅС‚Р°СЂСЊ.  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - РџСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ СЃР»РѕС‚ Р·Р°РЅСЏС‚ - РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РјРµСЃС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂРµ (РІРµСЃ) - РЎРЅРёРјР°РµС‚ Р±РѕРЅСѓСЃС‹ РѕС‚ РїСЂРµРґРјРµС‚Р° - РџРѕРјРµС‰Р°РµС‚ РїСЂРµРґРјРµС‚ РІ РёРЅРІРµРЅС‚Р°СЂСЊ  **РСЃС‚РѕС‡РЅРёРє:** `.BRAIN/05-technical/ui-main-game.md` (Р Р°Р·РґРµР» 3.1) ",
-        tags = { "Inventory", "Equipment" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ СЃРЅСЏС‚", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = UnequipItem200Response.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
-                    )
-                })
-
-            }),
-            @ApiResponse(responseCode = "403", description = "РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё\",\"details\":[]}}"
-                    )
-                })
-
-            }),
-            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
-                    )
-                })
-
-            }),
-            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
-                    )
-                })
-
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = InventoryApi.PATH_UNEQUIP_ITEM,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<UnequipItem200Response> unequipItem(
-        @Parameter(name = "UnequipItemRequest", description = "", required = true) @Valid @RequestBody UnequipItemRequest unequipItemRequest
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"item\" : { \"stackable\" : false, \"requirements\" : { \"minLevel\" : 0, \"minDexterity\" : 1, \"minStrength\" : 6, \"minIntelligence\" : 5 }, \"quantity\" : 1, \"questItem\" : false, \"equippable\" : true, \"description\" : \"РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РїРёСЃС‚РѕР»РµС‚ РєР°Р»РёР±СЂР° 10РјРј\", \"weight\" : 1.5, \"usable\" : false, \"name\" : \"M-10AF Lexington\", \"id\" : \"item_pistol_01\", \"category\" : \"weapons\", \"value\" : 500, \"rarity\" : \"common\" }, \"success\" : true, \"message\" : \"РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ СЃРЅСЏС‚\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_USE_ITEM = "/inventory/use";
-    /**
-     * POST /inventory/use : РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїСЂРµРґРјРµС‚
-     * РСЃРїРѕР»СЊР·СѓРµС‚ РїСЂРµРґРјРµС‚ РёР· РёРЅРІРµРЅС‚Р°СЂСЏ (РјРµРґРёРєР°РјРµРЅС‚С‹, СЂР°СЃС…РѕРґРЅРёРєРё).  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РїСЂРµРґРјРµС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂРµ - РџСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ РїСЂРµРґРјРµС‚ РјРѕР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ - РџСЂРёРјРµРЅСЏРµС‚ СЌС„С„РµРєС‚С‹ РѕС‚ РїСЂРµРґРјРµС‚Р° - РЈРјРµРЅСЊС€Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ РЅР° 1 (РёР»Рё СѓРґР°Р»СЏРµС‚, РµСЃР»Рё Р±С‹Р» РїРѕСЃР»РµРґРЅРёР№)  **РСЃС‚РѕС‡РЅРёРє:** &#x60;.BRAIN/05-technical/ui-main-game.md&#x60; (Р Р°Р·РґРµР» 3.1) 
-     *
-     * @param useItemRequest  (required)
-     * @return РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅ (status code 200)
-     *         or РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ.  (status code 400)
-     *         or РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ.  (status code 403)
-     *         or Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ.  (status code 404)
-     *         or РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°.  (status code 401)
-     */
-    @Operation(
-        operationId = "useItem",
-        summary = "РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїСЂРµРґРјРµС‚",
-        description = "РСЃРїРѕР»СЊР·СѓРµС‚ РїСЂРµРґРјРµС‚ РёР· РёРЅРІРµРЅС‚Р°СЂСЏ (РјРµРґРёРєР°РјРµРЅС‚С‹, СЂР°СЃС…РѕРґРЅРёРєРё).  **Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР°:** - РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РїСЂРµРґРјРµС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂРµ - РџСЂРѕРІРµСЂСЏРµС‚, С‡С‚Рѕ РїСЂРµРґРјРµС‚ РјРѕР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ - РџСЂРёРјРµРЅСЏРµС‚ СЌС„С„РµРєС‚С‹ РѕС‚ РїСЂРµРґРјРµС‚Р° - РЈРјРµРЅСЊС€Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ РЅР° 1 (РёР»Рё СѓРґР°Р»СЏРµС‚, РµСЃР»Рё Р±С‹Р» РїРѕСЃР»РµРґРЅРёР№)  **РСЃС‚РѕС‡РЅРёРє:** `.BRAIN/05-technical/ui-main-game.md` (Р Р°Р·РґРµР» 3.1) ",
+        operationId = "inventoryPlayersPlayerIdGet",
+        summary = "Получить состояние инвентаря игрока",
         tags = { "Inventory" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = UseItem200Response.class))
+            @ApiResponse(responseCode = "200", description = "Инвентарь и контейнеры", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Inventory.class))
             }),
-            @ApiResponse(responseCode = "400", description = "РќРµРІРµСЂРЅС‹Р№ Р·Р°РїСЂРѕСЃ. РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР° РЅРµРєРѕСЂСЂРµРєС‚РЅС‹ РёР»Рё РѕС‚СЃСѓС‚СЃС‚РІСѓСЋС‚ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ РїРѕР»СЏ. ", content = {
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\",\"details\":[{\"field\":\"name\",\"message\":\"РРјСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ РїСѓСЃС‚С‹Рј\",\"code\":\"REQUIRED\"}]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
                     )
                 })
 
             }),
-            @ApiResponse(responseCode = "403", description = "РЈ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅРµС‚ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РґР°РЅРЅРѕР№ РѕРїРµСЂР°С†РёРё. РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ РїСЂРѕС€Р»Р° СѓСЃРїРµС€РЅРѕ, РЅРѕ РґРѕСЃС‚СѓРїР° РЅРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ. ", content = {
+            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїСЂР°РІ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РѕРїРµСЂР°С†РёРё\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
                     )
                 })
 
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<Inventory> inventoryPlayersPlayerIdGet(
+        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"capacityModifiers\" : [ \"capacityModifiers\", \"capacityModifiers\" ], \"weight\" : { \"current\" : 3.616076749251911, \"penalty\" : \"penalty\", \"encumbrancePercent\" : 4.145608029883936, \"modifiers\" : [ \"modifiers\", \"modifiers\" ], \"capacity\" : 2.027123023002322 }, \"containers\" : [ { \"capacityWeight\" : 6.027456183070403, \"slots\" : [ { \"item\" : { \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 5, \"durability\" : { \"current\" : 7, \"max\" : 9 }, \"weight\" : 2.3021358869347655, \"type\" : \"type\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"itemId\" : \"itemId\", \"stackSize\" : 5, \"boundType\" : \"NONE\", \"stats\" : { \"key\" : \"\" }, \"name\" : \"name\", \"rarity\" : \"rarity\" }, \"metadata\" : { \"key\" : \"\" }, \"index\" : 1, \"slotId\" : \"slotId\", \"locked\" : true }, { \"item\" : { \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 5, \"durability\" : { \"current\" : 7, \"max\" : 9 }, \"weight\" : 2.3021358869347655, \"type\" : \"type\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"itemId\" : \"itemId\", \"stackSize\" : 5, \"boundType\" : \"NONE\", \"stats\" : { \"key\" : \"\" }, \"name\" : \"name\", \"rarity\" : \"rarity\" }, \"metadata\" : { \"key\" : \"\" }, \"index\" : 1, \"slotId\" : \"slotId\", \"locked\" : true } ], \"name\" : \"name\", \"capacitySlots\" : 0, \"filters\" : [ \"filters\", \"filters\" ], \"containerId\" : \"containerId\", \"type\" : \"BACKPACK\" }, { \"capacityWeight\" : 6.027456183070403, \"slots\" : [ { \"item\" : { \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 5, \"durability\" : { \"current\" : 7, \"max\" : 9 }, \"weight\" : 2.3021358869347655, \"type\" : \"type\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"itemId\" : \"itemId\", \"stackSize\" : 5, \"boundType\" : \"NONE\", \"stats\" : { \"key\" : \"\" }, \"name\" : \"name\", \"rarity\" : \"rarity\" }, \"metadata\" : { \"key\" : \"\" }, \"index\" : 1, \"slotId\" : \"slotId\", \"locked\" : true }, { \"item\" : { \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 5, \"durability\" : { \"current\" : 7, \"max\" : 9 }, \"weight\" : 2.3021358869347655, \"type\" : \"type\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"itemId\" : \"itemId\", \"stackSize\" : 5, \"boundType\" : \"NONE\", \"stats\" : { \"key\" : \"\" }, \"name\" : \"name\", \"rarity\" : \"rarity\" }, \"metadata\" : { \"key\" : \"\" }, \"index\" : 1, \"slotId\" : \"slotId\", \"locked\" : true } ], \"name\" : \"name\", \"capacitySlots\" : 0, \"filters\" : [ \"filters\", \"filters\" ], \"containerId\" : \"containerId\", \"type\" : \"BACKPACK\" } ], \"overloaded\" : true, \"playerId\" : \"playerId\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_INVENTORY_PLAYERS_PLAYER_ID_HISTORY_GET = "/inventory/players/{playerId}/history";
+    /**
+     * GET /inventory/players/{playerId}/history : Журнал операций с инвентарём
+     *
+     * @param playerId Идентификатор игрока/персонажа (required)
+     * @param event  (optional)
+     * @param page Номер страницы (начинается с 1) (optional, default to 1)
+     * @param pageSize Количество элементов на странице (optional, default to 20)
+     * @return История инвентаря (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "inventoryPlayersPlayerIdHistoryGet",
+        summary = "Журнал операций с инвентарём",
+        tags = { "Inventory" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "История инвентаря", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryHistoryResponse.class))
             }),
-            @ApiResponse(responseCode = "404", description = "Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ. ", content = {
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Р—Р°РїСЂРѕС€РµРЅРЅС‹Р№ СЂРµСЃСѓСЂСЃ РЅРµ РЅР°Р№РґРµРЅ\",\"details\":[{\"field\":\"id\",\"message\":\"NPC СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
                     )
                 })
 
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_HISTORY_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<InventoryHistoryResponse> inventoryPlayersPlayerIdHistoryGet(
+        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
+        @Parameter(name = "event", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "event", required = false) @Nullable String event,
+        @Min(value = 1) @Parameter(name = "page", description = "Номер страницы (начинается с 1)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+        @Min(value = 1) @Max(value = 100) @Parameter(name = "page_size", description = "Количество элементов на странице", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page_size", required = false, defaultValue = "20") Integer pageSize
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"entries\" : [ { \"relatedEntity\" : \"relatedEntity\", \"delta\" : [ { \"itemInstanceId\" : \"itemInstanceId\", \"quantity\" : 0 }, { \"itemInstanceId\" : \"itemInstanceId\", \"quantity\" : 0 } ], \"source\" : \"source\", \"event\" : \"event\", \"entryId\" : \"entryId\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" }, { \"relatedEntity\" : \"relatedEntity\", \"delta\" : [ { \"itemInstanceId\" : \"itemInstanceId\", \"quantity\" : 0 }, { \"itemInstanceId\" : \"itemInstanceId\", \"quantity\" : 0 } ], \"source\" : \"source\", \"event\" : \"event\", \"entryId\" : \"entryId\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" } ], \"pagination\" : { \"total\" : 156, \"has_next\" : true, \"page\" : 1, \"total_pages\" : 8, \"has_prev\" : false, \"page_size\" : 20 } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_CONSUME_POST = "/inventory/players/{playerId}/items/consume";
+    /**
+     * POST /inventory/players/{playerId}/items/consume : Использовать потребляемый предмет
+     *
+     * @param playerId Идентификатор игрока/персонажа (required)
+     * @param itemConsumeRequest  (required)
+     * @return Предмет использован (status code 200)
+     *         or Нельзя использовать (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "inventoryPlayersPlayerIdItemsConsumePost",
+        summary = "Использовать потребляемый предмет",
+        tags = { "Items" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Предмет использован"),
+            @ApiResponse(responseCode = "400", description = "Нельзя использовать", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
             }),
-            @ApiResponse(responseCode = "401", description = "РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅРµ Р°СѓС‚РµРЅС‚РёС„РёС†РёСЂРѕРІР°РЅ. РўСЂРµР±СѓРµС‚СЃСЏ РІР°Р»РёРґРЅС‹Р№ С‚РѕРєРµРЅ РґРѕСЃС‚СѓРїР°. ", content = {
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"РўСЂРµР±СѓРµС‚СЃСЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
                     )
                 })
 
@@ -586,37 +490,786 @@ public interface InventoryApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = InventoryApi.PATH_USE_ITEM,
+        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_CONSUME_POST,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<UseItem200Response> useItem(
-        @Parameter(name = "UseItemRequest", description = "", required = true) @Valid @RequestBody UseItemRequest useItemRequest
+    default ResponseEntity<Void> inventoryPlayersPlayerIdItemsConsumePost(
+        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
+        @Parameter(name = "ItemConsumeRequest", description = "", required = true) @Valid @RequestBody ItemConsumeRequest itemConsumeRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"effects\" : [ { \"type\" : \"heal\", \"value\" : 50, \"description\" : \"Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРѕ 50 HP\" } ], \"success\" : true, \"message\" : \"РџСЂРµРґРјРµС‚ СѓСЃРїРµС€РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅ\" }";
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_DROP_POST = "/inventory/players/{playerId}/items/drop";
+    /**
+     * POST /inventory/players/{playerId}/items/drop : Сбросить предмет в мир
+     *
+     * @param playerId Идентификатор игрока/персонажа (required)
+     * @param itemDropRequest  (required)
+     * @return Предмет удалён (status code 200)
+     *         or Предмет не найден или зарезервирован (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "inventoryPlayersPlayerIdItemsDropPost",
+        summary = "Сбросить предмет в мир",
+        tags = { "Items" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Предмет удалён"),
+            @ApiResponse(responseCode = "400", description = "Предмет не найден или зарезервирован", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_DROP_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> inventoryPlayersPlayerIdItemsDropPost(
+        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
+        @Parameter(name = "ItemDropRequest", description = "", required = true) @Valid @RequestBody ItemDropRequest itemDropRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_EQUIP_POST = "/inventory/players/{playerId}/items/equip";
+    /**
+     * POST /inventory/players/{playerId}/items/equip : Экипировать предмет
+     *
+     * @param playerId Идентификатор игрока/персонажа (required)
+     * @param itemEquipRequest  (required)
+     * @return Предмет экипирован (status code 200)
+     *         or Требования не выполнены (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "inventoryPlayersPlayerIdItemsEquipPost",
+        summary = "Экипировать предмет",
+        tags = { "Equipment" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Предмет экипирован"),
+            @ApiResponse(responseCode = "400", description = "Требования не выполнены", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_EQUIP_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> inventoryPlayersPlayerIdItemsEquipPost(
+        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
+        @Parameter(name = "ItemEquipRequest", description = "", required = true) @Valid @RequestBody ItemEquipRequest itemEquipRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_MERGE_POST = "/inventory/players/{playerId}/items/merge";
+    /**
+     * POST /inventory/players/{playerId}/items/merge : Объединить стеки
+     *
+     * @param playerId Идентификатор игрока/персонажа (required)
+     * @param itemMergeRequest  (required)
+     * @return Стеки объединены (status code 200)
+     *         or Объединение невозможно (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "inventoryPlayersPlayerIdItemsMergePost",
+        summary = "Объединить стеки",
+        tags = { "Items" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Стеки объединены"),
+            @ApiResponse(responseCode = "400", description = "Объединение невозможно", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_MERGE_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> inventoryPlayersPlayerIdItemsMergePost(
+        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
+        @Parameter(name = "ItemMergeRequest", description = "", required = true) @Valid @RequestBody ItemMergeRequest itemMergeRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"РќРµРІРµСЂРЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ Р·Р°РїСЂРѕСЃР°\" } }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_MOVE_POST = "/inventory/players/{playerId}/items/move";
+    /**
+     * POST /inventory/players/{playerId}/items/move : Переместить предмет
+     *
+     * @param playerId Идентификатор игрока/персонажа (required)
+     * @param itemMoveRequest  (required)
+     * @return Предмет перемещён (status code 200)
+     *         or Конфликт контейнеров (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "inventoryPlayersPlayerIdItemsMovePost",
+        summary = "Переместить предмет",
+        tags = { "Items" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Предмет перемещён"),
+            @ApiResponse(responseCode = "400", description = "Конфликт контейнеров", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_MOVE_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> inventoryPlayersPlayerIdItemsMovePost(
+        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
+        @Parameter(name = "ItemMoveRequest", description = "", required = true) @Valid @RequestBody ItemMoveRequest itemMoveRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_PICKUP_POST = "/inventory/players/{playerId}/items/pickup";
+    /**
+     * POST /inventory/players/{playerId}/items/pickup : Подобрать предмет и добавить в инвентарь
+     *
+     * @param playerId Идентификатор игрока/персонажа (required)
+     * @param itemPickupRequest  (required)
+     * @return Предмет добавлен (status code 200)
+     *         or Нет места или вес превышен (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "inventoryPlayersPlayerIdItemsPickupPost",
+        summary = "Подобрать предмет и добавить в инвентарь",
+        tags = { "Items" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Предмет добавлен", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ItemOperationResult.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Нет места или вес превышен", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_PICKUP_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<ItemOperationResult> inventoryPlayersPlayerIdItemsPickupPost(
+        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
+        @Parameter(name = "ItemPickupRequest", description = "", required = true) @Valid @RequestBody ItemPickupRequest itemPickupRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"item\" : { \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 5, \"durability\" : { \"current\" : 7, \"max\" : 9 }, \"weight\" : 2.3021358869347655, \"type\" : \"type\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"itemId\" : \"itemId\", \"stackSize\" : 5, \"boundType\" : \"NONE\", \"stats\" : { \"key\" : \"\" }, \"name\" : \"name\", \"rarity\" : \"rarity\" }, \"weight\" : { \"current\" : 3.616076749251911, \"penalty\" : \"penalty\", \"encumbrancePercent\" : 4.145608029883936, \"modifiers\" : [ \"modifiers\", \"modifiers\" ], \"capacity\" : 2.027123023002322 }, \"slotId\" : \"slotId\", \"containerId\" : \"containerId\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_SPLIT_POST = "/inventory/players/{playerId}/items/split";
+    /**
+     * POST /inventory/players/{playerId}/items/split : Разделить стек предметов
+     *
+     * @param playerId Идентификатор игрока/персонажа (required)
+     * @param itemSplitRequest  (required)
+     * @return Стек разделён (status code 200)
+     *         or Недостаточное количество или место (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "inventoryPlayersPlayerIdItemsSplitPost",
+        summary = "Разделить стек предметов",
+        tags = { "Items" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Стек разделён"),
+            @ApiResponse(responseCode = "400", description = "Недостаточное количество или место", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_SPLIT_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> inventoryPlayersPlayerIdItemsSplitPost(
+        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
+        @Parameter(name = "ItemSplitRequest", description = "", required = true) @Valid @RequestBody ItemSplitRequest itemSplitRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_UNEQUIP_POST = "/inventory/players/{playerId}/items/unequip";
+    /**
+     * POST /inventory/players/{playerId}/items/unequip : Снять предмет
+     *
+     * @param playerId Идентификатор игрока/персонажа (required)
+     * @param itemUnequipRequest  (required)
+     * @return Предмет снят (status code 200)
+     *         or Нет места в контейнере (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "inventoryPlayersPlayerIdItemsUnequipPost",
+        summary = "Снять предмет",
+        tags = { "Equipment" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Предмет снят"),
+            @ApiResponse(responseCode = "400", description = "Нет места в контейнере", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_ITEMS_UNEQUIP_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> inventoryPlayersPlayerIdItemsUnequipPost(
+        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
+        @Parameter(name = "ItemUnequipRequest", description = "", required = true) @Valid @RequestBody ItemUnequipRequest itemUnequipRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_INVENTORY_PLAYERS_PLAYER_ID_RELEASE_POST = "/inventory/players/{playerId}/release";
+    /**
+     * POST /inventory/players/{playerId}/release : Снять резерв предметов
+     *
+     * @param playerId Идентификатор игрока/персонажа (required)
+     * @param reservationReleaseRequest  (required)
+     * @return Резерв снят (status code 200)
+     *         or Резерв не найден (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "inventoryPlayersPlayerIdReleasePost",
+        summary = "Снять резерв предметов",
+        tags = { "Reserve" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Резерв снят"),
+            @ApiResponse(responseCode = "400", description = "Резерв не найден", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_RELEASE_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> inventoryPlayersPlayerIdReleasePost(
+        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
+        @Parameter(name = "ReservationReleaseRequest", description = "", required = true) @Valid @RequestBody ReservationReleaseRequest reservationReleaseRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_INVENTORY_PLAYERS_PLAYER_ID_RESERVE_POST = "/inventory/players/{playerId}/reserve";
+    /**
+     * POST /inventory/players/{playerId}/reserve : Зарезервировать предметы
+     *
+     * @param playerId Идентификатор игрока/персонажа (required)
+     * @param reservationRequest  (required)
+     * @return Резерв создан (status code 201)
+     *         or Конфликт резерва (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "inventoryPlayersPlayerIdReservePost",
+        summary = "Зарезервировать предметы",
+        tags = { "Reserve" },
+        responses = {
+            @ApiResponse(responseCode = "201", description = "Резерв создан", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Reservation.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Конфликт резерва", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_RESERVE_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Reservation> inventoryPlayersPlayerIdReservePost(
+        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
+        @Parameter(name = "ReservationRequest", description = "", required = true) @Valid @RequestBody ReservationRequest reservationRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"reservationId\" : \"reservationId\", \"context\" : \"context\", \"items\" : [ { \"itemInstanceId\" : \"itemInstanceId\", \"quantity\" : 0 }, { \"itemInstanceId\" : \"itemInstanceId\", \"quantity\" : 0 } ], \"referenceId\" : \"referenceId\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"status\" : \"ACTIVE\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_INVENTORY_PLAYERS_PLAYER_ID_STASH_TRANSFER_POST = "/inventory/players/{playerId}/stash/transfer";
+    /**
+     * POST /inventory/players/{playerId}/stash/transfer : Перемещение между backpack и stash/bank
+     *
+     * @param playerId Идентификатор игрока/персонажа (required)
+     * @param stashTransferRequest  (required)
+     * @return Перемещение выполнено (status code 200)
+     *         or Лимит банка или нет места (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "inventoryPlayersPlayerIdStashTransferPost",
+        summary = "Перемещение между backpack и stash/bank",
+        tags = { "Inventory" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Перемещение выполнено"),
+            @ApiResponse(responseCode = "400", description = "Лимит банка или нет места", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = InventoryError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_STASH_TRANSFER_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> inventoryPlayersPlayerIdStashTransferPost(
+        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId,
+        @Parameter(name = "StashTransferRequest", description = "", required = true) @Valid @RequestBody StashTransferRequest stashTransferRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"CONTAINER_FULL\", \"details\" : { \"extra\" : { \"key\" : \"\" }, \"errorCode\" : \"errorCode\", \"message\" : \"message\" }, \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_INVENTORY_PLAYERS_PLAYER_ID_WEIGHT_GET = "/inventory/players/{playerId}/weight";
+    /**
+     * GET /inventory/players/{playerId}/weight : Получить информацию о весе
+     *
+     * @param playerId Идентификатор игрока/персонажа (required)
+     * @return Вес и лимиты (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "inventoryPlayersPlayerIdWeightGet",
+        summary = "Получить информацию о весе",
+        tags = { "Weight" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Вес и лимиты", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = WeightInfo.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = InventoryApi.PATH_INVENTORY_PLAYERS_PLAYER_ID_WEIGHT_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<WeightInfo> inventoryPlayersPlayerIdWeightGet(
+        @NotNull @Parameter(name = "playerId", description = "Идентификатор игрока/персонажа", required = true, in = ParameterIn.PATH) @PathVariable("playerId") String playerId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"current\" : 3.616076749251911, \"penalty\" : \"penalty\", \"encumbrancePercent\" : 4.145608029883936, \"modifiers\" : [ \"modifiers\", \"modifiers\" ], \"capacity\" : 2.027123023002322 }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_INVENTORY_TEMPLATES_ITEMS_ITEM_ID_GET = "/inventory/templates/items/{itemId}";
+    /**
+     * GET /inventory/templates/items/{itemId} : Получить метаданные предмета
+     *
+     * @param itemId Идентификатор шаблона предмета (required)
+     * @return Метаданные предмета (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     *         or Запрошенный ресурс не найден.  (status code 404)
+     */
+    @Operation(
+        operationId = "inventoryTemplatesItemsItemIdGet",
+        summary = "Получить метаданные предмета",
+        tags = { "Inventory" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Метаданные предмета", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ItemTemplate.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            }),
+            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = InventoryApi.PATH_INVENTORY_TEMPLATES_ITEMS_ITEM_ID_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<ItemTemplate> inventoryTemplatesItemsItemIdGet(
+        @NotNull @Parameter(name = "itemId", description = "Идентификатор шаблона предмета", required = true, in = ParameterIn.PATH) @PathVariable("itemId") String itemId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"allowedSlots\" : [ \"allowedSlots\", \"allowedSlots\" ], \"itemId\" : \"itemId\", \"name\" : \"name\", \"description\" : \"description\", \"weight\" : 0.8008281904610115, \"baseStats\" : { \"key\" : \"\" }, \"rarity\" : \"rarity\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -627,4 +1280,3 @@ public interface InventoryApi {
     }
 
 }
-

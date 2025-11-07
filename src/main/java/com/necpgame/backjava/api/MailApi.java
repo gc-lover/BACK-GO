@@ -5,11 +5,24 @@
  */
 package com.necpgame.backjava.api;
 
-import com.necpgame.backjava.model.ClaimAttachmentsRequest;
-import com.necpgame.backjava.model.GetInbox200Response;
+import com.necpgame.backjava.model.AttachmentClaimRequest;
+import com.necpgame.backjava.model.AttachmentClaimResponse;
+import com.necpgame.backjava.model.CODPaymentRequest;
+import com.necpgame.backjava.model.CODPaymentResponse;
+import com.necpgame.backjava.model.Error;
+import com.necpgame.backjava.model.MailDetail;
+import com.necpgame.backjava.model.MailError;
+import com.necpgame.backjava.model.MailFlagRequest;
+import com.necpgame.backjava.model.MailHistoryResponse;
+import com.necpgame.backjava.model.MailListResponse;
+import com.necpgame.backjava.model.MailReturnRequest;
+import com.necpgame.backjava.model.MailSendRequest;
+import com.necpgame.backjava.model.MailSettings;
+import com.necpgame.backjava.model.MailSettingsUpdateRequest;
+import com.necpgame.backjava.model.MailStats;
 import org.springframework.lang.Nullable;
-import com.necpgame.backjava.model.SendMail200Response;
-import com.necpgame.backjava.model.SendMailRequest;
+import com.necpgame.backjava.model.SystemMailBatchRequest;
+import com.necpgame.backjava.model.SystemMailRequest;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -39,126 +52,64 @@ import jakarta.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 @Validated
-@Tag(name = "Mail", description = "Почтовая система")
+@Tag(name = "Analytics", description = "Статистика и история")
 public interface MailApi {
 
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
 
-    String PATH_CLAIM_ATTACHMENTS = "/mail/{mail_id}/claim-attachments";
+    String PATH_MAIL_HISTORY_GET = "/mail/history";
     /**
-     * POST /mail/{mail_id}/claim-attachments : Забрать вложения
-     * Забирает items/gold из письма. Требует оплату COD (если установлен). 
+     * GET /mail/history : Журнал операций почты
      *
-     * @param mailId  (required)
-     * @param claimAttachmentsRequest  (optional)
-     * @return Вложения получены (status code 200)
+     * @param type  (optional)
+     * @param page Номер страницы (начинается с 1) (optional, default to 1)
+     * @param pageSize Количество элементов на странице (optional, default to 20)
+     * @return История операций (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
      */
     @Operation(
-        operationId = "claimAttachments",
-        summary = "Забрать вложения",
-        description = "Забирает items/gold из письма. Требует оплату COD (если установлен). ",
-        tags = { "Mail" },
+        operationId = "mailHistoryGet",
+        summary = "Журнал операций почты",
+        tags = { "Analytics" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Вложения получены", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
+            @ApiResponse(responseCode = "200", description = "История операций", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MailHistoryResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
             })
         },
         security = {
-            @SecurityRequirement(name = "bearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = MailApi.PATH_CLAIM_ATTACHMENTS,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Object> claimAttachments(
-        @NotNull @Parameter(name = "mail_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("mail_id") String mailId,
-        @Parameter(name = "ClaimAttachmentsRequest", description = "") @Valid @RequestBody(required = false) @Nullable ClaimAttachmentsRequest claimAttachmentsRequest
-    ) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_DELETE_MAIL = "/mail/{mail_id}/delete";
-    /**
-     * DELETE /mail/{mail_id}/delete : Удалить письмо
-     * Удаляет письмо из inbox
-     *
-     * @param mailId  (required)
-     * @return Письмо удалено (status code 200)
-     */
-    @Operation(
-        operationId = "deleteMail",
-        summary = "Удалить письмо",
-        description = "Удаляет письмо из inbox",
-        tags = { "Mail" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Письмо удалено", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "bearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.DELETE,
-        value = MailApi.PATH_DELETE_MAIL,
-        produces = { "application/json" }
-    )
-    default ResponseEntity<Object> deleteMail(
-        @NotNull @Parameter(name = "mail_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("mail_id") String mailId
-    ) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_GET_INBOX = "/mail/inbox";
-    /**
-     * GET /mail/inbox : Получить входящие письма
-     * Возвращает список писем в inbox. Поддерживает пагинацию и фильтрацию. 
-     *
-     * @param characterId  (required)
-     * @param page  (optional, default to 1)
-     * @param limit  (optional, default to 50)
-     * @param unreadOnly  (optional, default to false)
-     * @return Список писем (status code 200)
-     */
-    @Operation(
-        operationId = "getInbox",
-        summary = "Получить входящие письма",
-        description = "Возвращает список писем в inbox. Поддерживает пагинацию и фильтрацию. ",
-        tags = { "Mail" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Список писем", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = GetInbox200Response.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "bearerAuth")
+            @SecurityRequirement(name = "BearerAuth")
         }
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = MailApi.PATH_GET_INBOX,
+        value = MailApi.PATH_MAIL_HISTORY_GET,
         produces = { "application/json" }
     )
-    default ResponseEntity<GetInbox200Response> getInbox(
-        @NotNull @Parameter(name = "character_id", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "character_id", required = true) String characterId,
-        @Parameter(name = "page", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-        @Parameter(name = "limit", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "limit", required = false, defaultValue = "50") Integer limit,
-        @Parameter(name = "unread_only", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "unread_only", required = false, defaultValue = "false") Boolean unreadOnly
+    default ResponseEntity<MailHistoryResponse> mailHistoryGet(
+        @Parameter(name = "type", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "type", required = false) @Nullable String type,
+        @Min(value = 1) @Parameter(name = "page", description = "Номер страницы (начинается с 1)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+        @Min(value = 1) @Max(value = 100) @Parameter(name = "page_size", description = "Количество элементов на странице", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page_size", required = false, defaultValue = "20") Integer pageSize
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"pagination\" : { \"total\" : 156, \"has_next\" : true, \"page\" : 1, \"total_pages\" : 8, \"has_prev\" : false, \"page_size\" : 20 }, \"mail\" : [ { \"is_read\" : true, \"is_system\" : true, \"has_attachments\" : true, \"expires_at\" : \"2000-01-23T04:56:07.000+00:00\", \"mail_id\" : \"mail_id\", \"subject\" : \"subject\", \"gold_attached\" : 0.8008281904610115, \"created_at\" : \"2000-01-23T04:56:07.000+00:00\", \"sender_name\" : \"sender_name\", \"body\" : \"body\", \"cod_amount\" : 6.027456183070403 }, { \"is_read\" : true, \"is_system\" : true, \"has_attachments\" : true, \"expires_at\" : \"2000-01-23T04:56:07.000+00:00\", \"mail_id\" : \"mail_id\", \"subject\" : \"subject\", \"gold_attached\" : 0.8008281904610115, \"created_at\" : \"2000-01-23T04:56:07.000+00:00\", \"sender_name\" : \"sender_name\", \"body\" : \"body\", \"cod_amount\" : 6.027456183070403 } ] }";
+                    String exampleString = "{ \"entries\" : [ { \"actorType\" : \"actorType\", \"actorId\" : \"actorId\", \"details\" : { \"key\" : \"\" }, \"event\" : \"event\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" }, { \"actorType\" : \"actorType\", \"actorId\" : \"actorId\", \"details\" : { \"key\" : \"\" }, \"event\" : \"event\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" } ], \"pagination\" : { \"total\" : 156, \"has_next\" : true, \"page\" : 1, \"total_pages\" : 8, \"has_prev\" : false, \"page_size\" : 20 } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -169,76 +120,989 @@ public interface MailApi {
     }
 
 
-    String PATH_READ_MAIL = "/mail/{mail_id}/read";
+    String PATH_MAIL_INBOX_GET = "/mail/inbox";
     /**
-     * POST /mail/{mail_id}/read : Прочитать письмо
-     * Отмечает письмо как прочитанное
+     * GET /mail/inbox : Список входящих писем
      *
-     * @param mailId  (required)
-     * @return Письмо прочитано (status code 200)
+     * @param unread  (optional)
+     * @param attachments  (optional)
+     * @param from  (optional)
+     * @param system  (optional)
+     * @param page Номер страницы (начинается с 1) (optional, default to 1)
+     * @param pageSize Количество элементов на странице (optional, default to 20)
+     * @return Входящие письма (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
      */
     @Operation(
-        operationId = "readMail",
-        summary = "Прочитать письмо",
-        description = "Отмечает письмо как прочитанное",
-        tags = { "Mail" },
+        operationId = "mailInboxGet",
+        summary = "Список входящих писем",
+        tags = { "Inbox" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Письмо прочитано", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
+            @ApiResponse(responseCode = "200", description = "Входящие письма", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MailListResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
             })
         },
         security = {
-            @SecurityRequirement(name = "bearerAuth")
+            @SecurityRequirement(name = "BearerAuth")
         }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = MailApi.PATH_READ_MAIL,
+        method = RequestMethod.GET,
+        value = MailApi.PATH_MAIL_INBOX_GET,
         produces = { "application/json" }
     )
-    default ResponseEntity<Object> readMail(
-        @NotNull @Parameter(name = "mail_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("mail_id") String mailId
+    default ResponseEntity<MailListResponse> mailInboxGet(
+        @Parameter(name = "unread", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "unread", required = false) @Nullable Boolean unread,
+        @Parameter(name = "attachments", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "attachments", required = false) @Nullable Boolean attachments,
+        @Parameter(name = "from", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "from", required = false) @Nullable String from,
+        @Parameter(name = "system", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "system", required = false) @Nullable Boolean system,
+        @Min(value = 1) @Parameter(name = "page", description = "Номер страницы (начинается с 1)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+        @Min(value = 1) @Max(value = 100) @Parameter(name = "page_size", description = "Количество элементов на странице", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page_size", required = false, defaultValue = "20") Integer pageSize
     ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"pagination\" : { \"total\" : 156, \"has_next\" : true, \"page\" : 1, \"total_pages\" : 8, \"has_prev\" : false, \"page_size\" : 20 }, \"items\" : [ { \"senderId\" : \"senderId\", \"senderName\" : \"senderName\", \"isCOD\" : true, \"subject\" : \"subject\", \"recipientId\" : \"recipientId\", \"mailId\" : \"mailId\", \"sentAt\" : \"2000-01-23T04:56:07.000+00:00\", \"hasAttachments\" : true, \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"status\" : \"SENT\" }, { \"senderId\" : \"senderId\", \"senderName\" : \"senderName\", \"isCOD\" : true, \"subject\" : \"subject\", \"recipientId\" : \"recipientId\", \"mailId\" : \"mailId\", \"sentAt\" : \"2000-01-23T04:56:07.000+00:00\", \"hasAttachments\" : true, \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"status\" : \"SENT\" } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
 
 
-    String PATH_SEND_MAIL = "/mail/send";
+    String PATH_MAIL_MAIL_ID_ATTACHMENTS_CLAIM_POST = "/mail/{mailId}/attachments/claim";
     /**
-     * POST /mail/send : Отправить письмо
-     * Отправляет письмо другому игроку. Можно приложить items (до 10) и gold. Можно установить COD (оплата при получении). 
+     * POST /mail/{mailId}/attachments/claim : Забрать вложения письма
      *
-     * @param sendMailRequest  (required)
-     * @return Письмо отправлено (status code 200)
+     * @param mailId Идентификатор письма (required)
+     * @param attachmentClaimRequest  (required)
+     * @return Вложения получены (status code 200)
+     *         or Вложения недоступны (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
      */
     @Operation(
-        operationId = "sendMail",
-        summary = "Отправить письмо",
-        description = "Отправляет письмо другому игроку. Можно приложить items (до 10) и gold. Можно установить COD (оплата при получении). ",
+        operationId = "mailMailIdAttachmentsClaimPost",
+        summary = "Забрать вложения письма",
         tags = { "Mail" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Письмо отправлено", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SendMail200Response.class))
+            @ApiResponse(responseCode = "200", description = "Вложения получены", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = AttachmentClaimResponse.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Вложения недоступны", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MailError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
             })
         },
         security = {
-            @SecurityRequirement(name = "bearerAuth")
+            @SecurityRequirement(name = "BearerAuth")
         }
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = MailApi.PATH_SEND_MAIL,
+        value = MailApi.PATH_MAIL_MAIL_ID_ATTACHMENTS_CLAIM_POST,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<SendMail200Response> sendMail(
-        @Parameter(name = "SendMailRequest", description = "", required = true) @Valid @RequestBody SendMailRequest sendMailRequest
+    default ResponseEntity<AttachmentClaimResponse> mailMailIdAttachmentsClaimPost(
+        @NotNull @Parameter(name = "mailId", description = "Идентификатор письма", required = true, in = ParameterIn.PATH) @PathVariable("mailId") String mailId,
+        @Parameter(name = "AttachmentClaimRequest", description = "", required = true) @Valid @RequestBody AttachmentClaimRequest attachmentClaimRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"mail_id\" : \"mail_id\" }";
+                    String exampleString = "{ \"reservedItems\" : [ \"reservedItems\", \"reservedItems\" ], \"claimed\" : [ { \"item\" : { \"itemId\" : \"itemId\", \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 6 }, \"currency\" : { \"amount\" : 1, \"currencyId\" : \"currencyId\" }, \"attachmentId\" : \"attachmentId\", \"type\" : \"ITEM\", \"token\" : { \"amount\" : 5, \"tokenId\" : \"tokenId\" } }, { \"item\" : { \"itemId\" : \"itemId\", \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 6 }, \"currency\" : { \"amount\" : 1, \"currencyId\" : \"currencyId\" }, \"attachmentId\" : \"attachmentId\", \"type\" : \"ITEM\", \"token\" : { \"amount\" : 5, \"tokenId\" : \"tokenId\" } } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"MAILBOX_FULL\", \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_MAIL_MAIL_ID_COD_PAY_POST = "/mail/{mailId}/cod/pay";
+    /**
+     * POST /mail/{mailId}/cod/pay : Оплатить COD и получить вложения
+     *
+     * @param mailId Идентификатор письма (required)
+     * @param coDPaymentRequest  (required)
+     * @return COD оплачен, вложения доступны (status code 200)
+     *         or Оплата невозможна (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "mailMailIdCodPayPost",
+        summary = "Оплатить COD и получить вложения",
+        tags = { "Mail" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "COD оплачен, вложения доступны", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CODPaymentResponse.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Оплата невозможна", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MailError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = MailApi.PATH_MAIL_MAIL_ID_COD_PAY_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<CODPaymentResponse> mailMailIdCodPayPost(
+        @NotNull @Parameter(name = "mailId", description = "Идентификатор письма", required = true, in = ParameterIn.PATH) @PathVariable("mailId") String mailId,
+        @Parameter(name = "CODPaymentRequest", description = "", required = true) @Valid @RequestBody CODPaymentRequest coDPaymentRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"codInfo\" : { \"amount\" : 0, \"autoAccept\" : true, \"paid\" : true, \"payerId\" : \"payerId\", \"paidAt\" : \"2000-01-23T04:56:07.000+00:00\", \"currencyId\" : \"currencyId\" }, \"attachments\" : [ { \"item\" : { \"itemId\" : \"itemId\", \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 6 }, \"currency\" : { \"amount\" : 1, \"currencyId\" : \"currencyId\" }, \"attachmentId\" : \"attachmentId\", \"type\" : \"ITEM\", \"token\" : { \"amount\" : 5, \"tokenId\" : \"tokenId\" } }, { \"item\" : { \"itemId\" : \"itemId\", \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 6 }, \"currency\" : { \"amount\" : 1, \"currencyId\" : \"currencyId\" }, \"attachmentId\" : \"attachmentId\", \"type\" : \"ITEM\", \"token\" : { \"amount\" : 5, \"tokenId\" : \"tokenId\" } } ], \"mailId\" : \"mailId\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"MAILBOX_FULL\", \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_MAIL_MAIL_ID_DELETE = "/mail/{mailId}";
+    /**
+     * DELETE /mail/{mailId} : Удалить письмо из почтового ящика
+     *
+     * @param mailId Идентификатор письма (required)
+     * @return Письмо помечено к удалению (status code 204)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "mailMailIdDelete",
+        summary = "Удалить письмо из почтового ящика",
+        tags = { "Mail" },
+        responses = {
+            @ApiResponse(responseCode = "204", description = "Письмо помечено к удалению"),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.DELETE,
+        value = MailApi.PATH_MAIL_MAIL_ID_DELETE,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<Void> mailMailIdDelete(
+        @NotNull @Parameter(name = "mailId", description = "Идентификатор письма", required = true, in = ParameterIn.PATH) @PathVariable("mailId") String mailId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_MAIL_MAIL_ID_FLAG_POST = "/mail/{mailId}/flag";
+    /**
+     * POST /mail/{mailId}/flag : Пожаловаться на письмо
+     *
+     * @param mailId Идентификатор письма (required)
+     * @param mailFlagRequest  (required)
+     * @return Жалоба зарегистрирована (status code 202)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "mailMailIdFlagPost",
+        summary = "Пожаловаться на письмо",
+        tags = { "Mail" },
+        responses = {
+            @ApiResponse(responseCode = "202", description = "Жалоба зарегистрирована"),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = MailApi.PATH_MAIL_MAIL_ID_FLAG_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> mailMailIdFlagPost(
+        @NotNull @Parameter(name = "mailId", description = "Идентификатор письма", required = true, in = ParameterIn.PATH) @PathVariable("mailId") String mailId,
+        @Parameter(name = "MailFlagRequest", description = "", required = true) @Valid @RequestBody MailFlagRequest mailFlagRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_MAIL_MAIL_ID_GET = "/mail/{mailId}";
+    /**
+     * GET /mail/{mailId} : Получить детали письма
+     *
+     * @param mailId Идентификатор письма (required)
+     * @return Полная информация о письме (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     *         or Запрошенный ресурс не найден.  (status code 404)
+     */
+    @Operation(
+        operationId = "mailMailIdGet",
+        summary = "Получить детали письма",
+        tags = { "Mail" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Полная информация о письме", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MailDetail.class), examples = {
+                    @ExampleObject(
+                        name = "MailDetail",
+                        value = "{\"mailId\":\"mail-7f92\",\"senderId\":\"player-neo-01\",\"senderName\":\"Neo\",\"recipientId\":\"player-glitch-77\",\"recipientName\":\"Glitch\",\"subject\":\"Сабля для рейда\",\"body\":\"Храни эту саблю. Оплата при получении.\",\"channel\":\"PLAYER\",\"isCOD\":true,\"codInfo\":{\"amount\":25000,\"currencyId\":\"credits\",\"paid\":false,\"autoAccept\":false},\"attachments\":[{\"attachmentId\":\"att-weapon\",\"type\":\"ITEM\",\"item\":{\"itemId\":\"weapon-neon-sabre\",\"itemInstanceId\":\"item-inst-993\",\"quantity\":1}}],\"status\":\"DELIVERED\",\"history\":[{\"event\":\"SENT\",\"actorId\":\"player-neo-01\",\"actorType\":\"PLAYER\",\"timestamp\":\"2025-11-08T03:58:00Z\"}],\"sentAt\":\"2025-11-08T03:58:00Z\",\"expiresAt\":\"2025-11-15T03:58:00Z\"}"
+                    )
+                })
+
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            }),
+            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = MailApi.PATH_MAIL_MAIL_ID_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<MailDetail> mailMailIdGet(
+        @NotNull @Parameter(name = "mailId", description = "Идентификатор письма", required = true, in = ParameterIn.PATH) @PathVariable("mailId") String mailId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"attachments\" : [ { \"item\" : { \"itemId\" : \"itemId\", \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 6 }, \"currency\" : { \"amount\" : 1, \"currencyId\" : \"currencyId\" }, \"attachmentId\" : \"attachmentId\", \"type\" : \"ITEM\", \"token\" : { \"amount\" : 5, \"tokenId\" : \"tokenId\" } }, { \"item\" : { \"itemId\" : \"itemId\", \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 6 }, \"currency\" : { \"amount\" : 1, \"currencyId\" : \"currencyId\" }, \"attachmentId\" : \"attachmentId\", \"type\" : \"ITEM\", \"token\" : { \"amount\" : 5, \"tokenId\" : \"tokenId\" } } ], \"subject\" : \"subject\", \"channel\" : \"PLAYER\", \"history\" : [ { \"actorType\" : \"actorType\", \"actorId\" : \"actorId\", \"details\" : { \"key\" : \"\" }, \"event\" : \"event\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" }, { \"actorType\" : \"actorType\", \"actorId\" : \"actorId\", \"details\" : { \"key\" : \"\" }, \"event\" : \"event\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" } ], \"sentAt\" : \"2000-01-23T04:56:07.000+00:00\", \"body\" : \"body\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"codInfo\" : { \"amount\" : 0, \"autoAccept\" : true, \"paid\" : true, \"payerId\" : \"payerId\", \"paidAt\" : \"2000-01-23T04:56:07.000+00:00\", \"currencyId\" : \"currencyId\" }, \"senderId\" : \"senderId\", \"senderName\" : \"senderName\", \"isCOD\" : true, \"recipientId\" : \"recipientId\", \"recipientName\" : \"recipientName\", \"mailId\" : \"mailId\", \"status\" : \"status\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_MAIL_MAIL_ID_READ_POST = "/mail/{mailId}/read";
+    /**
+     * POST /mail/{mailId}/read : Пометить письмо как прочитанное
+     *
+     * @param mailId Идентификатор письма (required)
+     * @return Письмо отмечено (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "mailMailIdReadPost",
+        summary = "Пометить письмо как прочитанное",
+        tags = { "Mail" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Письмо отмечено"),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = MailApi.PATH_MAIL_MAIL_ID_READ_POST,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<Void> mailMailIdReadPost(
+        @NotNull @Parameter(name = "mailId", description = "Идентификатор письма", required = true, in = ParameterIn.PATH) @PathVariable("mailId") String mailId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_MAIL_MAIL_ID_RESEND_POST = "/mail/{mailId}/resend";
+    /**
+     * POST /mail/{mailId}/resend : Повторно отправить письмо
+     *
+     * @param mailId Идентификатор письма (required)
+     * @return Повторная отправка запланирована (status code 202)
+     *         or Повторная отправка невозможна (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "mailMailIdResendPost",
+        summary = "Повторно отправить письмо",
+        tags = { "Mail" },
+        responses = {
+            @ApiResponse(responseCode = "202", description = "Повторная отправка запланирована"),
+            @ApiResponse(responseCode = "400", description = "Повторная отправка невозможна", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MailError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = MailApi.PATH_MAIL_MAIL_ID_RESEND_POST,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<Void> mailMailIdResendPost(
+        @NotNull @Parameter(name = "mailId", description = "Идентификатор письма", required = true, in = ParameterIn.PATH) @PathVariable("mailId") String mailId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"MAILBOX_FULL\", \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_MAIL_MAIL_ID_RETURN_POST = "/mail/{mailId}/return";
+    /**
+     * POST /mail/{mailId}/return : Вернуть письмо отправителю
+     *
+     * @param mailId Идентификатор письма (required)
+     * @param mailReturnRequest  (required)
+     * @return Письмо возвращено (status code 200)
+     *         or Возврат невозможен (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "mailMailIdReturnPost",
+        summary = "Вернуть письмо отправителю",
+        tags = { "Mail" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Письмо возвращено"),
+            @ApiResponse(responseCode = "400", description = "Возврат невозможен", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MailError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = MailApi.PATH_MAIL_MAIL_ID_RETURN_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> mailMailIdReturnPost(
+        @NotNull @Parameter(name = "mailId", description = "Идентификатор письма", required = true, in = ParameterIn.PATH) @PathVariable("mailId") String mailId,
+        @Parameter(name = "MailReturnRequest", description = "", required = true) @Valid @RequestBody MailReturnRequest mailReturnRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"MAILBOX_FULL\", \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_MAIL_OUTBOX_GET = "/mail/outbox";
+    /**
+     * GET /mail/outbox : Список отправленных писем
+     *
+     * @param status  (optional)
+     * @param page Номер страницы (начинается с 1) (optional, default to 1)
+     * @param pageSize Количество элементов на странице (optional, default to 20)
+     * @return Отправленные письма (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "mailOutboxGet",
+        summary = "Список отправленных писем",
+        tags = { "Outbox" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Отправленные письма", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MailListResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = MailApi.PATH_MAIL_OUTBOX_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<MailListResponse> mailOutboxGet(
+        @Parameter(name = "status", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "status", required = false) @Nullable String status,
+        @Min(value = 1) @Parameter(name = "page", description = "Номер страницы (начинается с 1)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+        @Min(value = 1) @Max(value = 100) @Parameter(name = "page_size", description = "Количество элементов на странице", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page_size", required = false, defaultValue = "20") Integer pageSize
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"pagination\" : { \"total\" : 156, \"has_next\" : true, \"page\" : 1, \"total_pages\" : 8, \"has_prev\" : false, \"page_size\" : 20 }, \"items\" : [ { \"senderId\" : \"senderId\", \"senderName\" : \"senderName\", \"isCOD\" : true, \"subject\" : \"subject\", \"recipientId\" : \"recipientId\", \"mailId\" : \"mailId\", \"sentAt\" : \"2000-01-23T04:56:07.000+00:00\", \"hasAttachments\" : true, \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"status\" : \"SENT\" }, { \"senderId\" : \"senderId\", \"senderName\" : \"senderName\", \"isCOD\" : true, \"subject\" : \"subject\", \"recipientId\" : \"recipientId\", \"mailId\" : \"mailId\", \"sentAt\" : \"2000-01-23T04:56:07.000+00:00\", \"hasAttachments\" : true, \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"status\" : \"SENT\" } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_MAIL_POST = "/mail";
+    /**
+     * POST /mail : Отправить письмо
+     *
+     * @param mailSendRequest  (required)
+     * @return Письмо отправлено (status code 201)
+     *         or Ошибка вложений или адресата (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     *         or Превышен лимит запросов. Клиенту следует повторить запрос позже.  (status code 429)
+     */
+    @Operation(
+        operationId = "mailPost",
+        summary = "Отправить письмо",
+        tags = { "Mail" },
+        responses = {
+            @ApiResponse(responseCode = "201", description = "Письмо отправлено", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MailDetail.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Ошибка вложений или адресата", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MailError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            }),
+            @ApiResponse(responseCode = "429", description = "Превышен лимит запросов. Клиенту следует повторить запрос позже. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"TOO_MANY_REQUESTS\",\"message\":\"Лимит запросов превышен. Повторите попытку позже.\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = MailApi.PATH_MAIL_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<MailDetail> mailPost(
+        @Parameter(name = "MailSendRequest", description = "", required = true) @Valid @RequestBody MailSendRequest mailSendRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"attachments\" : [ { \"item\" : { \"itemId\" : \"itemId\", \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 6 }, \"currency\" : { \"amount\" : 1, \"currencyId\" : \"currencyId\" }, \"attachmentId\" : \"attachmentId\", \"type\" : \"ITEM\", \"token\" : { \"amount\" : 5, \"tokenId\" : \"tokenId\" } }, { \"item\" : { \"itemId\" : \"itemId\", \"itemInstanceId\" : \"itemInstanceId\", \"metadata\" : { \"key\" : \"\" }, \"quantity\" : 6 }, \"currency\" : { \"amount\" : 1, \"currencyId\" : \"currencyId\" }, \"attachmentId\" : \"attachmentId\", \"type\" : \"ITEM\", \"token\" : { \"amount\" : 5, \"tokenId\" : \"tokenId\" } } ], \"subject\" : \"subject\", \"channel\" : \"PLAYER\", \"history\" : [ { \"actorType\" : \"actorType\", \"actorId\" : \"actorId\", \"details\" : { \"key\" : \"\" }, \"event\" : \"event\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" }, { \"actorType\" : \"actorType\", \"actorId\" : \"actorId\", \"details\" : { \"key\" : \"\" }, \"event\" : \"event\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" } ], \"sentAt\" : \"2000-01-23T04:56:07.000+00:00\", \"body\" : \"body\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"codInfo\" : { \"amount\" : 0, \"autoAccept\" : true, \"paid\" : true, \"payerId\" : \"payerId\", \"paidAt\" : \"2000-01-23T04:56:07.000+00:00\", \"currencyId\" : \"currencyId\" }, \"senderId\" : \"senderId\", \"senderName\" : \"senderName\", \"isCOD\" : true, \"recipientId\" : \"recipientId\", \"recipientName\" : \"recipientName\", \"mailId\" : \"mailId\", \"status\" : \"status\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"MAILBOX_FULL\", \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_MAIL_SETTINGS_GET = "/mail/settings";
+    /**
+     * GET /mail/settings : Получить почтовые настройки
+     *
+     * @return Текущие настройки почты (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "mailSettingsGet",
+        summary = "Получить почтовые настройки",
+        tags = { "Settings" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Текущие настройки почты", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MailSettings.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = MailApi.PATH_MAIL_SETTINGS_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<MailSettings> mailSettingsGet(
+        
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"autoDeleteExpired\" : true, \"autoAcceptCOD\" : true, \"blockedSenders\" : [ \"blockedSenders\", \"blockedSenders\" ], \"filters\" : [ { \"filterId\" : \"filterId\", \"type\" : \"type\", \"value\" : \"value\" }, { \"filterId\" : \"filterId\", \"type\" : \"type\", \"value\" : \"value\" } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_MAIL_SETTINGS_PUT = "/mail/settings";
+    /**
+     * PUT /mail/settings : Обновить почтовые настройки
+     *
+     * @param mailSettingsUpdateRequest  (required)
+     * @return Настройки обновлены (status code 200)
+     *         or Некорректные параметры (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "mailSettingsPut",
+        summary = "Обновить почтовые настройки",
+        tags = { "Settings" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Настройки обновлены"),
+            @ApiResponse(responseCode = "400", description = "Некорректные параметры", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MailError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.PUT,
+        value = MailApi.PATH_MAIL_SETTINGS_PUT,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> mailSettingsPut(
+        @Parameter(name = "MailSettingsUpdateRequest", description = "", required = true) @Valid @RequestBody MailSettingsUpdateRequest mailSettingsUpdateRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"MAILBOX_FULL\", \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_MAIL_STATS_GET = "/mail/stats";
+    /**
+     * GET /mail/stats : Статистика почтовой активности
+     *
+     * @param range  (optional)
+     * @return Почтовые метрики (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "mailStatsGet",
+        summary = "Статистика почтовой активности",
+        tags = { "Analytics" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Почтовые метрики", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MailStats.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = MailApi.PATH_MAIL_STATS_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<MailStats> mailStatsGet(
+        @Parameter(name = "range", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "range", required = false) @Nullable String range
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"codSuccessRate\" : 1.4658129805029452, \"flaggedCount\" : 5, \"attachmentClaimRate\" : 5.962133916683182, \"range\" : \"range\", \"totalSent\" : 0, \"totalReceived\" : 6 }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_MAIL_SYSTEM_BATCH_POST = "/mail/system/batch";
+    /**
+     * POST /mail/system/batch : Массовая отправка писем
+     *
+     * @param systemMailBatchRequest  (required)
+     * @return Batch отправка принята (status code 202)
+     *         or Нарушение лимитов (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "mailSystemBatchPost",
+        summary = "Массовая отправка писем",
+        tags = { "System Mail" },
+        responses = {
+            @ApiResponse(responseCode = "202", description = "Batch отправка принята"),
+            @ApiResponse(responseCode = "400", description = "Нарушение лимитов", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MailError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "ServiceToken")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = MailApi.PATH_MAIL_SYSTEM_BATCH_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> mailSystemBatchPost(
+        @Parameter(name = "SystemMailBatchRequest", description = "", required = true) @Valid @RequestBody SystemMailBatchRequest systemMailBatchRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"MAILBOX_FULL\", \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_MAIL_SYSTEM_POST = "/mail/system";
+    /**
+     * POST /mail/system : Отправить системное письмо или рассылку
+     *
+     * @param systemMailRequest  (required)
+     * @return Системная рассылка запланирована (status code 202)
+     *         or Ошибка шаблона или сегмента (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "mailSystemPost",
+        summary = "Отправить системное письмо или рассылку",
+        tags = { "System Mail" },
+        responses = {
+            @ApiResponse(responseCode = "202", description = "Системная рассылка запланирована"),
+            @ApiResponse(responseCode = "400", description = "Ошибка шаблона или сегмента", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MailError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "ServiceToken")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = MailApi.PATH_MAIL_SYSTEM_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> mailSystemPost(
+        @Parameter(name = "SystemMailRequest", description = "", required = true) @Valid @RequestBody SystemMailRequest systemMailRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"MAILBOX_FULL\", \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

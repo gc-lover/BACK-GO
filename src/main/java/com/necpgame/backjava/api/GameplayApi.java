@@ -5,15 +5,25 @@
  */
 package com.necpgame.backjava.api;
 
-import com.necpgame.backjava.model.ExploreLocation200Response;
-import com.necpgame.backjava.model.ExploreLocationRequest;
-import com.necpgame.backjava.model.HackSystem200Response;
-import com.necpgame.backjava.model.HackSystemRequest;
+import com.necpgame.backjava.model.BattlePassRewardError;
+import com.necpgame.backjava.model.BoostActivationRequest;
+import com.necpgame.backjava.model.BoostActivationResponse;
+import com.necpgame.backjava.model.BoostStatusResponse;
+import com.necpgame.backjava.model.Challenge;
+import com.necpgame.backjava.model.ChallengeCompleteRequest;
+import com.necpgame.backjava.model.ChallengeListResponse;
+import com.necpgame.backjava.model.ChallengeProgressUpdateRequest;
+import com.necpgame.backjava.model.ChallengeRerollRequest;
+import com.necpgame.backjava.model.Error;
+import com.necpgame.backjava.model.LeaderboardResponse;
 import org.springframework.lang.Nullable;
-import com.necpgame.backjava.model.RestAction200Response;
-import com.necpgame.backjava.model.RestActionRequest;
-import com.necpgame.backjava.model.UseObject200Response;
-import com.necpgame.backjava.model.UseObjectRequest;
+import com.necpgame.backjava.model.RewardAnalyticsResponse;
+import com.necpgame.backjava.model.RewardClaimRequest;
+import com.necpgame.backjava.model.RewardClaimResponse;
+import com.necpgame.backjava.model.RewardDefinition;
+import com.necpgame.backjava.model.RewardDefinitionList;
+import com.necpgame.backjava.model.RewardHistoryResponse;
+import com.necpgame.backjava.model.RewardRerollRequest;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -41,29 +51,46 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T20:50:35.859669800+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 @Validated
-@Tag(name = "Gameplay", description = "the Gameplay API")
+@Tag(name = "Analytics", description = "Отчёты по наградам, челленджам и бустам")
 public interface GameplayApi {
 
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
 
-    String PATH_EXPLORE_LOCATION = "/gameplay/actions/explore";
+    String PATH_GAMEPLAY_BATTLE_PASS_ANALYTICS_REWARDS_GET = "/gameplay/battle-pass/analytics/rewards";
     /**
-     * POST /gameplay/actions/explore : РћСЃРјРѕС‚СЂРµС‚СЊСЃСЏ РІ Р»РѕРєР°С†РёРё
+     * GET /gameplay/battle-pass/analytics/rewards : Аналитика наград и челленджей
      *
-     * @param exploreLocationRequest  (optional)
-     * @return Р”РµС‚Р°Р»СЊРЅРѕРµ РѕРїРёСЃР°РЅРёРµ Р»РѕРєР°С†РёРё (status code 200)
+     * @param seasonId  (optional)
+     * @param range  (optional, default to 7d)
+     * @return Сводка по наградам и челленджам (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
      */
     @Operation(
-        operationId = "exploreLocation",
-        summary = "РћСЃРјРѕС‚СЂРµС‚СЊСЃСЏ РІ Р»РѕРєР°С†РёРё",
-        tags = { "Gameplay", "Actions" },
+        operationId = "gameplayBattlePassAnalyticsRewardsGet",
+        summary = "Аналитика наград и челленджей",
+        tags = { "Analytics" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Р”РµС‚Р°Р»СЊРЅРѕРµ РѕРїРёСЃР°РЅРёРµ Р»РѕРєР°С†РёРё", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ExploreLocation200Response.class))
+            @ApiResponse(responseCode = "200", description = "Сводка по наградам и челленджам", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = RewardAnalyticsResponse.class), examples = {
+                    @ExampleObject(
+                        name = "RewardAnalyticsResponse",
+                        value = "{\"generatedAt\":\"2025-11-07T23:59:30Z\",\"seasonId\":\"bps-2025-07\",\"range\":\"7d\",\"totalClaims\":152340,\"premiumClaims\":63410,\"rerollUsage\":14200,\"challengeCompletionRate\":0.68,\"boostActivationRate\":0.47,\"topRewards\":[{\"rewardId\":\"reward-lv25-prem\",\"claimCount\":41890},{\"rewardId\":\"reward-token-reroll\",\"claimCount\":36550}]}"
+                    )
+                })
+
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
             })
         },
         security = {
@@ -71,18 +98,23 @@ public interface GameplayApi {
         }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = GameplayApi.PATH_EXPLORE_LOCATION,
-        produces = { "application/json" },
-        consumes = { "application/json" }
+        method = RequestMethod.GET,
+        value = GameplayApi.PATH_GAMEPLAY_BATTLE_PASS_ANALYTICS_REWARDS_GET,
+        produces = { "application/json" }
     )
-    default ResponseEntity<ExploreLocation200Response> exploreLocation(
-        @Parameter(name = "ExploreLocationRequest", description = "") @Valid @RequestBody(required = false) @Nullable ExploreLocationRequest exploreLocationRequest
+    default ResponseEntity<RewardAnalyticsResponse> gameplayBattlePassAnalyticsRewardsGet(
+        @Parameter(name = "seasonId", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "seasonId", required = false) @Nullable String seasonId,
+        @Parameter(name = "range", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "range", required = false, defaultValue = "7d") String range
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"hiddenObjects\" : [ \"hiddenObjects\", \"hiddenObjects\" ], \"pointsOfInterest\" : [ \"pointsOfInterest\", \"pointsOfInterest\" ], \"description\" : \"description\" }";
+                    String exampleString = "{ \"boostActivationRate\" : 5.637376656633329, \"seasonId\" : \"seasonId\", \"topRewards\" : [ { \"rewardId\" : \"rewardId\", \"claimCount\" : 2 }, { \"rewardId\" : \"rewardId\", \"claimCount\" : 2 } ], \"challengeCompletionRate\" : 5.962133916683182, \"generatedAt\" : \"2000-01-23T04:56:07.000+00:00\", \"range\" : \"range\", \"totalClaims\" : 0, \"premiumClaims\" : 6, \"rerollUsage\" : 1 }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -93,20 +125,34 @@ public interface GameplayApi {
     }
 
 
-    String PATH_HACK_SYSTEM = "/gameplay/actions/hack";
+    String PATH_GAMEPLAY_BATTLE_PASS_BOOSTS_ACTIVATE_POST = "/gameplay/battle-pass/boosts/activate";
     /**
-     * POST /gameplay/actions/hack : РҐР°РєРЅСѓС‚СЊ СЃРёСЃС‚РµРјСѓ
+     * POST /gameplay/battle-pass/boosts/activate : Активировать XP boost
      *
-     * @param hackSystemRequest  (optional)
-     * @return Р РµР·СѓР»СЊС‚Р°С‚ РІР·Р»РѕРјР° (status code 200)
+     * @param boostActivationRequest  (required)
+     * @return Буст активирован (status code 200)
+     *         or Буст уже активен или cooldown (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
      */
     @Operation(
-        operationId = "hackSystem",
-        summary = "РҐР°РєРЅСѓС‚СЊ СЃРёСЃС‚РµРјСѓ",
-        tags = { "Gameplay", "Actions" },
+        operationId = "gameplayBattlePassBoostsActivatePost",
+        summary = "Активировать XP boost",
+        tags = { "Boosts" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Р РµР·СѓР»СЊС‚Р°С‚ РІР·Р»РѕРјР°", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = HackSystem200Response.class))
+            @ApiResponse(responseCode = "200", description = "Буст активирован", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = BoostActivationResponse.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Буст уже активен или cooldown", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = BattlePassRewardError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
             })
         },
         security = {
@@ -115,17 +161,27 @@ public interface GameplayApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = GameplayApi.PATH_HACK_SYSTEM,
+        value = GameplayApi.PATH_GAMEPLAY_BATTLE_PASS_BOOSTS_ACTIVATE_POST,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<HackSystem200Response> hackSystem(
-        @Parameter(name = "HackSystemRequest", description = "") @Valid @RequestBody(required = false) @Nullable HackSystemRequest hackSystemRequest
+    default ResponseEntity<BoostActivationResponse> gameplayBattlePassBoostsActivatePost(
+        @Parameter(name = "BoostActivationRequest", description = "", required = true) @Valid @RequestBody BoostActivationRequest boostActivationRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"result\" : \"result\", \"dataAccessed\" : [ \"dataAccessed\", \"dataAccessed\" ], \"success\" : true }";
+                    String exampleString = "{ \"boost\" : { \"boostId\" : \"boostId\", \"multiplier\" : 0.8008281904610115, \"activatedAt\" : \"2000-01-23T04:56:07.000+00:00\", \"boostType\" : \"XP\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\" }, \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"LEVEL_LOCKED\", \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -136,20 +192,35 @@ public interface GameplayApi {
     }
 
 
-    String PATH_REST_ACTION = "/gameplay/actions/rest";
+    String PATH_GAMEPLAY_BATTLE_PASS_BOOSTS_GET = "/gameplay/battle-pass/boosts";
     /**
-     * POST /gameplay/actions/rest : РћС‚РґРѕС…РЅСѓС‚СЊ
+     * GET /gameplay/battle-pass/boosts : Активные и доступные бусты XP
      *
-     * @param restActionRequest  (optional)
-     * @return Р РµР·СѓР»СЊС‚Р°С‚ РѕС‚РґС‹С…Р° (status code 200)
+     * @return Статус бустов (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
      */
     @Operation(
-        operationId = "restAction",
-        summary = "РћС‚РґРѕС…РЅСѓС‚СЊ",
-        tags = { "Gameplay", "Actions" },
+        operationId = "gameplayBattlePassBoostsGet",
+        summary = "Активные и доступные бусты XP",
+        tags = { "Boosts" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Р РµР·СѓР»СЊС‚Р°С‚ РѕС‚РґС‹С…Р°", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = RestAction200Response.class))
+            @ApiResponse(responseCode = "200", description = "Статус бустов", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = BoostStatusResponse.class), examples = {
+                    @ExampleObject(
+                        name = "BoostStatusResponse",
+                        value = "{\"activeBoosts\":[{\"boostId\":\"boost-xp-2h\",\"boostType\":\"XP\",\"multiplier\":2.0,\"activatedAt\":\"2025-11-07T20:00:00Z\",\"expiresAt\":\"2025-11-07T22:00:00Z\"}],\"cooldowns\":[{\"boostId\":\"boost-double-drops\",\"readyAt\":\"2025-11-08T18:00:00Z\"}]}"
+                    )
+                })
+
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
             })
         },
         security = {
@@ -157,18 +228,22 @@ public interface GameplayApi {
         }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = GameplayApi.PATH_REST_ACTION,
-        produces = { "application/json" },
-        consumes = { "application/json" }
+        method = RequestMethod.GET,
+        value = GameplayApi.PATH_GAMEPLAY_BATTLE_PASS_BOOSTS_GET,
+        produces = { "application/json" }
     )
-    default ResponseEntity<RestAction200Response> restAction(
-        @Parameter(name = "RestActionRequest", description = "") @Valid @RequestBody(required = false) @Nullable RestActionRequest restActionRequest
+    default ResponseEntity<BoostStatusResponse> gameplayBattlePassBoostsGet(
+        
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"timePassed\" : 1, \"energyRestored\" : 6, \"healthRestored\" : 0 }";
+                    String exampleString = "{ \"cooldowns\" : [ { \"boostId\" : \"boostId\", \"readyAt\" : \"2000-01-23T04:56:07.000+00:00\" }, { \"boostId\" : \"boostId\", \"readyAt\" : \"2000-01-23T04:56:07.000+00:00\" } ], \"activeBoosts\" : [ { \"boostId\" : \"boostId\", \"multiplier\" : 0.8008281904610115, \"activatedAt\" : \"2000-01-23T04:56:07.000+00:00\", \"boostType\" : \"XP\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\" }, { \"boostId\" : \"boostId\", \"multiplier\" : 0.8008281904610115, \"activatedAt\" : \"2000-01-23T04:56:07.000+00:00\", \"boostType\" : \"XP\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\" } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -179,20 +254,35 @@ public interface GameplayApi {
     }
 
 
-    String PATH_USE_OBJECT = "/gameplay/actions/use";
+    String PATH_GAMEPLAY_BATTLE_PASS_CHALLENGES_CHALLENGE_ID_COMPLETE_POST = "/gameplay/battle-pass/challenges/{challengeId}/complete";
     /**
-     * POST /gameplay/actions/use : РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РѕР±СЉРµРєС‚ РІ Р»РѕРєР°С†РёРё
+     * POST /gameplay/battle-pass/challenges/{challengeId}/complete : Завершить челлендж и выдать награду
      *
-     * @param useObjectRequest  (optional)
-     * @return Р РµР·СѓР»СЊС‚Р°С‚ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РѕР±СЉРµРєС‚Р° (status code 200)
+     * @param challengeId Идентификатор челленджа Battle Pass (required)
+     * @param challengeCompleteRequest  (required)
+     * @return Челлендж завершён, награды выданы (status code 200)
+     *         or Челлендж ещё не выполнен (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
      */
     @Operation(
-        operationId = "useObject",
-        summary = "РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РѕР±СЉРµРєС‚ РІ Р»РѕРєР°С†РёРё",
-        tags = { "Gameplay", "Actions" },
+        operationId = "gameplayBattlePassChallengesChallengeIdCompletePost",
+        summary = "Завершить челлендж и выдать награду",
+        tags = { "Challenges" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Р РµР·СѓР»СЊС‚Р°С‚ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РѕР±СЉРµРєС‚Р°", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = UseObject200Response.class))
+            @ApiResponse(responseCode = "200", description = "Челлендж завершён, награды выданы", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = RewardClaimResponse.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Челлендж ещё не выполнен", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = BattlePassRewardError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
             })
         },
         security = {
@@ -201,17 +291,617 @@ public interface GameplayApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = GameplayApi.PATH_USE_OBJECT,
+        value = GameplayApi.PATH_GAMEPLAY_BATTLE_PASS_CHALLENGES_CHALLENGE_ID_COMPLETE_POST,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<UseObject200Response> useObject(
-        @Parameter(name = "UseObjectRequest", description = "") @Valid @RequestBody(required = false) @Nullable UseObjectRequest useObjectRequest
+    default ResponseEntity<RewardClaimResponse> gameplayBattlePassChallengesChallengeIdCompletePost(
+        @NotNull @Parameter(name = "challengeId", description = "Идентификатор челленджа Battle Pass", required = true, in = ParameterIn.PATH) @PathVariable("challengeId") String challengeId,
+        @Parameter(name = "ChallengeCompleteRequest", description = "", required = true) @Valid @RequestBody ChallengeCompleteRequest challengeCompleteRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"result\" : \"result\", \"reward\" : \"{}\", \"success\" : true }";
+                    String exampleString = "{ \"premiumStatus\" : true, \"rewards\" : [ { \"rewardId\" : \"rewardId\", \"level\" : 1, \"rewardType\" : \"CURRENCY\", \"previewAsset\" : \"https://openapi-generator.tech\", \"track\" : \"FREE\", \"rewardData\" : { \"key\" : \"\" }, \"rarity\" : \"common\" }, { \"rewardId\" : \"rewardId\", \"level\" : 1, \"rewardType\" : \"CURRENCY\", \"previewAsset\" : \"https://openapi-generator.tech\", \"track\" : \"FREE\", \"rewardData\" : { \"key\" : \"\" }, \"rarity\" : \"common\" } ], \"xpEarned\" : 0, \"events\" : [ \"events\", \"events\" ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"LEVEL_LOCKED\", \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GAMEPLAY_BATTLE_PASS_CHALLENGES_CHALLENGE_ID_PROGRESS_POST = "/gameplay/battle-pass/challenges/{challengeId}/progress";
+    /**
+     * POST /gameplay/battle-pass/challenges/{challengeId}/progress : Обновить прогресс челленджа (service token)
+     *
+     * @param challengeId Идентификатор челленджа Battle Pass (required)
+     * @param challengeProgressUpdateRequest  (required)
+     * @return Прогресс обновлён (status code 200)
+     *         or Челлендж не активен или лимит (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "gameplayBattlePassChallengesChallengeIdProgressPost",
+        summary = "Обновить прогресс челленджа (service token)",
+        tags = { "Challenges" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Прогресс обновлён"),
+            @ApiResponse(responseCode = "400", description = "Челлендж не активен или лимит", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = BattlePassRewardError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "ServiceToken")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = GameplayApi.PATH_GAMEPLAY_BATTLE_PASS_CHALLENGES_CHALLENGE_ID_PROGRESS_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> gameplayBattlePassChallengesChallengeIdProgressPost(
+        @NotNull @Parameter(name = "challengeId", description = "Идентификатор челленджа Battle Pass", required = true, in = ParameterIn.PATH) @PathVariable("challengeId") String challengeId,
+        @Parameter(name = "ChallengeProgressUpdateRequest", description = "", required = true) @Valid @RequestBody ChallengeProgressUpdateRequest challengeProgressUpdateRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"LEVEL_LOCKED\", \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GAMEPLAY_BATTLE_PASS_CHALLENGES_CHALLENGE_ID_REROLL_POST = "/gameplay/battle-pass/challenges/{challengeId}/reroll";
+    /**
+     * POST /gameplay/battle-pass/challenges/{challengeId}/reroll : Реролл челленджа
+     *
+     * @param challengeId Идентификатор челленджа Battle Pass (required)
+     * @param challengeRerollRequest  (required)
+     * @return Новый челлендж назначен (status code 200)
+     *         or Превышен лимит или нет валюты (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "gameplayBattlePassChallengesChallengeIdRerollPost",
+        summary = "Реролл челленджа",
+        tags = { "Challenges" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Новый челлендж назначен", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Challenge.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Превышен лимит или нет валюты", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = BattlePassRewardError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = GameplayApi.PATH_GAMEPLAY_BATTLE_PASS_CHALLENGES_CHALLENGE_ID_REROLL_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Challenge> gameplayBattlePassChallengesChallengeIdRerollPost(
+        @NotNull @Parameter(name = "challengeId", description = "Идентификатор челленджа Battle Pass", required = true, in = ParameterIn.PATH) @PathVariable("challengeId") String challengeId,
+        @Parameter(name = "ChallengeRerollRequest", description = "", required = true) @Valid @RequestBody ChallengeRerollRequest challengeRerollRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"challengeId\" : \"challengeId\", \"rewardId\" : \"rewardId\", \"rerollCost\" : 5, \"description\" : \"description\", \"challengeType\" : \"DAILY\", \"objectives\" : [ { \"current\" : 6, \"metric\" : \"metric\", \"target\" : 0 }, { \"current\" : 6, \"metric\" : \"metric\", \"target\" : 0 } ], \"xpReward\" : 1, \"endAt\" : \"2000-01-23T04:56:07.000+00:00\", \"startAt\" : \"2000-01-23T04:56:07.000+00:00\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"LEVEL_LOCKED\", \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GAMEPLAY_BATTLE_PASS_CHALLENGES_DAILY_GET = "/gameplay/battle-pass/challenges/daily";
+    /**
+     * GET /gameplay/battle-pass/challenges/daily : Активные дневные челленджи игрока
+     *
+     * @return Список челленджей и прогресс (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "gameplayBattlePassChallengesDailyGet",
+        summary = "Активные дневные челленджи игрока",
+        tags = { "Challenges" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Список челленджей и прогресс", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ChallengeListResponse.class), examples = {
+                    @ExampleObject(
+                        name = "DailyChallenges",
+                        value = "{\"challenges\":[{\"challenge\":{\"challengeId\":\"ch-daily-1210\",\"challengeType\":\"DAILY\",\"description\":\"Завершите 3 ежедневных задания\",\"objectives\":[{\"metric\":\"daily_quest_complete\",\"target\":3,\"current\":1}],\"xpReward\":1500,\"rewardId\":\"reward-token-reroll\",\"startAt\":\"2025-11-07T00:00:00Z\",\"endAt\":\"2025-11-08T00:00:00Z\",\"rerollCost\":1},\"progress\":{\"challengeId\":\"ch-daily-1210\",\"playerId\":\"player-90321\",\"status\":\"IN_PROGRESS\",\"progressValue\":1,\"updatedAt\":\"2025-11-07T21:10:00Z\"}}],\"refreshAt\":\"2025-11-08T00:00:00Z\"}"
+                    )
+                })
+
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = GameplayApi.PATH_GAMEPLAY_BATTLE_PASS_CHALLENGES_DAILY_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<ChallengeListResponse> gameplayBattlePassChallengesDailyGet(
+        
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"challenges\" : [ { \"challenge\" : { \"challengeId\" : \"challengeId\", \"rewardId\" : \"rewardId\", \"rerollCost\" : 5, \"description\" : \"description\", \"challengeType\" : \"DAILY\", \"objectives\" : [ { \"current\" : 6, \"metric\" : \"metric\", \"target\" : 0 }, { \"current\" : 6, \"metric\" : \"metric\", \"target\" : 0 } ], \"xpReward\" : 1, \"endAt\" : \"2000-01-23T04:56:07.000+00:00\", \"startAt\" : \"2000-01-23T04:56:07.000+00:00\" }, \"progress\" : { \"challengeId\" : \"challengeId\", \"progressValue\" : 5, \"playerId\" : \"playerId\", \"status\" : \"IN_PROGRESS\", \"updatedAt\" : \"2000-01-23T04:56:07.000+00:00\" } }, { \"challenge\" : { \"challengeId\" : \"challengeId\", \"rewardId\" : \"rewardId\", \"rerollCost\" : 5, \"description\" : \"description\", \"challengeType\" : \"DAILY\", \"objectives\" : [ { \"current\" : 6, \"metric\" : \"metric\", \"target\" : 0 }, { \"current\" : 6, \"metric\" : \"metric\", \"target\" : 0 } ], \"xpReward\" : 1, \"endAt\" : \"2000-01-23T04:56:07.000+00:00\", \"startAt\" : \"2000-01-23T04:56:07.000+00:00\" }, \"progress\" : { \"challengeId\" : \"challengeId\", \"progressValue\" : 5, \"playerId\" : \"playerId\", \"status\" : \"IN_PROGRESS\", \"updatedAt\" : \"2000-01-23T04:56:07.000+00:00\" } } ], \"refreshAt\" : \"2000-01-23T04:56:07.000+00:00\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GAMEPLAY_BATTLE_PASS_CHALLENGES_WEEKLY_GET = "/gameplay/battle-pass/challenges/weekly";
+    /**
+     * GET /gameplay/battle-pass/challenges/weekly : Активные недельные челленджи
+     *
+     * @return Список и таймеры неделяных челленджей (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "gameplayBattlePassChallengesWeeklyGet",
+        summary = "Активные недельные челленджи",
+        tags = { "Challenges" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Список и таймеры неделяных челленджей", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ChallengeListResponse.class), examples = {
+                    @ExampleObject(
+                        name = "WeeklyChallenges",
+                        value = "{\"challenges\":[{\"challenge\":{\"challengeId\":\"ch-week-0701\",\"challengeType\":\"WEEKLY\",\"description\":\"Выиграйте 10 матчей в Night City Arena\",\"objectives\":[{\"metric\":\"match_win_arena\",\"target\":10,\"current\":7}],\"xpReward\":5000,\"rewardId\":\"reward-lv-bonus\",\"startAt\":\"2025-11-04T00:00:00Z\",\"endAt\":\"2025-11-11T00:00:00Z\",\"rerollCost\":3},\"progress\":{\"challengeId\":\"ch-week-0701\",\"playerId\":\"player-90321\",\"status\":\"IN_PROGRESS\",\"progressValue\":7,\"updatedAt\":\"2025-11-07T19:35:00Z\"}}],\"refreshAt\":\"2025-11-11T00:00:00Z\"}"
+                    )
+                })
+
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = GameplayApi.PATH_GAMEPLAY_BATTLE_PASS_CHALLENGES_WEEKLY_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<ChallengeListResponse> gameplayBattlePassChallengesWeeklyGet(
+        
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"challenges\" : [ { \"challenge\" : { \"challengeId\" : \"challengeId\", \"rewardId\" : \"rewardId\", \"rerollCost\" : 5, \"description\" : \"description\", \"challengeType\" : \"DAILY\", \"objectives\" : [ { \"current\" : 6, \"metric\" : \"metric\", \"target\" : 0 }, { \"current\" : 6, \"metric\" : \"metric\", \"target\" : 0 } ], \"xpReward\" : 1, \"endAt\" : \"2000-01-23T04:56:07.000+00:00\", \"startAt\" : \"2000-01-23T04:56:07.000+00:00\" }, \"progress\" : { \"challengeId\" : \"challengeId\", \"progressValue\" : 5, \"playerId\" : \"playerId\", \"status\" : \"IN_PROGRESS\", \"updatedAt\" : \"2000-01-23T04:56:07.000+00:00\" } }, { \"challenge\" : { \"challengeId\" : \"challengeId\", \"rewardId\" : \"rewardId\", \"rerollCost\" : 5, \"description\" : \"description\", \"challengeType\" : \"DAILY\", \"objectives\" : [ { \"current\" : 6, \"metric\" : \"metric\", \"target\" : 0 }, { \"current\" : 6, \"metric\" : \"metric\", \"target\" : 0 } ], \"xpReward\" : 1, \"endAt\" : \"2000-01-23T04:56:07.000+00:00\", \"startAt\" : \"2000-01-23T04:56:07.000+00:00\" }, \"progress\" : { \"challengeId\" : \"challengeId\", \"progressValue\" : 5, \"playerId\" : \"playerId\", \"status\" : \"IN_PROGRESS\", \"updatedAt\" : \"2000-01-23T04:56:07.000+00:00\" } } ], \"refreshAt\" : \"2000-01-23T04:56:07.000+00:00\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GAMEPLAY_BATTLE_PASS_LEADERBOARD_GET = "/gameplay/battle-pass/leaderboard";
+    /**
+     * GET /gameplay/battle-pass/leaderboard : Лидерборд по челленджам/наградам
+     *
+     * @param metric  (optional, default to challenge_points)
+     * @param page Номер страницы (начинается с 1) (optional, default to 1)
+     * @param pageSize Количество элементов на странице (optional, default to 20)
+     * @return Список лидеров (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "gameplayBattlePassLeaderboardGet",
+        summary = "Лидерборд по челленджам/наградам",
+        tags = { "Analytics" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Список лидеров", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = LeaderboardResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = GameplayApi.PATH_GAMEPLAY_BATTLE_PASS_LEADERBOARD_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<LeaderboardResponse> gameplayBattlePassLeaderboardGet(
+        @Parameter(name = "metric", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "metric", required = false, defaultValue = "challenge_points") String metric,
+        @Min(value = 1) @Parameter(name = "page", description = "Номер страницы (начинается с 1)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+        @Min(value = 1) @Max(value = 100) @Parameter(name = "page_size", description = "Количество элементов на странице", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page_size", required = false, defaultValue = "20") Integer pageSize
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"entries\" : [ { \"metricValue\" : 6, \"rank\" : 0, \"playerId\" : \"playerId\" }, { \"metricValue\" : 6, \"rank\" : 0, \"playerId\" : \"playerId\" } ], \"pagination\" : { \"total\" : 156, \"has_next\" : true, \"page\" : 1, \"total_pages\" : 8, \"has_prev\" : false, \"page_size\" : 20 } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GAMEPLAY_BATTLE_PASS_REWARDS_CLAIM_POST = "/gameplay/battle-pass/rewards/claim";
+    /**
+     * POST /gameplay/battle-pass/rewards/claim : Получить награду уровня
+     *
+     * @param rewardClaimRequest  (required)
+     * @return Награда выдана (status code 200)
+     *         or Уровень недоступен или уже получен (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     *         or Конфликт с текущим состоянием ресурса или ограничениями системы. Например, превышение лимитов или нарушение бизнес-правил.  (status code 409)
+     */
+    @Operation(
+        operationId = "gameplayBattlePassRewardsClaimPost",
+        summary = "Получить награду уровня",
+        tags = { "Rewards" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Награда выдана", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = RewardClaimResponse.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Уровень недоступен или уже получен", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = BattlePassRewardError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            }),
+            @ApiResponse(responseCode = "409", description = "Конфликт с текущим состоянием ресурса или ограничениями системы. Например, превышение лимитов или нарушение бизнес-правил. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"LIMIT_EXCEEDED\",\"message\":\"Превышен лимит NPC для владельца\",\"details\":[{\"field\":\"maxNPCs\",\"message\":\"Достигнут максимальный лимит NPC (10)\",\"code\":\"LIMIT_EXCEEDED\"}]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = GameplayApi.PATH_GAMEPLAY_BATTLE_PASS_REWARDS_CLAIM_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<RewardClaimResponse> gameplayBattlePassRewardsClaimPost(
+        @Parameter(name = "RewardClaimRequest", description = "", required = true) @Valid @RequestBody RewardClaimRequest rewardClaimRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"premiumStatus\" : true, \"rewards\" : [ { \"rewardId\" : \"rewardId\", \"level\" : 1, \"rewardType\" : \"CURRENCY\", \"previewAsset\" : \"https://openapi-generator.tech\", \"track\" : \"FREE\", \"rewardData\" : { \"key\" : \"\" }, \"rarity\" : \"common\" }, { \"rewardId\" : \"rewardId\", \"level\" : 1, \"rewardType\" : \"CURRENCY\", \"previewAsset\" : \"https://openapi-generator.tech\", \"track\" : \"FREE\", \"rewardData\" : { \"key\" : \"\" }, \"rarity\" : \"common\" } ], \"xpEarned\" : 0, \"events\" : [ \"events\", \"events\" ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"LEVEL_LOCKED\", \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GAMEPLAY_BATTLE_PASS_REWARDS_GET = "/gameplay/battle-pass/rewards";
+    /**
+     * GET /gameplay/battle-pass/rewards : Список наград сезона
+     *
+     * @param track  (optional)
+     * @param rarity  (optional)
+     * @return Награды по уровням (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "gameplayBattlePassRewardsGet",
+        summary = "Список наград сезона",
+        tags = { "Rewards" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Награды по уровням", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = RewardDefinitionList.class), examples = {
+                    @ExampleObject(
+                        name = "RewardsList",
+                        value = "{\"rewards\":[{\"rewardId\":\"reward-lv25-prem\",\"level\":25,\"track\":\"PREMIUM\",\"rewardType\":\"COSMETIC\",\"rewardData\":{\"cosmeticId\":\"skin-neon-blade\"},\"rarity\":\"legendary\",\"previewAsset\":\"https://cdn.necpgame.com/bp/rewards/skin-neon-blade.png\"},{\"rewardId\":\"reward-lv25-free\",\"level\":25,\"track\":\"FREE\",\"rewardType\":\"CURRENCY\",\"rewardData\":{\"currency\":\"credits\",\"amount\":5000},\"rarity\":\"rare\"},{\"rewardId\":\"reward-lv26-prem\",\"level\":26,\"track\":\"PREMIUM\",\"rewardType\":\"ITEM\",\"rewardData\":{\"itemId\":\"weapon-mod-thermite\"},\"rarity\":\"epic\"}]}"
+                    )
+                })
+
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = GameplayApi.PATH_GAMEPLAY_BATTLE_PASS_REWARDS_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<RewardDefinitionList> gameplayBattlePassRewardsGet(
+        @Parameter(name = "track", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "track", required = false) @Nullable String track,
+        @Parameter(name = "rarity", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "rarity", required = false) @Nullable String rarity
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"rewards\" : [ { \"rewardId\" : \"rewardId\", \"level\" : 1, \"rewardType\" : \"CURRENCY\", \"previewAsset\" : \"https://openapi-generator.tech\", \"track\" : \"FREE\", \"rewardData\" : { \"key\" : \"\" }, \"rarity\" : \"common\" }, { \"rewardId\" : \"rewardId\", \"level\" : 1, \"rewardType\" : \"CURRENCY\", \"previewAsset\" : \"https://openapi-generator.tech\", \"track\" : \"FREE\", \"rewardData\" : { \"key\" : \"\" }, \"rarity\" : \"common\" } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GAMEPLAY_BATTLE_PASS_REWARDS_HISTORY_GET = "/gameplay/battle-pass/rewards/history";
+    /**
+     * GET /gameplay/battle-pass/rewards/history : История полученных наград
+     *
+     * @param page Номер страницы (начинается с 1) (optional, default to 1)
+     * @param pageSize Количество элементов на странице (optional, default to 20)
+     * @return История наград (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "gameplayBattlePassRewardsHistoryGet",
+        summary = "История полученных наград",
+        tags = { "Rewards" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "История наград", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = RewardHistoryResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = GameplayApi.PATH_GAMEPLAY_BATTLE_PASS_REWARDS_HISTORY_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<RewardHistoryResponse> gameplayBattlePassRewardsHistoryGet(
+        @Min(value = 1) @Parameter(name = "page", description = "Номер страницы (начинается с 1)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+        @Min(value = 1) @Max(value = 100) @Parameter(name = "page_size", description = "Количество элементов на странице", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page_size", required = false, defaultValue = "20") Integer pageSize
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"entries\" : [ { \"claimedAt\" : \"2000-01-23T04:56:07.000+00:00\", \"rewardId\" : \"rewardId\", \"amount\" : 6, \"level\" : 0, \"rewardType\" : \"rewardType\", \"source\" : \"LEVEL\", \"track\" : \"track\" }, { \"claimedAt\" : \"2000-01-23T04:56:07.000+00:00\", \"rewardId\" : \"rewardId\", \"amount\" : 6, \"level\" : 0, \"rewardType\" : \"rewardType\", \"source\" : \"LEVEL\", \"track\" : \"track\" } ], \"pagination\" : { \"total\" : 156, \"has_next\" : true, \"page\" : 1, \"total_pages\" : 8, \"has_prev\" : false, \"page_size\" : 20 } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GAMEPLAY_BATTLE_PASS_REWARDS_REROLL_POST = "/gameplay/battle-pass/rewards/reroll";
+    /**
+     * POST /gameplay/battle-pass/rewards/reroll : Реролл награды уровня
+     *
+     * @param rewardRerollRequest  (required)
+     * @return Награда сменена (status code 200)
+     *         or Нет токена реролла или превышен лимит (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "gameplayBattlePassRewardsRerollPost",
+        summary = "Реролл награды уровня",
+        tags = { "Rewards" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Награда сменена", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = RewardDefinition.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Нет токена реролла или превышен лимит", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = BattlePassRewardError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = GameplayApi.PATH_GAMEPLAY_BATTLE_PASS_REWARDS_REROLL_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<RewardDefinition> gameplayBattlePassRewardsRerollPost(
+        @Parameter(name = "RewardRerollRequest", description = "", required = true) @Valid @RequestBody RewardRerollRequest rewardRerollRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"rewardId\" : \"rewardId\", \"level\" : 1, \"rewardType\" : \"CURRENCY\", \"previewAsset\" : \"https://openapi-generator.tech\", \"track\" : \"FREE\", \"rewardData\" : { \"key\" : \"\" }, \"rarity\" : \"common\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"LEVEL_LOCKED\", \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -222,4 +912,3 @@ public interface GameplayApi {
     }
 
 }
-

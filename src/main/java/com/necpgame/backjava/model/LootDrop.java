@@ -25,7 +25,7 @@ import jakarta.annotation.Generated;
  * LootDrop
  */
 
-
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 public class LootDrop {
 
   private @Nullable String dropId;

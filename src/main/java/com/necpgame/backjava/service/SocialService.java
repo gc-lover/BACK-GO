@@ -1,18 +1,19 @@
 package com.necpgame.backjava.service;
 
-import com.necpgame.backjava.model.BlockPlayerRequest;
-import com.necpgame.backjava.model.CreateGuildRequest;
-import com.necpgame.backjava.model.CreatePartyRequest;
-import com.necpgame.backjava.model.GetFriends200Response;
-import com.necpgame.backjava.model.Guild;
-import com.necpgame.backjava.model.GuildDetails;
-import com.necpgame.backjava.model.InviteToGuildRequest;
-import com.necpgame.backjava.model.InviteToPartyRequest;
-import com.necpgame.backjava.model.JoinGuildRequest;
-import com.necpgame.backjava.model.JoinPartyRequest;
-import com.necpgame.backjava.model.Party;
-import com.necpgame.backjava.model.PartyDetails;
-import com.necpgame.backjava.model.SendFriendRequestRequest;
+import com.necpgame.backjava.model.BlockCreateRequest;
+import com.necpgame.backjava.model.BlockListResponse;
+import com.necpgame.backjava.model.Error;
+import com.necpgame.backjava.model.FriendError;
+import com.necpgame.backjava.model.FriendListResponse;
+import com.necpgame.backjava.model.FriendRequestCreate;
+import com.necpgame.backjava.model.FriendRequestDecline;
+import com.necpgame.backjava.model.FriendRequestsResponse;
+import org.springframework.lang.Nullable;
+import com.necpgame.backjava.model.PresenceFeedResponse;
+import com.necpgame.backjava.model.PresenceUpdateRequest;
+import com.necpgame.backjava.model.RecentPlayersResponse;
+import com.necpgame.backjava.model.SocialInviteRequest;
+import com.necpgame.backjava.model.SuggestionsResponse;
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -25,144 +26,113 @@ import org.springframework.validation.annotation.Validated;
 public interface SocialService {
 
     /**
-     * POST /social/guilds/create : Создать гильдию
-     * Создает новую гильдию. Требует минимальный уровень и стоимость. 
+     * DELETE /social/friends/blocks/{blockId} : Снять блокировку
      *
-     * @param createGuildRequest  (required)
-     * @return Guild
+     * @param blockId Идентификатор записи блокировки (required)
+     * @return Void
      */
-    Guild createGuild(CreateGuildRequest createGuildRequest);
+    Void socialFriendsBlocksBlockIdDelete(String blockId);
 
     /**
-     * GET /social/guilds/{guild_id} : Получить информацию о гильдии
-     * Возвращает детали гильдии, участников, звания
+     * GET /social/friends/blocks : Список блокировок и игнора
      *
-     * @param guildId  (required)
-     * @return GuildDetails
+     * @return BlockListResponse
      */
-    GuildDetails getGuild(String guildId);
+    BlockListResponse socialFriendsBlocksGet();
 
     /**
-     * POST /social/guilds/{guild_id}/invite : Пригласить в гильдию
-     * Отправляет приглашение в гильдию. Требует право INVITE_MEMBERS. 
+     * POST /social/friends/blocks : Добавить игрока в блок или mute
      *
-     * @param guildId  (required)
-     * @param inviteToGuildRequest  (required)
-     * @return Object
+     * @param blockCreateRequest  (required)
+     * @return Void
      */
-    Object inviteToGuild(String guildId, InviteToGuildRequest inviteToGuildRequest);
+    Void socialFriendsBlocksPost(BlockCreateRequest blockCreateRequest);
 
     /**
-     * POST /social/guilds/{guild_id}/join : Вступить в гильдию
-     * Принимает приглашение и вступает в гильдию
+     * DELETE /social/friends/{friendId} : Удалить игрока из друзей
      *
-     * @param guildId  (required)
-     * @param joinGuildRequest  (required)
-     * @return Object
+     * @param friendId Идентификатор дружеской связи/игрока (required)
+     * @return Void
      */
-    Object joinGuild(String guildId, JoinGuildRequest joinGuildRequest);
+    Void socialFriendsFriendIdDelete(String friendId);
 
     /**
-     * POST /social/guilds/{guild_id}/leave : Покинуть гильдию
-     * Покидает гильдию
+     * GET /social/friends : Список друзей текущего игрока
      *
-     * @param guildId  (required)
-     * @param joinGuildRequest  (required)
-     * @return Object
+     * @param includePresence  (optional, default to true)
+     * @param includeMetadata  (optional, default to false)
+     * @return FriendListResponse
      */
-    Object leaveGuild(String guildId, JoinGuildRequest joinGuildRequest);
+    FriendListResponse socialFriendsGet(Boolean includePresence, Boolean includeMetadata);
 
     /**
-     * POST /social/party/create : Создать группу
-     * Создает новую группу. Создатель становится лидером. 
+     * POST /social/friends/invites : Отправить социальное приглашение (party/guild)
      *
-     * @param createPartyRequest  (required)
-     * @return Party
+     * @param socialInviteRequest  (required)
+     * @return Void
      */
-    Party createParty(CreatePartyRequest createPartyRequest);
+    Void socialFriendsInvitesPost(SocialInviteRequest socialInviteRequest);
 
     /**
-     * GET /social/party/{party_id} : Получить информацию о группе
-     * Возвращает детали группы, участников, настройки
+     * POST /social/friends : Отправить запрос в друзья
      *
-     * @param partyId  (required)
-     * @return PartyDetails
+     * @param friendRequestCreate  (required)
+     * @return Void
      */
-    PartyDetails getParty(String partyId);
+    Void socialFriendsPost(FriendRequestCreate friendRequestCreate);
 
     /**
-     * POST /social/party/{party_id}/invite : Пригласить в группу
-     * Отправляет приглашение в группу. Только лидер может приглашать. 
+     * GET /social/friends/presence : Получить актуальные статусы присутствия друзей
      *
-     * @param partyId  (required)
-     * @param inviteToPartyRequest  (required)
-     * @return Object
+     * @return PresenceFeedResponse
      */
-    Object inviteToParty(String partyId, InviteToPartyRequest inviteToPartyRequest);
+    PresenceFeedResponse socialFriendsPresenceGet();
 
     /**
-     * POST /social/party/{party_id}/join : Присоединиться к группе
-     * Принимает приглашение и присоединяется к группе
+     * POST /social/friends/presence : Обновить собственный статус присутствия
      *
-     * @param partyId  (required)
-     * @param joinPartyRequest  (required)
-     * @return Party
+     * @param presenceUpdateRequest  (required)
+     * @return Void
      */
-    Party joinParty(String partyId, JoinPartyRequest joinPartyRequest);
+    Void socialFriendsPresencePost(PresenceUpdateRequest presenceUpdateRequest);
 
     /**
-     * POST /social/party/{party_id}/leave : Покинуть группу
-     * Покидает группу. Если лидер - лидерство передается другому. 
+     * GET /social/friends/recent : Недавние игроки
      *
-     * @param partyId  (required)
-     * @param joinPartyRequest  (required)
-     * @return Object
+     * @return RecentPlayersResponse
      */
-    Object leaveParty(String partyId, JoinPartyRequest joinPartyRequest);
+    RecentPlayersResponse socialFriendsRecentGet();
 
     /**
-     * POST /social/friends/request/{request_id}/accept : Принять запрос в друзья
-     * Принимает запрос, добавляет в friends list
+     * GET /social/friends/requests : Получить входящие и исходящие запросы
      *
-     * @param requestId  (required)
-     * @return Object
+     * @return FriendRequestsResponse
      */
-    Object acceptFriendRequest(String requestId);
+    FriendRequestsResponse socialFriendsRequestsGet();
 
     /**
-     * POST /social/friends/block : Заблокировать игрока
-     * Добавляет игрока в block list. Блокирует сообщения, invites, trade. 
+     * POST /social/friends/requests/{requestId}/accept : Принять запрос
      *
-     * @param blockPlayerRequest  (required)
-     * @return Object
+     * @param requestId Идентификатор запроса в друзья (required)
+     * @return Void
      */
-    Object blockPlayer(BlockPlayerRequest blockPlayerRequest);
+    Void socialFriendsRequestsRequestIdAcceptPost(String requestId);
 
     /**
-     * GET /social/friends : Получить список друзей
-     * Возвращает список друзей с online статусом
+     * POST /social/friends/requests/{requestId}/decline : Отклонить запрос
      *
-     * @param playerId  (required)
-     * @return GetFriends200Response
+     * @param requestId Идентификатор запроса в друзья (required)
+     * @param friendRequestDecline  (optional)
+     * @return Void
      */
-    GetFriends200Response getFriends(String playerId);
+    Void socialFriendsRequestsRequestIdDeclinePost(String requestId, FriendRequestDecline friendRequestDecline);
 
     /**
-     * DELETE /social/friends/{friend_id}/remove : Удалить из друзей
-     * Удаляет игрока из списка друзей
+     * GET /social/friends/suggestions : Рекомендации друзей
      *
-     * @param friendId  (required)
-     * @return Object
+     * @param source  (optional)
+     * @return SuggestionsResponse
      */
-    Object removeFriend(String friendId);
-
-    /**
-     * POST /social/friends/request : Отправить запрос в друзья
-     * Отправляет запрос на добавление в друзья
-     *
-     * @param sendFriendRequestRequest  (required)
-     * @return Object
-     */
-    Object sendFriendRequest(SendFriendRequestRequest sendFriendRequestRequest);
+    SuggestionsResponse socialFriendsSuggestionsGet(String source);
 }
 

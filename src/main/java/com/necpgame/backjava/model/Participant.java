@@ -5,12 +5,14 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.necpgame.backjava.model.ParticipantInitInitialPosition;
-import com.necpgame.backjava.model.ParticipantStats;
+import com.necpgame.backjava.model.StatsSnapshot;
 import com.necpgame.backjava.model.StatusEffect;
+import com.necpgame.backjava.model.Vector3;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -29,21 +31,23 @@ import jakarta.annotation.Generated;
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 public class Participant {
 
-  private @Nullable String id;
+  private @Nullable String participantId;
 
   /**
-   * Gets or Sets type
+   * Gets or Sets kind
    */
-  public enum TypeEnum {
+  public enum KindEnum {
     PLAYER("PLAYER"),
     
     NPC("NPC"),
     
-    AI_ENEMY("AI_ENEMY");
+    SUMMON("SUMMON"),
+    
+    PET("PET");
 
     private final String value;
 
-    TypeEnum(String value) {
+    KindEnum(String value) {
       this.value = value;
     }
 
@@ -58,8 +62,8 @@ public class Participant {
     }
 
     @JsonCreator
-    public static TypeEnum fromValue(String value) {
-      for (TypeEnum b : TypeEnum.values()) {
+    public static KindEnum fromValue(String value) {
+      for (KindEnum b : KindEnum.values()) {
         if (b.value.equals(value)) {
           return b;
         }
@@ -68,200 +72,190 @@ public class Participant {
     }
   }
 
-  private @Nullable TypeEnum type;
+  private @Nullable KindEnum kind;
 
-  private @Nullable String team;
+  private @Nullable String referenceId;
 
-  private @Nullable String characterName;
+  private @Nullable String teamId;
 
-  private @Nullable Integer hp;
+  private @Nullable String propertyClass;
 
-  private @Nullable Integer maxHp;
+  private @Nullable StatsSnapshot stats;
 
-  /**
-   * Gets or Sets status
-   */
-  public enum StatusEnum {
-    ALIVE("ALIVE"),
-    
-    DOWNED("DOWNED"),
-    
-    DEAD("DEAD");
+  @Valid
+  private Map<String, Object> resources = new HashMap<>();
 
-    private final String value;
-
-    StatusEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static StatusEnum fromValue(String value) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
-
-  private @Nullable StatusEnum status;
+  private @Nullable Vector3 position;
 
   @Valid
   private List<@Valid StatusEffect> statusEffects = new ArrayList<>();
 
-  private @Nullable ParticipantInitInitialPosition position;
-
-  private @Nullable ParticipantStats stats;
-
-  public Participant id(@Nullable String id) {
-    this.id = id;
+  public Participant participantId(@Nullable String participantId) {
+    this.participantId = participantId;
     return this;
   }
 
   /**
-   * Get id
-   * @return id
+   * Get participantId
+   * @return participantId
    */
   
-  @Schema(name = "id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("id")
-  public @Nullable String getId() {
-    return id;
+  @Schema(name = "participantId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("participantId")
+  public @Nullable String getParticipantId() {
+    return participantId;
   }
 
-  public void setId(@Nullable String id) {
-    this.id = id;
+  public void setParticipantId(@Nullable String participantId) {
+    this.participantId = participantId;
   }
 
-  public Participant type(@Nullable TypeEnum type) {
-    this.type = type;
+  public Participant kind(@Nullable KindEnum kind) {
+    this.kind = kind;
     return this;
   }
 
   /**
-   * Get type
-   * @return type
+   * Get kind
+   * @return kind
    */
   
-  @Schema(name = "type", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("type")
-  public @Nullable TypeEnum getType() {
-    return type;
+  @Schema(name = "kind", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("kind")
+  public @Nullable KindEnum getKind() {
+    return kind;
   }
 
-  public void setType(@Nullable TypeEnum type) {
-    this.type = type;
+  public void setKind(@Nullable KindEnum kind) {
+    this.kind = kind;
   }
 
-  public Participant team(@Nullable String team) {
-    this.team = team;
+  public Participant referenceId(@Nullable String referenceId) {
+    this.referenceId = referenceId;
     return this;
   }
 
   /**
-   * Get team
-   * @return team
+   * Get referenceId
+   * @return referenceId
    */
   
-  @Schema(name = "team", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("team")
-  public @Nullable String getTeam() {
-    return team;
+  @Schema(name = "referenceId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("referenceId")
+  public @Nullable String getReferenceId() {
+    return referenceId;
   }
 
-  public void setTeam(@Nullable String team) {
-    this.team = team;
+  public void setReferenceId(@Nullable String referenceId) {
+    this.referenceId = referenceId;
   }
 
-  public Participant characterName(@Nullable String characterName) {
-    this.characterName = characterName;
+  public Participant teamId(@Nullable String teamId) {
+    this.teamId = teamId;
     return this;
   }
 
   /**
-   * Get characterName
-   * @return characterName
+   * Get teamId
+   * @return teamId
    */
   
-  @Schema(name = "character_name", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("character_name")
-  public @Nullable String getCharacterName() {
-    return characterName;
+  @Schema(name = "teamId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("teamId")
+  public @Nullable String getTeamId() {
+    return teamId;
   }
 
-  public void setCharacterName(@Nullable String characterName) {
-    this.characterName = characterName;
+  public void setTeamId(@Nullable String teamId) {
+    this.teamId = teamId;
   }
 
-  public Participant hp(@Nullable Integer hp) {
-    this.hp = hp;
+  public Participant propertyClass(@Nullable String propertyClass) {
+    this.propertyClass = propertyClass;
     return this;
   }
 
   /**
-   * Get hp
-   * @return hp
+   * Get propertyClass
+   * @return propertyClass
    */
   
-  @Schema(name = "hp", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("hp")
-  public @Nullable Integer getHp() {
-    return hp;
+  @Schema(name = "class", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("class")
+  public @Nullable String getPropertyClass() {
+    return propertyClass;
   }
 
-  public void setHp(@Nullable Integer hp) {
-    this.hp = hp;
+  public void setPropertyClass(@Nullable String propertyClass) {
+    this.propertyClass = propertyClass;
   }
 
-  public Participant maxHp(@Nullable Integer maxHp) {
-    this.maxHp = maxHp;
+  public Participant stats(@Nullable StatsSnapshot stats) {
+    this.stats = stats;
     return this;
   }
 
   /**
-   * Get maxHp
-   * @return maxHp
+   * Get stats
+   * @return stats
    */
-  
-  @Schema(name = "max_hp", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("max_hp")
-  public @Nullable Integer getMaxHp() {
-    return maxHp;
+  @Valid 
+  @Schema(name = "stats", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("stats")
+  public @Nullable StatsSnapshot getStats() {
+    return stats;
   }
 
-  public void setMaxHp(@Nullable Integer maxHp) {
-    this.maxHp = maxHp;
+  public void setStats(@Nullable StatsSnapshot stats) {
+    this.stats = stats;
   }
 
-  public Participant status(@Nullable StatusEnum status) {
-    this.status = status;
+  public Participant resources(Map<String, Object> resources) {
+    this.resources = resources;
+    return this;
+  }
+
+  public Participant putResourcesItem(String key, Object resourcesItem) {
+    if (this.resources == null) {
+      this.resources = new HashMap<>();
+    }
+    this.resources.put(key, resourcesItem);
     return this;
   }
 
   /**
-   * Get status
-   * @return status
+   * Get resources
+   * @return resources
    */
   
-  @Schema(name = "status", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("status")
-  public @Nullable StatusEnum getStatus() {
-    return status;
+  @Schema(name = "resources", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("resources")
+  public Map<String, Object> getResources() {
+    return resources;
   }
 
-  public void setStatus(@Nullable StatusEnum status) {
-    this.status = status;
+  public void setResources(Map<String, Object> resources) {
+    this.resources = resources;
+  }
+
+  public Participant position(@Nullable Vector3 position) {
+    this.position = position;
+    return this;
+  }
+
+  /**
+   * Get position
+   * @return position
+   */
+  @Valid 
+  @Schema(name = "position", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("position")
+  public @Nullable Vector3 getPosition() {
+    return position;
+  }
+
+  public void setPosition(@Nullable Vector3 position) {
+    this.position = position;
   }
 
   public Participant statusEffects(List<@Valid StatusEffect> statusEffects) {
@@ -282,54 +276,14 @@ public class Participant {
    * @return statusEffects
    */
   @Valid 
-  @Schema(name = "status_effects", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("status_effects")
+  @Schema(name = "statusEffects", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("statusEffects")
   public List<@Valid StatusEffect> getStatusEffects() {
     return statusEffects;
   }
 
   public void setStatusEffects(List<@Valid StatusEffect> statusEffects) {
     this.statusEffects = statusEffects;
-  }
-
-  public Participant position(@Nullable ParticipantInitInitialPosition position) {
-    this.position = position;
-    return this;
-  }
-
-  /**
-   * Get position
-   * @return position
-   */
-  @Valid 
-  @Schema(name = "position", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("position")
-  public @Nullable ParticipantInitInitialPosition getPosition() {
-    return position;
-  }
-
-  public void setPosition(@Nullable ParticipantInitInitialPosition position) {
-    this.position = position;
-  }
-
-  public Participant stats(@Nullable ParticipantStats stats) {
-    this.stats = stats;
-    return this;
-  }
-
-  /**
-   * Get stats
-   * @return stats
-   */
-  @Valid 
-  @Schema(name = "stats", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("stats")
-  public @Nullable ParticipantStats getStats() {
-    return stats;
-  }
-
-  public void setStats(@Nullable ParticipantStats stats) {
-    this.stats = stats;
   }
 
   @Override
@@ -341,37 +295,35 @@ public class Participant {
       return false;
     }
     Participant participant = (Participant) o;
-    return Objects.equals(this.id, participant.id) &&
-        Objects.equals(this.type, participant.type) &&
-        Objects.equals(this.team, participant.team) &&
-        Objects.equals(this.characterName, participant.characterName) &&
-        Objects.equals(this.hp, participant.hp) &&
-        Objects.equals(this.maxHp, participant.maxHp) &&
-        Objects.equals(this.status, participant.status) &&
-        Objects.equals(this.statusEffects, participant.statusEffects) &&
+    return Objects.equals(this.participantId, participant.participantId) &&
+        Objects.equals(this.kind, participant.kind) &&
+        Objects.equals(this.referenceId, participant.referenceId) &&
+        Objects.equals(this.teamId, participant.teamId) &&
+        Objects.equals(this.propertyClass, participant.propertyClass) &&
+        Objects.equals(this.stats, participant.stats) &&
+        Objects.equals(this.resources, participant.resources) &&
         Objects.equals(this.position, participant.position) &&
-        Objects.equals(this.stats, participant.stats);
+        Objects.equals(this.statusEffects, participant.statusEffects);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, type, team, characterName, hp, maxHp, status, statusEffects, position, stats);
+    return Objects.hash(participantId, kind, referenceId, teamId, propertyClass, stats, resources, position, statusEffects);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Participant {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    team: ").append(toIndentedString(team)).append("\n");
-    sb.append("    characterName: ").append(toIndentedString(characterName)).append("\n");
-    sb.append("    hp: ").append(toIndentedString(hp)).append("\n");
-    sb.append("    maxHp: ").append(toIndentedString(maxHp)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("    statusEffects: ").append(toIndentedString(statusEffects)).append("\n");
-    sb.append("    position: ").append(toIndentedString(position)).append("\n");
+    sb.append("    participantId: ").append(toIndentedString(participantId)).append("\n");
+    sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
+    sb.append("    referenceId: ").append(toIndentedString(referenceId)).append("\n");
+    sb.append("    teamId: ").append(toIndentedString(teamId)).append("\n");
+    sb.append("    propertyClass: ").append(toIndentedString(propertyClass)).append("\n");
     sb.append("    stats: ").append(toIndentedString(stats)).append("\n");
+    sb.append("    resources: ").append(toIndentedString(resources)).append("\n");
+    sb.append("    position: ").append(toIndentedString(position)).append("\n");
+    sb.append("    statusEffects: ").append(toIndentedString(statusEffects)).append("\n");
     sb.append("}");
     return sb.toString();
   }

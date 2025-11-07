@@ -4,13 +4,11 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.necpgame.backjava.model.LeaderboardEntry;
-import java.time.OffsetDateTime;
+import com.necpgame.backjava.model.LeaderboardResponseEntriesInner;
+import com.necpgame.backjava.model.PaginationMeta;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -29,101 +27,17 @@ import jakarta.annotation.Generated;
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 public class LeaderboardResponse {
 
-  private @Nullable String category;
-
-  /**
-   * Gets or Sets leaderboardType
-   */
-  public enum LeaderboardTypeEnum {
-    GLOBAL("GLOBAL"),
-    
-    SEASONAL("SEASONAL"),
-    
-    FRIENDS("FRIENDS");
-
-    private final String value;
-
-    LeaderboardTypeEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static LeaderboardTypeEnum fromValue(String value) {
-      for (LeaderboardTypeEnum b : LeaderboardTypeEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
-
-  private @Nullable LeaderboardTypeEnum leaderboardType;
-
   @Valid
-  private List<@Valid LeaderboardEntry> entries = new ArrayList<>();
+  private List<@Valid LeaderboardResponseEntriesInner> entries = new ArrayList<>();
 
-  private @Nullable Integer totalEntries;
+  private @Nullable PaginationMeta pagination;
 
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private @Nullable OffsetDateTime updatedAt;
-
-  public LeaderboardResponse category(@Nullable String category) {
-    this.category = category;
-    return this;
-  }
-
-  /**
-   * Get category
-   * @return category
-   */
-  
-  @Schema(name = "category", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("category")
-  public @Nullable String getCategory() {
-    return category;
-  }
-
-  public void setCategory(@Nullable String category) {
-    this.category = category;
-  }
-
-  public LeaderboardResponse leaderboardType(@Nullable LeaderboardTypeEnum leaderboardType) {
-    this.leaderboardType = leaderboardType;
-    return this;
-  }
-
-  /**
-   * Get leaderboardType
-   * @return leaderboardType
-   */
-  
-  @Schema(name = "leaderboard_type", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("leaderboard_type")
-  public @Nullable LeaderboardTypeEnum getLeaderboardType() {
-    return leaderboardType;
-  }
-
-  public void setLeaderboardType(@Nullable LeaderboardTypeEnum leaderboardType) {
-    this.leaderboardType = leaderboardType;
-  }
-
-  public LeaderboardResponse entries(List<@Valid LeaderboardEntry> entries) {
+  public LeaderboardResponse entries(List<@Valid LeaderboardResponseEntriesInner> entries) {
     this.entries = entries;
     return this;
   }
 
-  public LeaderboardResponse addEntriesItem(LeaderboardEntry entriesItem) {
+  public LeaderboardResponse addEntriesItem(LeaderboardResponseEntriesInner entriesItem) {
     if (this.entries == null) {
       this.entries = new ArrayList<>();
     }
@@ -138,52 +52,32 @@ public class LeaderboardResponse {
   @Valid 
   @Schema(name = "entries", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("entries")
-  public List<@Valid LeaderboardEntry> getEntries() {
+  public List<@Valid LeaderboardResponseEntriesInner> getEntries() {
     return entries;
   }
 
-  public void setEntries(List<@Valid LeaderboardEntry> entries) {
+  public void setEntries(List<@Valid LeaderboardResponseEntriesInner> entries) {
     this.entries = entries;
   }
 
-  public LeaderboardResponse totalEntries(@Nullable Integer totalEntries) {
-    this.totalEntries = totalEntries;
+  public LeaderboardResponse pagination(@Nullable PaginationMeta pagination) {
+    this.pagination = pagination;
     return this;
   }
 
   /**
-   * Get totalEntries
-   * @return totalEntries
-   */
-  
-  @Schema(name = "total_entries", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("total_entries")
-  public @Nullable Integer getTotalEntries() {
-    return totalEntries;
-  }
-
-  public void setTotalEntries(@Nullable Integer totalEntries) {
-    this.totalEntries = totalEntries;
-  }
-
-  public LeaderboardResponse updatedAt(@Nullable OffsetDateTime updatedAt) {
-    this.updatedAt = updatedAt;
-    return this;
-  }
-
-  /**
-   * Get updatedAt
-   * @return updatedAt
+   * Get pagination
+   * @return pagination
    */
   @Valid 
-  @Schema(name = "updated_at", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("updated_at")
-  public @Nullable OffsetDateTime getUpdatedAt() {
-    return updatedAt;
+  @Schema(name = "pagination", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("pagination")
+  public @Nullable PaginationMeta getPagination() {
+    return pagination;
   }
 
-  public void setUpdatedAt(@Nullable OffsetDateTime updatedAt) {
-    this.updatedAt = updatedAt;
+  public void setPagination(@Nullable PaginationMeta pagination) {
+    this.pagination = pagination;
   }
 
   @Override
@@ -195,27 +89,21 @@ public class LeaderboardResponse {
       return false;
     }
     LeaderboardResponse leaderboardResponse = (LeaderboardResponse) o;
-    return Objects.equals(this.category, leaderboardResponse.category) &&
-        Objects.equals(this.leaderboardType, leaderboardResponse.leaderboardType) &&
-        Objects.equals(this.entries, leaderboardResponse.entries) &&
-        Objects.equals(this.totalEntries, leaderboardResponse.totalEntries) &&
-        Objects.equals(this.updatedAt, leaderboardResponse.updatedAt);
+    return Objects.equals(this.entries, leaderboardResponse.entries) &&
+        Objects.equals(this.pagination, leaderboardResponse.pagination);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(category, leaderboardType, entries, totalEntries, updatedAt);
+    return Objects.hash(entries, pagination);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class LeaderboardResponse {\n");
-    sb.append("    category: ").append(toIndentedString(category)).append("\n");
-    sb.append("    leaderboardType: ").append(toIndentedString(leaderboardType)).append("\n");
     sb.append("    entries: ").append(toIndentedString(entries)).append("\n");
-    sb.append("    totalEntries: ").append(toIndentedString(totalEntries)).append("\n");
-    sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
+    sb.append("    pagination: ").append(toIndentedString(pagination)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -2,6 +2,7 @@ package com.necpgame.backjava.service.impl;
 
 import com.necpgame.backjava.model.*;
 import com.necpgame.backjava.repository.*;
+import com.necpgame.backjava.repository.specification.LoreLocationSpecifications;
 import com.necpgame.backjava.service.LocationsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.util.StringUtils;
+import com.necpgame.backjava.model.LoreLocationType;
+import com.necpgame.backjava.model.LoreLocationEntity;
 
 /**
  * Р РµР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІРёСЃР° РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РёРіСЂРѕРІС‹РјРё Р»РѕРєР°С†РёСЏРјРё.
@@ -29,7 +34,18 @@ public class LocationsServiceImpl implements LocationsService {
         log.info("Getting locations for character: {} (region: {}, dangerLevel: {}, minLevel: {})", 
                  characterId, region, dangerLevel, minLevel);
         
-        // TODO: РџРѕР»РЅР°СЏ СЂРµР°Р»РёР·Р°С†РёСЏ (Р·Р°РіСЂСѓР·РёС‚СЊ РґРѕСЃС‚СѓРїРЅС‹Рµ Р»РѕРєР°С†РёРё, СѓС‡РµСЃС‚СЊ С‚СЂРµР±РѕРІР°РЅРёСЏ Рё С„РёР»СЊС‚СЂС‹)
+        Specification<LoreLocationEntity> specification = Specification.where(null);
+
+        if (StringUtils.hasText(type)) {
+            LoreLocationType locationType = toLocationType(type);
+            specification = specification == null
+                    ? LoreLocationSpecifications.hasType(locationType)
+                    : specification.and(LoreLocationSpecifications.hasType(locationType));
+        }
+        if (StringUtils.hasText(region)) {
+            Specification<LoreLocationEntity> regionSpec = LoreLocationSpecifications.hasRegion(region);
+            specification = specification == null ? regionSpec : specification.and(regionSpec);
+        }
         return null;
     }
     

@@ -1,18 +1,24 @@
 package com.necpgame.backjava.service;
 
-import com.necpgame.backjava.model.CombatEndResult;
-import com.necpgame.backjava.model.CombatSession;
-import com.necpgame.backjava.model.CreateCombatSessionRequest;
-import com.necpgame.backjava.model.DamageRequest;
-import com.necpgame.backjava.model.DamageResult;
-import com.necpgame.backjava.model.EndCombatSessionRequest;
+import com.necpgame.backjava.model.BattlePassRewardError;
+import com.necpgame.backjava.model.BoostActivationRequest;
+import com.necpgame.backjava.model.BoostActivationResponse;
+import com.necpgame.backjava.model.BoostStatusResponse;
+import com.necpgame.backjava.model.Challenge;
+import com.necpgame.backjava.model.ChallengeCompleteRequest;
+import com.necpgame.backjava.model.ChallengeListResponse;
+import com.necpgame.backjava.model.ChallengeProgressUpdateRequest;
+import com.necpgame.backjava.model.ChallengeRerollRequest;
 import com.necpgame.backjava.model.Error;
-import com.necpgame.backjava.model.GetCombatEvents200Response;
-import com.necpgame.backjava.model.NextTurn200Response;
-import org.springframework.lang.NonNull;
+import com.necpgame.backjava.model.LeaderboardResponse;
 import org.springframework.lang.Nullable;
-import java.util.UUID;
-import com.necpgame.backjava.model.UpdateParticipantStatusRequest;
+import com.necpgame.backjava.model.RewardAnalyticsResponse;
+import com.necpgame.backjava.model.RewardClaimRequest;
+import com.necpgame.backjava.model.RewardClaimResponse;
+import com.necpgame.backjava.model.RewardDefinition;
+import com.necpgame.backjava.model.RewardDefinitionList;
+import com.necpgame.backjava.model.RewardHistoryResponse;
+import com.necpgame.backjava.model.RewardRerollRequest;
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -25,65 +31,112 @@ import org.springframework.validation.annotation.Validated;
 public interface GameplayService {
 
     /**
-     * POST /gameplay/combat/sessions/{session_id}/damage : Нанести урон
+     * GET /gameplay/battle-pass/analytics/rewards : Аналитика наград и челленджей
      *
-     * @param sessionId  (required)
-     * @param damageRequest  (required)
-     * @return DamageResult
+     * @param seasonId  (optional)
+     * @param range  (optional, default to 7d)
+     * @return RewardAnalyticsResponse
      */
-    DamageResult applyDamage(@NonNull UUID sessionId, DamageRequest damageRequest);
+    RewardAnalyticsResponse gameplayBattlePassAnalyticsRewardsGet(String seasonId, String range);
 
     /**
-     * POST /gameplay/combat/sessions : Создать боевую сессию
+     * POST /gameplay/battle-pass/boosts/activate : Активировать XP boost
      *
-     * @param createCombatSessionRequest  (required)
-     * @return CombatSession
+     * @param boostActivationRequest  (required)
+     * @return BoostActivationResponse
      */
-    CombatSession createCombatSession(CreateCombatSessionRequest createCombatSessionRequest);
+    BoostActivationResponse gameplayBattlePassBoostsActivatePost(BoostActivationRequest boostActivationRequest);
 
     /**
-     * POST /gameplay/combat/sessions/{session_id}/end : Завершить бой
+     * GET /gameplay/battle-pass/boosts : Активные и доступные бусты XP
      *
-     * @param sessionId  (required)
-     * @param endCombatSessionRequest  (required)
-     * @return CombatEndResult
+     * @return BoostStatusResponse
      */
-    CombatEndResult endCombatSession(@NonNull UUID sessionId, EndCombatSessionRequest endCombatSessionRequest);
+    BoostStatusResponse gameplayBattlePassBoostsGet();
 
     /**
-     * GET /gameplay/combat/sessions/{session_id}/events : Получить лог событий боя
+     * POST /gameplay/battle-pass/challenges/{challengeId}/complete : Завершить челлендж и выдать награду
      *
-     * @param sessionId  (required)
-     * @param sinceEventId Получить события после указанного ID (optional)
-     * @return GetCombatEvents200Response
+     * @param challengeId Идентификатор челленджа Battle Pass (required)
+     * @param challengeCompleteRequest  (required)
+     * @return RewardClaimResponse
      */
-    GetCombatEvents200Response getCombatEvents(@NonNull UUID sessionId, Integer sinceEventId);
+    RewardClaimResponse gameplayBattlePassChallengesChallengeIdCompletePost(String challengeId, ChallengeCompleteRequest challengeCompleteRequest);
 
     /**
-     * GET /gameplay/combat/sessions/{session_id} : Получить состояние боевой сессии
+     * POST /gameplay/battle-pass/challenges/{challengeId}/progress : Обновить прогресс челленджа (service token)
      *
-     * @param sessionId  (required)
-     * @return CombatSession
-     */
-    CombatSession getCombatSession(@NonNull UUID sessionId);
-
-    /**
-     * POST /gameplay/combat/sessions/{session_id}/turn/next : Следующий ход
-     * Для turn-based combat
-     *
-     * @param sessionId  (required)
-     * @return NextTurn200Response
-     */
-    NextTurn200Response nextTurn(@NonNull UUID sessionId);
-
-    /**
-     * PUT /gameplay/combat/sessions/{session_id}/participants/{participant_id}/status : Обновить статус участника
-     *
-     * @param sessionId  (required)
-     * @param participantId  (required)
-     * @param updateParticipantStatusRequest  (required)
+     * @param challengeId Идентификатор челленджа Battle Pass (required)
+     * @param challengeProgressUpdateRequest  (required)
      * @return Void
      */
-    Void updateParticipantStatus(@NonNull UUID sessionId, @NonNull String participantId, UpdateParticipantStatusRequest updateParticipantStatusRequest);
+    Void gameplayBattlePassChallengesChallengeIdProgressPost(String challengeId, ChallengeProgressUpdateRequest challengeProgressUpdateRequest);
+
+    /**
+     * POST /gameplay/battle-pass/challenges/{challengeId}/reroll : Реролл челленджа
+     *
+     * @param challengeId Идентификатор челленджа Battle Pass (required)
+     * @param challengeRerollRequest  (required)
+     * @return Challenge
+     */
+    Challenge gameplayBattlePassChallengesChallengeIdRerollPost(String challengeId, ChallengeRerollRequest challengeRerollRequest);
+
+    /**
+     * GET /gameplay/battle-pass/challenges/daily : Активные дневные челленджи игрока
+     *
+     * @return ChallengeListResponse
+     */
+    ChallengeListResponse gameplayBattlePassChallengesDailyGet();
+
+    /**
+     * GET /gameplay/battle-pass/challenges/weekly : Активные недельные челленджи
+     *
+     * @return ChallengeListResponse
+     */
+    ChallengeListResponse gameplayBattlePassChallengesWeeklyGet();
+
+    /**
+     * GET /gameplay/battle-pass/leaderboard : Лидерборд по челленджам/наградам
+     *
+     * @param metric  (optional, default to challenge_points)
+     * @param page Номер страницы (начинается с 1) (optional, default to 1)
+     * @param pageSize Количество элементов на странице (optional, default to 20)
+     * @return LeaderboardResponse
+     */
+    LeaderboardResponse gameplayBattlePassLeaderboardGet(String metric, Integer page, Integer pageSize);
+
+    /**
+     * POST /gameplay/battle-pass/rewards/claim : Получить награду уровня
+     *
+     * @param rewardClaimRequest  (required)
+     * @return RewardClaimResponse
+     */
+    RewardClaimResponse gameplayBattlePassRewardsClaimPost(RewardClaimRequest rewardClaimRequest);
+
+    /**
+     * GET /gameplay/battle-pass/rewards : Список наград сезона
+     *
+     * @param track  (optional)
+     * @param rarity  (optional)
+     * @return RewardDefinitionList
+     */
+    RewardDefinitionList gameplayBattlePassRewardsGet(String track, String rarity);
+
+    /**
+     * GET /gameplay/battle-pass/rewards/history : История полученных наград
+     *
+     * @param page Номер страницы (начинается с 1) (optional, default to 1)
+     * @param pageSize Количество элементов на странице (optional, default to 20)
+     * @return RewardHistoryResponse
+     */
+    RewardHistoryResponse gameplayBattlePassRewardsHistoryGet(Integer page, Integer pageSize);
+
+    /**
+     * POST /gameplay/battle-pass/rewards/reroll : Реролл награды уровня
+     *
+     * @param rewardRerollRequest  (required)
+     * @return RewardDefinition
+     */
+    RewardDefinition gameplayBattlePassRewardsRerollPost(RewardRerollRequest rewardRerollRequest);
 }
 

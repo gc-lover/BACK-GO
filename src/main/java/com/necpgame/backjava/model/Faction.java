@@ -5,10 +5,6 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -24,22 +20,24 @@ import jakarta.annotation.Generated;
  * Faction
  */
 
-
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 public class Faction {
 
-  private UUID id;
+  private @Nullable String factionId;
 
-  private String name;
+  private @Nullable String name;
 
   /**
-   * РўРёРї С„СЂР°РєС†РёРё
+   * Gets or Sets type
    */
   public enum TypeEnum {
-    CORPORATION("corporation"),
+    CORPORATION("CORPORATION"),
     
-    GANG("gang"),
+    GANG("GANG"),
     
-    ORGANIZATION("organization");
+    ORGANIZATION("ORGANIZATION"),
+    
+    GOVERNMENT("GOVERNMENT");
 
     private final String value;
 
@@ -68,171 +66,134 @@ public class Faction {
     }
   }
 
-  private TypeEnum type;
+  private @Nullable TypeEnum type;
 
-  private String description;
+  private @Nullable String region;
 
-  /**
-   * Gets or Sets availableForOrigins
-   */
-  public enum AvailableForOriginsEnum {
-    STREET_KID("street_kid"),
-    
-    CORPO("corpo"),
-    
-    NOMAD("nomad");
+  private @Nullable Integer powerLevel;
 
-    private final String value;
+  private @Nullable String descriptionShort;
 
-    AvailableForOriginsEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static AvailableForOriginsEnum fromValue(String value) {
-      for (AvailableForOriginsEnum b : AvailableForOriginsEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
-
-  @Valid
-  private List<AvailableForOriginsEnum> availableForOrigins = new ArrayList<>();
-
-  public Faction() {
-    super();
-  }
-
-  /**
-   * Constructor with only required parameters
-   */
-  public Faction(UUID id, String name, TypeEnum type, String description, List<AvailableForOriginsEnum> availableForOrigins) {
-    this.id = id;
-    this.name = name;
-    this.type = type;
-    this.description = description;
-    this.availableForOrigins = availableForOrigins;
-  }
-
-  public Faction id(UUID id) {
-    this.id = id;
+  public Faction factionId(@Nullable String factionId) {
+    this.factionId = factionId;
     return this;
   }
 
   /**
-   * РЈРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С„СЂР°РєС†РёРё
-   * @return id
+   * Get factionId
+   * @return factionId
    */
-  @NotNull @Valid 
-  @Schema(name = "id", example = "550e8400-e29b-41d4-a716-446655440000", description = "РЈРЅРёРєР°Р»СЊРЅС‹Р№ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ С„СЂР°РєС†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("id")
-  public UUID getId() {
-    return id;
+  
+  @Schema(name = "faction_id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("faction_id")
+  public @Nullable String getFactionId() {
+    return factionId;
   }
 
-  public void setId(UUID id) {
-    this.id = id;
+  public void setFactionId(@Nullable String factionId) {
+    this.factionId = factionId;
   }
 
-  public Faction name(String name) {
+  public Faction name(@Nullable String name) {
     this.name = name;
     return this;
   }
 
   /**
-   * РќР°Р·РІР°РЅРёРµ С„СЂР°РєС†РёРё
+   * Get name
    * @return name
    */
-  @NotNull 
-  @Schema(name = "name", example = "Arasaka", description = "РќР°Р·РІР°РЅРёРµ С„СЂР°РєС†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
+  
+  @Schema(name = "name", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("name")
-  public String getName() {
+  public @Nullable String getName() {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(@Nullable String name) {
     this.name = name;
   }
 
-  public Faction type(TypeEnum type) {
+  public Faction type(@Nullable TypeEnum type) {
     this.type = type;
     return this;
   }
 
   /**
-   * РўРёРї С„СЂР°РєС†РёРё
+   * Get type
    * @return type
    */
-  @NotNull 
-  @Schema(name = "type", example = "corporation", description = "РўРёРї С„СЂР°РєС†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
+  
+  @Schema(name = "type", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("type")
-  public TypeEnum getType() {
+  public @Nullable TypeEnum getType() {
     return type;
   }
 
-  public void setType(TypeEnum type) {
+  public void setType(@Nullable TypeEnum type) {
     this.type = type;
   }
 
-  public Faction description(String description) {
-    this.description = description;
+  public Faction region(@Nullable String region) {
+    this.region = region;
     return this;
   }
 
   /**
-   * РћРїРёСЃР°РЅРёРµ С„СЂР°РєС†РёРё
-   * @return description
+   * Get region
+   * @return region
    */
-  @NotNull 
-  @Schema(name = "description", example = "РљРѕСЂРїРѕСЂР°С†РёСЏ, С‚РµС…РЅРѕР»РѕРіРёРё, РІР»Р°СЃС‚СЊ", description = "РћРїРёСЃР°РЅРёРµ С„СЂР°РєС†РёРё", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("description")
-  public String getDescription() {
-    return description;
+  
+  @Schema(name = "region", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("region")
+  public @Nullable String getRegion() {
+    return region;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
+  public void setRegion(@Nullable String region) {
+    this.region = region;
   }
 
-  public Faction availableForOrigins(List<AvailableForOriginsEnum> availableForOrigins) {
-    this.availableForOrigins = availableForOrigins;
-    return this;
-  }
-
-  public Faction addAvailableForOriginsItem(AvailableForOriginsEnum availableForOriginsItem) {
-    if (this.availableForOrigins == null) {
-      this.availableForOrigins = new ArrayList<>();
-    }
-    this.availableForOrigins.add(availableForOriginsItem);
+  public Faction powerLevel(@Nullable Integer powerLevel) {
+    this.powerLevel = powerLevel;
     return this;
   }
 
   /**
-   * РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёР№ РґР»СЏ СЃС‚Р°СЂС‚Р°
-   * @return availableForOrigins
+   * Get powerLevel
+   * minimum: 1
+   * maximum: 10
+   * @return powerLevel
    */
-  @NotNull 
-  @Schema(name = "available_for_origins", example = "[\"corpo\",\"street_kid\"]", description = "РЎРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РїСЂРѕРёСЃС…РѕР¶РґРµРЅРёР№ РґР»СЏ СЃС‚Р°СЂС‚Р°", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("available_for_origins")
-  public List<AvailableForOriginsEnum> getAvailableForOrigins() {
-    return availableForOrigins;
+  @Min(value = 1) @Max(value = 10) 
+  @Schema(name = "power_level", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("power_level")
+  public @Nullable Integer getPowerLevel() {
+    return powerLevel;
   }
 
-  public void setAvailableForOrigins(List<AvailableForOriginsEnum> availableForOrigins) {
-    this.availableForOrigins = availableForOrigins;
+  public void setPowerLevel(@Nullable Integer powerLevel) {
+    this.powerLevel = powerLevel;
+  }
+
+  public Faction descriptionShort(@Nullable String descriptionShort) {
+    this.descriptionShort = descriptionShort;
+    return this;
+  }
+
+  /**
+   * Get descriptionShort
+   * @return descriptionShort
+   */
+  
+  @Schema(name = "description_short", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("description_short")
+  public @Nullable String getDescriptionShort() {
+    return descriptionShort;
+  }
+
+  public void setDescriptionShort(@Nullable String descriptionShort) {
+    this.descriptionShort = descriptionShort;
   }
 
   @Override
@@ -244,27 +205,29 @@ public class Faction {
       return false;
     }
     Faction faction = (Faction) o;
-    return Objects.equals(this.id, faction.id) &&
+    return Objects.equals(this.factionId, faction.factionId) &&
         Objects.equals(this.name, faction.name) &&
         Objects.equals(this.type, faction.type) &&
-        Objects.equals(this.description, faction.description) &&
-        Objects.equals(this.availableForOrigins, faction.availableForOrigins);
+        Objects.equals(this.region, faction.region) &&
+        Objects.equals(this.powerLevel, faction.powerLevel) &&
+        Objects.equals(this.descriptionShort, faction.descriptionShort);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, type, description, availableForOrigins);
+    return Objects.hash(factionId, name, type, region, powerLevel, descriptionShort);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Faction {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    factionId: ").append(toIndentedString(factionId)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("    availableForOrigins: ").append(toIndentedString(availableForOrigins)).append("\n");
+    sb.append("    region: ").append(toIndentedString(region)).append("\n");
+    sb.append("    powerLevel: ").append(toIndentedString(powerLevel)).append("\n");
+    sb.append("    descriptionShort: ").append(toIndentedString(descriptionShort)).append("\n");
     sb.append("}");
     return sb.toString();
   }

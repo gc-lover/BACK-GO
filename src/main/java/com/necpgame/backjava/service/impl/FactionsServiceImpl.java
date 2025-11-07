@@ -3,6 +3,7 @@ package com.necpgame.backjava.service.impl;
 import com.necpgame.backjava.model.Faction;
 import com.necpgame.backjava.model.GetFactions200Response;
 import com.necpgame.backjava.repository.FactionRepository;
+import com.necpgame.backjava.repository.specification.LoreFactionSpecifications;
 import com.necpgame.backjava.service.FactionsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.Collectors;
+import org.springframework.data.jpa.domain.Specification;
+import com.necpgame.backjava.model.LoreFactionType;
+import com.necpgame.backjava.model.LoreFactionEntity;
+import org.springframework.util.StringUtils;
 
 /**
  * Р РµР°Р»РёР·Р°С†РёСЏ СЃРµСЂРІРёСЃР° С„СЂР°РєС†РёР№

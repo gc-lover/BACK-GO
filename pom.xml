@@ -125,6 +125,18 @@
             <version>1.5.5.Final</version>
         </dependency>
 
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+
         <!-- Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -202,6 +214,7 @@
                                 <argument>generate</argument>
                                 <argument>-i</argument>
                                 <argument>${openapi.spec}</argument>
+                                <argument>--skip-validate-spec</argument>
                                 <argument>-g</argument>
                                 <argument>spring</argument>
                                 <argument>-o</argument>
@@ -238,6 +251,7 @@
                                 <argument>generate</argument>
                                 <argument>-i</argument>
                                 <argument>${openapi.spec}</argument>
+                                <argument>--skip-validate-spec</argument>
                                 <argument>-g</argument>
                                 <argument>spring</argument>
                                 <argument>-t</argument>

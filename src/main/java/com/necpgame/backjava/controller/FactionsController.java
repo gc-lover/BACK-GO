@@ -29,5 +29,9 @@ public class FactionsController implements FactionsApi {
         GetFactions200Response response = factionsService.getFactions(origin);
         return ResponseEntity.ok(response);
     }
+
+    public ResponseEntity<GetFactions200Response> listFactions(String type, String region, Integer page, Integer pageSize) {
+        return ResponseEntity.ok(factionsService.listFactions(type, region, page, pageSize));
+    }
 }
 

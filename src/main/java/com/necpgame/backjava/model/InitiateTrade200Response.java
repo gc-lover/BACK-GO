@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("initiateTrade_200_response")
-
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 public class InitiateTrade200Response {
 
   private @Nullable String tradeSessionId;

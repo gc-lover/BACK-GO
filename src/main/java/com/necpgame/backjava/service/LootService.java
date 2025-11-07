@@ -1,11 +1,35 @@
 package com.necpgame.backjava.service;
 
-import com.necpgame.backjava.model.GenerateLootRequest;
-import com.necpgame.backjava.model.GeneratedLoot;
-import com.necpgame.backjava.model.GetRollResult200Response;
-import com.necpgame.backjava.model.LootDrop;
-import com.necpgame.backjava.model.LootItem200Response;
-import com.necpgame.backjava.model.LootItemRequest;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.necpgame.backjava.model.DistributionResult;
+import com.necpgame.backjava.model.Error;
+import com.necpgame.backjava.model.GuaranteedDistributionRequest;
+import com.necpgame.backjava.model.LootConfigResponse;
+import com.necpgame.backjava.model.LootEntryBatchRequest;
+import com.necpgame.backjava.model.LootEventNotificationRequest;
+import com.necpgame.backjava.model.LootGenerationError;
+import com.necpgame.backjava.model.LootGenerationRequest;
+import com.necpgame.backjava.model.LootGenerationResult;
+import com.necpgame.backjava.model.LootHistoryResponse;
+import com.necpgame.backjava.model.LootReleaseRequest;
+import com.necpgame.backjava.model.LootReservationResponse;
+import com.necpgame.backjava.model.LootReserveRequest;
+import com.necpgame.backjava.model.LootRoll;
+import com.necpgame.backjava.model.LootStatsResponse;
+import com.necpgame.backjava.model.LootTableListResponse;
+import com.necpgame.backjava.model.LootTableSummary;
+import com.necpgame.backjava.model.LootTableUpsertRequest;
+import org.springframework.lang.Nullable;
+import java.time.OffsetDateTime;
+import com.necpgame.backjava.model.PersonalDistributionRequest;
+import com.necpgame.backjava.model.PityTimerState;
+import com.necpgame.backjava.model.PityTimerUpdateRequest;
+import com.necpgame.backjava.model.RaidDistributionRequest;
+import com.necpgame.backjava.model.RollStartRequest;
+import com.necpgame.backjava.model.SharedDistributionRequest;
+import com.necpgame.backjava.model.SimulationRequest;
+import com.necpgame.backjava.model.SimulationResponse;
+import java.util.UUID;
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -18,40 +42,169 @@ import org.springframework.validation.annotation.Validated;
 public interface LootService {
 
     /**
-     * POST /loot/generate : Сгенерировать лут
-     * Генерирует лут из loot table. Используется при убийстве NPC, открытии контейнера. 
+     * GET /loot/config : Получить конфигурацию модификаторов лута
      *
-     * @param generateLootRequest  (required)
-     * @return GeneratedLoot
+     * @return LootConfigResponse
      */
-    GeneratedLoot generateLoot(GenerateLootRequest generateLootRequest);
+    LootConfigResponse lootConfigGet();
 
     /**
-     * GET /loot/drops/{drop_id} : Получить информацию о дропе
-     * Возвращает информацию о выпавшем луте. Для отображения в мире. 
+     * POST /loot/distribution/guaranteed : Выдать гарантированную награду
      *
-     * @param dropId  (required)
-     * @return LootDrop
+     * @param guaranteedDistributionRequest  (required)
+     * @return Void
      */
-    LootDrop getLootDrop(String dropId);
+    Void lootDistributionGuaranteedPost(GuaranteedDistributionRequest guaranteedDistributionRequest);
 
     /**
-     * GET /loot/rolls/{roll_id}/result : Получить результат ролла
-     * Возвращает результат ролла (после 60s или когда все проголосовали). Winner получает предмет. 
+     * POST /loot/distribution/personal : Выдать персональный лут
      *
-     * @param rollId  (required)
-     * @return GetRollResult200Response
+     * @param personalDistributionRequest  (required)
+     * @return DistributionResult
      */
-    GetRollResult200Response getRollResult(String rollId);
+    DistributionResult lootDistributionPersonalPost(PersonalDistributionRequest personalDistributionRequest);
 
     /**
-     * POST /loot/drops/{drop_id}/loot : Залутить предмет
-     * Забирает предмет из дропа. Personal loot - мгновенно. Shared loot - начинает roll. 
+     * POST /loot/distribution/raid : Распределить рейдовый лут с гарантиями
      *
-     * @param dropId  (required)
-     * @param lootItemRequest  (required)
-     * @return LootItem200Response
+     * @param raidDistributionRequest  (required)
+     * @return DistributionResult
      */
-    LootItem200Response lootItem(String dropId, LootItemRequest lootItemRequest);
+    DistributionResult lootDistributionRaidPost(RaidDistributionRequest raidDistributionRequest);
+
+    /**
+     * POST /loot/distribution/shared : Распределить общий лут
+     *
+     * @param sharedDistributionRequest  (required)
+     * @return DistributionResult
+     */
+    DistributionResult lootDistributionSharedPost(SharedDistributionRequest sharedDistributionRequest);
+
+    /**
+     * POST /loot/events/notify : Отправить уведомление о событии лута
+     *
+     * @param lootEventNotificationRequest  (required)
+     * @return Void
+     */
+    Void lootEventsNotifyPost(LootEventNotificationRequest lootEventNotificationRequest);
+
+    /**
+     * GET /loot/history : История полученного лута
+     *
+     * @param playerId  (optional)
+     * @param sourceId  (optional)
+     * @param distributionMode  (optional)
+     * @param rarity  (optional)
+     * @param from  (optional)
+     * @param to  (optional)
+     * @param page Номер страницы (начинается с 1) (optional, default to 1)
+     * @param pageSize Количество элементов на странице (optional, default to 20)
+     * @return LootHistoryResponse
+     */
+    LootHistoryResponse lootHistoryGet(String playerId, String sourceId, String distributionMode, String rarity, OffsetDateTime from, OffsetDateTime to, Integer page, Integer pageSize);
+
+    /**
+     * POST /loot/pity : Управление счетчиками гарантированного дропа
+     *
+     * @param pityTimerUpdateRequest  (required)
+     * @return PityTimerState
+     */
+    PityTimerState lootPityPost(PityTimerUpdateRequest pityTimerUpdateRequest);
+
+    /**
+     * POST /loot/release : Снять резерв с предмета
+     *
+     * @param lootReleaseRequest  (required)
+     * @return Void
+     */
+    Void lootReleasePost(LootReleaseRequest lootReleaseRequest);
+
+    /**
+     * POST /loot/reserve : Зарезервировать предмет до выдачи
+     *
+     * @param lootReserveRequest  (required)
+     * @return LootReservationResponse
+     */
+    LootReservationResponse lootReservePost(LootReserveRequest lootReserveRequest);
+
+    /**
+     * POST /loot/rolls : Создать сессию Need/Greed
+     *
+     * @param rollStartRequest  (required)
+     * @return Void
+     */
+    Void lootRollsPost(RollStartRequest rollStartRequest);
+
+    /**
+     * GET /loot/rolls/{sessionId} : Получить состояние ролла
+     *
+     * @param sessionId Идентификатор сессии Need/Greed. (required)
+     * @return LootRoll
+     */
+    LootRoll lootRollsSessionIdGet(UUID sessionId);
+
+    /**
+     * POST /loot/sources/{sourceId}/generate : Сгенерировать лут для источника
+     *
+     * @param sourceId Идентификатор источника лута. (required)
+     * @param lootGenerationRequest  (required)
+     * @return LootGenerationResult
+     */
+    LootGenerationResult lootSourcesSourceIdGeneratePost(String sourceId, LootGenerationRequest lootGenerationRequest);
+
+    /**
+     * POST /loot/sources/{sourceId}/simulate : Провести симуляцию таблицы дропа
+     *
+     * @param sourceId Идентификатор источника лута. (required)
+     * @param simulationRequest  (required)
+     * @return SimulationResponse
+     */
+    SimulationResponse lootSourcesSourceIdSimulatePost(String sourceId, SimulationRequest simulationRequest);
+
+    /**
+     * GET /loot/stats : Агрегированные метрики дропа
+     *
+     * @param tableId  (optional)
+     * @param timeRange  (optional)
+     * @return LootStatsResponse
+     */
+    LootStatsResponse lootStatsGet(String tableId, String timeRange);
+
+    /**
+     * GET /loot/tables : Получить список таблиц лута
+     *
+     * @param sourceType  (optional)
+     * @param active  (optional)
+     * @param rarityCurve  (optional)
+     * @param page Номер страницы (начинается с 1) (optional, default to 1)
+     * @param pageSize Количество элементов на странице (optional, default to 20)
+     * @return LootTableListResponse
+     */
+    LootTableListResponse lootTablesGet(String sourceType, Boolean active, String rarityCurve, Integer page, Integer pageSize);
+
+    /**
+     * POST /loot/tables : Создать или обновить таблицу лута
+     *
+     * @param lootTableUpsertRequest  (required)
+     * @return LootTableSummary
+     */
+    LootTableSummary lootTablesPost(LootTableUpsertRequest lootTableUpsertRequest);
+
+    /**
+     * POST /loot/tables/{tableId}/entries : Массовые операции над записями таблицы
+     *
+     * @param tableId Идентификатор таблицы лута. (required)
+     * @param lootEntryBatchRequest  (required)
+     * @return Void
+     */
+    Void lootTablesTableIdEntriesPost(String tableId, LootEntryBatchRequest lootEntryBatchRequest);
+
+    /**
+     * GET /loot/tables/{tableId} : Получить конфигурацию таблицы
+     *
+     * @param tableId Идентификатор таблицы лута. (required)
+     * @return LootTableUpsertRequest
+     */
+    LootTableUpsertRequest lootTablesTableIdGet(String tableId);
 }
 

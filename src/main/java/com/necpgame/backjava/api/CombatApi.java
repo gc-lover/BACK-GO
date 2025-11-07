@@ -5,15 +5,30 @@
  */
 package com.necpgame.backjava.api;
 
-import com.necpgame.backjava.model.CombatResult;
-import com.necpgame.backjava.model.CombatState;
-import com.necpgame.backjava.model.FleeCombat200Response;
-import com.necpgame.backjava.model.FleeCombatRequest;
-import com.necpgame.backjava.model.GetAvailableActions200Response;
-import com.necpgame.backjava.model.InitiateCombatRequest;
+import com.necpgame.backjava.model.ActionRequest;
+import com.necpgame.backjava.model.ActionResult;
+import com.necpgame.backjava.model.CombatError;
+import com.necpgame.backjava.model.CombatLogResponse;
+import com.necpgame.backjava.model.CombatMetricsResponse;
+import com.necpgame.backjava.model.CombatSession;
+import com.necpgame.backjava.model.CombatSessionCreateRequest;
+import com.necpgame.backjava.model.CombatSessionStateResponse;
+import com.necpgame.backjava.model.DamagePreviewRequest;
+import com.necpgame.backjava.model.DamagePreviewResponse;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.necpgame.backjava.model.Error;
+import com.necpgame.backjava.model.LagCompensationRequest;
+import com.necpgame.backjava.model.LagCompensationResponse;
 import org.springframework.lang.Nullable;
-import com.necpgame.backjava.model.PerformCombatActionRequest;
-import java.util.UUID;
+import java.time.OffsetDateTime;
+import com.necpgame.backjava.model.Participant;
+import com.necpgame.backjava.model.ReviveRequest;
+import com.necpgame.backjava.model.SessionAbortRequest;
+import com.necpgame.backjava.model.SessionCompleteRequest;
+import com.necpgame.backjava.model.SessionCompleteResponse;
+import com.necpgame.backjava.model.SessionJoinRequest;
+import com.necpgame.backjava.model.SimulationRequest;
+import com.necpgame.backjava.model.SurrenderRequest;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -41,30 +56,43 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T21:22:00.452540100+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 @Validated
-@Tag(name = "Combat", description = "the Combat API")
+@Tag(name = "Sessions", description = "Жизненный цикл боевых сессий")
 public interface CombatApi {
 
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
 
-    String PATH_FLEE_COMBAT = "/combat/{combatId}/flee";
+    String PATH_COMBAT_SESSIONS_POST = "/combat/sessions";
     /**
-     * POST /combat/{combatId}/flee : РЎР±РµР¶Р°С‚СЊ РёР· Р±РѕСЏ
+     * POST /combat/sessions : Создать боевую сессию
      *
-     * @param combatId  (required)
-     * @param fleeCombatRequest  (optional)
-     * @return Р РµР·СѓР»СЊС‚Р°С‚ РїРѕР±РµРіР° (status code 200)
+     * @param combatSessionCreateRequest  (required)
+     * @return Сессия создана (status code 201)
+     *         or Некорректные параметры или конфликты (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
      */
     @Operation(
-        operationId = "fleeCombat",
-        summary = "РЎР±РµР¶Р°С‚СЊ РёР· Р±РѕСЏ",
-        tags = { "Combat" },
+        operationId = "combatSessionsPost",
+        summary = "Создать боевую сессию",
+        tags = { "Sessions" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Р РµР·СѓР»СЊС‚Р°С‚ РїРѕР±РµРіР°", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = FleeCombat200Response.class))
+            @ApiResponse(responseCode = "201", description = "Сессия создана", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CombatSession.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Некорректные параметры или конфликты", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CombatError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
             })
         },
         security = {
@@ -73,18 +101,27 @@ public interface CombatApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = CombatApi.PATH_FLEE_COMBAT,
+        value = CombatApi.PATH_COMBAT_SESSIONS_POST,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<FleeCombat200Response> fleeCombat(
-        @NotNull @Parameter(name = "combatId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("combatId") UUID combatId,
-        @Parameter(name = "FleeCombatRequest", description = "") @Valid @RequestBody(required = false) @Nullable FleeCombatRequest fleeCombatRequest
+    default ResponseEntity<CombatSession> combatSessionsPost(
+        @Parameter(name = "CombatSessionCreateRequest", description = "", required = true) @Valid @RequestBody CombatSessionCreateRequest combatSessionCreateRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"success\" : true, \"message\" : \"message\" }";
+                    String exampleString = "{ \"mode\" : \"PVE\", \"settings\" : { \"key\" : \"\" }, \"teams\" : [ { \"side\" : \"side\", \"teamId\" : \"teamId\", \"name\" : \"name\", \"participants\" : [ { \"participantId\" : \"participantId\", \"statusEffects\" : [ { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 }, { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 } ], \"stats\" : { \"shield\" : 1.4658129805029452, \"critChance\" : 2.3021358869347655, \"healthMax\" : 6.027456183070403, \"stamina\" : 5.962133916683182, \"health\" : 0.8008281904610115, \"haste\" : 5.637376656633329, \"modifiers\" : { \"key\" : \"\" } }, \"kind\" : \"PLAYER\", \"teamId\" : \"teamId\", \"resources\" : { \"key\" : \"\" }, \"position\" : { \"x\" : 7.061401241503109, \"y\" : 9.301444243932576, \"z\" : 3.616076749251911 }, \"class\" : \"class\", \"referenceId\" : \"referenceId\" }, { \"participantId\" : \"participantId\", \"statusEffects\" : [ { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 }, { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 } ], \"stats\" : { \"shield\" : 1.4658129805029452, \"critChance\" : 2.3021358869347655, \"healthMax\" : 6.027456183070403, \"stamina\" : 5.962133916683182, \"health\" : 0.8008281904610115, \"haste\" : 5.637376656633329, \"modifiers\" : { \"key\" : \"\" } }, \"kind\" : \"PLAYER\", \"teamId\" : \"teamId\", \"resources\" : { \"key\" : \"\" }, \"position\" : { \"x\" : 7.061401241503109, \"y\" : 9.301444243932576, \"z\" : 3.616076749251911 }, \"class\" : \"class\", \"referenceId\" : \"referenceId\" } ] }, { \"side\" : \"side\", \"teamId\" : \"teamId\", \"name\" : \"name\", \"participants\" : [ { \"participantId\" : \"participantId\", \"statusEffects\" : [ { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 }, { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 } ], \"stats\" : { \"shield\" : 1.4658129805029452, \"critChance\" : 2.3021358869347655, \"healthMax\" : 6.027456183070403, \"stamina\" : 5.962133916683182, \"health\" : 0.8008281904610115, \"haste\" : 5.637376656633329, \"modifiers\" : { \"key\" : \"\" } }, \"kind\" : \"PLAYER\", \"teamId\" : \"teamId\", \"resources\" : { \"key\" : \"\" }, \"position\" : { \"x\" : 7.061401241503109, \"y\" : 9.301444243932576, \"z\" : 3.616076749251911 }, \"class\" : \"class\", \"referenceId\" : \"referenceId\" }, { \"participantId\" : \"participantId\", \"statusEffects\" : [ { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 }, { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 } ], \"stats\" : { \"shield\" : 1.4658129805029452, \"critChance\" : 2.3021358869347655, \"healthMax\" : 6.027456183070403, \"stamina\" : 5.962133916683182, \"health\" : 0.8008281904610115, \"haste\" : 5.637376656633329, \"modifiers\" : { \"key\" : \"\" } }, \"kind\" : \"PLAYER\", \"teamId\" : \"teamId\", \"resources\" : { \"key\" : \"\" }, \"position\" : { \"x\" : 7.061401241503109, \"y\" : 9.301444243932576, \"z\" : 3.616076749251911 }, \"class\" : \"class\", \"referenceId\" : \"referenceId\" } ] } ], \"createdBy\" : \"createdBy\", \"rules\" : { \"key\" : \"\" }, \"startTime\" : \"2000-01-23T04:56:07.000+00:00\", \"sessionId\" : \"sessionId\", \"map\" : \"map\", \"status\" : \"PENDING\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"SESSION_NOT_FOUND\", \"details\" : { \"key\" : \"\" }, \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -95,148 +132,33 @@ public interface CombatApi {
     }
 
 
-    String PATH_GET_AVAILABLE_ACTIONS = "/combat/{combatId}/available-actions";
+    String PATH_COMBAT_SESSIONS_SESSION_ID_ABORT_POST = "/combat/sessions/{sessionId}/abort";
     /**
-     * GET /combat/{combatId}/available-actions : Р”РѕСЃС‚СѓРїРЅС‹Рµ РґРµР№СЃС‚РІРёСЏ
+     * POST /combat/sessions/{sessionId}/abort : Аварийно завершить бой
      *
-     * @param combatId  (required)
-     * @param characterId  (required)
-     * @return Р”РѕСЃС‚СѓРїРЅС‹Рµ РґРµР№СЃС‚РІРёСЏ (status code 200)
+     * @param sessionId Идентификатор боевой сессии (required)
+     * @param sessionAbortRequest  (required)
+     * @return Сессия завершена аварийно (status code 200)
+     *         or Операция отклонена (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
      */
     @Operation(
-        operationId = "getAvailableActions",
-        summary = "Р”РѕСЃС‚СѓРїРЅС‹Рµ РґРµР№СЃС‚РІРёСЏ",
-        tags = { "Combat" },
+        operationId = "combatSessionsSessionIdAbortPost",
+        summary = "Аварийно завершить бой",
+        tags = { "Rewards" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Р”РѕСЃС‚СѓРїРЅС‹Рµ РґРµР№СЃС‚РІРёСЏ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = GetAvailableActions200Response.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = CombatApi.PATH_GET_AVAILABLE_ACTIONS,
-        produces = { "application/json" }
-    )
-    default ResponseEntity<GetAvailableActions200Response> getAvailableActions(
-        @NotNull @Parameter(name = "combatId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("combatId") UUID combatId,
-        @NotNull @Parameter(name = "characterId", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "characterId", required = true) UUID characterId
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"actions\" : [ { \"damage\" : 6, \"cost\" : 0, \"name\" : \"name\", \"available\" : true, \"description\" : \"description\", \"id\" : \"id\", \"type\" : \"attack\" }, { \"damage\" : 6, \"cost\" : 0, \"name\" : \"name\", \"available\" : true, \"description\" : \"description\", \"id\" : \"id\", \"type\" : \"attack\" } ] }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+            @ApiResponse(responseCode = "200", description = "Сессия завершена аварийно"),
+            @ApiResponse(responseCode = "400", description = "Операция отклонена", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CombatError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
 
-    }
-
-
-    String PATH_GET_COMBAT_RESULT = "/combat/{combatId}/result";
-    /**
-     * GET /combat/{combatId}/result : Р РµР·СѓР»СЊС‚Р°С‚ Р±РѕСЏ
-     *
-     * @param combatId  (required)
-     * @return Р РµР·СѓР»СЊС‚Р°С‚ Р±РѕСЏ (status code 200)
-     */
-    @Operation(
-        operationId = "getCombatResult",
-        summary = "Р РµР·СѓР»СЊС‚Р°С‚ Р±РѕСЏ",
-        tags = { "Combat" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Р РµР·СѓР»СЊС‚Р°С‚ Р±РѕСЏ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = CombatResult.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = CombatApi.PATH_GET_COMBAT_RESULT,
-        produces = { "application/json" }
-    )
-    default ResponseEntity<CombatResult> getCombatResult(
-        @NotNull @Parameter(name = "combatId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("combatId") UUID combatId
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"penalties\" : \"{}\", \"victory\" : true, \"rewards\" : { \"currency\" : 6, \"experience\" : 0, \"items\" : [ \"items\", \"items\" ] } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_GET_COMBAT_STATE = "/combat/{combatId}";
-    /**
-     * GET /combat/{combatId} : РЎРѕСЃС‚РѕСЏРЅРёРµ Р±РѕСЏ
-     *
-     * @param combatId  (required)
-     * @return РЎРѕСЃС‚РѕСЏРЅРёРµ Р±РѕСЏ (status code 200)
-     */
-    @Operation(
-        operationId = "getCombatState",
-        summary = "РЎРѕСЃС‚РѕСЏРЅРёРµ Р±РѕСЏ",
-        tags = { "Combat" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "РЎРѕСЃС‚РѕСЏРЅРёРµ Р±РѕСЏ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = CombatState.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = CombatApi.PATH_GET_COMBAT_STATE,
-        produces = { "application/json" }
-    )
-    default ResponseEntity<CombatState> getCombatState(
-        @NotNull @Parameter(name = "combatId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("combatId") UUID combatId
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"currentTurn\" : \"currentTurn\", \"round\" : 5, \"log\" : [ \"log\", \"log\" ], \"id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"status\" : \"active\", \"participants\" : [ { \"isAlive\" : true, \"armor\" : 5, \"name\" : \"name\", \"health\" : 0, \"maxHealth\" : 6, \"id\" : \"id\", \"type\" : \"player\", \"energy\" : 1 }, { \"isAlive\" : true, \"armor\" : 5, \"name\" : \"name\", \"health\" : 0, \"maxHealth\" : 6, \"id\" : \"id\", \"type\" : \"player\", \"energy\" : 1 } ] }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_INITIATE_COMBAT = "/combat/initiate";
-    /**
-     * POST /combat/initiate : РќР°С‡Р°С‚СЊ Р±РѕР№
-     *
-     * @param initiateCombatRequest  (optional)
-     * @return Р‘РѕР№ РЅР°С‡Р°С‚ (status code 200)
-     */
-    @Operation(
-        operationId = "initiateCombat",
-        summary = "РќР°С‡Р°С‚СЊ Р±РѕР№",
-        tags = { "Combat" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Р‘РѕР№ РЅР°С‡Р°С‚", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = CombatState.class))
             })
         },
         security = {
@@ -245,17 +167,23 @@ public interface CombatApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = CombatApi.PATH_INITIATE_COMBAT,
+        value = CombatApi.PATH_COMBAT_SESSIONS_SESSION_ID_ABORT_POST,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<CombatState> initiateCombat(
-        @Parameter(name = "InitiateCombatRequest", description = "") @Valid @RequestBody(required = false) @Nullable InitiateCombatRequest initiateCombatRequest
+    default ResponseEntity<Void> combatSessionsSessionIdAbortPost(
+        @NotNull @Parameter(name = "sessionId", description = "Идентификатор боевой сессии", required = true, in = ParameterIn.PATH) @PathVariable("sessionId") String sessionId,
+        @Parameter(name = "SessionAbortRequest", description = "", required = true) @Valid @RequestBody SessionAbortRequest sessionAbortRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"currentTurn\" : \"currentTurn\", \"round\" : 5, \"log\" : [ \"log\", \"log\" ], \"id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"status\" : \"active\", \"participants\" : [ { \"isAlive\" : true, \"armor\" : 5, \"name\" : \"name\", \"health\" : 0, \"maxHealth\" : 6, \"id\" : \"id\", \"type\" : \"player\", \"energy\" : 1 }, { \"isAlive\" : true, \"armor\" : 5, \"name\" : \"name\", \"health\" : 0, \"maxHealth\" : 6, \"id\" : \"id\", \"type\" : \"player\", \"energy\" : 1 } ] }";
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"SESSION_NOT_FOUND\", \"details\" : { \"key\" : \"\" }, \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -266,21 +194,39 @@ public interface CombatApi {
     }
 
 
-    String PATH_PERFORM_COMBAT_ACTION = "/combat/{combatId}/action";
+    String PATH_COMBAT_SESSIONS_SESSION_ID_ACTIONS_POST = "/combat/sessions/{sessionId}/actions";
     /**
-     * POST /combat/{combatId}/action : Р’С‹РїРѕР»РЅРёС‚СЊ РґРµР№СЃС‚РІРёРµ РІ Р±РѕСЋ
+     * POST /combat/sessions/{sessionId}/actions : Выполнить действие в боевой сессии
      *
-     * @param combatId  (required)
-     * @param performCombatActionRequest  (optional)
-     * @return Р”РµР№СЃС‚РІРёРµ РІС‹РїРѕР»РЅРµРЅРѕ (status code 200)
+     * @param sessionId Идентификатор боевой сессии (required)
+     * @param actionRequest  (required)
+     * @return Действие принято и выполнено (status code 200)
+     *         or Действие отклонено (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     *         or Нарушен порядок ходов (status code 409)
      */
     @Operation(
-        operationId = "performCombatAction",
-        summary = "Р’С‹РїРѕР»РЅРёС‚СЊ РґРµР№СЃС‚РІРёРµ РІ Р±РѕСЋ",
-        tags = { "Combat" },
+        operationId = "combatSessionsSessionIdActionsPost",
+        summary = "Выполнить действие в боевой сессии",
+        tags = { "Actions" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Р”РµР№СЃС‚РІРёРµ РІС‹РїРѕР»РЅРµРЅРѕ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = CombatState.class))
+            @ApiResponse(responseCode = "200", description = "Действие принято и выполнено", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ActionResult.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Действие отклонено", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CombatError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            }),
+            @ApiResponse(responseCode = "409", description = "Нарушен порядок ходов", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CombatError.class))
             })
         },
         security = {
@@ -289,18 +235,750 @@ public interface CombatApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = CombatApi.PATH_PERFORM_COMBAT_ACTION,
+        value = CombatApi.PATH_COMBAT_SESSIONS_SESSION_ID_ACTIONS_POST,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<CombatState> performCombatAction(
-        @NotNull @Parameter(name = "combatId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("combatId") UUID combatId,
-        @Parameter(name = "PerformCombatActionRequest", description = "") @Valid @RequestBody(required = false) @Nullable PerformCombatActionRequest performCombatActionRequest
+    default ResponseEntity<ActionResult> combatSessionsSessionIdActionsPost(
+        @NotNull @Parameter(name = "sessionId", description = "Идентификатор боевой сессии", required = true, in = ParameterIn.PATH) @PathVariable("sessionId") String sessionId,
+        @Parameter(name = "ActionRequest", description = "", required = true) @Valid @RequestBody ActionRequest actionRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"currentTurn\" : \"currentTurn\", \"round\" : 5, \"log\" : [ \"log\", \"log\" ], \"id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"status\" : \"active\", \"participants\" : [ { \"isAlive\" : true, \"armor\" : 5, \"name\" : \"name\", \"health\" : 0, \"maxHealth\" : 6, \"id\" : \"id\", \"type\" : \"player\", \"energy\" : 1 }, { \"isAlive\" : true, \"armor\" : 5, \"name\" : \"name\", \"health\" : 0, \"maxHealth\" : 6, \"id\" : \"id\", \"type\" : \"player\", \"energy\" : 1 } ] }";
+                    String exampleString = "{ \"newEffects\" : [ { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 }, { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 } ], \"applied\" : [ { \"sourceId\" : \"sourceId\", \"mitigation\" : 1.4658129805029452, \"targetId\" : \"targetId\", \"finalDamage\" : 5.637376656633329, \"baseDamage\" : 0.8008281904610115, \"shieldAbsorbed\" : 5.962133916683182, \"critMultiplier\" : 6.027456183070403, \"tags\" : [ \"tags\", \"tags\" ] }, { \"sourceId\" : \"sourceId\", \"mitigation\" : 1.4658129805029452, \"targetId\" : \"targetId\", \"finalDamage\" : 5.637376656633329, \"baseDamage\" : 0.8008281904610115, \"shieldAbsorbed\" : 5.962133916683182, \"critMultiplier\" : 6.027456183070403, \"tags\" : [ \"tags\", \"tags\" ] } ], \"cooldowns\" : { \"key\" : \"\" }, \"actionId\" : \"actionId\", \"logEntry\" : { \"payload\" : { \"key\" : \"\" }, \"eventType\" : \"eventType\", \"entryId\" : \"entryId\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"SESSION_NOT_FOUND\", \"details\" : { \"key\" : \"\" }, \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"SESSION_NOT_FOUND\", \"details\" : { \"key\" : \"\" }, \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_COMBAT_SESSIONS_SESSION_ID_COMPLETE_POST = "/combat/sessions/{sessionId}/complete";
+    /**
+     * POST /combat/sessions/{sessionId}/complete : Завершить бой и выдать награды
+     *
+     * @param sessionId Идентификатор боевой сессии (required)
+     * @param sessionCompleteRequest  (required)
+     * @return Бой завершён, награды выданы (status code 200)
+     *         or Завершение невозможно (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "combatSessionsSessionIdCompletePost",
+        summary = "Завершить бой и выдать награды",
+        tags = { "Rewards" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Бой завершён, награды выданы", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SessionCompleteResponse.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Завершение невозможно", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CombatError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = CombatApi.PATH_COMBAT_SESSIONS_SESSION_ID_COMPLETE_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<SessionCompleteResponse> combatSessionsSessionIdCompletePost(
+        @NotNull @Parameter(name = "sessionId", description = "Идентификатор боевой сессии", required = true, in = ParameterIn.PATH) @PathVariable("sessionId") String sessionId,
+        @Parameter(name = "SessionCompleteRequest", description = "", required = true) @Valid @RequestBody SessionCompleteRequest sessionCompleteRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"achievements\" : [ \"achievements\", \"achievements\" ], \"rewards\" : { \"ratingChange\" : 1, \"xp\" : 0, \"reputation\" : 5, \"currency\" : [ { \"amount\" : 6, \"currencyId\" : \"currencyId\" }, { \"amount\" : 6, \"currencyId\" : \"currencyId\" } ], \"items\" : [ { \"key\" : \"\" }, { \"key\" : \"\" } ] }, \"questProgress\" : [ { \"key\" : \"\" }, { \"key\" : \"\" } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"SESSION_NOT_FOUND\", \"details\" : { \"key\" : \"\" }, \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_COMBAT_SESSIONS_SESSION_ID_DAMAGE_PREVIEW_POST = "/combat/sessions/{sessionId}/damage/preview";
+    /**
+     * POST /combat/sessions/{sessionId}/damage/preview : Получить предварительный расчёт урона
+     *
+     * @param sessionId Идентификатор боевой сессии (required)
+     * @param damagePreviewRequest  (required)
+     * @return Предварительный расчёт урона (status code 200)
+     *         or Расчёт невозможен (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "combatSessionsSessionIdDamagePreviewPost",
+        summary = "Получить предварительный расчёт урона",
+        tags = { "Actions" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Предварительный расчёт урона", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = DamagePreviewResponse.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Расчёт невозможен", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CombatError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = CombatApi.PATH_COMBAT_SESSIONS_SESSION_ID_DAMAGE_PREVIEW_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<DamagePreviewResponse> combatSessionsSessionIdDamagePreviewPost(
+        @NotNull @Parameter(name = "sessionId", description = "Идентификатор боевой сессии", required = true, in = ParameterIn.PATH) @PathVariable("sessionId") String sessionId,
+        @Parameter(name = "DamagePreviewRequest", description = "", required = true) @Valid @RequestBody DamagePreviewRequest damagePreviewRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"estimatedTimeMs\" : 0, \"previewPackets\" : [ { \"sourceId\" : \"sourceId\", \"mitigation\" : 1.4658129805029452, \"targetId\" : \"targetId\", \"finalDamage\" : 5.637376656633329, \"baseDamage\" : 0.8008281904610115, \"shieldAbsorbed\" : 5.962133916683182, \"critMultiplier\" : 6.027456183070403, \"tags\" : [ \"tags\", \"tags\" ] }, { \"sourceId\" : \"sourceId\", \"mitigation\" : 1.4658129805029452, \"targetId\" : \"targetId\", \"finalDamage\" : 5.637376656633329, \"baseDamage\" : 0.8008281904610115, \"shieldAbsorbed\" : 5.962133916683182, \"critMultiplier\" : 6.027456183070403, \"tags\" : [ \"tags\", \"tags\" ] } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"SESSION_NOT_FOUND\", \"details\" : { \"key\" : \"\" }, \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_COMBAT_SESSIONS_SESSION_ID_GET = "/combat/sessions/{sessionId}";
+    /**
+     * GET /combat/sessions/{sessionId} : Получить состояние боевой сессии
+     *
+     * @param sessionId Идентификатор боевой сессии (required)
+     * @return Состояние, участники и эффекты (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     *         or Запрошенный ресурс не найден.  (status code 404)
+     */
+    @Operation(
+        operationId = "combatSessionsSessionIdGet",
+        summary = "Получить состояние боевой сессии",
+        tags = { "Sessions" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Состояние, участники и эффекты", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CombatSessionStateResponse.class), examples = {
+                    @ExampleObject(
+                        name = "CombatSessionState",
+                        value = "{\"session\":{\"sessionId\":\"combat-8821\",\"mode\":\"RAID\",\"map\":\"blackwall_citadel\",\"status\":\"ACTIVE\",\"startTime\":\"2025-11-08T05:10:00Z\",\"teams\":[{\"teamId\":\"team-alpha\",\"participants\":[{\"participantId\":\"p-neo\",\"stats\":{\"health\":3200,\"healthMax\":4000}},{\"participantId\":\"p-glitch\",\"stats\":{\"health\":1800,\"healthMax\":2500}}]},{\"teamId\":\"team-boss\",\"participants\":[{\"participantId\":\"boss-unit\",\"stats\":{\"health\":95000,\"healthMax\":120000}}]}]},\"timeline\":[{\"turnNumber\":12,\"currentActorId\":\"boss-unit\",\"phase\":\"ACTION\",\"remainingTimeMs\":4300}],\"activeEffects\":[{\"effectId\":\"dot-radiation\",\"type\":\"DoT\",\"sourceId\":\"boss-unit\",\"stacks\":2,\"remainingMs\":6000}]}"
+                    )
+                })
+
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            }),
+            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = CombatApi.PATH_COMBAT_SESSIONS_SESSION_ID_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<CombatSessionStateResponse> combatSessionsSessionIdGet(
+        @NotNull @Parameter(name = "sessionId", description = "Идентификатор боевой сессии", required = true, in = ParameterIn.PATH) @PathVariable("sessionId") String sessionId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"log\" : { \"entries\" : [ { \"payload\" : { \"key\" : \"\" }, \"eventType\" : \"eventType\", \"entryId\" : \"entryId\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" }, { \"payload\" : { \"key\" : \"\" }, \"eventType\" : \"eventType\", \"entryId\" : \"entryId\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" } ] }, \"session\" : { \"mode\" : \"PVE\", \"settings\" : { \"key\" : \"\" }, \"teams\" : [ { \"side\" : \"side\", \"teamId\" : \"teamId\", \"name\" : \"name\", \"participants\" : [ { \"participantId\" : \"participantId\", \"statusEffects\" : [ { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 }, { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 } ], \"stats\" : { \"shield\" : 1.4658129805029452, \"critChance\" : 2.3021358869347655, \"healthMax\" : 6.027456183070403, \"stamina\" : 5.962133916683182, \"health\" : 0.8008281904610115, \"haste\" : 5.637376656633329, \"modifiers\" : { \"key\" : \"\" } }, \"kind\" : \"PLAYER\", \"teamId\" : \"teamId\", \"resources\" : { \"key\" : \"\" }, \"position\" : { \"x\" : 7.061401241503109, \"y\" : 9.301444243932576, \"z\" : 3.616076749251911 }, \"class\" : \"class\", \"referenceId\" : \"referenceId\" }, { \"participantId\" : \"participantId\", \"statusEffects\" : [ { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 }, { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 } ], \"stats\" : { \"shield\" : 1.4658129805029452, \"critChance\" : 2.3021358869347655, \"healthMax\" : 6.027456183070403, \"stamina\" : 5.962133916683182, \"health\" : 0.8008281904610115, \"haste\" : 5.637376656633329, \"modifiers\" : { \"key\" : \"\" } }, \"kind\" : \"PLAYER\", \"teamId\" : \"teamId\", \"resources\" : { \"key\" : \"\" }, \"position\" : { \"x\" : 7.061401241503109, \"y\" : 9.301444243932576, \"z\" : 3.616076749251911 }, \"class\" : \"class\", \"referenceId\" : \"referenceId\" } ] }, { \"side\" : \"side\", \"teamId\" : \"teamId\", \"name\" : \"name\", \"participants\" : [ { \"participantId\" : \"participantId\", \"statusEffects\" : [ { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 }, { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 } ], \"stats\" : { \"shield\" : 1.4658129805029452, \"critChance\" : 2.3021358869347655, \"healthMax\" : 6.027456183070403, \"stamina\" : 5.962133916683182, \"health\" : 0.8008281904610115, \"haste\" : 5.637376656633329, \"modifiers\" : { \"key\" : \"\" } }, \"kind\" : \"PLAYER\", \"teamId\" : \"teamId\", \"resources\" : { \"key\" : \"\" }, \"position\" : { \"x\" : 7.061401241503109, \"y\" : 9.301444243932576, \"z\" : 3.616076749251911 }, \"class\" : \"class\", \"referenceId\" : \"referenceId\" }, { \"participantId\" : \"participantId\", \"statusEffects\" : [ { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 }, { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 } ], \"stats\" : { \"shield\" : 1.4658129805029452, \"critChance\" : 2.3021358869347655, \"healthMax\" : 6.027456183070403, \"stamina\" : 5.962133916683182, \"health\" : 0.8008281904610115, \"haste\" : 5.637376656633329, \"modifiers\" : { \"key\" : \"\" } }, \"kind\" : \"PLAYER\", \"teamId\" : \"teamId\", \"resources\" : { \"key\" : \"\" }, \"position\" : { \"x\" : 7.061401241503109, \"y\" : 9.301444243932576, \"z\" : 3.616076749251911 }, \"class\" : \"class\", \"referenceId\" : \"referenceId\" } ] } ], \"createdBy\" : \"createdBy\", \"rules\" : { \"key\" : \"\" }, \"startTime\" : \"2000-01-23T04:56:07.000+00:00\", \"sessionId\" : \"sessionId\", \"map\" : \"map\", \"status\" : \"PENDING\" }, \"timeline\" : [ { \"phase\" : \"PREPARE\", \"currentActorId\" : \"currentActorId\", \"remainingTimeMs\" : 6, \"turnNumber\" : 0 }, { \"phase\" : \"PREPARE\", \"currentActorId\" : \"currentActorId\", \"remainingTimeMs\" : 6, \"turnNumber\" : 0 } ], \"activeEffects\" : [ { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 }, { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_COMBAT_SESSIONS_SESSION_ID_JOIN_POST = "/combat/sessions/{sessionId}/join";
+    /**
+     * POST /combat/sessions/{sessionId}/join : Присоединиться к существующему бою
+     *
+     * @param sessionId Идентификатор боевой сессии (required)
+     * @param sessionJoinRequest  (required)
+     * @return Участник добавлен/переведён в spectate (status code 200)
+     *         or Присоединение невозможно (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "combatSessionsSessionIdJoinPost",
+        summary = "Присоединиться к существующему бою",
+        tags = { "Sessions" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Участник добавлен/переведён в spectate", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Participant.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Присоединение невозможно", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CombatError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = CombatApi.PATH_COMBAT_SESSIONS_SESSION_ID_JOIN_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Participant> combatSessionsSessionIdJoinPost(
+        @NotNull @Parameter(name = "sessionId", description = "Идентификатор боевой сессии", required = true, in = ParameterIn.PATH) @PathVariable("sessionId") String sessionId,
+        @Parameter(name = "SessionJoinRequest", description = "", required = true) @Valid @RequestBody SessionJoinRequest sessionJoinRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"participantId\" : \"participantId\", \"statusEffects\" : [ { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 }, { \"sourceId\" : \"sourceId\", \"effectId\" : \"effectId\", \"stacks\" : 2, \"remainingMs\" : 7, \"type\" : \"type\", \"modifiers\" : { \"key\" : \"\" }, \"durationMs\" : 4 } ], \"stats\" : { \"shield\" : 1.4658129805029452, \"critChance\" : 2.3021358869347655, \"healthMax\" : 6.027456183070403, \"stamina\" : 5.962133916683182, \"health\" : 0.8008281904610115, \"haste\" : 5.637376656633329, \"modifiers\" : { \"key\" : \"\" } }, \"kind\" : \"PLAYER\", \"teamId\" : \"teamId\", \"resources\" : { \"key\" : \"\" }, \"position\" : { \"x\" : 7.061401241503109, \"y\" : 9.301444243932576, \"z\" : 3.616076749251911 }, \"class\" : \"class\", \"referenceId\" : \"referenceId\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"SESSION_NOT_FOUND\", \"details\" : { \"key\" : \"\" }, \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_COMBAT_SESSIONS_SESSION_ID_LAG_COMPENSATION_POST = "/combat/sessions/{sessionId}/lag-compensation";
+    /**
+     * POST /combat/sessions/{sessionId}/lag-compensation : Запрос лаг-компенсации события
+     *
+     * @param sessionId Идентификатор боевой сессии (required)
+     * @param lagCompensationRequest  (required)
+     * @return Пересчёт выполнен (status code 200)
+     *         or Пересчёт невозможен (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "combatSessionsSessionIdLagCompensationPost",
+        summary = "Запрос лаг-компенсации события",
+        tags = { "Actions" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Пересчёт выполнен", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = LagCompensationResponse.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Пересчёт невозможен", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CombatError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = CombatApi.PATH_COMBAT_SESSIONS_SESSION_ID_LAG_COMPENSATION_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<LagCompensationResponse> combatSessionsSessionIdLagCompensationPost(
+        @NotNull @Parameter(name = "sessionId", description = "Идентификатор боевой сессии", required = true, in = ParameterIn.PATH) @PathVariable("sessionId") String sessionId,
+        @Parameter(name = "LagCompensationRequest", description = "", required = true) @Valid @RequestBody LagCompensationRequest lagCompensationRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"eventId\" : \"eventId\", \"corrections\" : { \"key\" : \"\" }, \"adjusted\" : true, \"outcome\" : \"REFRESHED\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"SESSION_NOT_FOUND\", \"details\" : { \"key\" : \"\" }, \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_COMBAT_SESSIONS_SESSION_ID_LOG_GET = "/combat/sessions/{sessionId}/log";
+    /**
+     * GET /combat/sessions/{sessionId}/log : Получить журнал боя
+     *
+     * @param sessionId Идентификатор боевой сессии (required)
+     * @param from  (optional)
+     * @param to  (optional)
+     * @return Журнал событий (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "combatSessionsSessionIdLogGet",
+        summary = "Получить журнал боя",
+        tags = { "Rewards" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Журнал событий", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CombatLogResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = CombatApi.PATH_COMBAT_SESSIONS_SESSION_ID_LOG_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<CombatLogResponse> combatSessionsSessionIdLogGet(
+        @NotNull @Parameter(name = "sessionId", description = "Идентификатор боевой сессии", required = true, in = ParameterIn.PATH) @PathVariable("sessionId") String sessionId,
+        @Parameter(name = "from", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "from", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Nullable OffsetDateTime from,
+        @Parameter(name = "to", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "to", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @Nullable OffsetDateTime to
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"entries\" : [ { \"payload\" : { \"key\" : \"\" }, \"eventType\" : \"eventType\", \"entryId\" : \"entryId\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" }, { \"payload\" : { \"key\" : \"\" }, \"eventType\" : \"eventType\", \"entryId\" : \"entryId\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_COMBAT_SESSIONS_SESSION_ID_METRICS_GET = "/combat/sessions/{sessionId}/metrics";
+    /**
+     * GET /combat/sessions/{sessionId}/metrics : Аналитические метрики сессии
+     *
+     * @param sessionId Идентификатор боевой сессии (required)
+     * @return Метрики боя (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "combatSessionsSessionIdMetricsGet",
+        summary = "Аналитические метрики сессии",
+        tags = { "Rewards" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Метрики боя", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CombatMetricsResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = CombatApi.PATH_COMBAT_SESSIONS_SESSION_ID_METRICS_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<CombatMetricsResponse> combatSessionsSessionIdMetricsGet(
+        @NotNull @Parameter(name = "sessionId", description = "Идентификатор боевой сессии", required = true, in = ParameterIn.PATH) @PathVariable("sessionId") String sessionId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"sessionId\" : \"sessionId\", \"metrics\" : { \"key\" : \"\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_COMBAT_SESSIONS_SESSION_ID_REVIVE_POST = "/combat/sessions/{sessionId}/revive";
+    /**
+     * POST /combat/sessions/{sessionId}/revive : Воскрешение участника
+     *
+     * @param sessionId Идентификатор боевой сессии (required)
+     * @param reviveRequest  (required)
+     * @return Участник оживлён (status code 200)
+     *         or Воскрешение недоступно (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "combatSessionsSessionIdRevivePost",
+        summary = "Воскрешение участника",
+        tags = { "Actions" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Участник оживлён"),
+            @ApiResponse(responseCode = "400", description = "Воскрешение недоступно", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CombatError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = CombatApi.PATH_COMBAT_SESSIONS_SESSION_ID_REVIVE_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> combatSessionsSessionIdRevivePost(
+        @NotNull @Parameter(name = "sessionId", description = "Идентификатор боевой сессии", required = true, in = ParameterIn.PATH) @PathVariable("sessionId") String sessionId,
+        @Parameter(name = "ReviveRequest", description = "", required = true) @Valid @RequestBody ReviveRequest reviveRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"SESSION_NOT_FOUND\", \"details\" : { \"key\" : \"\" }, \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_COMBAT_SESSIONS_SESSION_ID_SIMULATE_POST = "/combat/sessions/{sessionId}/simulate";
+    /**
+     * POST /combat/sessions/{sessionId}/simulate : Запуск симуляции боя (GM/Design)
+     *
+     * @param sessionId Идентификатор боевой сессии (required)
+     * @param simulationRequest  (required)
+     * @return Симуляция запущена (status code 202)
+     *         or Ошибка симуляции (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "combatSessionsSessionIdSimulatePost",
+        summary = "Запуск симуляции боя (GM/Design)",
+        tags = { "Rewards" },
+        responses = {
+            @ApiResponse(responseCode = "202", description = "Симуляция запущена"),
+            @ApiResponse(responseCode = "400", description = "Ошибка симуляции", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CombatError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "ServiceToken")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = CombatApi.PATH_COMBAT_SESSIONS_SESSION_ID_SIMULATE_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> combatSessionsSessionIdSimulatePost(
+        @NotNull @Parameter(name = "sessionId", description = "Идентификатор боевой сессии", required = true, in = ParameterIn.PATH) @PathVariable("sessionId") String sessionId,
+        @Parameter(name = "SimulationRequest", description = "", required = true) @Valid @RequestBody SimulationRequest simulationRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"SESSION_NOT_FOUND\", \"details\" : { \"key\" : \"\" }, \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_COMBAT_SESSIONS_SESSION_ID_SURRENDER_POST = "/combat/sessions/{sessionId}/surrender";
+    /**
+     * POST /combat/sessions/{sessionId}/surrender : Инициировать капитуляцию команды
+     *
+     * @param sessionId Идентификатор боевой сессии (required)
+     * @param surrenderRequest  (required)
+     * @return Голосование начато (status code 202)
+     *         or Капитуляция невозможна (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "combatSessionsSessionIdSurrenderPost",
+        summary = "Инициировать капитуляцию команды",
+        tags = { "Actions" },
+        responses = {
+            @ApiResponse(responseCode = "202", description = "Голосование начато"),
+            @ApiResponse(responseCode = "400", description = "Капитуляция невозможна", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CombatError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = CombatApi.PATH_COMBAT_SESSIONS_SESSION_ID_SURRENDER_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> combatSessionsSessionIdSurrenderPost(
+        @NotNull @Parameter(name = "sessionId", description = "Идентификатор боевой сессии", required = true, in = ParameterIn.PATH) @PathVariable("sessionId") String sessionId,
+        @Parameter(name = "SurrenderRequest", description = "", required = true) @Valid @RequestBody SurrenderRequest surrenderRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"SESSION_NOT_FOUND\", \"details\" : { \"key\" : \"\" }, \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_COMBAT_SESSIONS_SESSION_ID_TURN_END_POST = "/combat/sessions/{sessionId}/turn/end";
+    /**
+     * POST /combat/sessions/{sessionId}/turn/end : Завершить текущий ход
+     *
+     * @param sessionId Идентификатор боевой сессии (required)
+     * @return Ход завершён, следующий определён (status code 200)
+     *         or Нельзя завершить ход (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "combatSessionsSessionIdTurnEndPost",
+        summary = "Завершить текущий ход",
+        tags = { "Actions" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Ход завершён, следующий определён"),
+            @ApiResponse(responseCode = "400", description = "Нельзя завершить ход", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CombatError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = CombatApi.PATH_COMBAT_SESSIONS_SESSION_ID_TURN_END_POST,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<Void> combatSessionsSessionIdTurnEndPost(
+        @NotNull @Parameter(name = "sessionId", description = "Идентификатор боевой сессии", required = true, in = ParameterIn.PATH) @PathVariable("sessionId") String sessionId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"SESSION_NOT_FOUND\", \"details\" : { \"key\" : \"\" }, \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

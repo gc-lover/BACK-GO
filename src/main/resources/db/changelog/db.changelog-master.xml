@@ -162,8 +162,18 @@
     <include file="db/changelog/changes/091-create-logistics-tables.xml"/>
     <include file="db/changelog/changes/092-seed-logistics-data.xml"/>
 
+    <!-- Maintenance Mode -->
+    <include file="db/changelog/changes/096-create-maintenance-tables.xml"/>
+
+    <!-- Player Orders -->
+    <include file="db/changelog/changes/095-create-player-orders-tables.xml"/>
+
     <!-- World Events Framework -->
     <include file="db/changelog/changes/089-create-world-events-framework-tables.xml"/>
     <include file="db/changelog/changes/090-seed-world-events-framework-data.xml"/>
+
+    <!-- Investments System -->
+    <include file="db/changelog/changes/096-create-investments-tables.xml"/>
+    <include file="db/changelog/changes/097-seed-investments-data.xml"/>
 
 </databaseChangeLog>

@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("makeTradeOffer_request_items_inner")
-
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 public class MakeTradeOfferRequestItemsInner {
 
   private @Nullable String itemId;

@@ -16,11 +16,11 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * РњРµС‚Р°РґР°РЅРЅС‹Рµ РїР°РіРёРЅР°С†РёРё
+ * Метаданные пагинации
  */
 
-@Schema(name = "PaginationMeta", description = "РњРµС‚Р°РґР°РЅРЅС‹Рµ РїР°РіРёРЅР°С†РёРё")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-06T19:56:57.236771400+03:00[Europe/Moscow]", comments = "Generator version: 7.17.0")
+@Schema(name = "PaginationMeta", description = "Метаданные пагинации")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 public class PaginationMeta {
 
   private Integer page;
@@ -55,12 +55,12 @@ public class PaginationMeta {
   }
 
   /**
-   * РўРµРєСѓС‰РёР№ РЅРѕРјРµСЂ СЃС‚СЂР°РЅРёС†С‹
+   * Текущий номер страницы
    * minimum: 1
    * @return page
    */
   @NotNull @Min(value = 1) 
-  @Schema(name = "page", example = "1", description = "РўРµРєСѓС‰РёР№ РЅРѕРјРµСЂ СЃС‚СЂР°РЅРёС†С‹", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "page", example = "1", description = "Текущий номер страницы", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("page")
   public Integer getPage() {
     return page;
@@ -76,12 +76,12 @@ public class PaginationMeta {
   }
 
   /**
-   * РљРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ РЅР° СЃС‚СЂР°РЅРёС†Рµ
+   * Количество элементов на странице
    * minimum: 1
    * @return pageSize
    */
   @NotNull @Min(value = 1) 
-  @Schema(name = "page_size", example = "20", description = "РљРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ РЅР° СЃС‚СЂР°РЅРёС†Рµ", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "page_size", example = "20", description = "Количество элементов на странице", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("page_size")
   public Integer getPageSize() {
     return pageSize;
@@ -97,12 +97,12 @@ public class PaginationMeta {
   }
 
   /**
-   * РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ
+   * Общее количество элементов
    * minimum: 0
    * @return total
    */
   @NotNull @Min(value = 0) 
-  @Schema(name = "total", example = "156", description = "РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "total", example = "156", description = "Общее количество элементов", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("total")
   public Integer getTotal() {
     return total;
@@ -118,12 +118,12 @@ public class PaginationMeta {
   }
 
   /**
-   * РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚СЂР°РЅРёС†
+   * Общее количество страниц
    * minimum: 0
    * @return totalPages
    */
   @NotNull @Min(value = 0) 
-  @Schema(name = "total_pages", example = "8", description = "РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚СЂР°РЅРёС†", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Schema(name = "total_pages", example = "8", description = "Общее количество страниц", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("total_pages")
   public Integer getTotalPages() {
     return totalPages;
@@ -139,11 +139,11 @@ public class PaginationMeta {
   }
 
   /**
-   * Р•СЃС‚СЊ Р»Рё СЃР»РµРґСѓСЋС‰Р°СЏ СЃС‚СЂР°РЅРёС†Р°
+   * Есть ли следующая страница
    * @return hasNext
    */
   
-  @Schema(name = "has_next", example = "true", description = "Р•СЃС‚СЊ Р»Рё СЃР»РµРґСѓСЋС‰Р°СЏ СЃС‚СЂР°РЅРёС†Р°", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "has_next", example = "true", description = "Есть ли следующая страница", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("has_next")
   public @Nullable Boolean getHasNext() {
     return hasNext;
@@ -159,11 +159,11 @@ public class PaginationMeta {
   }
 
   /**
-   * Р•СЃС‚СЊ Р»Рё РїСЂРµРґС‹РґСѓС‰Р°СЏ СЃС‚СЂР°РЅРёС†Р°
+   * Есть ли предыдущая страница
    * @return hasPrev
    */
   
-  @Schema(name = "has_prev", example = "false", description = "Р•СЃС‚СЊ Р»Рё РїСЂРµРґС‹РґСѓС‰Р°СЏ СЃС‚СЂР°РЅРёС†Р°", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "has_prev", example = "false", description = "Есть ли предыдущая страница", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("has_prev")
   public @Nullable Boolean getHasPrev() {
     return hasPrev;

@@ -5,498 +5,884 @@
  */
 package com.necpgame.backjava.api;
 
-import com.necpgame.backjava.model.BlockPlayerRequest;
-import com.necpgame.backjava.model.CreateGuildRequest;
-import com.necpgame.backjava.model.CreatePartyRequest;
-import com.necpgame.backjava.model.GetFriends200Response;
-import com.necpgame.backjava.model.Guild;
-import com.necpgame.backjava.model.GuildDetails;
-import com.necpgame.backjava.model.InviteToGuildRequest;
-import com.necpgame.backjava.model.InviteToPartyRequest;
-import com.necpgame.backjava.model.JoinGuildRequest;
-import com.necpgame.backjava.model.JoinPartyRequest;
-import com.necpgame.backjava.model.Party;
-import com.necpgame.backjava.model.PartyDetails;
-import com.necpgame.backjava.model.SendFriendRequestRequest;
+import com.necpgame.backjava.model.BlockCreateRequest;
+import com.necpgame.backjava.model.BlockListResponse;
+import com.necpgame.backjava.model.Error;
+import com.necpgame.backjava.model.FriendError;
+import com.necpgame.backjava.model.FriendListResponse;
+import com.necpgame.backjava.model.FriendRequestCreate;
+import com.necpgame.backjava.model.FriendRequestDecline;
+import com.necpgame.backjava.model.FriendRequestsResponse;
+import org.springframework.lang.Nullable;
+import com.necpgame.backjava.model.PresenceFeedResponse;
+import com.necpgame.backjava.model.PresenceUpdateRequest;
+import com.necpgame.backjava.model.RecentPlayersResponse;
+import com.necpgame.backjava.model.SocialInviteRequest;
+import com.necpgame.backjava.model.SuggestionsResponse;
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 @Validated
-@Tag(name = "Friends", description = "Система друзей")
-@Tag(name = "Party", description = "Система групп")
-@Tag(name = "Guilds", description = "Система гильдий")
+@Tag(name = "Blocks", description = "Блокировки, mute, privacy")
 public interface SocialApi {
 
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
 
-    String PATH_CREATE_GUILD = "/social/guilds/create";
+    String PATH_SOCIAL_FRIENDS_BLOCKS_BLOCK_ID_DELETE = "/social/friends/blocks/{blockId}";
+    /**
+     * DELETE /social/friends/blocks/{blockId} : Снять блокировку
+     *
+     * @param blockId Идентификатор записи блокировки (required)
+     * @return Блокировка снята (status code 204)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
     @Operation(
-        operationId = "createGuild",
-        summary = "Создать гильдию",
-        description = "Создает новую гильдию. Требует минимальный уровень и стоимость. ",
-        tags = { "Guilds" },
+        operationId = "socialFriendsBlocksBlockIdDelete",
+        summary = "Снять блокировку",
+        tags = { "Blocks" },
         responses = {
-            @ApiResponse(responseCode = "201", description = "Гильдия создана", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Guild.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "bearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = SocialApi.PATH_CREATE_GUILD,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Guild> createGuild(
-        @Parameter(name = "CreateGuildRequest", description = "", required = true) @Valid @RequestBody CreateGuildRequest createGuildRequest
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"level\" : 0, \"guild_id\" : \"guild_id\", \"name\" : \"name\", \"created_at\" : \"2000-01-23T04:56:07.000+00:00\", \"tag\" : \"tag\", \"member_count\" : 6 }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
+            @ApiResponse(responseCode = "204", description = "Блокировка снята"),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
 
-    String PATH_GET_GUILD = "/social/guilds/{guild_id}";
-    @Operation(
-        operationId = "getGuild",
-        summary = "Получить информацию о гильдии",
-        description = "Возвращает детали гильдии, участников, звания",
-        tags = { "Guilds" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Информация о гильдии", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = GuildDetails.class))
             })
         },
         security = {
-            @SecurityRequirement(name = "bearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = SocialApi.PATH_GET_GUILD,
-        produces = { "application/json" }
-    )
-    default ResponseEntity<GuildDetails> getGuild(
-        @NotNull @Parameter(name = "guild_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("guild_id") String guildId
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"level\" : 0, \"members\" : [ \"{}\", \"{}\" ], \"guild_id\" : \"guild_id\", \"name\" : \"name\", \"created_at\" : \"2000-01-23T04:56:07.000+00:00\", \"tag\" : \"tag\", \"member_count\" : 6 }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    String PATH_INVITE_TO_GUILD = "/social/guilds/{guild_id}/invite";
-    @Operation(
-        operationId = "inviteToGuild",
-        summary = "Пригласить в гильдию",
-        description = "Отправляет приглашение в гильдию. Требует право INVITE_MEMBERS. ",
-        tags = { "Guilds" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Приглашение отправлено", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "bearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = SocialApi.PATH_INVITE_TO_GUILD,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Object> inviteToGuild(
-        @NotNull @Parameter(name = "guild_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("guild_id") String guildId,
-        @Parameter(name = "InviteToGuildRequest", description = "", required = true) @Valid @RequestBody InviteToGuildRequest inviteToGuildRequest
-    ) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    String PATH_JOIN_GUILD = "/social/guilds/{guild_id}/join";
-    @Operation(
-        operationId = "joinGuild",
-        summary = "Вступить в гильдию",
-        description = "Принимает приглашение и вступает в гильдию",
-        tags = { "Guilds" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Вступил в гильдию", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "bearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = SocialApi.PATH_JOIN_GUILD,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Object> joinGuild(
-        @NotNull @Parameter(name = "guild_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("guild_id") String guildId,
-        @Parameter(name = "JoinGuildRequest", description = "", required = true) @Valid @RequestBody JoinGuildRequest joinGuildRequest
-    ) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    String PATH_LEAVE_GUILD = "/social/guilds/{guild_id}/leave";
-    @Operation(
-        operationId = "leaveGuild",
-        summary = "Покинуть гильдию",
-        description = "Покидает гильдию",
-        tags = { "Guilds" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Покинул гильдию", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "bearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = SocialApi.PATH_LEAVE_GUILD,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Object> leaveGuild(
-        @NotNull @Parameter(name = "guild_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("guild_id") String guildId,
-        @Parameter(name = "JoinGuildRequest", description = "", required = true) @Valid @RequestBody JoinGuildRequest joinGuildRequest
-    ) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    String PATH_ACCEPT_FRIEND_REQUEST = "/social/friends/request/{request_id}/accept";
-    @Operation(
-        operationId = "acceptFriendRequest",
-        summary = "Принять запрос в друзья",
-        description = "Принимает запрос, добавляет в friends list",
-        tags = { "Friends" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Запрос принят", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "bearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = SocialApi.PATH_ACCEPT_FRIEND_REQUEST,
-        produces = { "application/json" }
-    )
-    default ResponseEntity<Object> acceptFriendRequest(
-        @NotNull @Parameter(name = "request_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("request_id") String requestId
-    ) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    String PATH_BLOCK_PLAYER = "/social/friends/block";
-    @Operation(
-        operationId = "blockPlayer",
-        summary = "Заблокировать игрока",
-        description = "Добавляет игрока в block list. Блокирует сообщения, invites, trade. ",
-        tags = { "Friends" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Игрок заблокирован", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "bearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = SocialApi.PATH_BLOCK_PLAYER,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Object> blockPlayer(
-        @Parameter(name = "BlockPlayerRequest", description = "", required = true) @Valid @RequestBody BlockPlayerRequest blockPlayerRequest
-    ) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    String PATH_GET_FRIENDS = "/social/friends";
-    @Operation(
-        operationId = "getFriends",
-        summary = "Получить список друзей",
-        description = "Возвращает список друзей с online статусом",
-        tags = { "Friends" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Список друзей", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = GetFriends200Response.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "bearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = SocialApi.PATH_GET_FRIENDS,
-        produces = { "application/json" }
-    )
-    default ResponseEntity<GetFriends200Response> getFriends(
-        @NotNull @Parameter(name = "player_id", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "player_id", required = true) String playerId
-    ) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    String PATH_REMOVE_FRIEND = "/social/friends/{friend_id}/remove";
-    @Operation(
-        operationId = "removeFriend",
-        summary = "Удалить из друзей",
-        description = "Удаляет игрока из списка друзей",
-        tags = { "Friends" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Удален из друзей", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "bearerAuth")
+            @SecurityRequirement(name = "BearerAuth")
         }
     )
     @RequestMapping(
         method = RequestMethod.DELETE,
-        value = SocialApi.PATH_REMOVE_FRIEND,
+        value = SocialApi.PATH_SOCIAL_FRIENDS_BLOCKS_BLOCK_ID_DELETE,
         produces = { "application/json" }
     )
-    default ResponseEntity<Object> removeFriend(
-        @NotNull @Parameter(name = "friend_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("friend_id") String friendId
-    ) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    String PATH_SEND_FRIEND_REQUEST = "/social/friends/request";
-    @Operation(
-        operationId = "sendFriendRequest",
-        summary = "Отправить запрос в друзья",
-        description = "Отправляет запрос на добавление в друзья",
-        tags = { "Friends" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Запрос отправлен", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "bearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = SocialApi.PATH_SEND_FRIEND_REQUEST,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Object> sendFriendRequest(
-        @Parameter(name = "SendFriendRequestRequest", description = "", required = true) @Valid @RequestBody SendFriendRequestRequest sendFriendRequestRequest
-    ) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    String PATH_CREATE_PARTY = "/social/party/create";
-    @Operation(
-        operationId = "createParty",
-        summary = "Создать группу",
-        description = "Создает новую группу. Создатель становится лидером. ",
-        tags = { "Party" },
-        responses = {
-            @ApiResponse(responseCode = "201", description = "Группа создана", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Party.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "bearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = SocialApi.PATH_CREATE_PARTY,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Party> createParty(
-        @Parameter(name = "CreatePartyRequest", description = "", required = true) @Valid @RequestBody CreatePartyRequest createPartyRequest
+    default ResponseEntity<Void> socialFriendsBlocksBlockIdDelete(
+        @NotNull @Parameter(name = "blockId", description = "Идентификатор записи блокировки", required = true, in = ParameterIn.PATH) @PathVariable("blockId") String blockId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"party_id\" : \"party_id\", \"members\" : [ \"members\", \"members\" ], \"max_members\" : 0, \"created_at\" : \"2000-01-23T04:56:07.000+00:00\", \"leader_id\" : \"leader_id\", \"loot_mode\" : \"loot_mode\" }";
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
             }
         });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
     }
 
-    String PATH_GET_PARTY = "/social/party/{party_id}";
+
+    String PATH_SOCIAL_FRIENDS_BLOCKS_GET = "/social/friends/blocks";
+    /**
+     * GET /social/friends/blocks : Список блокировок и игнора
+     *
+     * @return Заблокированные игроки (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
     @Operation(
-        operationId = "getParty",
-        summary = "Получить информацию о группе",
-        description = "Возвращает детали группы, участников, настройки",
-        tags = { "Party" },
+        operationId = "socialFriendsBlocksGet",
+        summary = "Список блокировок и игнора",
+        tags = { "Blocks" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Информация о группе", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = PartyDetails.class))
+            @ApiResponse(responseCode = "200", description = "Заблокированные игроки", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = BlockListResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
             })
         },
         security = {
-            @SecurityRequirement(name = "bearerAuth")
+            @SecurityRequirement(name = "BearerAuth")
         }
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = SocialApi.PATH_GET_PARTY,
+        value = SocialApi.PATH_SOCIAL_FRIENDS_BLOCKS_GET,
         produces = { "application/json" }
     )
-    default ResponseEntity<PartyDetails> getParty(
-        @NotNull @Parameter(name = "party_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("party_id") String partyId
+    default ResponseEntity<BlockListResponse> socialFriendsBlocksGet(
+        
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"member_details\" : [ { \"level\" : 6, \"name\" : \"name\", \"character_id\" : \"character_id\", \"is_online\" : true, \"class\" : \"class\" }, { \"level\" : 6, \"name\" : \"name\", \"character_id\" : \"character_id\", \"is_online\" : true, \"class\" : \"class\" } ], \"party_id\" : \"party_id\", \"members\" : [ \"members\", \"members\" ], \"max_members\" : 0, \"created_at\" : \"2000-01-23T04:56:07.000+00:00\", \"leader_id\" : \"leader_id\", \"loot_mode\" : \"loot_mode\" }";
+                    String exampleString = "{ \"entries\" : [ { \"blockId\" : \"blockId\", \"reason\" : \"reason\", \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\", \"targetId\" : \"targetId\", \"type\" : \"BLOCK\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\" }, { \"blockId\" : \"blockId\", \"reason\" : \"reason\", \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\", \"targetId\" : \"targetId\", \"type\" : \"BLOCK\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\" } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
             }
         });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
     }
 
-    String PATH_INVITE_TO_PARTY = "/social/party/{party_id}/invite";
+
+    String PATH_SOCIAL_FRIENDS_BLOCKS_POST = "/social/friends/blocks";
+    /**
+     * POST /social/friends/blocks : Добавить игрока в блок или mute
+     *
+     * @param blockCreateRequest  (required)
+     * @return Блокировка добавлена (status code 201)
+     *         or Ошибка добавления (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
     @Operation(
-        operationId = "inviteToParty",
-        summary = "Пригласить в группу",
-        description = "Отправляет приглашение в группу. Только лидер может приглашать. ",
-        tags = { "Party" },
+        operationId = "socialFriendsBlocksPost",
+        summary = "Добавить игрока в блок или mute",
+        tags = { "Blocks" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Приглашение отправлено", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
+            @ApiResponse(responseCode = "201", description = "Блокировка добавлена"),
+            @ApiResponse(responseCode = "400", description = "Ошибка добавления", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = FriendError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
             })
         },
         security = {
-            @SecurityRequirement(name = "bearerAuth")
+            @SecurityRequirement(name = "BearerAuth")
         }
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = SocialApi.PATH_INVITE_TO_PARTY,
+        value = SocialApi.PATH_SOCIAL_FRIENDS_BLOCKS_POST,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<Object> inviteToParty(
-        @NotNull @Parameter(name = "party_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("party_id") String partyId,
-        @Parameter(name = "InviteToPartyRequest", description = "", required = true) @Valid @RequestBody InviteToPartyRequest inviteToPartyRequest
-    ) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-    }
-
-    String PATH_JOIN_PARTY = "/social/party/{party_id}/join";
-    @Operation(
-        operationId = "joinParty",
-        summary = "Присоединиться к группе",
-        description = "Принимает приглашение и присоединяется к группе",
-        tags = { "Party" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Присоединился к группе", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Party.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "bearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = SocialApi.PATH_JOIN_PARTY,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Party> joinParty(
-        @NotNull @Parameter(name = "party_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("party_id") String partyId,
-        @Parameter(name = "JoinPartyRequest", description = "", required = true) @Valid @RequestBody JoinPartyRequest joinPartyRequest
+    default ResponseEntity<Void> socialFriendsBlocksPost(
+        @Parameter(name = "BlockCreateRequest", description = "", required = true) @Valid @RequestBody BlockCreateRequest blockCreateRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"party_id\" : \"party_id\", \"members\" : [ \"members\", \"members\" ], \"max_members\" : 0, \"created_at\" : \"2000-01-23T04:56:07.000+00:00\", \"leader_id\" : \"leader_id\", \"loot_mode\" : \"loot_mode\" }";
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"REQUEST_LIMIT\", \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
             }
         });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
     }
 
-    String PATH_LEAVE_PARTY = "/social/party/{party_id}/leave";
+
+    String PATH_SOCIAL_FRIENDS_FRIEND_ID_DELETE = "/social/friends/{friendId}";
+    /**
+     * DELETE /social/friends/{friendId} : Удалить игрока из друзей
+     *
+     * @param friendId Идентификатор дружеской связи/игрока (required)
+     * @return Друг удалён (status code 204)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     *         or Запрошенный ресурс не найден.  (status code 404)
+     */
     @Operation(
-        operationId = "leaveParty",
-        summary = "Покинуть группу",
-        description = "Покидает группу. Если лидер - лидерство передается другому. ",
-        tags = { "Party" },
+        operationId = "socialFriendsFriendIdDelete",
+        summary = "Удалить игрока из друзей",
+        tags = { "Friends" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Покинул группу", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
+            @ApiResponse(responseCode = "204", description = "Друг удалён"),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            }),
+            @ApiResponse(responseCode = "404", description = "Запрошенный ресурс не найден. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"NOT_FOUND\",\"message\":\"Запрошенный ресурс не найден\",\"details\":[{\"field\":\"id\",\"message\":\"NPC с указанным ID не существует\",\"code\":\"RESOURCE_NOT_FOUND\"}]}}"
+                    )
+                })
+
             })
         },
         security = {
-            @SecurityRequirement(name = "bearerAuth")
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.DELETE,
+        value = SocialApi.PATH_SOCIAL_FRIENDS_FRIEND_ID_DELETE,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<Void> socialFriendsFriendIdDelete(
+        @NotNull @Parameter(name = "friendId", description = "Идентификатор дружеской связи/игрока", required = true, in = ParameterIn.PATH) @PathVariable("friendId") String friendId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_SOCIAL_FRIENDS_GET = "/social/friends";
+    /**
+     * GET /social/friends : Список друзей текущего игрока
+     *
+     * @param includePresence  (optional, default to true)
+     * @param includeMetadata  (optional, default to false)
+     * @return Список друзей (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "socialFriendsGet",
+        summary = "Список друзей текущего игрока",
+        tags = { "Friends" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Список друзей", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = FriendListResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = SocialApi.PATH_SOCIAL_FRIENDS_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<FriendListResponse> socialFriendsGet(
+        @Parameter(name = "includePresence", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "includePresence", required = false, defaultValue = "true") Boolean includePresence,
+        @Parameter(name = "includeMetadata", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "includeMetadata", required = false, defaultValue = "false") Boolean includeMetadata
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"total\" : 0, \"friends\" : [ { \"metadata\" : { \"key\" : \"\" }, \"nickname\" : \"nickname\", \"relationship\" : \"FRIEND\", \"presence\" : { \"lastSeen\" : \"2000-01-23T04:56:07.000+00:00\", \"activity\" : \"activity\", \"state\" : \"ONLINE\", \"sessionId\" : \"sessionId\", \"platform\" : \"platform\" }, \"favorite\" : true, \"platform\" : \"platform\", \"playerId\" : \"playerId\" }, { \"metadata\" : { \"key\" : \"\" }, \"nickname\" : \"nickname\", \"relationship\" : \"FRIEND\", \"presence\" : { \"lastSeen\" : \"2000-01-23T04:56:07.000+00:00\", \"activity\" : \"activity\", \"state\" : \"ONLINE\", \"sessionId\" : \"sessionId\", \"platform\" : \"platform\" }, \"favorite\" : true, \"platform\" : \"platform\", \"playerId\" : \"playerId\" } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_SOCIAL_FRIENDS_INVITES_POST = "/social/friends/invites";
+    /**
+     * POST /social/friends/invites : Отправить социальное приглашение (party/guild)
+     *
+     * @param socialInviteRequest  (required)
+     * @return Приглашение отправлено (status code 202)
+     *         or Отправка невозможна (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "socialFriendsInvitesPost",
+        summary = "Отправить социальное приглашение (party/guild)",
+        tags = { "Requests" },
+        responses = {
+            @ApiResponse(responseCode = "202", description = "Приглашение отправлено"),
+            @ApiResponse(responseCode = "400", description = "Отправка невозможна", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = FriendError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
         }
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = SocialApi.PATH_LEAVE_PARTY,
+        value = SocialApi.PATH_SOCIAL_FRIENDS_INVITES_POST,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<Object> leaveParty(
-        @NotNull @Parameter(name = "party_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("party_id") String partyId,
-        @Parameter(name = "JoinPartyRequest", description = "", required = true) @Valid @RequestBody JoinPartyRequest joinPartyRequest
+    default ResponseEntity<Void> socialFriendsInvitesPost(
+        @Parameter(name = "SocialInviteRequest", description = "", required = true) @Valid @RequestBody SocialInviteRequest socialInviteRequest
     ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"REQUEST_LIMIT\", \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
     }
+
+
+    String PATH_SOCIAL_FRIENDS_POST = "/social/friends";
+    /**
+     * POST /social/friends : Отправить запрос в друзья
+     *
+     * @param friendRequestCreate  (required)
+     * @return Запрос создан (status code 202)
+     *         or Запрос невозможен (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     *         or Превышен лимит запросов. Клиенту следует повторить запрос позже.  (status code 429)
+     */
+    @Operation(
+        operationId = "socialFriendsPost",
+        summary = "Отправить запрос в друзья",
+        tags = { "Requests" },
+        responses = {
+            @ApiResponse(responseCode = "202", description = "Запрос создан"),
+            @ApiResponse(responseCode = "400", description = "Запрос невозможен", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = FriendError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            }),
+            @ApiResponse(responseCode = "429", description = "Превышен лимит запросов. Клиенту следует повторить запрос позже. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"TOO_MANY_REQUESTS\",\"message\":\"Лимит запросов превышен. Повторите попытку позже.\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = SocialApi.PATH_SOCIAL_FRIENDS_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> socialFriendsPost(
+        @Parameter(name = "FriendRequestCreate", description = "", required = true) @Valid @RequestBody FriendRequestCreate friendRequestCreate
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"REQUEST_LIMIT\", \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_SOCIAL_FRIENDS_PRESENCE_GET = "/social/friends/presence";
+    /**
+     * GET /social/friends/presence : Получить актуальные статусы присутствия друзей
+     *
+     * @return Статусы присутствия (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "socialFriendsPresenceGet",
+        summary = "Получить актуальные статусы присутствия друзей",
+        tags = { "Presence" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Статусы присутствия", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = PresenceFeedResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = SocialApi.PATH_SOCIAL_FRIENDS_PRESENCE_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<PresenceFeedResponse> socialFriendsPresenceGet(
+        
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"entries\" : [ { \"presence\" : { \"lastSeen\" : \"2000-01-23T04:56:07.000+00:00\", \"activity\" : \"activity\", \"state\" : \"ONLINE\", \"sessionId\" : \"sessionId\", \"platform\" : \"platform\" }, \"playerId\" : \"playerId\" }, { \"presence\" : { \"lastSeen\" : \"2000-01-23T04:56:07.000+00:00\", \"activity\" : \"activity\", \"state\" : \"ONLINE\", \"sessionId\" : \"sessionId\", \"platform\" : \"platform\" }, \"playerId\" : \"playerId\" } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_SOCIAL_FRIENDS_PRESENCE_POST = "/social/friends/presence";
+    /**
+     * POST /social/friends/presence : Обновить собственный статус присутствия
+     *
+     * @param presenceUpdateRequest  (required)
+     * @return Статус обновлён (status code 200)
+     *         or Некорректное состояние (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "socialFriendsPresencePost",
+        summary = "Обновить собственный статус присутствия",
+        tags = { "Presence" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Статус обновлён"),
+            @ApiResponse(responseCode = "400", description = "Некорректное состояние", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = FriendError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = SocialApi.PATH_SOCIAL_FRIENDS_PRESENCE_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> socialFriendsPresencePost(
+        @Parameter(name = "PresenceUpdateRequest", description = "", required = true) @Valid @RequestBody PresenceUpdateRequest presenceUpdateRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"REQUEST_LIMIT\", \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_SOCIAL_FRIENDS_RECENT_GET = "/social/friends/recent";
+    /**
+     * GET /social/friends/recent : Недавние игроки
+     *
+     * @return Список последних игроков (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "socialFriendsRecentGet",
+        summary = "Недавние игроки",
+        tags = { "SocialGraph" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Список последних игроков", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = RecentPlayersResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = SocialApi.PATH_SOCIAL_FRIENDS_RECENT_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<RecentPlayersResponse> socialFriendsRecentGet(
+        
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"players\" : [ { \"metAt\" : \"2000-01-23T04:56:07.000+00:00\", \"score\" : 0.8008281904610115, \"nickname\" : \"nickname\", \"context\" : \"MATCH\", \"playerId\" : \"playerId\" }, { \"metAt\" : \"2000-01-23T04:56:07.000+00:00\", \"score\" : 0.8008281904610115, \"nickname\" : \"nickname\", \"context\" : \"MATCH\", \"playerId\" : \"playerId\" } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_SOCIAL_FRIENDS_REQUESTS_GET = "/social/friends/requests";
+    /**
+     * GET /social/friends/requests : Получить входящие и исходящие запросы
+     *
+     * @return Запросы дружбы (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "socialFriendsRequestsGet",
+        summary = "Получить входящие и исходящие запросы",
+        tags = { "Requests" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Запросы дружбы", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = FriendRequestsResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = SocialApi.PATH_SOCIAL_FRIENDS_REQUESTS_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<FriendRequestsResponse> socialFriendsRequestsGet(
+        
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"incoming\" : [ { \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\", \"requestId\" : \"requestId\", \"from\" : \"from\", \"to\" : \"to\", \"message\" : \"message\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"status\" : \"PENDING\" }, { \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\", \"requestId\" : \"requestId\", \"from\" : \"from\", \"to\" : \"to\", \"message\" : \"message\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"status\" : \"PENDING\" } ], \"outgoing\" : [ { \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\", \"requestId\" : \"requestId\", \"from\" : \"from\", \"to\" : \"to\", \"message\" : \"message\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"status\" : \"PENDING\" }, { \"createdAt\" : \"2000-01-23T04:56:07.000+00:00\", \"requestId\" : \"requestId\", \"from\" : \"from\", \"to\" : \"to\", \"message\" : \"message\", \"expiresAt\" : \"2000-01-23T04:56:07.000+00:00\", \"status\" : \"PENDING\" } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_SOCIAL_FRIENDS_REQUESTS_REQUEST_ID_ACCEPT_POST = "/social/friends/requests/{requestId}/accept";
+    /**
+     * POST /social/friends/requests/{requestId}/accept : Принять запрос
+     *
+     * @param requestId Идентификатор запроса в друзья (required)
+     * @return Запрос принят (status code 200)
+     *         or Запрос недействителен (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "socialFriendsRequestsRequestIdAcceptPost",
+        summary = "Принять запрос",
+        tags = { "Requests" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Запрос принят"),
+            @ApiResponse(responseCode = "400", description = "Запрос недействителен", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = FriendError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = SocialApi.PATH_SOCIAL_FRIENDS_REQUESTS_REQUEST_ID_ACCEPT_POST,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<Void> socialFriendsRequestsRequestIdAcceptPost(
+        @NotNull @Parameter(name = "requestId", description = "Идентификатор запроса в друзья", required = true, in = ParameterIn.PATH) @PathVariable("requestId") String requestId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"REQUEST_LIMIT\", \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_SOCIAL_FRIENDS_REQUESTS_REQUEST_ID_DECLINE_POST = "/social/friends/requests/{requestId}/decline";
+    /**
+     * POST /social/friends/requests/{requestId}/decline : Отклонить запрос
+     *
+     * @param requestId Идентификатор запроса в друзья (required)
+     * @param friendRequestDecline  (optional)
+     * @return Запрос отклонён (status code 200)
+     *         or Запрос недействителен (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "socialFriendsRequestsRequestIdDeclinePost",
+        summary = "Отклонить запрос",
+        tags = { "Requests" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Запрос отклонён"),
+            @ApiResponse(responseCode = "400", description = "Запрос недействителен", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = FriendError.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = SocialApi.PATH_SOCIAL_FRIENDS_REQUESTS_REQUEST_ID_DECLINE_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> socialFriendsRequestsRequestIdDeclinePost(
+        @NotNull @Parameter(name = "requestId", description = "Идентификатор запроса в друзья", required = true, in = ParameterIn.PATH) @PathVariable("requestId") String requestId,
+        @Parameter(name = "FriendRequestDecline", description = "") @Valid @RequestBody(required = false) @Nullable FriendRequestDecline friendRequestDecline
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"traceId\" : \"traceId\", \"code\" : \"REQUEST_LIMIT\", \"message\" : \"message\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_SOCIAL_FRIENDS_SUGGESTIONS_GET = "/social/friends/suggestions";
+    /**
+     * GET /social/friends/suggestions : Рекомендации друзей
+     *
+     * @param source  (optional)
+     * @return Список рекомендаций (status code 200)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "socialFriendsSuggestionsGet",
+        summary = "Рекомендации друзей",
+        tags = { "SocialGraph" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Список рекомендаций", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SuggestionsResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = SocialApi.PATH_SOCIAL_FRIENDS_SUGGESTIONS_GET,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<SuggestionsResponse> socialFriendsSuggestionsGet(
+        @Parameter(name = "source", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "source", required = false) @Nullable String source
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"suggestions\" : [ { \"nickname\" : \"nickname\", \"source\" : \"source\", \"mutualFriends\" : 6, \"relevance\" : 0.8008281904610115, \"playerId\" : \"playerId\" }, { \"nickname\" : \"nickname\", \"source\" : \"source\", \"mutualFriends\" : 6, \"relevance\" : 0.8008281904610115, \"playerId\" : \"playerId\" } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
 }

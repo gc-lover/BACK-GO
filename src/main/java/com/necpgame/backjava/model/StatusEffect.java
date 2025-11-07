@@ -4,7 +4,8 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -25,56 +26,18 @@ public class StatusEffect {
 
   private @Nullable String effectId;
 
-  private @Nullable String name;
+  private @Nullable String type;
 
-  /**
-   * Gets or Sets type
-   */
-  public enum TypeEnum {
-    BUFF("BUFF"),
-    
-    DEBUFF("DEBUFF"),
-    
-    DOT("DOT"),
-    
-    HOT("HOT"),
-    
-    STUN("STUN"),
-    
-    ROOT("ROOT");
+  private @Nullable Integer stacks;
 
-    private final String value;
+  private @Nullable Integer durationMs;
 
-    TypeEnum(String value) {
-      this.value = value;
-    }
+  private @Nullable Integer remainingMs;
 
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
+  private @Nullable String sourceId;
 
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static TypeEnum fromValue(String value) {
-      for (TypeEnum b : TypeEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
-
-  private @Nullable TypeEnum type;
-
-  private @Nullable Integer durationSeconds;
-
-  private Integer stacks = 1;
+  @Valid
+  private Map<String, Object> modifiers = new HashMap<>();
 
   public StatusEffect effectId(@Nullable String effectId) {
     this.effectId = effectId;
@@ -86,8 +49,8 @@ public class StatusEffect {
    * @return effectId
    */
   
-  @Schema(name = "effect_id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("effect_id")
+  @Schema(name = "effectId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("effectId")
   public @Nullable String getEffectId() {
     return effectId;
   }
@@ -96,27 +59,7 @@ public class StatusEffect {
     this.effectId = effectId;
   }
 
-  public StatusEffect name(@Nullable String name) {
-    this.name = name;
-    return this;
-  }
-
-  /**
-   * Get name
-   * @return name
-   */
-  
-  @Schema(name = "name", example = "Burning", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("name")
-  public @Nullable String getName() {
-    return name;
-  }
-
-  public void setName(@Nullable String name) {
-    this.name = name;
-  }
-
-  public StatusEffect type(@Nullable TypeEnum type) {
+  public StatusEffect type(@Nullable String type) {
     this.type = type;
     return this;
   }
@@ -128,35 +71,15 @@ public class StatusEffect {
   
   @Schema(name = "type", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("type")
-  public @Nullable TypeEnum getType() {
+  public @Nullable String getType() {
     return type;
   }
 
-  public void setType(@Nullable TypeEnum type) {
+  public void setType(@Nullable String type) {
     this.type = type;
   }
 
-  public StatusEffect durationSeconds(@Nullable Integer durationSeconds) {
-    this.durationSeconds = durationSeconds;
-    return this;
-  }
-
-  /**
-   * Get durationSeconds
-   * @return durationSeconds
-   */
-  
-  @Schema(name = "duration_seconds", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("duration_seconds")
-  public @Nullable Integer getDurationSeconds() {
-    return durationSeconds;
-  }
-
-  public void setDurationSeconds(@Nullable Integer durationSeconds) {
-    this.durationSeconds = durationSeconds;
-  }
-
-  public StatusEffect stacks(Integer stacks) {
+  public StatusEffect stacks(@Nullable Integer stacks) {
     this.stacks = stacks;
     return this;
   }
@@ -168,12 +91,100 @@ public class StatusEffect {
   
   @Schema(name = "stacks", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("stacks")
-  public Integer getStacks() {
+  public @Nullable Integer getStacks() {
     return stacks;
   }
 
-  public void setStacks(Integer stacks) {
+  public void setStacks(@Nullable Integer stacks) {
     this.stacks = stacks;
+  }
+
+  public StatusEffect durationMs(@Nullable Integer durationMs) {
+    this.durationMs = durationMs;
+    return this;
+  }
+
+  /**
+   * Get durationMs
+   * @return durationMs
+   */
+  
+  @Schema(name = "durationMs", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("durationMs")
+  public @Nullable Integer getDurationMs() {
+    return durationMs;
+  }
+
+  public void setDurationMs(@Nullable Integer durationMs) {
+    this.durationMs = durationMs;
+  }
+
+  public StatusEffect remainingMs(@Nullable Integer remainingMs) {
+    this.remainingMs = remainingMs;
+    return this;
+  }
+
+  /**
+   * Get remainingMs
+   * @return remainingMs
+   */
+  
+  @Schema(name = "remainingMs", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("remainingMs")
+  public @Nullable Integer getRemainingMs() {
+    return remainingMs;
+  }
+
+  public void setRemainingMs(@Nullable Integer remainingMs) {
+    this.remainingMs = remainingMs;
+  }
+
+  public StatusEffect sourceId(@Nullable String sourceId) {
+    this.sourceId = sourceId;
+    return this;
+  }
+
+  /**
+   * Get sourceId
+   * @return sourceId
+   */
+  
+  @Schema(name = "sourceId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("sourceId")
+  public @Nullable String getSourceId() {
+    return sourceId;
+  }
+
+  public void setSourceId(@Nullable String sourceId) {
+    this.sourceId = sourceId;
+  }
+
+  public StatusEffect modifiers(Map<String, Object> modifiers) {
+    this.modifiers = modifiers;
+    return this;
+  }
+
+  public StatusEffect putModifiersItem(String key, Object modifiersItem) {
+    if (this.modifiers == null) {
+      this.modifiers = new HashMap<>();
+    }
+    this.modifiers.put(key, modifiersItem);
+    return this;
+  }
+
+  /**
+   * Get modifiers
+   * @return modifiers
+   */
+  
+  @Schema(name = "modifiers", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("modifiers")
+  public Map<String, Object> getModifiers() {
+    return modifiers;
+  }
+
+  public void setModifiers(Map<String, Object> modifiers) {
+    this.modifiers = modifiers;
   }
 
   @Override
@@ -186,15 +197,17 @@ public class StatusEffect {
     }
     StatusEffect statusEffect = (StatusEffect) o;
     return Objects.equals(this.effectId, statusEffect.effectId) &&
-        Objects.equals(this.name, statusEffect.name) &&
         Objects.equals(this.type, statusEffect.type) &&
-        Objects.equals(this.durationSeconds, statusEffect.durationSeconds) &&
-        Objects.equals(this.stacks, statusEffect.stacks);
+        Objects.equals(this.stacks, statusEffect.stacks) &&
+        Objects.equals(this.durationMs, statusEffect.durationMs) &&
+        Objects.equals(this.remainingMs, statusEffect.remainingMs) &&
+        Objects.equals(this.sourceId, statusEffect.sourceId) &&
+        Objects.equals(this.modifiers, statusEffect.modifiers);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(effectId, name, type, durationSeconds, stacks);
+    return Objects.hash(effectId, type, stacks, durationMs, remainingMs, sourceId, modifiers);
   }
 
   @Override
@@ -202,10 +215,12 @@ public class StatusEffect {
     StringBuilder sb = new StringBuilder();
     sb.append("class StatusEffect {\n");
     sb.append("    effectId: ").append(toIndentedString(effectId)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    durationSeconds: ").append(toIndentedString(durationSeconds)).append("\n");
     sb.append("    stacks: ").append(toIndentedString(stacks)).append("\n");
+    sb.append("    durationMs: ").append(toIndentedString(durationMs)).append("\n");
+    sb.append("    remainingMs: ").append(toIndentedString(remainingMs)).append("\n");
+    sb.append("    sourceId: ").append(toIndentedString(sourceId)).append("\n");
+    sb.append("    modifiers: ").append(toIndentedString(modifiers)).append("\n");
     sb.append("}");
     return sb.toString();
   }

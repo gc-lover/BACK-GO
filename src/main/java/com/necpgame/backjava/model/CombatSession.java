@@ -5,16 +5,15 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.necpgame.backjava.model.Participant;
+import com.necpgame.backjava.model.Team;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
-import org.openapitools.jackson.nullable.JsonNullable;
+import java.util.Map;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
-import java.util.NoSuchElementException;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -32,25 +31,25 @@ import jakarta.annotation.Generated;
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 public class CombatSession {
 
-  private @Nullable UUID id;
+  private @Nullable String sessionId;
 
   /**
-   * Gets or Sets combatType
+   * Gets or Sets mode
    */
-  public enum CombatTypeEnum {
+  public enum ModeEnum {
     PVE("PVE"),
     
-    PVP_DUEL("PVP_DUEL"),
+    PVP("PVP"),
     
-    PVP_ARENA("PVP_ARENA"),
+    RAID("RAID"),
     
-    RAID_BOSS("RAID_BOSS"),
+    DUEL("DUEL"),
     
-    EXTRACTION("EXTRACTION");
+    SIMULATION("SIMULATION");
 
     private final String value;
 
-    CombatTypeEnum(String value) {
+    ModeEnum(String value) {
       this.value = value;
     }
 
@@ -65,8 +64,8 @@ public class CombatSession {
     }
 
     @JsonCreator
-    public static CombatTypeEnum fromValue(String value) {
-      for (CombatTypeEnum b : CombatTypeEnum.values()) {
+    public static ModeEnum fromValue(String value) {
+      for (ModeEnum b : ModeEnum.values()) {
         if (b.value.equals(value)) {
           return b;
         }
@@ -75,19 +74,21 @@ public class CombatSession {
     }
   }
 
-  private @Nullable CombatTypeEnum combatType;
+  private @Nullable ModeEnum mode;
+
+  private @Nullable String map;
 
   /**
    * Gets or Sets status
    */
   public enum StatusEnum {
-    STARTING("STARTING"),
+    PENDING("PENDING"),
     
     ACTIVE("ACTIVE"),
     
-    PAUSED("PAUSED"),
+    COMPLETED("COMPLETED"),
     
-    ENDED("ENDED");
+    ABORTED("ABORTED");
 
     private final String value;
 
@@ -119,60 +120,77 @@ public class CombatSession {
   private @Nullable StatusEnum status;
 
   @Valid
-  private List<@Valid Participant> participants = new ArrayList<>();
+  private Map<String, Object> rules = new HashMap<>();
 
-  private JsonNullable<Integer> currentTurn = JsonNullable.<Integer>undefined();
-
-  private JsonNullable<String> activeParticipantId = JsonNullable.<String>undefined();
-
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private @Nullable OffsetDateTime startedAt;
+  @Valid
+  private Map<String, Object> settings = new HashMap<>();
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private JsonNullable<OffsetDateTime> endedAt = JsonNullable.<OffsetDateTime>undefined();
+  private @Nullable OffsetDateTime startTime;
 
-  private @Nullable Integer durationSeconds;
+  private @Nullable String createdBy;
 
-  private JsonNullable<String> winnerTeam = JsonNullable.<String>undefined();
+  @Valid
+  private List<@Valid Team> teams = new ArrayList<>();
 
-  public CombatSession id(@Nullable UUID id) {
-    this.id = id;
+  public CombatSession sessionId(@Nullable String sessionId) {
+    this.sessionId = sessionId;
     return this;
   }
 
   /**
-   * Get id
-   * @return id
-   */
-  @Valid 
-  @Schema(name = "id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("id")
-  public @Nullable UUID getId() {
-    return id;
-  }
-
-  public void setId(@Nullable UUID id) {
-    this.id = id;
-  }
-
-  public CombatSession combatType(@Nullable CombatTypeEnum combatType) {
-    this.combatType = combatType;
-    return this;
-  }
-
-  /**
-   * Get combatType
-   * @return combatType
+   * Get sessionId
+   * @return sessionId
    */
   
-  @Schema(name = "combat_type", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("combat_type")
-  public @Nullable CombatTypeEnum getCombatType() {
-    return combatType;
+  @Schema(name = "sessionId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("sessionId")
+  public @Nullable String getSessionId() {
+    return sessionId;
   }
 
-  public void setCombatType(@Nullable CombatTypeEnum combatType) {
-    this.combatType = combatType;
+  public void setSessionId(@Nullable String sessionId) {
+    this.sessionId = sessionId;
+  }
+
+  public CombatSession mode(@Nullable ModeEnum mode) {
+    this.mode = mode;
+    return this;
+  }
+
+  /**
+   * Get mode
+   * @return mode
+   */
+  
+  @Schema(name = "mode", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("mode")
+  public @Nullable ModeEnum getMode() {
+    return mode;
+  }
+
+  public void setMode(@Nullable ModeEnum mode) {
+    this.mode = mode;
+  }
+
+  public CombatSession map(@Nullable String map) {
+    this.map = map;
+    return this;
+  }
+
+  /**
+   * Get map
+   * @return map
+   */
+  
+  @Schema(name = "map", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("map")
+  public @Nullable String getMap() {
+    return map;
+  }
+
+  public void setMap(@Nullable String map) {
+    this.map = map;
   }
 
   public CombatSession status(@Nullable StatusEnum status) {
@@ -195,152 +213,128 @@ public class CombatSession {
     this.status = status;
   }
 
-  public CombatSession participants(List<@Valid Participant> participants) {
-    this.participants = participants;
+  public CombatSession rules(Map<String, Object> rules) {
+    this.rules = rules;
     return this;
   }
 
-  public CombatSession addParticipantsItem(Participant participantsItem) {
-    if (this.participants == null) {
-      this.participants = new ArrayList<>();
+  public CombatSession putRulesItem(String key, Object rulesItem) {
+    if (this.rules == null) {
+      this.rules = new HashMap<>();
     }
-    this.participants.add(participantsItem);
+    this.rules.put(key, rulesItem);
     return this;
   }
 
   /**
-   * Get participants
-   * @return participants
+   * Get rules
+   * @return rules
+   */
+  
+  @Schema(name = "rules", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("rules")
+  public Map<String, Object> getRules() {
+    return rules;
+  }
+
+  public void setRules(Map<String, Object> rules) {
+    this.rules = rules;
+  }
+
+  public CombatSession settings(Map<String, Object> settings) {
+    this.settings = settings;
+    return this;
+  }
+
+  public CombatSession putSettingsItem(String key, Object settingsItem) {
+    if (this.settings == null) {
+      this.settings = new HashMap<>();
+    }
+    this.settings.put(key, settingsItem);
+    return this;
+  }
+
+  /**
+   * Get settings
+   * @return settings
+   */
+  
+  @Schema(name = "settings", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("settings")
+  public Map<String, Object> getSettings() {
+    return settings;
+  }
+
+  public void setSettings(Map<String, Object> settings) {
+    this.settings = settings;
+  }
+
+  public CombatSession startTime(@Nullable OffsetDateTime startTime) {
+    this.startTime = startTime;
+    return this;
+  }
+
+  /**
+   * Get startTime
+   * @return startTime
    */
   @Valid 
-  @Schema(name = "participants", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("participants")
-  public List<@Valid Participant> getParticipants() {
-    return participants;
+  @Schema(name = "startTime", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("startTime")
+  public @Nullable OffsetDateTime getStartTime() {
+    return startTime;
   }
 
-  public void setParticipants(List<@Valid Participant> participants) {
-    this.participants = participants;
+  public void setStartTime(@Nullable OffsetDateTime startTime) {
+    this.startTime = startTime;
   }
 
-  public CombatSession currentTurn(Integer currentTurn) {
-    this.currentTurn = JsonNullable.of(currentTurn);
+  public CombatSession createdBy(@Nullable String createdBy) {
+    this.createdBy = createdBy;
     return this;
   }
 
   /**
-   * Get currentTurn
-   * @return currentTurn
+   * Get createdBy
+   * @return createdBy
    */
   
-  @Schema(name = "current_turn", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("current_turn")
-  public JsonNullable<Integer> getCurrentTurn() {
-    return currentTurn;
+  @Schema(name = "createdBy", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("createdBy")
+  public @Nullable String getCreatedBy() {
+    return createdBy;
   }
 
-  public void setCurrentTurn(JsonNullable<Integer> currentTurn) {
-    this.currentTurn = currentTurn;
+  public void setCreatedBy(@Nullable String createdBy) {
+    this.createdBy = createdBy;
   }
 
-  public CombatSession activeParticipantId(String activeParticipantId) {
-    this.activeParticipantId = JsonNullable.of(activeParticipantId);
+  public CombatSession teams(List<@Valid Team> teams) {
+    this.teams = teams;
+    return this;
+  }
+
+  public CombatSession addTeamsItem(Team teamsItem) {
+    if (this.teams == null) {
+      this.teams = new ArrayList<>();
+    }
+    this.teams.add(teamsItem);
     return this;
   }
 
   /**
-   * Get activeParticipantId
-   * @return activeParticipantId
-   */
-  
-  @Schema(name = "active_participant_id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("active_participant_id")
-  public JsonNullable<String> getActiveParticipantId() {
-    return activeParticipantId;
-  }
-
-  public void setActiveParticipantId(JsonNullable<String> activeParticipantId) {
-    this.activeParticipantId = activeParticipantId;
-  }
-
-  public CombatSession startedAt(@Nullable OffsetDateTime startedAt) {
-    this.startedAt = startedAt;
-    return this;
-  }
-
-  /**
-   * Get startedAt
-   * @return startedAt
+   * Get teams
+   * @return teams
    */
   @Valid 
-  @Schema(name = "started_at", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("started_at")
-  public @Nullable OffsetDateTime getStartedAt() {
-    return startedAt;
+  @Schema(name = "teams", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("teams")
+  public List<@Valid Team> getTeams() {
+    return teams;
   }
 
-  public void setStartedAt(@Nullable OffsetDateTime startedAt) {
-    this.startedAt = startedAt;
-  }
-
-  public CombatSession endedAt(OffsetDateTime endedAt) {
-    this.endedAt = JsonNullable.of(endedAt);
-    return this;
-  }
-
-  /**
-   * Get endedAt
-   * @return endedAt
-   */
-  @Valid 
-  @Schema(name = "ended_at", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("ended_at")
-  public JsonNullable<OffsetDateTime> getEndedAt() {
-    return endedAt;
-  }
-
-  public void setEndedAt(JsonNullable<OffsetDateTime> endedAt) {
-    this.endedAt = endedAt;
-  }
-
-  public CombatSession durationSeconds(@Nullable Integer durationSeconds) {
-    this.durationSeconds = durationSeconds;
-    return this;
-  }
-
-  /**
-   * Get durationSeconds
-   * @return durationSeconds
-   */
-  
-  @Schema(name = "duration_seconds", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("duration_seconds")
-  public @Nullable Integer getDurationSeconds() {
-    return durationSeconds;
-  }
-
-  public void setDurationSeconds(@Nullable Integer durationSeconds) {
-    this.durationSeconds = durationSeconds;
-  }
-
-  public CombatSession winnerTeam(String winnerTeam) {
-    this.winnerTeam = JsonNullable.of(winnerTeam);
-    return this;
-  }
-
-  /**
-   * Get winnerTeam
-   * @return winnerTeam
-   */
-  
-  @Schema(name = "winner_team", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("winner_team")
-  public JsonNullable<String> getWinnerTeam() {
-    return winnerTeam;
-  }
-
-  public void setWinnerTeam(JsonNullable<String> winnerTeam) {
-    this.winnerTeam = winnerTeam;
+  public void setTeams(List<@Valid Team> teams) {
+    this.teams = teams;
   }
 
   @Override
@@ -352,48 +346,35 @@ public class CombatSession {
       return false;
     }
     CombatSession combatSession = (CombatSession) o;
-    return Objects.equals(this.id, combatSession.id) &&
-        Objects.equals(this.combatType, combatSession.combatType) &&
+    return Objects.equals(this.sessionId, combatSession.sessionId) &&
+        Objects.equals(this.mode, combatSession.mode) &&
+        Objects.equals(this.map, combatSession.map) &&
         Objects.equals(this.status, combatSession.status) &&
-        Objects.equals(this.participants, combatSession.participants) &&
-        equalsNullable(this.currentTurn, combatSession.currentTurn) &&
-        equalsNullable(this.activeParticipantId, combatSession.activeParticipantId) &&
-        Objects.equals(this.startedAt, combatSession.startedAt) &&
-        equalsNullable(this.endedAt, combatSession.endedAt) &&
-        Objects.equals(this.durationSeconds, combatSession.durationSeconds) &&
-        equalsNullable(this.winnerTeam, combatSession.winnerTeam);
-  }
-
-  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
-    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
+        Objects.equals(this.rules, combatSession.rules) &&
+        Objects.equals(this.settings, combatSession.settings) &&
+        Objects.equals(this.startTime, combatSession.startTime) &&
+        Objects.equals(this.createdBy, combatSession.createdBy) &&
+        Objects.equals(this.teams, combatSession.teams);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, combatType, status, participants, hashCodeNullable(currentTurn), hashCodeNullable(activeParticipantId), startedAt, hashCodeNullable(endedAt), durationSeconds, hashCodeNullable(winnerTeam));
-  }
-
-  private static <T> int hashCodeNullable(JsonNullable<T> a) {
-    if (a == null) {
-      return 1;
-    }
-    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
+    return Objects.hash(sessionId, mode, map, status, rules, settings, startTime, createdBy, teams);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CombatSession {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    combatType: ").append(toIndentedString(combatType)).append("\n");
+    sb.append("    sessionId: ").append(toIndentedString(sessionId)).append("\n");
+    sb.append("    mode: ").append(toIndentedString(mode)).append("\n");
+    sb.append("    map: ").append(toIndentedString(map)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("    participants: ").append(toIndentedString(participants)).append("\n");
-    sb.append("    currentTurn: ").append(toIndentedString(currentTurn)).append("\n");
-    sb.append("    activeParticipantId: ").append(toIndentedString(activeParticipantId)).append("\n");
-    sb.append("    startedAt: ").append(toIndentedString(startedAt)).append("\n");
-    sb.append("    endedAt: ").append(toIndentedString(endedAt)).append("\n");
-    sb.append("    durationSeconds: ").append(toIndentedString(durationSeconds)).append("\n");
-    sb.append("    winnerTeam: ").append(toIndentedString(winnerTeam)).append("\n");
+    sb.append("    rules: ").append(toIndentedString(rules)).append("\n");
+    sb.append("    settings: ").append(toIndentedString(settings)).append("\n");
+    sb.append("    startTime: ").append(toIndentedString(startTime)).append("\n");
+    sb.append("    createdBy: ").append(toIndentedString(createdBy)).append("\n");
+    sb.append("    teams: ").append(toIndentedString(teams)).append("\n");
     sb.append("}");
     return sb.toString();
   }
