@@ -13,3 +13,4 @@ public interface QuestDialogueStateRepository extends JpaRepository<QuestDialogu
 }
 
 
+

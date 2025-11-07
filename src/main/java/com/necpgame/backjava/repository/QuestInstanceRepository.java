@@ -19,3 +19,4 @@ public interface QuestInstanceRepository extends JpaRepository<QuestInstanceEnti
 }
 
 
+

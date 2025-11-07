@@ -148,4 +148,10 @@
     <include file="db/changelog/changes/081-create-currency-exchange-orders-table.xml"/>
     <include file="db/changelog/changes/082-create-currency-arbitrage-table.xml"/>
 
+    <!-- Crafting System -->
+    <include file="db/changelog/changes/083-create-crafting-recipes-tables.xml"/>
+    <include file="db/changelog/changes/084-create-character-known-recipes-table.xml"/>
+    <include file="db/changelog/changes/085-create-crafting-sessions-table.xml"/>
+    <include file="db/changelog/changes/086-seed-crafting-data.xml"/>
+
 </databaseChangeLog>

@@ -66,3 +66,4 @@ public class CurrencyRateHistoryEntity {
     private LocalDateTime recordedAt;
 }
 
+

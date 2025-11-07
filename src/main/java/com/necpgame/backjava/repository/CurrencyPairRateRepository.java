@@ -18,3 +18,4 @@ public interface CurrencyPairRateRepository extends JpaRepository<CurrencyPairRa
     List<CurrencyPairRateEntity> findByBaseCurrencyAndTimestampAfterOrderByTimestampDesc(String baseCurrency, LocalDateTime timestamp);
 }
 
+

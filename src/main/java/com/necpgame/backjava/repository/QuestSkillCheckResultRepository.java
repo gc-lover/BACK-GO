@@ -13,3 +13,4 @@ public interface QuestSkillCheckResultRepository extends JpaRepository<QuestSkil
 }
 
 
+

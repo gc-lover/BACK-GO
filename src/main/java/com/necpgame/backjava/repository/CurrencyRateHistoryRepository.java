@@ -14,3 +14,4 @@ public interface CurrencyRateHistoryRepository extends JpaRepository<CurrencyRat
     List<CurrencyRateHistoryEntity> findTop500ByPairAndPeriodIgnoreCaseAndIntervalIgnoreCaseOrderByTimestampDesc(String pair, String period, String interval);
 }
 
+

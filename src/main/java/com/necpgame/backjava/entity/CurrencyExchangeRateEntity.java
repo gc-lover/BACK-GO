@@ -45,3 +45,4 @@ public class CurrencyExchangeRateEntity {
     private LocalDateTime createdAt;
 }
 
+

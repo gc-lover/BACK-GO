@@ -9,3 +9,4 @@ public interface QuestTemplateDefinitionRepository extends JpaRepository<QuestTe
 }
 
 
+

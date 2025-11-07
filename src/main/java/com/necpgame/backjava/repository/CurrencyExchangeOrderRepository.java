@@ -9,3 +9,4 @@ import org.springframework.stereotype.Repository;
 public interface CurrencyExchangeOrderRepository extends JpaRepository<CurrencyExchangeOrderEntity, UUID> {
 }
 
+

@@ -10,3 +10,4 @@ public interface CharacterProgressionRepository extends JpaRepository<CharacterP
 }
 
 
+

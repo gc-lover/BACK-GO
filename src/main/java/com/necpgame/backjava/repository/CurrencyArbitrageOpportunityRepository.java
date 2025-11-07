@@ -12,3 +12,4 @@ public interface CurrencyArbitrageOpportunityRepository extends JpaRepository<Cu
     List<CurrencyArbitrageOpportunityEntity> findAllByOrderByProfitPotentialDesc();
 }
 
+

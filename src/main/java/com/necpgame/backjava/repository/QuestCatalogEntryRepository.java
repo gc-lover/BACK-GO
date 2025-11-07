@@ -10,3 +10,4 @@ public interface QuestCatalogEntryRepository extends JpaRepository<QuestCatalogE
     JpaSpecificationExecutor<QuestCatalogEntryEntity> {
 }
 
+

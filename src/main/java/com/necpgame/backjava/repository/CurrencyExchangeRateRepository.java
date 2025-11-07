@@ -12,3 +12,4 @@ public interface CurrencyExchangeRateRepository extends JpaRepository<CurrencyEx
     Optional<CurrencyExchangeRateEntity> findFirstByOrderByTimestampDesc();
 }
 
+

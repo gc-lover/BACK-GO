@@ -16,3 +16,4 @@ public interface CurrencyPairRepository extends JpaRepository<CurrencyPairEntity
     Optional<CurrencyPairEntity> findByPair(String pair);
 }
 
+

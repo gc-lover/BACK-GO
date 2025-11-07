@@ -61,3 +61,4 @@ public class CurrencyPairRateEntity {
     private LocalDateTime createdAt;
 }
 
+
