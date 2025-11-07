@@ -126,4 +126,7 @@
     <!-- Quest Engine -->
     <include file="db/changelog/changes/072-create-quest-engine-tables.xml"/>
 
+    <!-- Combat Session v2 -->
+    <include file="db/changelog/changes/073-create-combat-session-instances.xml"/>
+
 </databaseChangeLog>
