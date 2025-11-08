@@ -214,6 +214,14 @@ function Run-Generator {
 
     Write-Host "    npx openapi-generator-cli $($arguments -join ' ')"
     $generatorOutput = & npx --yes @openapitools/openapi-generator-cli @arguments 2>&1
+    
+    # Показываем последние строки вывода для диагностики
+    if ($generatorOutput -and $generatorOutput.Count -gt 0) {
+        $lastLines = $generatorOutput | Select-Object -Last 3
+        Write-Host "    Последние строки вывода генератора:" -ForegroundColor Cyan
+        $lastLines | ForEach-Object { Write-Host "      $_" -ForegroundColor Cyan }
+    }
+    
     if ($LASTEXITCODE -ne 0) {
         $errorMessage = "Генерация завершилась с ошибкой для файла $InputFile"
         if ($generatorOutput) {
@@ -227,13 +235,37 @@ function Copy-GeneratedContent {
     param([string]$SourceRoot, [string]$TargetRoot)
     $sourceCom = Join-Path $SourceRoot "com"
     if (-not (Test-Path $sourceCom)) {
+        Write-Warning "Директория $sourceCom не найдена после генерации."
+        Write-Host "  Содержимое ${SourceRoot}:" -ForegroundColor Yellow
+        if (Test-Path $SourceRoot) {
+            Get-ChildItem -Path $SourceRoot -Recurse | Select-Object -First 5 | ForEach-Object {
+                Write-Host "    - $($_.FullName)"
+            }
+        }
         throw "Не найдена директория $sourceCom после генерации."
     }
     Ensure-DirectoryExists -PathValue $TargetRoot
-    $robocopyArgs = @($sourceCom, $TargetRoot, "/E", "/XC", "/XN", "/XO", "/NJH", "/NJS", "/NFL", "/NDL")
-    $null = robocopy @robocopyArgs
-    if ($LASTEXITCODE -gt 8) {
-        throw "Ошибка копирования файлов из $sourceCom в $TargetRoot (robocopy code $LASTEXITCODE)."
+    
+    $targetCom = Join-Path $TargetRoot "com"
+    Write-Host "    Копирование из $sourceCom в $targetCom"
+    
+    # Копируем содержимое директории com/* в TargetRoot/com/
+    # Robocopy копирует СОДЕРЖИМОЕ первой директории во вторую
+    $robocopyArgs = @($sourceCom, $targetCom, "/E", "/IS", "/IT", "/NJH", "/NJS", "/NFL", "/NDL")
+    $robocopyOutput = robocopy @robocopyArgs 2>&1
+    
+    # Robocopy exit codes: 0=ничего не скопировано, 1=файлы скопированы, 2+=частичные проблемы, 8+=ошибки
+    if ($LASTEXITCODE -ge 8) {
+        Write-Host "    Robocopy output: $robocopyOutput" -ForegroundColor Red
+        throw "Ошибка копирования файлов из $sourceCom в $targetCom (robocopy code $LASTEXITCODE)."
+    }
+    
+    # Проверяем, что файлы действительно скопировались
+    if (Test-Path $targetCom) {
+        $copiedFiles = (Get-ChildItem -Path $targetCom -Recurse -File | Measure-Object).Count
+        Write-Host "    ✓ Файлы скопированы: $copiedFiles файлов"
+    } else {
+        throw "Копирование не создало директорию com в $TargetRoot"
     }
 }
 
@@ -288,7 +320,7 @@ foreach ($task in $Tasks) {
 
     if (-not $Microservices.ContainsKey($metadata.name)) {
         Write-Host "⚠ Микросервис '$($metadata.name)' не найден в конфигурации!" -ForegroundColor Yellow
-        return
+        continue
     }
     
     $destinationRoot = $Microservices[$metadata.name].sourceDir
@@ -330,8 +362,14 @@ foreach ($task in $Tasks) {
             }
             Write-Host "✗ Ошибка: $($_.Exception.Message)" -ForegroundColor Red
         } finally {
+            # Проверяем содержимое перед удалением для диагностики
             if (Test-Path $fileTempRoot) {
-                Remove-Item -Path $fileTempRoot -Recurse -Force
+                $fileCount = (Get-ChildItem -Path $fileTempRoot -Recurse -File | Measure-Object).Count
+                Write-Host "    Временная директория содержит $fileCount файлов" -ForegroundColor Cyan
+                if ($fileCount -eq 0) {
+                    Write-Warning "Генератор не создал файлов! Проверьте параметры генерации."
+                }
+                Remove-Item -Path $fileTempRoot -Recurse -Force -ErrorAction SilentlyContinue
             }
         }
     } else {
