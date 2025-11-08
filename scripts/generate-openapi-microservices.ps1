@@ -42,6 +42,9 @@ function Collect-ApiFiles {
 }
 
 $ApiFiles = Collect-ApiFiles -Spec $resolvedSpec -Directory $resolvedDirectory
+$ApiFiles = $ApiFiles | Where-Object {
+    $_.Replace('\', '/').ToLowerInvariant() -notlike "*/api/v1/shared/*"
+}
 if ($ApiFiles.Count -eq 0) {
     throw "OpenAPI файлы не найдены."
 }
@@ -73,6 +76,94 @@ $Microservices = @{
     }
 }
 
+function Get-LineIndent {
+    param([string]$Line)
+    return ([regex]::Match($Line, "^\s*")).Value.Length
+}
+
+function ParseOpenApiMetadataFromLines {
+    param([string[]]$Lines, [string]$FilePath)
+
+    $metadata = @{
+        name = ""
+        package = ""
+    }
+    $serverUrls = New-Object System.Collections.Generic.List[string]
+
+    $infoIndent = -1
+    $xMicroserviceIndent = -1
+    $serversIndent = -1
+
+    for ($i = 0; $i -lt $Lines.Length; $i++) {
+        $line = $Lines[$i]
+        $trimmed = $line.Trim()
+        $indent = Get-LineIndent -Line $line
+
+        if ($trimmed -match "^\s*info\s*:") {
+            $infoIndent = $indent
+            $xMicroserviceIndent = -1
+            continue
+        }
+
+        if ($infoIndent -ge 0 -and $indent -le $infoIndent -and $trimmed -ne "") {
+            $infoIndent = -1
+            $xMicroserviceIndent = -1
+        }
+
+        if ($infoIndent -ge 0 -and $trimmed -match "^\s*x-microservice\s*:") {
+            $xMicroserviceIndent = $indent
+            continue
+        }
+
+        if ($xMicroserviceIndent -ge 0 -and $indent -le $xMicroserviceIndent -and $trimmed -ne "") {
+            $xMicroserviceIndent = -1
+        }
+
+        if ($xMicroserviceIndent -ge 0 -and $indent -gt $xMicroserviceIndent) {
+            if ($trimmed -match "^\s*name\s*:\s*(.+)$" -and [string]::IsNullOrWhiteSpace($metadata.name)) {
+                $metadata.name = $matches[1].Trim('"', "'"," ")
+            }
+            if ($trimmed -match "^\s*package\s*:\s*(.+)$" -and [string]::IsNullOrWhiteSpace($metadata.package)) {
+                $metadata.package = $matches[1].Trim('"', "'"," ")
+            }
+            continue
+        }
+
+        if ($trimmed -match "^\s*servers\s*:") {
+            $serversIndent = $indent
+            continue
+        }
+
+        if ($serversIndent -ge 0 -and $indent -le $serversIndent -and $trimmed -ne "") {
+            $serversIndent = -1
+        }
+
+        if ($serversIndent -ge 0 -and $trimmed -match "^\s*-\s*url\s*:\s*(.+)$") {
+            $url = $matches[1].Trim().Trim('"',"'")
+            if (-not [string]::IsNullOrWhiteSpace($url)) {
+                $serverUrls.Add($url)
+            }
+        }
+    }
+
+    if ([string]::IsNullOrWhiteSpace($metadata.name)) {
+        throw "В файле $FilePath отсутствует info.x-microservice.name."
+    }
+
+    if ([string]::IsNullOrWhiteSpace($metadata.package)) {
+        $suffix = ($metadata.name -replace "[^A-Za-z0-9]", "")
+        if ([string]::IsNullOrWhiteSpace($suffix)) {
+            $suffix = "microservice"
+        }
+        $metadata.package = "com.necpgame.$suffix"
+    }
+
+    return @{
+        metadata = $metadata
+        servers = $serverUrls
+    }
+}
+
 function Read-OpenApiContext {
     param([string]$FilePath)
 
@@ -85,64 +176,68 @@ function Read-OpenApiContext {
         throw "OpenAPI файл пуст: $FilePath"
     }
 
-    try {
-        $document = ConvertFrom-Yaml -Yaml $rawContent
-    } catch {
-        throw "Не удалось распарсить OpenAPI файл: $FilePath. Ошибка: $($_.Exception.Message)"
-    }
+    $metadata = $null
+    $servers = $null
 
-    if ($null -eq $document) {
-        throw "OpenAPI файл не содержит валидных данных: $FilePath"
-    }
-
-    $metadata = @{
-        name = ""
-        package = ""
-    }
-
-    $xMicroservice = $null
-    if ($null -ne $document.info -and $document.info.PSObject.Properties.Name -contains "x-microservice") {
-        $xMicroservice = $document.info."x-microservice"
-    }
-
-    if ($null -eq $xMicroservice) {
-        throw "В файле $FilePath отсутствует info.x-microservice. Добавьте блок с обязательным полем name."
-    }
-
-    if (-not ($xMicroservice.PSObject.Properties.Name -contains "name") -or [string]::IsNullOrWhiteSpace($xMicroservice.name)) {
-        throw "Поле info.x-microservice.name обязательно в файле $FilePath."
-    }
-    $metadata.name = [string]$xMicroservice.name
-
-    if ($xMicroservice.PSObject.Properties.Name -contains "package" -and -not [string]::IsNullOrWhiteSpace($xMicroservice.package)) {
-        $metadata.package = [string]$xMicroservice.package
-    }
-    if ([string]::IsNullOrWhiteSpace($metadata.package)) {
-        $suffix = ($metadata.name -replace "[^A-Za-z0-9]", "")
-        if ([string]::IsNullOrWhiteSpace($suffix)) {
-            $suffix = "microservice"
+    $convertCmd = Get-Command -Name ConvertFrom-Yaml -ErrorAction SilentlyContinue
+    if ($convertCmd) {
+        try {
+            $document = ConvertFrom-Yaml -Yaml $rawContent
+        } catch {
+            $document = $null
         }
-        $metadata.package = "com.necpgame.$suffix"
-    }
 
-    $requiredServerUrl = "https://api.necp.game/v1"
-    $serverUrls = @()
-    if ($null -ne $document.servers) {
-        foreach ($server in @($document.servers)) {
-            if ($null -ne $server -and $server.PSObject.Properties.Name -contains "url" -and -not [string]::IsNullOrWhiteSpace($server.url)) {
-                $serverUrls += [string]$server.url
+        if ($null -ne $document) {
+            $metadata = @{
+                name = ""
+                package = ""
+            }
+            if ($null -ne $document.info -and $document.info.PSObject.Properties.Name -contains "x-microservice") {
+                $xMicroservice = $document.info."x-microservice"
+                if ($xMicroservice.PSObject.Properties.Name -contains "name") {
+                    $metadata.name = [string]$xMicroservice.name
+                }
+                if ($xMicroservice.PSObject.Properties.Name -contains "package") {
+                    $metadata.package = [string]$xMicroservice.package
+                }
+            }
+
+            $servers = New-Object System.Collections.Generic.List[string]
+            if ($null -ne $document.servers) {
+                foreach ($server in @($document.servers)) {
+                    if ($null -ne $server -and $server.PSObject.Properties.Name -contains "url" -and -not [string]::IsNullOrWhiteSpace($server.url)) {
+                        $servers.Add([string]$server.url)
+                    }
+                }
+            }
+
+            if ([string]::IsNullOrWhiteSpace($metadata.name)) {
+                throw "В файле $FilePath отсутствует info.x-microservice.name."
+            }
+
+            if ([string]::IsNullOrWhiteSpace($metadata.package)) {
+                $suffix = ($metadata.name -replace "[^A-Za-z0-9]", "")
+                if ([string]::IsNullOrWhiteSpace($suffix)) {
+                    $suffix = "microservice"
+                }
+                $metadata.package = "com.necpgame.$suffix"
             }
         }
     }
 
-    if (-not ($serverUrls -contains $requiredServerUrl)) {
+    if ($null -eq $metadata) {
+        $lines = Get-Content -Path $FilePath
+        $parsed = ParseOpenApiMetadataFromLines -Lines $lines -FilePath $FilePath
+        $metadata = $parsed.metadata
+        $servers = $parsed.servers
+    }
+
+    $requiredServerUrl = "https://api.necp.game/v1"
+    if (-not $servers.Contains($requiredServerUrl)) {
         throw "В файле $FilePath отсутствует production URL сервера '$requiredServerUrl' в разделе servers."
     }
 
-    return @{
-        metadata = $metadata
-        document = $document
-    }
+    return @{ metadata = $metadata }
 }
 
 function Ensure-DirectoryExists {
@@ -270,7 +365,6 @@ $Tasks = foreach ($file in $ApiFiles) {
     [ordered]@{
         FilePath = $file
         Metadata = $context.metadata
-        Document = $context.document
     }
 }
 
