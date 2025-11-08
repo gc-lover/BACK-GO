@@ -10,14 +10,14 @@
 
 ### Q: Как генерировать контракты из OpenAPI?
 
-**A:** Используй PowerShell скрипт для генерации:
+**A:** Используй PowerShell скрипт для генерации в микросервисы:
 
 ```powershell
-# Генерация из одного файла
-.\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml
+# Валидация перед генерацией
+.\scripts\validate-openapi.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
 
-# Генерация из всей директории
-.\scripts\generate-openapi-layers.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
+# Генерация во все микросервисы
+.\scripts\generate-openapi-microservices.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
 ```
 
 **Что генерируется:**
@@ -536,9 +536,10 @@ paths:
                   $ref: '#/components/schemas/User'
 ```
 
-**Шаг 2: Сгенерировать контракты**
+**Шаг 2: Сгенерировать контракты в целевой микросервис**
 ```powershell
-.\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/users/users.yaml
+.\scripts\validate-openapi.ps1 -ApiSpec ../API-SWAGGER/api/v1/users/users.yaml
+.\scripts\generate-openapi-microservices.ps1 -ApiDirectory ../API-SWAGGER/api/v1/users/
 ```
 
 **Шаг 3: Создать реализацию вручную**

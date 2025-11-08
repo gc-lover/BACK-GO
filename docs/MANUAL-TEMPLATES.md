@@ -772,9 +772,10 @@ public class JsonNullableMapper {
 
 ## 🚀 Быстрый старт
 
-### 1. Генерируем контракты
+### 1. Генерируем контракты в целевой микросервис
 ```powershell
-.\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/your-api.yaml
+.\scripts\validate-openapi.ps1 -ApiSpec ../API-SWAGGER/api/v1/your-api.yaml
+.\scripts\generate-openapi-microservices.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
 ```
 
 ### 2. Создаём реализацию

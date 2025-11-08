@@ -123,7 +123,8 @@ BACK-GO/microservices/<service>/
 │               └── ...
 │
 ├── scripts/
-│   ├── generate-openapi-layers.ps1               # Скрипт генерации контрактов
+│   ├── generate-openapi-microservices.ps1        # Скрипт генерации контрактов в микросервисы
+│   ├── validate-openapi.ps1                      # Валидация OpenAPI спецификаций
 │   ├── autocommit.ps1
 │   └── autocommit.sh
 │

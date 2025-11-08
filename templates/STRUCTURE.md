@@ -50,17 +50,17 @@ public class FactionsController implements FactionsApi {
 ### Использование скрипта:
 
 ```powershell
-# Генерация контрактов из одного файла
-.\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml
+# Валидация OpenAPI спецификаций
+.\scripts\validate-openapi.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
 
-# Генерация контрактов из всей директории
-.\scripts\generate-openapi-layers.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
+# Генерация контрактов во все микросервисы
+.\scripts\generate-openapi-microservices.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
 
 # Генерация только DTOs и API Interfaces
-.\scripts\generate-openapi-layers.ps1 -ApiSpec path/to/api.yaml -Layers DTOs
+.\scripts\generate-openapi-microservices.ps1 -ApiDirectory ../API-SWAGGER/api/v1/ -Layers DTOs
 
 # Генерация только Service Interfaces
-.\scripts\generate-openapi-layers.ps1 -ApiSpec path/to/api.yaml -Layers Services
+.\scripts\generate-openapi-microservices.ps1 -ApiDirectory ../API-SWAGGER/api/v1/ -Layers Services
 ```
 
 ### Генерируемая структура:
@@ -260,9 +260,10 @@ public class AuthServiceImpl implements AuthService {
 # Редактируем API-SWAGGER/api/v1/auth/character-creation.yaml
 ```
 
-### 2. Генерируем контракты
+### 2. Генерируем контракты в целевой микросервис
 ```powershell
-.\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml
+.\scripts\validate-openapi.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml
+.\scripts\generate-openapi-microservices.ps1 -ApiDirectory ../API-SWAGGER/api/v1/auth/
 ```
 
 ### 3. Проверяем изменения в контрактах

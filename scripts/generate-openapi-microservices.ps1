@@ -2,8 +2,6 @@
 param(
     [string]$ApiSpec = "",
     [string]$ApiDirectory = "",
-    [ValidateSet("Monolith", "Microservices", "Hybrid")]
-    [string]$Mode = "Microservices",
     [switch]$Validate,
     [switch]$DryRun,
     [string]$Layers = "All"
@@ -74,9 +72,6 @@ $Microservices = @{
         sourceDir = Join-Path $ProjectRoot "microservices/world-service/src/main/java"
     }
 }
-
-$MonolithPackage = "com.necpgame.backjava"
-$MonolithSourceDir = Join-Path $ProjectRoot "src/main/java"
 
 function Detect-MicroserviceFromPath {
     param([string]$Path)
@@ -285,25 +280,18 @@ foreach ($task in $Tasks) {
         Write-Host "⚠ Автоопределение микросервиса (добавьте info.x-microservice для точности)" -ForegroundColor Yellow
     }
 
-    $targetMode = switch ($Mode) {
-        "Microservices" { "Microservices" }
-        "Monolith" { "Monolith" }
-        "Hybrid" {
-            if ($metadata.name -eq "auth-service") { "Microservices" } else { "Monolith" }
-        }
-    }
-
     $javaPackageRoot = $metadata.package
     $apiPackage = "$javaPackageRoot.api"
     $modelPackage = "$javaPackageRoot.model"
     $servicePackage = "$javaPackageRoot.service"
     $invokerPackage = "$javaPackageRoot.invoker"
 
-    $destinationRoot = if ($targetMode -eq "Microservices" -and $Microservices.ContainsKey($metadata.name)) {
-        $Microservices[$metadata.name].sourceDir
-    } else {
-        $MonolithSourceDir
+    if (-not $Microservices.ContainsKey($metadata.name)) {
+        Write-Host "⚠ Микросервис '$($metadata.name)' не найден в конфигурации!" -ForegroundColor Yellow
+        return
     }
+    
+    $destinationRoot = $Microservices[$metadata.name].sourceDir
 
     Ensure-DirectoryExists -PathValue $destinationRoot
 

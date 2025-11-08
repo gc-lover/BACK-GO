@@ -136,11 +136,6 @@ cd BACK-GO
 .\scripts\generate-openapi-microservices.ps1 -ApiDirectory ../API-SWAGGER/api/v1/ -Validate $true
 ```
 
-### Режимы генерации:
-- **Microservices** (по умолчанию): генерация в целевые микросервисы
-- **Hybrid**: поддержка переходного состояния
-- **Monolith** (legacy): генерация в монолит (устаревший режим)
-
 ### Что происходит:
 
 1. **Определение целевого микросервиса:**
