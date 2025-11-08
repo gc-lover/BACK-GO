@@ -5,18 +5,15 @@
  */
 package com.necpgame.adminservice.api;
 
-import com.necpgame.adminservice.model.CloseSession200Response;
-import com.necpgame.adminservice.model.CloseSessionRequest;
-import com.necpgame.adminservice.model.CreateSession200Response;
-import com.necpgame.adminservice.model.CreateSessionRequest;
-import com.necpgame.adminservice.model.Error;
-import com.necpgame.adminservice.model.GetActiveSessions200Response;
-import org.springframework.lang.Nullable;
-import com.necpgame.adminservice.model.ReconnectSession200Response;
-import com.necpgame.adminservice.model.ReconnectSessionRequest;
-import com.necpgame.adminservice.model.SendHeartbeat200Response;
-import com.necpgame.adminservice.model.SendHeartbeatRequest;
-import com.necpgame.adminservice.model.SessionState;
+import com.necpgame.adminservice.model.AppearanceOptions;
+import com.necpgame.adminservice.model.CharacterCreationFlow;
+import com.necpgame.adminservice.model.GetCharacterSelectData200Response;
+import com.necpgame.adminservice.model.GetServerList200Response;
+import com.necpgame.adminservice.model.GetUIFeatures200Response;
+import com.necpgame.adminservice.model.HUDData;
+import com.necpgame.adminservice.model.LoginScreenData;
+import com.necpgame.adminservice.model.UISettings;
+import java.util.UUID;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -46,143 +43,44 @@ import jakarta.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 @Validated
-@Tag(name = "Session Management", description = "Управление сессиями")
+@Tag(name = "Character Creation UI", description = "UI создания персонажа")
 public interface TechnicalApi {
 
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
 
-    String PATH_CLOSE_SESSION = "/technical/sessions/close";
+    String PATH_GET_APPEARANCE_OPTIONS = "/technical/ui/character-creation/appearance-options";
     /**
-     * POST /technical/sessions/close : Закрыть сессию
-     * Закрывает игровую сессию при выходе игрока. Сохраняет state персонажа. 
+     * GET /technical/ui/character-creation/appearance-options : Получить опции внешности
      *
-     * @param closeSessionRequest  (required)
-     * @return Сессия закрыта (status code 200)
+     * @return Опции внешности (status code 200)
      */
     @Operation(
-        operationId = "closeSession",
-        summary = "Закрыть сессию",
-        description = "Закрывает игровую сессию при выходе игрока. Сохраняет state персонажа. ",
-        tags = { "Session Management" },
+        operationId = "getAppearanceOptions",
+        summary = "Получить опции внешности",
+        tags = { "Character Creation UI" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Сессия закрыта", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = CloseSession200Response.class))
+            @ApiResponse(responseCode = "200", description = "Опции внешности", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = AppearanceOptions.class))
             })
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = TechnicalApi.PATH_CLOSE_SESSION,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<CloseSession200Response> closeSession(
-        @Parameter(name = "CloseSessionRequest", description = "", required = true) @Valid @RequestBody CloseSessionRequest closeSessionRequest
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"duration\" : 0.8008281904610115, \"closed_at\" : \"2000-01-23T04:56:07.000+00:00\", \"session_id\" : \"session_id\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_CREATE_SESSION = "/technical/sessions/create";
-    /**
-     * POST /technical/sessions/create : Создать игровую сессию
-     * Создает новую игровую сессию при входе игрока. Проверяет на дубликаты (concurrent sessions). 
-     *
-     * @param createSessionRequest  (required)
-     * @return Сессия создана (status code 200)
-     *         or Конфликт с текущим состоянием ресурса или ограничениями системы. Например, превышение лимитов или нарушение бизнес-правил.  (status code 409)
-     */
-    @Operation(
-        operationId = "createSession",
-        summary = "Создать игровую сессию",
-        description = "Создает новую игровую сессию при входе игрока. Проверяет на дубликаты (concurrent sessions). ",
-        tags = { "Session Management" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Сессия создана", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = CreateSession200Response.class))
-            }),
-            @ApiResponse(responseCode = "409", description = "Конфликт с текущим состоянием ресурса или ограничениями системы. Например, превышение лимитов или нарушение бизнес-правил. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"LIMIT_EXCEEDED\",\"message\":\"Превышен лимит NPC для владельца\",\"details\":[{\"field\":\"maxNPCs\",\"message\":\"Достигнут максимальный лимит NPC (10)\",\"code\":\"LIMIT_EXCEEDED\"}]}}"
-                    )
-                })
-
-            })
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = TechnicalApi.PATH_CREATE_SESSION,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<CreateSession200Response> createSession(
-        @Parameter(name = "CreateSessionRequest", description = "", required = true) @Valid @RequestBody CreateSessionRequest createSessionRequest
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"session_id\" : \"session_id\", \"created_at\" : \"2000-01-23T04:56:07.000+00:00\", \"character_id\" : \"character_id\", \"afk_timeout\" : 6, \"heartbeat_interval\" : 0 }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_GET_ACTIVE_SESSIONS = "/technical/sessions/active";
-    /**
-     * GET /technical/sessions/active : Получить активные сессии
-     * Возвращает список активных сессий (для админов). Может фильтроваться по account_id. 
-     *
-     * @param accountId  (optional)
-     * @return Активные сессии (status code 200)
-     */
-    @Operation(
-        operationId = "getActiveSessions",
-        summary = "Получить активные сессии",
-        description = "Возвращает список активных сессий (для админов). Может фильтроваться по account_id. ",
-        tags = { "Session Management" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Активные сессии", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = GetActiveSessions200Response.class))
-            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
         }
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = TechnicalApi.PATH_GET_ACTIVE_SESSIONS,
+        value = TechnicalApi.PATH_GET_APPEARANCE_OPTIONS,
         produces = { "application/json" }
     )
-    default ResponseEntity<GetActiveSessions200Response> getActiveSessions(
-        @Parameter(name = "account_id", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "account_id", required = false) @Nullable String accountId
+    default ResponseEntity<AppearanceOptions> getAppearanceOptions(
+        
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"sessions\" : [ { \"duration\" : 0.8008281904610115, \"character_name\" : \"character_name\", \"session_id\" : \"session_id\", \"created_at\" : \"2000-01-23T04:56:07.000+00:00\", \"character_id\" : \"character_id\", \"last_heartbeat\" : \"2000-01-23T04:56:07.000+00:00\" }, { \"duration\" : 0.8008281904610115, \"character_name\" : \"character_name\", \"session_id\" : \"session_id\", \"created_at\" : \"2000-01-23T04:56:07.000+00:00\", \"character_id\" : \"character_id\", \"last_heartbeat\" : \"2000-01-23T04:56:07.000+00:00\" } ] }";
+                    String exampleString = "{ \"customization_sliders\" : [ { \"default\" : 1.4658129805029452, \"min\" : 0.8008281904610115, \"max\" : 6.027456183070403, \"name\" : \"name\", \"slider_id\" : \"slider_id\" }, { \"default\" : 1.4658129805029452, \"min\" : 0.8008281904610115, \"max\" : 6.027456183070403, \"name\" : \"name\", \"slider_id\" : \"slider_id\" } ], \"body_types\" : [ \"{}\", \"{}\" ], \"hairstyles\" : [ \"{}\", \"{}\" ], \"face_presets\" : [ \"{}\", \"{}\" ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -193,37 +91,37 @@ public interface TechnicalApi {
     }
 
 
-    String PATH_GET_SESSION_STATE = "/technical/sessions/{session_id}/state";
+    String PATH_GET_CHARACTER_CREATION_FLOW = "/technical/ui/character-creation/flow";
     /**
-     * GET /technical/sessions/{session_id}/state : Получить состояние сессии
-     * Возвращает текущее состояние игровой сессии
+     * GET /technical/ui/character-creation/flow : Получить flow создания персонажа
      *
-     * @param sessionId  (required)
-     * @return Состояние сессии (status code 200)
+     * @return Creation flow (status code 200)
      */
     @Operation(
-        operationId = "getSessionState",
-        summary = "Получить состояние сессии",
-        description = "Возвращает текущее состояние игровой сессии",
-        tags = { "Session Management" },
+        operationId = "getCharacterCreationFlow",
+        summary = "Получить flow создания персонажа",
+        tags = { "Character Creation UI" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Состояние сессии", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SessionState.class))
+            @ApiResponse(responseCode = "200", description = "Creation flow", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CharacterCreationFlow.class))
             })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
         }
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = TechnicalApi.PATH_GET_SESSION_STATE,
+        value = TechnicalApi.PATH_GET_CHARACTER_CREATION_FLOW,
         produces = { "application/json" }
     )
-    default ResponseEntity<SessionState> getSessionState(
-        @NotNull @Parameter(name = "session_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("session_id") String sessionId
+    default ResponseEntity<CharacterCreationFlow> getCharacterCreationFlow(
+        
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"account_id\" : \"account_id\", \"activity\" : \"active\", \"current_activity\" : \"current_activity\", \"party_id\" : \"party_id\", \"connection_status\" : \"connected\", \"session_id\" : \"session_id\", \"created_at\" : \"2000-01-23T04:56:07.000+00:00\", \"location\" : \"location\", \"character_id\" : \"character_id\", \"last_heartbeat\" : \"2000-01-23T04:56:07.000+00:00\" }";
+                    String exampleString = "{ \"estimated_time_minutes\" : 1, \"total_steps\" : 6, \"steps\" : [ { \"description\" : \"description\", \"step_id\" : \"step_id\", \"title\" : \"title\", \"order\" : 0 }, { \"description\" : \"description\", \"step_id\" : \"step_id\", \"title\" : \"title\", \"order\" : 0 } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -234,38 +132,38 @@ public interface TechnicalApi {
     }
 
 
-    String PATH_RECONNECT_SESSION = "/technical/sessions/reconnect";
+    String PATH_GET_CHARACTER_SELECT_DATA = "/technical/ui/character-select/{account_id}";
     /**
-     * POST /technical/sessions/reconnect : Переподключение
-     * Быстрое переподключение к существующей сессии. Восстанавливает state персонажа. 
+     * GET /technical/ui/character-select/{account_id} : Получить персонажей для выбора
      *
-     * @param reconnectSessionRequest  (required)
-     * @return Переподключение успешно (status code 200)
+     * @param accountId  (required)
+     * @return Данные для character select (status code 200)
      */
     @Operation(
-        operationId = "reconnectSession",
-        summary = "Переподключение",
-        description = "Быстрое переподключение к существующей сессии. Восстанавливает state персонажа. ",
-        tags = { "Session Management" },
+        operationId = "getCharacterSelectData",
+        summary = "Получить персонажей для выбора",
+        tags = { "UI Data" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Переподключение успешно", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ReconnectSession200Response.class))
+            @ApiResponse(responseCode = "200", description = "Данные для character select", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = GetCharacterSelectData200Response.class))
             })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
         }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = TechnicalApi.PATH_RECONNECT_SESSION,
-        produces = { "application/json" },
-        consumes = { "application/json" }
+        method = RequestMethod.GET,
+        value = TechnicalApi.PATH_GET_CHARACTER_SELECT_DATA,
+        produces = { "application/json" }
     )
-    default ResponseEntity<ReconnectSession200Response> reconnectSession(
-        @Parameter(name = "ReconnectSessionRequest", description = "", required = true) @Valid @RequestBody ReconnectSessionRequest reconnectSessionRequest
+    default ResponseEntity<GetCharacterSelectData200Response> getCharacterSelectData(
+        @NotNull @Parameter(name = "account_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("account_id") UUID accountId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"session_id\" : \"session_id\", \"session_state\" : { \"activity\" : \"activity\", \"party_id\" : \"party_id\", \"location\" : \"location\" }, \"reconnected\" : true }";
+                    String exampleString = "{ \"characters\" : [ { \"level\" : 0, \"name\" : \"name\", \"last_played\" : \"2000-01-23T04:56:07.000+00:00\", \"location\" : \"location\", \"character_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"thumbnail_url\" : \"thumbnail_url\", \"class\" : \"class\", \"playtime_hours\" : 6 }, { \"level\" : 0, \"name\" : \"name\", \"last_played\" : \"2000-01-23T04:56:07.000+00:00\", \"location\" : \"location\", \"character_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"thumbnail_url\" : \"thumbnail_url\", \"class\" : \"class\", \"playtime_hours\" : 6 } ], \"max_slots\" : 1 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -276,43 +174,241 @@ public interface TechnicalApi {
     }
 
 
-    String PATH_SEND_HEARTBEAT = "/technical/sessions/heartbeat";
+    String PATH_GET_HUD_DATA = "/technical/ui/hud/{character_id}";
     /**
-     * POST /technical/sessions/heartbeat : Heartbeat (keepalive)
-     * Отправляет heartbeat для поддержания сессии активной. Должен вызываться каждые 30 секунд. 
+     * GET /technical/ui/hud/{character_id} : Получить данные для HUD
      *
-     * @param sendHeartbeatRequest  (required)
-     * @return Heartbeat принят (status code 200)
+     * @param characterId  (required)
+     * @return HUD данные (status code 200)
      */
     @Operation(
-        operationId = "sendHeartbeat",
-        summary = "Heartbeat (keepalive)",
-        description = "Отправляет heartbeat для поддержания сессии активной. Должен вызываться каждые 30 секунд. ",
-        tags = { "Session Management" },
+        operationId = "getHUDData",
+        summary = "Получить данные для HUD",
+        tags = { "Game UI" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Heartbeat принят", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SendHeartbeat200Response.class))
+            @ApiResponse(responseCode = "200", description = "HUD данные", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = HUDData.class))
             })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
         }
     )
     @RequestMapping(
-        method = RequestMethod.POST,
-        value = TechnicalApi.PATH_SEND_HEARTBEAT,
-        produces = { "application/json" },
-        consumes = { "application/json" }
+        method = RequestMethod.GET,
+        value = TechnicalApi.PATH_GET_HUD_DATA,
+        produces = { "application/json" }
     )
-    default ResponseEntity<SendHeartbeat200Response> sendHeartbeat(
-        @Parameter(name = "SendHeartbeatRequest", description = "", required = true) @Valid @RequestBody SendHeartbeatRequest sendHeartbeatRequest
+    default ResponseEntity<HUDData> getHUDData(
+        @NotNull @Parameter(name = "character_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("character_id") UUID characterId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"server_time\" : \"2000-01-23T04:56:07.000+00:00\", \"session_id\" : \"session_id\", \"last_heartbeat\" : \"2000-01-23T04:56:07.000+00:00\" }";
+                    String exampleString = "{ \"character\" : { \"hp_max\" : 1, \"level\" : 0, \"stamina\" : 5, \"name\" : \"name\", \"hp\" : 6 }, \"minimap\" : { \"location\" : \"location\", \"nearby_poi\" : [ { \"distance_meters\" : 5.637376656633329, \"name\" : \"name\", \"type\" : \"type\" }, { \"distance_meters\" : 5.637376656633329, \"name\" : \"name\", \"type\" : \"type\" } ] }, \"notifications\" : [ { \"severity\" : \"severity\", \"message\" : \"message\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" }, { \"severity\" : \"severity\", \"message\" : \"message\", \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\" } ], \"quick_actions\" : [ { \"cooldown_remaining\" : 7.061401241503109, \"action_id\" : \"action_id\", \"slot\" : 2 }, { \"cooldown_remaining\" : 7.061401241503109, \"action_id\" : \"action_id\", \"slot\" : 2 } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
             }
         });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GET_LOGIN_SCREEN_DATA = "/technical/ui/login";
+    /**
+     * GET /technical/ui/login : Получить данные для экрана входа
+     *
+     * @return Данные для login screen (status code 200)
+     */
+    @Operation(
+        operationId = "getLoginScreenData",
+        summary = "Получить данные для экрана входа",
+        tags = { "UI Data" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Данные для login screen", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = LoginScreenData.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = TechnicalApi.PATH_GET_LOGIN_SCREEN_DATA,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<LoginScreenData> getLoginScreenData(
+        
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"news\" : [ { \"image_url\" : \"image_url\", \"title\" : \"title\", \"content\" : \"content\" }, { \"image_url\" : \"image_url\", \"title\" : \"title\", \"content\" : \"content\" } ], \"motd\" : \"motd\", \"server_status\" : \"ONLINE\", \"version\" : \"version\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GET_SERVER_LIST = "/technical/ui/servers";
+    /**
+     * GET /technical/ui/servers : Получить список серверов
+     *
+     * @return Список серверов (status code 200)
+     */
+    @Operation(
+        operationId = "getServerList",
+        summary = "Получить список серверов",
+        tags = { "UI Data" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Список серверов", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = GetServerList200Response.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = TechnicalApi.PATH_GET_SERVER_LIST,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<GetServerList200Response> getServerList(
+        
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"servers\" : [ { \"ping_ms\" : 0, \"name\" : \"name\", \"server_id\" : \"server_id\", \"region\" : \"region\", \"population\" : \"LOW\", \"status\" : \"ONLINE\" }, { \"ping_ms\" : 0, \"name\" : \"name\", \"server_id\" : \"server_id\", \"region\" : \"region\", \"population\" : \"LOW\", \"status\" : \"ONLINE\" } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GET_UI_FEATURES = "/technical/ui/features";
+    /**
+     * GET /technical/ui/features : Получить доступные UI features
+     *
+     * @return UI features (status code 200)
+     */
+    @Operation(
+        operationId = "getUIFeatures",
+        summary = "Получить доступные UI features",
+        tags = { "Game UI" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "UI features", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = GetUIFeatures200Response.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = TechnicalApi.PATH_GET_UI_FEATURES,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<GetUIFeatures200Response> getUIFeatures(
+        
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"features\" : [ { \"feature_id\" : \"feature_id\", \"required_level\" : 0, \"name\" : \"name\", \"description\" : \"description\", \"enabled\" : true }, { \"feature_id\" : \"feature_id\", \"required_level\" : 0, \"name\" : \"name\", \"description\" : \"description\", \"enabled\" : true } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GET_UI_SETTINGS = "/technical/ui/settings/{character_id}";
+    /**
+     * GET /technical/ui/settings/{character_id} : Получить UI настройки персонажа
+     *
+     * @param characterId  (required)
+     * @return UI settings (status code 200)
+     */
+    @Operation(
+        operationId = "getUISettings",
+        summary = "Получить UI настройки персонажа",
+        tags = { "Game UI" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "UI settings", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UISettings.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = TechnicalApi.PATH_GET_UI_SETTINGS,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<UISettings> getUISettings(
+        @NotNull @Parameter(name = "character_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("character_id") UUID characterId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"chat_font_size\" : 6, \"show_minimap\" : true, \"hud_scale\" : 0.8008282, \"ui_theme\" : \"DARK\", \"custom_settings\" : { \"key\" : \"\" }, \"character_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"show_damage_numbers\" : true, \"show_quest_tracker\" : true }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_UPDATE_UI_SETTINGS = "/technical/ui/settings/{character_id}";
+    /**
+     * PUT /technical/ui/settings/{character_id} : Обновить UI настройки
+     *
+     * @param characterId  (required)
+     * @param uiSettings  (required)
+     * @return Настройки обновлены (status code 200)
+     */
+    @Operation(
+        operationId = "updateUISettings",
+        summary = "Обновить UI настройки",
+        tags = { "Game UI" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Настройки обновлены")
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.PUT,
+        value = TechnicalApi.PATH_UPDATE_UI_SETTINGS,
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> updateUISettings(
+        @NotNull @Parameter(name = "character_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("character_id") UUID characterId,
+        @Parameter(name = "UISettings", description = "", required = true) @Valid @RequestBody UISettings uiSettings
+    ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

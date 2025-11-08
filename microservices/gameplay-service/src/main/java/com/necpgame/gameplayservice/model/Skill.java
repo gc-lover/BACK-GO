@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import java.math.BigDecimal;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -26,15 +27,15 @@ public class Skill {
 
   private @Nullable String name;
 
-  private @Nullable Integer level;
+  private @Nullable String category;
 
-  private @Nullable Integer experience;
+  private @Nullable Integer rank;
 
-  private @Nullable Integer experienceToNextLevel;
+  private @Nullable BigDecimal progress;
 
-  private @Nullable Float progressPercentage;
+  private @Nullable BigDecimal progressToNext;
 
-  private @Nullable String attributeDependency;
+  private @Nullable BigDecimal classModifier;
 
   public Skill skillId(@Nullable String skillId) {
     this.skillId = skillId;
@@ -46,7 +47,7 @@ public class Skill {
    * @return skillId
    */
   
-  @Schema(name = "skill_id", example = "STEALTH", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "skill_id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("skill_id")
   public @Nullable String getSkillId() {
     return skillId;
@@ -66,7 +67,7 @@ public class Skill {
    * @return name
    */
   
-  @Schema(name = "name", example = "Stealth", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "name", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("name")
   public @Nullable String getName() {
     return name;
@@ -76,104 +77,104 @@ public class Skill {
     this.name = name;
   }
 
-  public Skill level(@Nullable Integer level) {
-    this.level = level;
+  public Skill category(@Nullable String category) {
+    this.category = category;
     return this;
   }
 
   /**
-   * Get level
-   * @return level
+   * Get category
+   * @return category
    */
   
-  @Schema(name = "level", example = "8", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("level")
-  public @Nullable Integer getLevel() {
-    return level;
+  @Schema(name = "category", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("category")
+  public @Nullable String getCategory() {
+    return category;
   }
 
-  public void setLevel(@Nullable Integer level) {
-    this.level = level;
+  public void setCategory(@Nullable String category) {
+    this.category = category;
   }
 
-  public Skill experience(@Nullable Integer experience) {
-    this.experience = experience;
+  public Skill rank(@Nullable Integer rank) {
+    this.rank = rank;
     return this;
   }
 
   /**
-   * Get experience
-   * @return experience
+   * Текущий ранг навыка (0-10)
+   * @return rank
    */
   
-  @Schema(name = "experience", example = "3500", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("experience")
-  public @Nullable Integer getExperience() {
-    return experience;
+  @Schema(name = "rank", description = "Текущий ранг навыка (0-10)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("rank")
+  public @Nullable Integer getRank() {
+    return rank;
   }
 
-  public void setExperience(@Nullable Integer experience) {
-    this.experience = experience;
+  public void setRank(@Nullable Integer rank) {
+    this.rank = rank;
   }
 
-  public Skill experienceToNextLevel(@Nullable Integer experienceToNextLevel) {
-    this.experienceToNextLevel = experienceToNextLevel;
+  public Skill progress(@Nullable BigDecimal progress) {
+    this.progress = progress;
     return this;
   }
 
   /**
-   * Get experienceToNextLevel
-   * @return experienceToNextLevel
+   * Прогресс к следующему рангу
+   * @return progress
    */
-  
-  @Schema(name = "experience_to_next_level", example = "4000", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("experience_to_next_level")
-  public @Nullable Integer getExperienceToNextLevel() {
-    return experienceToNextLevel;
+  @Valid 
+  @Schema(name = "progress", description = "Прогресс к следующему рангу", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("progress")
+  public @Nullable BigDecimal getProgress() {
+    return progress;
   }
 
-  public void setExperienceToNextLevel(@Nullable Integer experienceToNextLevel) {
-    this.experienceToNextLevel = experienceToNextLevel;
+  public void setProgress(@Nullable BigDecimal progress) {
+    this.progress = progress;
   }
 
-  public Skill progressPercentage(@Nullable Float progressPercentage) {
-    this.progressPercentage = progressPercentage;
+  public Skill progressToNext(@Nullable BigDecimal progressToNext) {
+    this.progressToNext = progressToNext;
     return this;
   }
 
   /**
-   * Get progressPercentage
-   * @return progressPercentage
+   * Get progressToNext
+   * @return progressToNext
    */
-  
-  @Schema(name = "progress_percentage", example = "87.5", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("progress_percentage")
-  public @Nullable Float getProgressPercentage() {
-    return progressPercentage;
+  @Valid 
+  @Schema(name = "progress_to_next", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("progress_to_next")
+  public @Nullable BigDecimal getProgressToNext() {
+    return progressToNext;
   }
 
-  public void setProgressPercentage(@Nullable Float progressPercentage) {
-    this.progressPercentage = progressPercentage;
+  public void setProgressToNext(@Nullable BigDecimal progressToNext) {
+    this.progressToNext = progressToNext;
   }
 
-  public Skill attributeDependency(@Nullable String attributeDependency) {
-    this.attributeDependency = attributeDependency;
+  public Skill classModifier(@Nullable BigDecimal classModifier) {
+    this.classModifier = classModifier;
     return this;
   }
 
   /**
-   * От какого атрибута зависит
-   * @return attributeDependency
+   * Модификатор от класса персонажа
+   * @return classModifier
    */
-  
-  @Schema(name = "attribute_dependency", example = "COOL", description = "От какого атрибута зависит", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("attribute_dependency")
-  public @Nullable String getAttributeDependency() {
-    return attributeDependency;
+  @Valid 
+  @Schema(name = "class_modifier", description = "Модификатор от класса персонажа", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("class_modifier")
+  public @Nullable BigDecimal getClassModifier() {
+    return classModifier;
   }
 
-  public void setAttributeDependency(@Nullable String attributeDependency) {
-    this.attributeDependency = attributeDependency;
+  public void setClassModifier(@Nullable BigDecimal classModifier) {
+    this.classModifier = classModifier;
   }
 
   @Override
@@ -187,16 +188,16 @@ public class Skill {
     Skill skill = (Skill) o;
     return Objects.equals(this.skillId, skill.skillId) &&
         Objects.equals(this.name, skill.name) &&
-        Objects.equals(this.level, skill.level) &&
-        Objects.equals(this.experience, skill.experience) &&
-        Objects.equals(this.experienceToNextLevel, skill.experienceToNextLevel) &&
-        Objects.equals(this.progressPercentage, skill.progressPercentage) &&
-        Objects.equals(this.attributeDependency, skill.attributeDependency);
+        Objects.equals(this.category, skill.category) &&
+        Objects.equals(this.rank, skill.rank) &&
+        Objects.equals(this.progress, skill.progress) &&
+        Objects.equals(this.progressToNext, skill.progressToNext) &&
+        Objects.equals(this.classModifier, skill.classModifier);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(skillId, name, level, experience, experienceToNextLevel, progressPercentage, attributeDependency);
+    return Objects.hash(skillId, name, category, rank, progress, progressToNext, classModifier);
   }
 
   @Override
@@ -205,11 +206,11 @@ public class Skill {
     sb.append("class Skill {\n");
     sb.append("    skillId: ").append(toIndentedString(skillId)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    level: ").append(toIndentedString(level)).append("\n");
-    sb.append("    experience: ").append(toIndentedString(experience)).append("\n");
-    sb.append("    experienceToNextLevel: ").append(toIndentedString(experienceToNextLevel)).append("\n");
-    sb.append("    progressPercentage: ").append(toIndentedString(progressPercentage)).append("\n");
-    sb.append("    attributeDependency: ").append(toIndentedString(attributeDependency)).append("\n");
+    sb.append("    category: ").append(toIndentedString(category)).append("\n");
+    sb.append("    rank: ").append(toIndentedString(rank)).append("\n");
+    sb.append("    progress: ").append(toIndentedString(progress)).append("\n");
+    sb.append("    progressToNext: ").append(toIndentedString(progressToNext)).append("\n");
+    sb.append("    classModifier: ").append(toIndentedString(classModifier)).append("\n");
     sb.append("}");
     return sb.toString();
   }

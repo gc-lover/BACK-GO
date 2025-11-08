@@ -5,11 +5,12 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.UUID;
+import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
+import java.util.NoSuchElementException;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -27,25 +28,24 @@ import jakarta.annotation.Generated;
 
 public class ChatMessage {
 
-  private @Nullable String messageId;
-
-  private @Nullable String senderId;
-
-  private @Nullable String senderName;
+  private @Nullable UUID messageId;
 
   private @Nullable String channel;
 
-  private @Nullable String message;
+  private @Nullable UUID senderId;
+
+  private @Nullable String senderName;
+
+  private @Nullable String content;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private @Nullable OffsetDateTime sentAt;
+  private @Nullable OffsetDateTime timestamp;
 
-  private @Nullable Object formatting;
+  private @Nullable Boolean flagged;
 
-  @Valid
-  private List<String> mentions = new ArrayList<>();
+  private JsonNullable<String> flagReason = JsonNullable.<String>undefined();
 
-  public ChatMessage messageId(@Nullable String messageId) {
+  public ChatMessage messageId(@Nullable UUID messageId) {
     this.messageId = messageId;
     return this;
   }
@@ -54,18 +54,38 @@ public class ChatMessage {
    * Get messageId
    * @return messageId
    */
-  
+  @Valid 
   @Schema(name = "message_id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("message_id")
-  public @Nullable String getMessageId() {
+  public @Nullable UUID getMessageId() {
     return messageId;
   }
 
-  public void setMessageId(@Nullable String messageId) {
+  public void setMessageId(@Nullable UUID messageId) {
     this.messageId = messageId;
   }
 
-  public ChatMessage senderId(@Nullable String senderId) {
+  public ChatMessage channel(@Nullable String channel) {
+    this.channel = channel;
+    return this;
+  }
+
+  /**
+   * Get channel
+   * @return channel
+   */
+  
+  @Schema(name = "channel", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("channel")
+  public @Nullable String getChannel() {
+    return channel;
+  }
+
+  public void setChannel(@Nullable String channel) {
+    this.channel = channel;
+  }
+
+  public ChatMessage senderId(@Nullable UUID senderId) {
     this.senderId = senderId;
     return this;
   }
@@ -74,14 +94,14 @@ public class ChatMessage {
    * Get senderId
    * @return senderId
    */
-  
+  @Valid 
   @Schema(name = "sender_id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("sender_id")
-  public @Nullable String getSenderId() {
+  public @Nullable UUID getSenderId() {
     return senderId;
   }
 
-  public void setSenderId(@Nullable String senderId) {
+  public void setSenderId(@Nullable UUID senderId) {
     this.senderId = senderId;
   }
 
@@ -105,112 +125,84 @@ public class ChatMessage {
     this.senderName = senderName;
   }
 
-  public ChatMessage channel(@Nullable String channel) {
-    this.channel = channel;
+  public ChatMessage content(@Nullable String content) {
+    this.content = content;
     return this;
   }
 
   /**
-   * Get channel
-   * @return channel
+   * Get content
+   * @return content
    */
   
-  @Schema(name = "channel", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("channel")
-  public @Nullable String getChannel() {
-    return channel;
+  @Schema(name = "content", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("content")
+  public @Nullable String getContent() {
+    return content;
   }
 
-  public void setChannel(@Nullable String channel) {
-    this.channel = channel;
+  public void setContent(@Nullable String content) {
+    this.content = content;
   }
 
-  public ChatMessage message(@Nullable String message) {
-    this.message = message;
+  public ChatMessage timestamp(@Nullable OffsetDateTime timestamp) {
+    this.timestamp = timestamp;
     return this;
   }
 
   /**
-   * Get message
-   * @return message
-   */
-  
-  @Schema(name = "message", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("message")
-  public @Nullable String getMessage() {
-    return message;
-  }
-
-  public void setMessage(@Nullable String message) {
-    this.message = message;
-  }
-
-  public ChatMessage sentAt(@Nullable OffsetDateTime sentAt) {
-    this.sentAt = sentAt;
-    return this;
-  }
-
-  /**
-   * Get sentAt
-   * @return sentAt
+   * Get timestamp
+   * @return timestamp
    */
   @Valid 
-  @Schema(name = "sent_at", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("sent_at")
-  public @Nullable OffsetDateTime getSentAt() {
-    return sentAt;
+  @Schema(name = "timestamp", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("timestamp")
+  public @Nullable OffsetDateTime getTimestamp() {
+    return timestamp;
   }
 
-  public void setSentAt(@Nullable OffsetDateTime sentAt) {
-    this.sentAt = sentAt;
+  public void setTimestamp(@Nullable OffsetDateTime timestamp) {
+    this.timestamp = timestamp;
   }
 
-  public ChatMessage formatting(@Nullable Object formatting) {
-    this.formatting = formatting;
+  public ChatMessage flagged(@Nullable Boolean flagged) {
+    this.flagged = flagged;
     return this;
   }
 
   /**
-   * Get formatting
-   * @return formatting
+   * Get flagged
+   * @return flagged
    */
   
-  @Schema(name = "formatting", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("formatting")
-  public @Nullable Object getFormatting() {
-    return formatting;
+  @Schema(name = "flagged", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("flagged")
+  public @Nullable Boolean getFlagged() {
+    return flagged;
   }
 
-  public void setFormatting(@Nullable Object formatting) {
-    this.formatting = formatting;
+  public void setFlagged(@Nullable Boolean flagged) {
+    this.flagged = flagged;
   }
 
-  public ChatMessage mentions(List<String> mentions) {
-    this.mentions = mentions;
-    return this;
-  }
-
-  public ChatMessage addMentionsItem(String mentionsItem) {
-    if (this.mentions == null) {
-      this.mentions = new ArrayList<>();
-    }
-    this.mentions.add(mentionsItem);
+  public ChatMessage flagReason(String flagReason) {
+    this.flagReason = JsonNullable.of(flagReason);
     return this;
   }
 
   /**
-   * Get mentions
-   * @return mentions
+   * Get flagReason
+   * @return flagReason
    */
   
-  @Schema(name = "mentions", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("mentions")
-  public List<String> getMentions() {
-    return mentions;
+  @Schema(name = "flag_reason", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("flag_reason")
+  public JsonNullable<String> getFlagReason() {
+    return flagReason;
   }
 
-  public void setMentions(List<String> mentions) {
-    this.mentions = mentions;
+  public void setFlagReason(JsonNullable<String> flagReason) {
+    this.flagReason = flagReason;
   }
 
   @Override
@@ -223,18 +215,29 @@ public class ChatMessage {
     }
     ChatMessage chatMessage = (ChatMessage) o;
     return Objects.equals(this.messageId, chatMessage.messageId) &&
+        Objects.equals(this.channel, chatMessage.channel) &&
         Objects.equals(this.senderId, chatMessage.senderId) &&
         Objects.equals(this.senderName, chatMessage.senderName) &&
-        Objects.equals(this.channel, chatMessage.channel) &&
-        Objects.equals(this.message, chatMessage.message) &&
-        Objects.equals(this.sentAt, chatMessage.sentAt) &&
-        Objects.equals(this.formatting, chatMessage.formatting) &&
-        Objects.equals(this.mentions, chatMessage.mentions);
+        Objects.equals(this.content, chatMessage.content) &&
+        Objects.equals(this.timestamp, chatMessage.timestamp) &&
+        Objects.equals(this.flagged, chatMessage.flagged) &&
+        equalsNullable(this.flagReason, chatMessage.flagReason);
+  }
+
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(messageId, senderId, senderName, channel, message, sentAt, formatting, mentions);
+    return Objects.hash(messageId, channel, senderId, senderName, content, timestamp, flagged, hashCodeNullable(flagReason));
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
@@ -242,13 +245,13 @@ public class ChatMessage {
     StringBuilder sb = new StringBuilder();
     sb.append("class ChatMessage {\n");
     sb.append("    messageId: ").append(toIndentedString(messageId)).append("\n");
+    sb.append("    channel: ").append(toIndentedString(channel)).append("\n");
     sb.append("    senderId: ").append(toIndentedString(senderId)).append("\n");
     sb.append("    senderName: ").append(toIndentedString(senderName)).append("\n");
-    sb.append("    channel: ").append(toIndentedString(channel)).append("\n");
-    sb.append("    message: ").append(toIndentedString(message)).append("\n");
-    sb.append("    sentAt: ").append(toIndentedString(sentAt)).append("\n");
-    sb.append("    formatting: ").append(toIndentedString(formatting)).append("\n");
-    sb.append("    mentions: ").append(toIndentedString(mentions)).append("\n");
+    sb.append("    content: ").append(toIndentedString(content)).append("\n");
+    sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
+    sb.append("    flagged: ").append(toIndentedString(flagged)).append("\n");
+    sb.append("    flagReason: ").append(toIndentedString(flagReason)).append("\n");
     sb.append("}");
     return sb.toString();
   }

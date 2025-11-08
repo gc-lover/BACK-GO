@@ -4,9 +4,8 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.math.BigDecimal;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -27,14 +26,109 @@ public class LootItem {
 
   private @Nullable String itemId;
 
-  private @Nullable String rarity;
+  /**
+   * Gets or Sets itemType
+   */
+  public enum ItemTypeEnum {
+    WEAPON("weapon"),
+    
+    EQUIPMENT("equipment"),
+    
+    RESOURCE("resource"),
+    
+    INFORMATION("information"),
+    
+    IMPLANT("implant"),
+    
+    CYBERDECK("cyberdeck"),
+    
+    MOD("mod"),
+    
+    ACCESS_CARD("access_card"),
+    
+    VIRUS("virus"),
+    
+    DATA_CHIP("data_chip"),
+    
+    BLUEPRINT("blueprint");
 
-  private @Nullable Integer quantity;
+    private final String value;
 
-  @Valid
-  private List<String> smartLootTags = new ArrayList<>();
+    ItemTypeEnum(String value) {
+      this.value = value;
+    }
 
-  private @Nullable Boolean guaranteed;
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static ItemTypeEnum fromValue(String value) {
+      for (ItemTypeEnum b : ItemTypeEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+  }
+
+  private @Nullable ItemTypeEnum itemType;
+
+  /**
+   * Gets or Sets rarity
+   */
+  public enum RarityEnum {
+    COMMON("common"),
+    
+    UNCOMMON("uncommon"),
+    
+    RARE("rare"),
+    
+    EPIC("epic"),
+    
+    LEGENDARY("legendary"),
+    
+    ARTIFACT("artifact"),
+    
+    ICONIC("iconic");
+
+    private final String value;
+
+    RarityEnum(String value) {
+      this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static RarityEnum fromValue(String value) {
+      for (RarityEnum b : RarityEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+  }
+
+  private @Nullable RarityEnum rarity;
+
+  private @Nullable BigDecimal value;
 
   public LootItem itemId(@Nullable String itemId) {
     this.itemId = itemId;
@@ -46,8 +140,8 @@ public class LootItem {
    * @return itemId
    */
   
-  @Schema(name = "itemId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("itemId")
+  @Schema(name = "item_id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("item_id")
   public @Nullable String getItemId() {
     return itemId;
   }
@@ -56,7 +150,27 @@ public class LootItem {
     this.itemId = itemId;
   }
 
-  public LootItem rarity(@Nullable String rarity) {
+  public LootItem itemType(@Nullable ItemTypeEnum itemType) {
+    this.itemType = itemType;
+    return this;
+  }
+
+  /**
+   * Get itemType
+   * @return itemType
+   */
+  
+  @Schema(name = "item_type", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("item_type")
+  public @Nullable ItemTypeEnum getItemType() {
+    return itemType;
+  }
+
+  public void setItemType(@Nullable ItemTypeEnum itemType) {
+    this.itemType = itemType;
+  }
+
+  public LootItem rarity(@Nullable RarityEnum rarity) {
     this.rarity = rarity;
     return this;
   }
@@ -68,80 +182,32 @@ public class LootItem {
   
   @Schema(name = "rarity", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("rarity")
-  public @Nullable String getRarity() {
+  public @Nullable RarityEnum getRarity() {
     return rarity;
   }
 
-  public void setRarity(@Nullable String rarity) {
+  public void setRarity(@Nullable RarityEnum rarity) {
     this.rarity = rarity;
   }
 
-  public LootItem quantity(@Nullable Integer quantity) {
-    this.quantity = quantity;
+  public LootItem value(@Nullable BigDecimal value) {
+    this.value = value;
     return this;
   }
 
   /**
-   * Get quantity
-   * @return quantity
+   * Get value
+   * @return value
    */
-  
-  @Schema(name = "quantity", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("quantity")
-  public @Nullable Integer getQuantity() {
-    return quantity;
+  @Valid 
+  @Schema(name = "value", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("value")
+  public @Nullable BigDecimal getValue() {
+    return value;
   }
 
-  public void setQuantity(@Nullable Integer quantity) {
-    this.quantity = quantity;
-  }
-
-  public LootItem smartLootTags(List<String> smartLootTags) {
-    this.smartLootTags = smartLootTags;
-    return this;
-  }
-
-  public LootItem addSmartLootTagsItem(String smartLootTagsItem) {
-    if (this.smartLootTags == null) {
-      this.smartLootTags = new ArrayList<>();
-    }
-    this.smartLootTags.add(smartLootTagsItem);
-    return this;
-  }
-
-  /**
-   * Get smartLootTags
-   * @return smartLootTags
-   */
-  
-  @Schema(name = "smartLootTags", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("smartLootTags")
-  public List<String> getSmartLootTags() {
-    return smartLootTags;
-  }
-
-  public void setSmartLootTags(List<String> smartLootTags) {
-    this.smartLootTags = smartLootTags;
-  }
-
-  public LootItem guaranteed(@Nullable Boolean guaranteed) {
-    this.guaranteed = guaranteed;
-    return this;
-  }
-
-  /**
-   * Get guaranteed
-   * @return guaranteed
-   */
-  
-  @Schema(name = "guaranteed", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("guaranteed")
-  public @Nullable Boolean getGuaranteed() {
-    return guaranteed;
-  }
-
-  public void setGuaranteed(@Nullable Boolean guaranteed) {
-    this.guaranteed = guaranteed;
+  public void setValue(@Nullable BigDecimal value) {
+    this.value = value;
   }
 
   @Override
@@ -154,15 +220,14 @@ public class LootItem {
     }
     LootItem lootItem = (LootItem) o;
     return Objects.equals(this.itemId, lootItem.itemId) &&
+        Objects.equals(this.itemType, lootItem.itemType) &&
         Objects.equals(this.rarity, lootItem.rarity) &&
-        Objects.equals(this.quantity, lootItem.quantity) &&
-        Objects.equals(this.smartLootTags, lootItem.smartLootTags) &&
-        Objects.equals(this.guaranteed, lootItem.guaranteed);
+        Objects.equals(this.value, lootItem.value);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(itemId, rarity, quantity, smartLootTags, guaranteed);
+    return Objects.hash(itemId, itemType, rarity, value);
   }
 
   @Override
@@ -170,10 +235,9 @@ public class LootItem {
     StringBuilder sb = new StringBuilder();
     sb.append("class LootItem {\n");
     sb.append("    itemId: ").append(toIndentedString(itemId)).append("\n");
+    sb.append("    itemType: ").append(toIndentedString(itemType)).append("\n");
     sb.append("    rarity: ").append(toIndentedString(rarity)).append("\n");
-    sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
-    sb.append("    smartLootTags: ").append(toIndentedString(smartLootTags)).append("\n");
-    sb.append("    guaranteed: ").append(toIndentedString(guaranteed)).append("\n");
+    sb.append("    value: ").append(toIndentedString(value)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -1,10 +1,13 @@
 package com.necpgame.authservice.service;
 
+import com.necpgame.authservice.model.BlacklistStatusResponse;
 import com.necpgame.authservice.model.Error;
-import com.necpgame.authservice.model.LoginRequest;
-import com.necpgame.authservice.model.LoginResponse;
-import com.necpgame.authservice.model.Register201Response;
-import com.necpgame.authservice.model.RegisterRequest;
+import org.springframework.lang.Nullable;
+import com.necpgame.authservice.model.RefreshTokenRequest;
+import com.necpgame.authservice.model.TokenRefreshResponse;
+import com.necpgame.authservice.model.TokenRevokeAllRequest;
+import com.necpgame.authservice.model.TokenVerifyRequest;
+import com.necpgame.authservice.model.TokenVerifyResponse;
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -17,21 +20,48 @@ import org.springframework.validation.annotation.Validated;
 public interface AuthService {
 
     /**
-     * POST /auth/login : Вход в систему
-     * Аутентификация игрока по email или username и паролю. Возвращает JWT токен.
+     * GET /auth/token/blacklist/{tokenId} : Проверить наличие токена в blacklist
+     * Диагностическая ручка для аналитики и поддержки.
      *
-     * @param loginRequest  (required)
-     * @return LoginResponse
+     * @param tokenId  (required)
+     * @return BlacklistStatusResponse
      */
-    LoginResponse login(LoginRequest loginRequest);
+    BlacklistStatusResponse getBlacklistStatus(String tokenId);
 
     /**
-     * POST /auth/register : Регистрация нового аккаунта
-     * Создает новый аккаунт игрока. Проверяет уникальность email и username.
+     * POST /auth/token/refresh : Обновить access token по refresh token
+     * Возвращает новый комплект токенов. Лимит 5 запросов за 5 минут на refresh token.
      *
-     * @param registerRequest  (required)
-     * @return Register201Response
+     * @param refreshTokenRequest  (required)
+     * @return TokenRefreshResponse
      */
-    Register201Response register(RegisterRequest registerRequest);
+    TokenRefreshResponse refreshToken(RefreshTokenRequest refreshTokenRequest);
+
+    /**
+     * POST /auth/token/revoke-all : Завершить все сессии пользователя
+     * Инвалидирует все refresh tokens пользователя (logout everywhere).
+     *
+     * @param tokenRevokeAllRequest  (optional)
+     * @return Void
+     */
+    Void revokeAllTokens(TokenRevokeAllRequest tokenRevokeAllRequest);
+
+    /**
+     * POST /auth/token/revoke : Отозвать refresh token
+     * Добавляет refresh token в blacklist и закрывает связанные access токены.
+     *
+     * @param refreshTokenRequest  (required)
+     * @return Void
+     */
+    Void revokeToken(RefreshTokenRequest refreshTokenRequest);
+
+    /**
+     * POST /auth/token/verify : Проверить валидность токена
+     * Используется API Gateway и игровыми сервисами для проверки пользовательских токенов.
+     *
+     * @param tokenVerifyRequest  (required)
+     * @return TokenVerifyResponse
+     */
+    TokenVerifyResponse verifyToken(TokenVerifyRequest tokenVerifyRequest);
 }
 

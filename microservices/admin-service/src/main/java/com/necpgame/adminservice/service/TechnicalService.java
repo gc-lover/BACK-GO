@@ -1,17 +1,14 @@
 package com.necpgame.adminservice.service;
 
-import com.necpgame.adminservice.model.CloseSession200Response;
-import com.necpgame.adminservice.model.CloseSessionRequest;
-import com.necpgame.adminservice.model.CreateSession200Response;
-import com.necpgame.adminservice.model.CreateSessionRequest;
-import com.necpgame.adminservice.model.Error;
-import com.necpgame.adminservice.model.GetActiveSessions200Response;
-import org.springframework.lang.Nullable;
-import com.necpgame.adminservice.model.ReconnectSession200Response;
-import com.necpgame.adminservice.model.ReconnectSessionRequest;
-import com.necpgame.adminservice.model.SendHeartbeat200Response;
-import com.necpgame.adminservice.model.SendHeartbeatRequest;
-import com.necpgame.adminservice.model.SessionState;
+import com.necpgame.adminservice.model.AppearanceOptions;
+import com.necpgame.adminservice.model.CharacterCreationFlow;
+import com.necpgame.adminservice.model.GetCharacterSelectData200Response;
+import com.necpgame.adminservice.model.GetServerList200Response;
+import com.necpgame.adminservice.model.GetUIFeatures200Response;
+import com.necpgame.adminservice.model.HUDData;
+import com.necpgame.adminservice.model.LoginScreenData;
+import com.necpgame.adminservice.model.UISettings;
+import java.util.UUID;
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -24,57 +21,71 @@ import org.springframework.validation.annotation.Validated;
 public interface TechnicalService {
 
     /**
-     * POST /technical/sessions/close : Закрыть сессию
-     * Закрывает игровую сессию при выходе игрока. Сохраняет state персонажа. 
+     * GET /technical/ui/character-creation/appearance-options : Получить опции внешности
      *
-     * @param closeSessionRequest  (required)
-     * @return CloseSession200Response
+     * @return AppearanceOptions
      */
-    CloseSession200Response closeSession(CloseSessionRequest closeSessionRequest);
+    AppearanceOptions getAppearanceOptions();
 
     /**
-     * POST /technical/sessions/create : Создать игровую сессию
-     * Создает новую игровую сессию при входе игрока. Проверяет на дубликаты (concurrent sessions). 
+     * GET /technical/ui/character-creation/flow : Получить flow создания персонажа
      *
-     * @param createSessionRequest  (required)
-     * @return CreateSession200Response
+     * @return CharacterCreationFlow
      */
-    CreateSession200Response createSession(CreateSessionRequest createSessionRequest);
+    CharacterCreationFlow getCharacterCreationFlow();
 
     /**
-     * GET /technical/sessions/active : Получить активные сессии
-     * Возвращает список активных сессий (для админов). Может фильтроваться по account_id. 
+     * GET /technical/ui/character-select/{account_id} : Получить персонажей для выбора
      *
-     * @param accountId  (optional)
-     * @return GetActiveSessions200Response
+     * @param accountId  (required)
+     * @return GetCharacterSelectData200Response
      */
-    GetActiveSessions200Response getActiveSessions(String accountId);
+    GetCharacterSelectData200Response getCharacterSelectData(UUID accountId);
 
     /**
-     * GET /technical/sessions/{session_id}/state : Получить состояние сессии
-     * Возвращает текущее состояние игровой сессии
+     * GET /technical/ui/hud/{character_id} : Получить данные для HUD
      *
-     * @param sessionId  (required)
-     * @return SessionState
+     * @param characterId  (required)
+     * @return HUDData
      */
-    SessionState getSessionState(String sessionId);
+    HUDData getHUDData(UUID characterId);
 
     /**
-     * POST /technical/sessions/reconnect : Переподключение
-     * Быстрое переподключение к существующей сессии. Восстанавливает state персонажа. 
+     * GET /technical/ui/login : Получить данные для экрана входа
      *
-     * @param reconnectSessionRequest  (required)
-     * @return ReconnectSession200Response
+     * @return LoginScreenData
      */
-    ReconnectSession200Response reconnectSession(ReconnectSessionRequest reconnectSessionRequest);
+    LoginScreenData getLoginScreenData();
 
     /**
-     * POST /technical/sessions/heartbeat : Heartbeat (keepalive)
-     * Отправляет heartbeat для поддержания сессии активной. Должен вызываться каждые 30 секунд. 
+     * GET /technical/ui/servers : Получить список серверов
      *
-     * @param sendHeartbeatRequest  (required)
-     * @return SendHeartbeat200Response
+     * @return GetServerList200Response
      */
-    SendHeartbeat200Response sendHeartbeat(SendHeartbeatRequest sendHeartbeatRequest);
+    GetServerList200Response getServerList();
+
+    /**
+     * GET /technical/ui/features : Получить доступные UI features
+     *
+     * @return GetUIFeatures200Response
+     */
+    GetUIFeatures200Response getUIFeatures();
+
+    /**
+     * GET /technical/ui/settings/{character_id} : Получить UI настройки персонажа
+     *
+     * @param characterId  (required)
+     * @return UISettings
+     */
+    UISettings getUISettings(UUID characterId);
+
+    /**
+     * PUT /technical/ui/settings/{character_id} : Обновить UI настройки
+     *
+     * @param characterId  (required)
+     * @param uiSettings  (required)
+     * @return Void
+     */
+    Void updateUISettings(UUID characterId, UISettings uiSettings);
 }
 

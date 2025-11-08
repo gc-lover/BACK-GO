@@ -4,14 +4,12 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.necpgame.narrativeservice.model.DialogueOptionRequiredAttribute;
-import com.necpgame.narrativeservice.model.SkillCheckRequirement;
+import com.necpgame.narrativeservice.model.DialogueSkillCheck;
+import com.necpgame.narrativeservice.model.OptionOutcome;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import org.openapitools.jackson.nullable.JsonNullable;
+import java.util.List;
 import org.springframework.lang.Nullable;
-import java.util.NoSuchElementException;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -29,145 +27,245 @@ import jakarta.annotation.Generated;
 
 public class DialogueOption {
 
-  private @Nullable String optionId;
+  private String id;
 
-  private @Nullable String text;
-
-  private JsonNullable<DialogueOptionRequiredAttribute> requiredAttribute = JsonNullable.<DialogueOptionRequiredAttribute>undefined();
-
-  private @Nullable SkillCheckRequirement skillCheck;
-
-  private @Nullable String leadsToNode;
+  private String textKey;
 
   @Valid
-  private Map<String, Object> effects = new HashMap<>();
+  private List<@Valid DialogueSkillCheck> skillChecks = new ArrayList<>();
 
-  public DialogueOption optionId(@Nullable String optionId) {
-    this.optionId = optionId;
+  private @Nullable OptionOutcome success;
+
+  private @Nullable OptionOutcome failure;
+
+  private @Nullable OptionOutcome criticalFailure;
+
+  private @Nullable String nextNode;
+
+  private @Nullable String tooltipKey;
+
+  private @Nullable Integer cooldownSeconds;
+
+  private @Nullable String telemetryTag;
+
+  public DialogueOption() {
+    super();
+  }
+
+  /**
+   * Constructor with only required parameters
+   */
+  public DialogueOption(String id, String textKey) {
+    this.id = id;
+    this.textKey = textKey;
+  }
+
+  public DialogueOption id(String id) {
+    this.id = id;
     return this;
   }
 
   /**
-   * Get optionId
-   * @return optionId
+   * Get id
+   * @return id
    */
-  
-  @Schema(name = "option_id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("option_id")
-  public @Nullable String getOptionId() {
-    return optionId;
+  @NotNull 
+  @Schema(name = "id", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("id")
+  public String getId() {
+    return id;
   }
 
-  public void setOptionId(@Nullable String optionId) {
-    this.optionId = optionId;
+  public void setId(String id) {
+    this.id = id;
   }
 
-  public DialogueOption text(@Nullable String text) {
-    this.text = text;
+  public DialogueOption textKey(String textKey) {
+    this.textKey = textKey;
     return this;
   }
 
   /**
-   * Get text
-   * @return text
+   * Get textKey
+   * @return textKey
    */
-  
-  @Schema(name = "text", example = "[Corpo] I'm always ready for business.", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("text")
-  public @Nullable String getText() {
-    return text;
+  @NotNull 
+  @Schema(name = "textKey", example = "dialogue.quest001.option.arrival.ready", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("textKey")
+  public String getTextKey() {
+    return textKey;
   }
 
-  public void setText(@Nullable String text) {
-    this.text = text;
+  public void setTextKey(String textKey) {
+    this.textKey = textKey;
   }
 
-  public DialogueOption requiredAttribute(DialogueOptionRequiredAttribute requiredAttribute) {
-    this.requiredAttribute = JsonNullable.of(requiredAttribute);
+  public DialogueOption skillChecks(List<@Valid DialogueSkillCheck> skillChecks) {
+    this.skillChecks = skillChecks;
     return this;
   }
 
-  /**
-   * Get requiredAttribute
-   * @return requiredAttribute
-   */
-  @Valid 
-  @Schema(name = "required_attribute", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("required_attribute")
-  public JsonNullable<DialogueOptionRequiredAttribute> getRequiredAttribute() {
-    return requiredAttribute;
-  }
-
-  public void setRequiredAttribute(JsonNullable<DialogueOptionRequiredAttribute> requiredAttribute) {
-    this.requiredAttribute = requiredAttribute;
-  }
-
-  public DialogueOption skillCheck(@Nullable SkillCheckRequirement skillCheck) {
-    this.skillCheck = skillCheck;
-    return this;
-  }
-
-  /**
-   * Get skillCheck
-   * @return skillCheck
-   */
-  @Valid 
-  @Schema(name = "skill_check", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("skill_check")
-  public @Nullable SkillCheckRequirement getSkillCheck() {
-    return skillCheck;
-  }
-
-  public void setSkillCheck(@Nullable SkillCheckRequirement skillCheck) {
-    this.skillCheck = skillCheck;
-  }
-
-  public DialogueOption leadsToNode(@Nullable String leadsToNode) {
-    this.leadsToNode = leadsToNode;
-    return this;
-  }
-
-  /**
-   * Следующий node диалога
-   * @return leadsToNode
-   */
-  
-  @Schema(name = "leads_to_node", description = "Следующий node диалога", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("leads_to_node")
-  public @Nullable String getLeadsToNode() {
-    return leadsToNode;
-  }
-
-  public void setLeadsToNode(@Nullable String leadsToNode) {
-    this.leadsToNode = leadsToNode;
-  }
-
-  public DialogueOption effects(Map<String, Object> effects) {
-    this.effects = effects;
-    return this;
-  }
-
-  public DialogueOption putEffectsItem(String key, Object effectsItem) {
-    if (this.effects == null) {
-      this.effects = new HashMap<>();
+  public DialogueOption addSkillChecksItem(DialogueSkillCheck skillChecksItem) {
+    if (this.skillChecks == null) {
+      this.skillChecks = new ArrayList<>();
     }
-    this.effects.put(key, effectsItem);
+    this.skillChecks.add(skillChecksItem);
     return this;
   }
 
   /**
-   * Эффекты выбора (flags, reputation)
-   * @return effects
+   * Get skillChecks
+   * @return skillChecks
    */
-  
-  @Schema(name = "effects", description = "Эффекты выбора (flags, reputation)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("effects")
-  public Map<String, Object> getEffects() {
-    return effects;
+  @Valid 
+  @Schema(name = "skillChecks", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("skillChecks")
+  public List<@Valid DialogueSkillCheck> getSkillChecks() {
+    return skillChecks;
   }
 
-  public void setEffects(Map<String, Object> effects) {
-    this.effects = effects;
+  public void setSkillChecks(List<@Valid DialogueSkillCheck> skillChecks) {
+    this.skillChecks = skillChecks;
+  }
+
+  public DialogueOption success(@Nullable OptionOutcome success) {
+    this.success = success;
+    return this;
+  }
+
+  /**
+   * Get success
+   * @return success
+   */
+  @Valid 
+  @Schema(name = "success", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("success")
+  public @Nullable OptionOutcome getSuccess() {
+    return success;
+  }
+
+  public void setSuccess(@Nullable OptionOutcome success) {
+    this.success = success;
+  }
+
+  public DialogueOption failure(@Nullable OptionOutcome failure) {
+    this.failure = failure;
+    return this;
+  }
+
+  /**
+   * Get failure
+   * @return failure
+   */
+  @Valid 
+  @Schema(name = "failure", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("failure")
+  public @Nullable OptionOutcome getFailure() {
+    return failure;
+  }
+
+  public void setFailure(@Nullable OptionOutcome failure) {
+    this.failure = failure;
+  }
+
+  public DialogueOption criticalFailure(@Nullable OptionOutcome criticalFailure) {
+    this.criticalFailure = criticalFailure;
+    return this;
+  }
+
+  /**
+   * Get criticalFailure
+   * @return criticalFailure
+   */
+  @Valid 
+  @Schema(name = "criticalFailure", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("criticalFailure")
+  public @Nullable OptionOutcome getCriticalFailure() {
+    return criticalFailure;
+  }
+
+  public void setCriticalFailure(@Nullable OptionOutcome criticalFailure) {
+    this.criticalFailure = criticalFailure;
+  }
+
+  public DialogueOption nextNode(@Nullable String nextNode) {
+    this.nextNode = nextNode;
+    return this;
+  }
+
+  /**
+   * Get nextNode
+   * @return nextNode
+   */
+  
+  @Schema(name = "nextNode", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("nextNode")
+  public @Nullable String getNextNode() {
+    return nextNode;
+  }
+
+  public void setNextNode(@Nullable String nextNode) {
+    this.nextNode = nextNode;
+  }
+
+  public DialogueOption tooltipKey(@Nullable String tooltipKey) {
+    this.tooltipKey = tooltipKey;
+    return this;
+  }
+
+  /**
+   * Get tooltipKey
+   * @return tooltipKey
+   */
+  
+  @Schema(name = "tooltipKey", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("tooltipKey")
+  public @Nullable String getTooltipKey() {
+    return tooltipKey;
+  }
+
+  public void setTooltipKey(@Nullable String tooltipKey) {
+    this.tooltipKey = tooltipKey;
+  }
+
+  public DialogueOption cooldownSeconds(@Nullable Integer cooldownSeconds) {
+    this.cooldownSeconds = cooldownSeconds;
+    return this;
+  }
+
+  /**
+   * Get cooldownSeconds
+   * @return cooldownSeconds
+   */
+  
+  @Schema(name = "cooldownSeconds", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("cooldownSeconds")
+  public @Nullable Integer getCooldownSeconds() {
+    return cooldownSeconds;
+  }
+
+  public void setCooldownSeconds(@Nullable Integer cooldownSeconds) {
+    this.cooldownSeconds = cooldownSeconds;
+  }
+
+  public DialogueOption telemetryTag(@Nullable String telemetryTag) {
+    this.telemetryTag = telemetryTag;
+    return this;
+  }
+
+  /**
+   * Get telemetryTag
+   * @return telemetryTag
+   */
+  
+  @Schema(name = "telemetryTag", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("telemetryTag")
+  public @Nullable String getTelemetryTag() {
+    return telemetryTag;
+  }
+
+  public void setTelemetryTag(@Nullable String telemetryTag) {
+    this.telemetryTag = telemetryTag;
   }
 
   @Override
@@ -179,40 +277,37 @@ public class DialogueOption {
       return false;
     }
     DialogueOption dialogueOption = (DialogueOption) o;
-    return Objects.equals(this.optionId, dialogueOption.optionId) &&
-        Objects.equals(this.text, dialogueOption.text) &&
-        equalsNullable(this.requiredAttribute, dialogueOption.requiredAttribute) &&
-        Objects.equals(this.skillCheck, dialogueOption.skillCheck) &&
-        Objects.equals(this.leadsToNode, dialogueOption.leadsToNode) &&
-        Objects.equals(this.effects, dialogueOption.effects);
-  }
-
-  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
-    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
+    return Objects.equals(this.id, dialogueOption.id) &&
+        Objects.equals(this.textKey, dialogueOption.textKey) &&
+        Objects.equals(this.skillChecks, dialogueOption.skillChecks) &&
+        Objects.equals(this.success, dialogueOption.success) &&
+        Objects.equals(this.failure, dialogueOption.failure) &&
+        Objects.equals(this.criticalFailure, dialogueOption.criticalFailure) &&
+        Objects.equals(this.nextNode, dialogueOption.nextNode) &&
+        Objects.equals(this.tooltipKey, dialogueOption.tooltipKey) &&
+        Objects.equals(this.cooldownSeconds, dialogueOption.cooldownSeconds) &&
+        Objects.equals(this.telemetryTag, dialogueOption.telemetryTag);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(optionId, text, hashCodeNullable(requiredAttribute), skillCheck, leadsToNode, effects);
-  }
-
-  private static <T> int hashCodeNullable(JsonNullable<T> a) {
-    if (a == null) {
-      return 1;
-    }
-    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
+    return Objects.hash(id, textKey, skillChecks, success, failure, criticalFailure, nextNode, tooltipKey, cooldownSeconds, telemetryTag);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class DialogueOption {\n");
-    sb.append("    optionId: ").append(toIndentedString(optionId)).append("\n");
-    sb.append("    text: ").append(toIndentedString(text)).append("\n");
-    sb.append("    requiredAttribute: ").append(toIndentedString(requiredAttribute)).append("\n");
-    sb.append("    skillCheck: ").append(toIndentedString(skillCheck)).append("\n");
-    sb.append("    leadsToNode: ").append(toIndentedString(leadsToNode)).append("\n");
-    sb.append("    effects: ").append(toIndentedString(effects)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    textKey: ").append(toIndentedString(textKey)).append("\n");
+    sb.append("    skillChecks: ").append(toIndentedString(skillChecks)).append("\n");
+    sb.append("    success: ").append(toIndentedString(success)).append("\n");
+    sb.append("    failure: ").append(toIndentedString(failure)).append("\n");
+    sb.append("    criticalFailure: ").append(toIndentedString(criticalFailure)).append("\n");
+    sb.append("    nextNode: ").append(toIndentedString(nextNode)).append("\n");
+    sb.append("    tooltipKey: ").append(toIndentedString(tooltipKey)).append("\n");
+    sb.append("    cooldownSeconds: ").append(toIndentedString(cooldownSeconds)).append("\n");
+    sb.append("    telemetryTag: ").append(toIndentedString(telemetryTag)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -5,14 +5,16 @@
  */
 package com.necpgame.narrativeservice.api;
 
-import com.necpgame.narrativeservice.model.GetClassQuests200Response;
-import com.necpgame.narrativeservice.model.GetMainStoryQuests200Response;
-import com.necpgame.narrativeservice.model.GetOriginStories200Response;
-import com.necpgame.narrativeservice.model.GetRecommendedStarterContent200Response;
-import com.necpgame.narrativeservice.model.GetStarterProgression200Response;
-import org.springframework.lang.Nullable;
-import com.necpgame.narrativeservice.model.OriginStoryDetailed;
-import java.util.UUID;
+import com.necpgame.narrativeservice.model.ChooseFloorApproach200Response;
+import com.necpgame.narrativeservice.model.ChooseFloorApproachRequest;
+import com.necpgame.narrativeservice.model.CompleteCorpoTowerRaidRequest;
+import com.necpgame.narrativeservice.model.CorpoTowerRaidStatus;
+import com.necpgame.narrativeservice.model.CorpoTowerRequirements;
+import com.necpgame.narrativeservice.model.RaidCompletion;
+import com.necpgame.narrativeservice.model.StartCEOFight200Response;
+import com.necpgame.narrativeservice.model.StartCEOFightRequest;
+import com.necpgame.narrativeservice.model.StartCorpoTowerRaid200Response;
+import com.necpgame.narrativeservice.model.StartCorpoTowerRaidRequest;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -42,220 +44,44 @@ import jakarta.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 @Validated
-@Tag(name = "Class Quests", description = "Классовые квесты")
+@Tag(name = "Corpo Tower Assault", description = "Штурм корпоративной башни")
 public interface NarrativeApi {
 
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
 
-    String PATH_GET_CLASS_QUESTS = "/narrative/starter-content/class-quests";
+    String PATH_CHECK_CORPO_TOWER_REQUIREMENTS = "/narrative/raids/corpo-tower/requirements";
     /**
-     * GET /narrative/starter-content/class-quests : Получить классовые стартовые квесты
-     *
-     * @param classId  (optional)
-     * @return Классовые квесты (status code 200)
-     */
-    @Operation(
-        operationId = "getClassQuests",
-        summary = "Получить классовые стартовые квесты",
-        tags = { "Class Quests" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Классовые квесты", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = GetClassQuests200Response.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = NarrativeApi.PATH_GET_CLASS_QUESTS,
-        produces = { "application/json" }
-    )
-    default ResponseEntity<GetClassQuests200Response> getClassQuests(
-        @Parameter(name = "class_id", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "class_id", required = false) @Nullable String classId
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"quests\" : [ { \"estimated_time_minutes\" : 6, \"required_level\" : 0, \"description\" : \"description\", \"quest_id\" : \"quest_id\", \"title\" : \"title\", \"type\" : \"ORIGIN\", \"rewards\" : { \"currency\" : 5, \"experience\" : 1, \"items\" : [ { \"quantity\" : 5, \"item_id\" : \"item_id\" }, { \"quantity\" : 5, \"item_id\" : \"item_id\" } ] }, \"next_quest\" : \"next_quest\" }, { \"estimated_time_minutes\" : 6, \"required_level\" : 0, \"description\" : \"description\", \"quest_id\" : \"quest_id\", \"title\" : \"title\", \"type\" : \"ORIGIN\", \"rewards\" : { \"currency\" : 5, \"experience\" : 1, \"items\" : [ { \"quantity\" : 5, \"item_id\" : \"item_id\" }, { \"quantity\" : 5, \"item_id\" : \"item_id\" } ] }, \"next_quest\" : \"next_quest\" } ] }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_GET_MAIN_STORY_QUESTS = "/narrative/starter-content/main-story";
-    /**
-     * GET /narrative/starter-content/main-story : Получить квесты основного сюжета
-     *
-     * @param period  (optional)
-     * @param chapter  (optional)
-     * @param page Номер страницы (начинается с 1) (optional, default to 1)
-     * @param pageSize Количество элементов на странице (optional, default to 20)
-     * @return Main story quests (status code 200)
-     */
-    @Operation(
-        operationId = "getMainStoryQuests",
-        summary = "Получить квесты основного сюжета",
-        tags = { "Main Story" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Main story quests", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = GetMainStoryQuests200Response.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = NarrativeApi.PATH_GET_MAIN_STORY_QUESTS,
-        produces = { "application/json" }
-    )
-    default ResponseEntity<GetMainStoryQuests200Response> getMainStoryQuests(
-        @Parameter(name = "period", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "period", required = false) @Nullable String period,
-        @Parameter(name = "chapter", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "chapter", required = false) @Nullable Integer chapter,
-        @Min(value = 1) @Parameter(name = "page", description = "Номер страницы (начинается с 1)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-        @Min(value = 1) @Max(value = 100) @Parameter(name = "page_size", description = "Количество элементов на странице", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page_size", required = false, defaultValue = "20") Integer pageSize
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"data\" : [ { \"prerequisites\" : [ \"prerequisites\", \"prerequisites\" ], \"chapter\" : 0, \"period\" : \"2055\", \"required_level\" : 6, \"estimated_time_hours\" : 5.962133916683182, \"major_choices\" : [ { \"description\" : \"description\", \"consequences\" : \"consequences\", \"choice_id\" : \"choice_id\" }, { \"description\" : \"description\", \"consequences\" : \"consequences\", \"choice_id\" : \"choice_id\" } ], \"description\" : \"description\", \"quest_id\" : \"quest_id\", \"title\" : \"title\", \"branches\" : 1 }, { \"prerequisites\" : [ \"prerequisites\", \"prerequisites\" ], \"chapter\" : 0, \"period\" : \"2055\", \"required_level\" : 6, \"estimated_time_hours\" : 5.962133916683182, \"major_choices\" : [ { \"description\" : \"description\", \"consequences\" : \"consequences\", \"choice_id\" : \"choice_id\" }, { \"description\" : \"description\", \"consequences\" : \"consequences\", \"choice_id\" : \"choice_id\" } ], \"description\" : \"description\", \"quest_id\" : \"quest_id\", \"title\" : \"title\", \"branches\" : 1 } ], \"meta\" : { \"total\" : 156, \"has_next\" : true, \"page\" : 1, \"total_pages\" : 8, \"has_prev\" : false, \"page_size\" : 20 } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_GET_ORIGIN_STORIES = "/narrative/starter-content/origin-stories";
-    /**
-     * GET /narrative/starter-content/origin-stories : Получить доступные origin stories
-     *
-     * @return Origin stories (status code 200)
-     */
-    @Operation(
-        operationId = "getOriginStories",
-        summary = "Получить доступные origin stories",
-        tags = { "Origin Stories" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Origin stories", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = GetOriginStories200Response.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = NarrativeApi.PATH_GET_ORIGIN_STORIES,
-        produces = { "application/json" }
-    )
-    default ResponseEntity<GetOriginStories200Response> getOriginStories(
-        
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"origins\" : [ { \"backstory\" : \"backstory\", \"compatible_classes\" : [ \"compatible_classes\", \"compatible_classes\" ], \"starting_bonuses\" : { \"skills\" : { \"key\" : 6 }, \"reputation\" : { \"key\" : 1 }, \"attributes\" : { \"key\" : 0 }, \"items\" : [ \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" ] }, \"name\" : \"Solo - Military Veteran\", \"description\" : \"description\", \"origin_id\" : \"origin_id\" }, { \"backstory\" : \"backstory\", \"compatible_classes\" : [ \"compatible_classes\", \"compatible_classes\" ], \"starting_bonuses\" : { \"skills\" : { \"key\" : 6 }, \"reputation\" : { \"key\" : 1 }, \"attributes\" : { \"key\" : 0 }, \"items\" : [ \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" ] }, \"name\" : \"Solo - Military Veteran\", \"description\" : \"description\", \"origin_id\" : \"origin_id\" } ] }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_GET_ORIGIN_STORY = "/narrative/starter-content/origin/{origin_id}";
-    /**
-     * GET /narrative/starter-content/origin/{origin_id} : Получить детали origin story
-     *
-     * @param originId  (required)
-     * @return Origin story (status code 200)
-     */
-    @Operation(
-        operationId = "getOriginStory",
-        summary = "Получить детали origin story",
-        tags = { "Origin Stories" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Origin story", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = OriginStoryDetailed.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = NarrativeApi.PATH_GET_ORIGIN_STORY,
-        produces = { "application/json" }
-    )
-    default ResponseEntity<OriginStoryDetailed> getOriginStory(
-        @NotNull @Parameter(name = "origin_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("origin_id") String originId
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"backstory\" : \"backstory\", \"compatible_classes\" : [ \"compatible_classes\", \"compatible_classes\" ], \"full_backstory\" : \"full_backstory\", \"origin_quest\" : { \"estimated_time_minutes\" : 6, \"required_level\" : 0, \"description\" : \"description\", \"quest_id\" : \"quest_id\", \"title\" : \"title\", \"type\" : \"ORIGIN\", \"rewards\" : { \"currency\" : 5, \"experience\" : 1, \"items\" : [ { \"quantity\" : 5, \"item_id\" : \"item_id\" }, { \"quantity\" : 5, \"item_id\" : \"item_id\" } ] }, \"next_quest\" : \"next_quest\" }, \"starting_bonuses\" : { \"skills\" : { \"key\" : 6 }, \"reputation\" : { \"key\" : 1 }, \"attributes\" : { \"key\" : 0 }, \"items\" : [ \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\" ] }, \"world_reactions\" : [ \"world_reactions\", \"world_reactions\" ], \"name\" : \"Solo - Military Veteran\", \"description\" : \"description\", \"origin_id\" : \"origin_id\", \"unique_dialogue_options\" : [ \"unique_dialogue_options\", \"unique_dialogue_options\" ] }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    String PATH_GET_RECOMMENDED_STARTER_CONTENT = "/narrative/starter-content/character/{character_id}/recommended";
-    /**
-     * GET /narrative/starter-content/character/{character_id}/recommended : Получить рекомендованный стартовый контент
-     * На основе класса, фракции и origin
+     * GET /narrative/raids/corpo-tower/requirements : Проверить требования для рейда
+     * Проверяет требования для доступа к рейду. Уровень, Gear Score, завершенные квесты, выбор стороны. 
      *
      * @param characterId  (required)
-     * @return Рекомендованный контент (status code 200)
+     * @return Требования проверены (status code 200)
      */
     @Operation(
-        operationId = "getRecommendedStarterContent",
-        summary = "Получить рекомендованный стартовый контент",
-        description = "На основе класса, фракции и origin",
-        tags = { "Origin Stories" },
+        operationId = "checkCorpoTowerRequirements",
+        summary = "Проверить требования для рейда",
+        description = "Проверяет требования для доступа к рейду. Уровень, Gear Score, завершенные квесты, выбор стороны. ",
+        tags = { "Corpo Tower Assault" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Рекомендованный контент", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = GetRecommendedStarterContent200Response.class))
+            @ApiResponse(responseCode = "200", description = "Требования проверены", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CorpoTowerRequirements.class))
             })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
         }
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = NarrativeApi.PATH_GET_RECOMMENDED_STARTER_CONTENT,
+        value = NarrativeApi.PATH_CHECK_CORPO_TOWER_REQUIREMENTS,
         produces = { "application/json" }
     )
-    default ResponseEntity<GetRecommendedStarterContent200Response> getRecommendedStarterContent(
-        @NotNull @Parameter(name = "character_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("character_id") UUID characterId
+    default ResponseEntity<CorpoTowerRequirements> checkCorpoTowerRequirements(
+        @NotNull @Parameter(name = "character_id", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "character_id", required = true) String characterId
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"origin_quest\" : { \"estimated_time_minutes\" : 6, \"required_level\" : 0, \"description\" : \"description\", \"quest_id\" : \"quest_id\", \"title\" : \"title\", \"type\" : \"ORIGIN\", \"rewards\" : { \"currency\" : 5, \"experience\" : 1, \"items\" : [ { \"quantity\" : 5, \"item_id\" : \"item_id\" }, { \"quantity\" : 5, \"item_id\" : \"item_id\" } ] }, \"next_quest\" : \"next_quest\" }, \"class_quests\" : [ { \"estimated_time_minutes\" : 6, \"required_level\" : 0, \"description\" : \"description\", \"quest_id\" : \"quest_id\", \"title\" : \"title\", \"type\" : \"ORIGIN\", \"rewards\" : { \"currency\" : 5, \"experience\" : 1, \"items\" : [ { \"quantity\" : 5, \"item_id\" : \"item_id\" }, { \"quantity\" : 5, \"item_id\" : \"item_id\" } ] }, \"next_quest\" : \"next_quest\" }, { \"estimated_time_minutes\" : 6, \"required_level\" : 0, \"description\" : \"description\", \"quest_id\" : \"quest_id\", \"title\" : \"title\", \"type\" : \"ORIGIN\", \"rewards\" : { \"currency\" : 5, \"experience\" : 1, \"items\" : [ { \"quantity\" : 5, \"item_id\" : \"item_id\" }, { \"quantity\" : 5, \"item_id\" : \"item_id\" } ] }, \"next_quest\" : \"next_quest\" } ], \"main_story_entry\" : { \"prerequisites\" : [ \"prerequisites\", \"prerequisites\" ], \"chapter\" : 0, \"period\" : \"2055\", \"required_level\" : 6, \"estimated_time_hours\" : 5.962133916683182, \"major_choices\" : [ { \"description\" : \"description\", \"consequences\" : \"consequences\", \"choice_id\" : \"choice_id\" }, { \"description\" : \"description\", \"consequences\" : \"consequences\", \"choice_id\" : \"choice_id\" } ], \"description\" : \"description\", \"quest_id\" : \"quest_id\", \"title\" : \"title\", \"branches\" : 1 }, \"tutorial_quests\" : [ { \"estimated_time_minutes\" : 6, \"required_level\" : 0, \"description\" : \"description\", \"quest_id\" : \"quest_id\", \"title\" : \"title\", \"type\" : \"ORIGIN\", \"rewards\" : { \"currency\" : 5, \"experience\" : 1, \"items\" : [ { \"quantity\" : 5, \"item_id\" : \"item_id\" }, { \"quantity\" : 5, \"item_id\" : \"item_id\" } ] }, \"next_quest\" : \"next_quest\" }, { \"estimated_time_minutes\" : 6, \"required_level\" : 0, \"description\" : \"description\", \"quest_id\" : \"quest_id\", \"title\" : \"title\", \"type\" : \"ORIGIN\", \"rewards\" : { \"currency\" : 5, \"experience\" : 1, \"items\" : [ { \"quantity\" : 5, \"item_id\" : \"item_id\" }, { \"quantity\" : 5, \"item_id\" : \"item_id\" } ] }, \"next_quest\" : \"next_quest\" } ] }";
+                    String exampleString = "{ \"access_card_required\" : true, \"side_chosen\" : \"arasaka\", \"reasons\" : [ \"reasons\", \"reasons\" ], \"level\" : 0, \"eligible\" : true, \"gear_score\" : 1, \"gear_score_required\" : 5, \"character_id\" : \"character_id\", \"level_required\" : 6, \"faction_war_quests_completed\" : true }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -266,39 +92,213 @@ public interface NarrativeApi {
     }
 
 
-    String PATH_GET_STARTER_PROGRESSION = "/narrative/starter-content/progression";
+    String PATH_CHOOSE_FLOOR_APPROACH = "/narrative/raids/corpo-tower/{raid_id}/floor/{floor_number}/approach";
     /**
-     * GET /narrative/starter-content/progression : Получить прогрессию стартового контента
-     * Правильный порядок квестов для новых игроков
+     * POST /narrative/raids/corpo-tower/{raid_id}/floor/{floor_number}/approach : Выбрать подход к этажу
+     * Выбирает подход к текущему этажу. Stealth (скрытное проникновение) или Combat (прямой бой). 
      *
-     * @return Progression path (status code 200)
+     * @param raidId  (required)
+     * @param floorNumber  (required)
+     * @param chooseFloorApproachRequest  (required)
+     * @return Подход выбран (status code 200)
      */
     @Operation(
-        operationId = "getStarterProgression",
-        summary = "Получить прогрессию стартового контента",
-        description = "Правильный порядок квестов для новых игроков",
-        tags = { "Main Story" },
+        operationId = "chooseFloorApproach",
+        summary = "Выбрать подход к этажу",
+        description = "Выбирает подход к текущему этажу. Stealth (скрытное проникновение) или Combat (прямой бой). ",
+        tags = { "Corpo Tower Assault" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Progression path", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = GetStarterProgression200Response.class))
+            @ApiResponse(responseCode = "200", description = "Подход выбран", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ChooseFloorApproach200Response.class))
             })
-        },
-        security = {
-            @SecurityRequirement(name = "BearerAuth")
         }
     )
     @RequestMapping(
-        method = RequestMethod.GET,
-        value = NarrativeApi.PATH_GET_STARTER_PROGRESSION,
-        produces = { "application/json" }
+        method = RequestMethod.POST,
+        value = NarrativeApi.PATH_CHOOSE_FLOOR_APPROACH,
+        produces = { "application/json" },
+        consumes = { "application/json" }
     )
-    default ResponseEntity<GetStarterProgression200Response> getStarterProgression(
-        
+    default ResponseEntity<ChooseFloorApproach200Response> chooseFloorApproach(
+        @NotNull @Parameter(name = "raid_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("raid_id") String raidId,
+        @NotNull @Parameter(name = "floor_number", description = "", required = true, in = ParameterIn.PATH) @PathVariable("floor_number") Integer floorNumber,
+        @Parameter(name = "ChooseFloorApproachRequest", description = "", required = true) @Valid @RequestBody ChooseFloorApproachRequest chooseFloorApproachRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"recommended_order\" : [ { \"estimated_level\" : 6, \"step\" : 0, \"quest_id\" : \"quest_id\", \"quest_name\" : \"quest_name\" }, { \"estimated_level\" : 6, \"step\" : 0, \"quest_id\" : \"quest_id\", \"quest_name\" : \"quest_name\" } ] }";
+                    String exampleString = "{ \"floor_number\" : 0, \"approach\" : \"approach\", \"difficulty_modifier\" : 6.027456183070403 }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_COMPLETE_CORPO_TOWER_RAID = "/narrative/raids/corpo-tower/{raid_id}/complete";
+    /**
+     * POST /narrative/raids/corpo-tower/{raid_id}/complete : Завершить рейд
+     * Завершает рейд после победы над CEO. Распределяет награды. 
+     *
+     * @param raidId  (required)
+     * @param completeCorpoTowerRaidRequest  (required)
+     * @return Рейд завершен (status code 200)
+     */
+    @Operation(
+        operationId = "completeCorpoTowerRaid",
+        summary = "Завершить рейд",
+        description = "Завершает рейд после победы над CEO. Распределяет награды. ",
+        tags = { "Corpo Tower Assault" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Рейд завершен", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = RaidCompletion.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = NarrativeApi.PATH_COMPLETE_CORPO_TOWER_RAID,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<RaidCompletion> completeCorpoTowerRaid(
+        @NotNull @Parameter(name = "raid_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("raid_id") String raidId,
+        @Parameter(name = "CompleteCorpoTowerRaidRequest", description = "", required = true) @Valid @RequestBody CompleteCorpoTowerRaidRequest completeCorpoTowerRaidRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"duration\" : 0.8008281904610115, \"completed_at\" : \"2000-01-23T04:56:07.000+00:00\", \"players_participated\" : 6, \"raid_id\" : \"raid_id\", \"rewards\" : { \"corporate_artifacts\" : [ \"corporate_artifacts\", \"corporate_artifacts\" ], \"legendary_items\" : [ \"legendary_items\", \"legendary_items\" ], \"currency\" : 5.962133916683182, \"experience\" : 1.4658129805029452 } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_GET_CORPO_TOWER_RAID_STATUS = "/narrative/raids/corpo-tower/{raid_id}/status";
+    /**
+     * GET /narrative/raids/corpo-tower/{raid_id}/status : Получить статус рейда
+     * Возвращает текущий статус рейда. Фаза, прогресс, состояние участников, текущий этаж. 
+     *
+     * @param raidId  (required)
+     * @return Статус рейда (status code 200)
+     */
+    @Operation(
+        operationId = "getCorpoTowerRaidStatus",
+        summary = "Получить статус рейда",
+        description = "Возвращает текущий статус рейда. Фаза, прогресс, состояние участников, текущий этаж. ",
+        tags = { "Corpo Tower Assault" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Статус рейда", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CorpoTowerRaidStatus.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = NarrativeApi.PATH_GET_CORPO_TOWER_RAID_STATUS,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<CorpoTowerRaidStatus> getCorpoTowerRaidStatus(
+        @NotNull @Parameter(name = "raid_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("raid_id") String raidId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"phase\" : \"infiltration\", \"raid_id\" : \"raid_id\", \"total_floors\" : 6, \"phase_progress\" : 1.4658129805029452, \"enemies_defeated\" : 2, \"target_corporation\" : \"target_corporation\", \"approach_used\" : \"stealth\", \"time_elapsed\" : 7.061401241503109, \"players_alive\" : 5, \"current_floor\" : 0, \"players_total\" : 5 }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_START_CEO_FIGHT = "/narrative/raids/corpo-tower/{raid_id}/ceo-fight";
+    /**
+     * POST /narrative/raids/corpo-tower/{raid_id}/ceo-fight : Начать бой с CEO
+     * Начинает финальный босс-файт с CEO корпорации. Требует завершения всех предыдущих фаз. 
+     *
+     * @param raidId  (required)
+     * @param startCEOFightRequest  (required)
+     * @return Бой с CEO начат (status code 200)
+     */
+    @Operation(
+        operationId = "startCEOFight",
+        summary = "Начать бой с CEO",
+        description = "Начинает финальный босс-файт с CEO корпорации. Требует завершения всех предыдущих фаз. ",
+        tags = { "Corpo Tower Assault" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Бой с CEO начат", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = StartCEOFight200Response.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = NarrativeApi.PATH_START_CEO_FIGHT,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<StartCEOFight200Response> startCEOFight(
+        @NotNull @Parameter(name = "raid_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("raid_id") String raidId,
+        @Parameter(name = "StartCEOFightRequest", description = "", required = true) @Valid @RequestBody StartCEOFightRequest startCEOFightRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"boss_name\" : \"boss_name\", \"phase\" : \"ceo_boss\", \"raid_id\" : \"raid_id\", \"fight_started_at\" : \"2000-01-23T04:56:07.000+00:00\", \"boss_id\" : \"boss_id\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_START_CORPO_TOWER_RAID = "/narrative/raids/corpo-tower/start";
+    /**
+     * POST /narrative/raids/corpo-tower/start : Начать рейд Corpo Tower Assault
+     * Начинает рейд для группы. Требует выбор корпорации (Arasaka или Militech). 
+     *
+     * @param startCorpoTowerRaidRequest  (required)
+     * @return Рейд начат (status code 200)
+     */
+    @Operation(
+        operationId = "startCorpoTowerRaid",
+        summary = "Начать рейд Corpo Tower Assault",
+        description = "Начинает рейд для группы. Требует выбор корпорации (Arasaka или Militech). ",
+        tags = { "Corpo Tower Assault" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Рейд начат", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = StartCorpoTowerRaid200Response.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = NarrativeApi.PATH_START_CORPO_TOWER_RAID,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<StartCorpoTowerRaid200Response> startCorpoTowerRaid(
+        @Parameter(name = "StartCorpoTowerRaidRequest", description = "", required = true) @Valid @RequestBody StartCorpoTowerRaidRequest startCorpoTowerRaidRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"phase\" : \"infiltration\", \"raid_id\" : \"raid_id\", \"target_corporation\" : \"target_corporation\", \"party_id\" : \"party_id\", \"started_at\" : \"2000-01-23T04:56:07.000+00:00\", \"approach\" : \"approach\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

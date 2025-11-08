@@ -5,11 +5,14 @@
  */
 package com.necpgame.authservice.api;
 
+import com.necpgame.authservice.model.BlacklistStatusResponse;
 import com.necpgame.authservice.model.Error;
-import com.necpgame.authservice.model.LoginRequest;
-import com.necpgame.authservice.model.LoginResponse;
-import com.necpgame.authservice.model.Register201Response;
-import com.necpgame.authservice.model.RegisterRequest;
+import org.springframework.lang.Nullable;
+import com.necpgame.authservice.model.RefreshTokenRequest;
+import com.necpgame.authservice.model.TokenRefreshResponse;
+import com.necpgame.authservice.model.TokenRevokeAllRequest;
+import com.necpgame.authservice.model.TokenVerifyRequest;
+import com.necpgame.authservice.model.TokenVerifyResponse;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -39,31 +42,100 @@ import jakarta.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 @Validated
-@Tag(name = "Auth", description = "the Auth API")
+@Tag(name = "Tokens", description = "the Tokens API")
 public interface AuthApi {
 
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
 
-    String PATH_LOGIN = "/auth/login";
+    String PATH_GET_BLACKLIST_STATUS = "/auth/token/blacklist/{tokenId}";
     /**
-     * POST /auth/login : Вход в систему
-     * Аутентификация игрока по email или username и паролю. Возвращает JWT токен.
+     * GET /auth/token/blacklist/{tokenId} : Проверить наличие токена в blacklist
+     * Диагностическая ручка для аналитики и поддержки.
      *
-     * @param loginRequest  (required)
-     * @return Успешный вход (status code 200)
+     * @param tokenId  (required)
+     * @return Статус токена (status code 200)
      *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
-     *         or У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно.  (status code 403)
      */
     @Operation(
-        operationId = "login",
-        summary = "Вход в систему",
-        description = "Аутентификация игрока по email или username и паролю. Возвращает JWT токен.",
-        tags = { "Auth", "Login" },
+        operationId = "getBlacklistStatus",
+        summary = "Проверить наличие токена в blacklist",
+        description = "Диагностическая ручка для аналитики и поддержки.",
+        tags = { "Tokens" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Успешный вход", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = LoginResponse.class))
+            @ApiResponse(responseCode = "200", description = "Статус токена", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = BlacklistStatusResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = AuthApi.PATH_GET_BLACKLIST_STATUS,
+        produces = { "application/json" }
+    )
+    default ResponseEntity<BlacklistStatusResponse> getBlacklistStatus(
+        @NotNull @Parameter(name = "tokenId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("tokenId") String tokenId
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"blacklisted\" : true, \"token_id\" : \"token_id\", \"comment\" : \"comment\", \"blacklisted_at\" : \"2000-01-23T04:56:07.000+00:00\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_REFRESH_TOKEN = "/auth/token/refresh";
+    /**
+     * POST /auth/token/refresh : Обновить access token по refresh token
+     * Возвращает новый комплект токенов. Лимит 5 запросов за 5 минут на refresh token.
+     *
+     * @param refreshTokenRequest  (required)
+     * @return Новый набор токенов выдаётся клиенту (status code 200)
+     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     *         or Превышен лимит запросов. Клиенту следует повторить запрос позже.  (status code 429)
+     */
+    @Operation(
+        operationId = "refreshToken",
+        summary = "Обновить access token по refresh token",
+        description = "Возвращает новый комплект токенов. Лимит 5 запросов за 5 минут на refresh token.",
+        tags = { "Tokens" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Новый набор токенов выдаётся клиенту", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = TokenRefreshResponse.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"VALIDATION_ERROR\",\"message\":\"Неверные параметры запроса\",\"details\":[{\"field\":\"name\",\"message\":\"Имя должно быть не пустым\",\"code\":\"REQUIRED\"}]}}"
+                    )
+                })
+
             }),
             @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
@@ -74,11 +146,11 @@ public interface AuthApi {
                 })
 
             }),
-            @ApiResponse(responseCode = "403", description = "У пользователя нет прав для выполнения данной операции. Аутентификация прошла успешно, но доступа недостаточно. ", content = {
+            @ApiResponse(responseCode = "429", description = "Превышен лимит запросов. Клиенту следует повторить запрос позже. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
                     @ExampleObject(
                         name = "",
-                        value = "{\"error\":{\"code\":\"FORBIDDEN\",\"message\":\"Недостаточно прав для выполнения операции\",\"details\":[]}}"
+                        value = "{\"error\":{\"code\":\"TOO_MANY_REQUESTS\",\"message\":\"Лимит запросов превышен. Повторите попытку позже.\",\"details\":[]}}"
                     )
                 })
 
@@ -87,17 +159,22 @@ public interface AuthApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = AuthApi.PATH_LOGIN,
+        value = AuthApi.PATH_REFRESH_TOKEN,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<LoginResponse> login(
-        @Parameter(name = "LoginRequest", description = "", required = true) @Valid @RequestBody LoginRequest loginRequest
+    default ResponseEntity<TokenRefreshResponse> refreshToken(
+        @Parameter(name = "RefreshTokenRequest", description = "", required = true) @Valid @RequestBody RefreshTokenRequest refreshTokenRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"account_id\" : \"550e8400-e29b-41d4-a716-446655440000\", \"expires_at\" : \"2025-01-27T20:00:00Z\", \"token\" : \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\" }";
+                    String exampleString = "{ \"access_token\" : \"access_token\", \"refresh_token\" : \"refresh_token\", \"token_type\" : \"Bearer\", \"expires_in\" : 0 }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -118,24 +195,129 @@ public interface AuthApi {
     }
 
 
-    String PATH_REGISTER = "/auth/register";
+    String PATH_REVOKE_ALL_TOKENS = "/auth/token/revoke-all";
     /**
-     * POST /auth/register : Регистрация нового аккаунта
-     * Создает новый аккаунт игрока. Проверяет уникальность email и username.
+     * POST /auth/token/revoke-all : Завершить все сессии пользователя
+     * Инвалидирует все refresh tokens пользователя (logout everywhere).
      *
-     * @param registerRequest  (required)
-     * @return Аккаунт успешно создан (status code 201)
-     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
-     *         or Конфликт с текущим состоянием ресурса или ограничениями системы. Например, превышение лимитов или нарушение бизнес-правил.  (status code 409)
+     * @param tokenRevokeAllRequest  (optional)
+     * @return Все токены отозваны (status code 204)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
      */
     @Operation(
-        operationId = "register",
-        summary = "Регистрация нового аккаунта",
-        description = "Создает новый аккаунт игрока. Проверяет уникальность email и username.",
-        tags = { "Auth", "Registration" },
+        operationId = "revokeAllTokens",
+        summary = "Завершить все сессии пользователя",
+        description = "Инвалидирует все refresh tokens пользователя (logout everywhere).",
+        tags = { "Tokens" },
         responses = {
-            @ApiResponse(responseCode = "201", description = "Аккаунт успешно создан", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Register201Response.class))
+            @ApiResponse(responseCode = "204", description = "Все токены отозваны"),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = AuthApi.PATH_REVOKE_ALL_TOKENS,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> revokeAllTokens(
+        @Parameter(name = "TokenRevokeAllRequest", description = "") @Valid @RequestBody(required = false) @Nullable TokenRevokeAllRequest tokenRevokeAllRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_REVOKE_TOKEN = "/auth/token/revoke";
+    /**
+     * POST /auth/token/revoke : Отозвать refresh token
+     * Добавляет refresh token в blacklist и закрывает связанные access токены.
+     *
+     * @param refreshTokenRequest  (required)
+     * @return Токен отозван (status code 204)
+     *         or Пользователь не аутентифицирован. Требуется валидный токен доступа.  (status code 401)
+     */
+    @Operation(
+        operationId = "revokeToken",
+        summary = "Отозвать refresh token",
+        description = "Добавляет refresh token в blacklist и закрывает связанные access токены.",
+        tags = { "Tokens" },
+        responses = {
+            @ApiResponse(responseCode = "204", description = "Токен отозван"),
+            @ApiResponse(responseCode = "401", description = "Пользователь не аутентифицирован. Требуется валидный токен доступа. ", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
+                    @ExampleObject(
+                        name = "",
+                        value = "{\"error\":{\"code\":\"UNAUTHORIZED\",\"message\":\"Требуется аутентификация\",\"details\":[]}}"
+                    )
+                })
+
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "BearerAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = AuthApi.PATH_REVOKE_TOKEN,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<Void> revokeToken(
+        @Parameter(name = "RefreshTokenRequest", description = "", required = true) @Valid @RequestBody RefreshTokenRequest refreshTokenRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    String PATH_VERIFY_TOKEN = "/auth/token/verify";
+    /**
+     * POST /auth/token/verify : Проверить валидность токена
+     * Используется API Gateway и игровыми сервисами для проверки пользовательских токенов.
+     *
+     * @param tokenVerifyRequest  (required)
+     * @return Результат валидации токена (status code 200)
+     *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
+     */
+    @Operation(
+        operationId = "verifyToken",
+        summary = "Проверить валидность токена",
+        description = "Используется API Gateway и игровыми сервисами для проверки пользовательских токенов.",
+        tags = { "Tokens" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Результат валидации токена", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = TokenVerifyResponse.class))
             }),
             @ApiResponse(responseCode = "400", description = "Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля. ", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
@@ -145,36 +327,22 @@ public interface AuthApi {
                     )
                 })
 
-            }),
-            @ApiResponse(responseCode = "409", description = "Конфликт с текущим состоянием ресурса или ограничениями системы. Например, превышение лимитов или нарушение бизнес-правил. ", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class), examples = {
-                    @ExampleObject(
-                        name = "",
-                        value = "{\"error\":{\"code\":\"LIMIT_EXCEEDED\",\"message\":\"Превышен лимит NPC для владельца\",\"details\":[{\"field\":\"maxNPCs\",\"message\":\"Достигнут максимальный лимит NPC (10)\",\"code\":\"LIMIT_EXCEEDED\"}]}}"
-                    )
-                })
-
             })
         }
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = AuthApi.PATH_REGISTER,
+        value = AuthApi.PATH_VERIFY_TOKEN,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<Register201Response> register(
-        @Parameter(name = "RegisterRequest", description = "", required = true) @Valid @RequestBody RegisterRequest registerRequest
+    default ResponseEntity<TokenVerifyResponse> verifyToken(
+        @Parameter(name = "TokenVerifyRequest", description = "", required = true) @Valid @RequestBody TokenVerifyRequest tokenVerifyRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"account_id\" : \"550e8400-e29b-41d4-a716-446655440000\", \"message\" : \"Account created successfully\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"error\" : { \"code\" : \"VALIDATION_ERROR\", \"details\" : [ { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" }, { \"code\" : \"code\", \"field\" : \"field\", \"message\" : \"message\" } ], \"message\" : \"Неверные параметры запроса\" } }";
+                    String exampleString = "{ \"valid\" : true, \"reason\" : \"reason\", \"account_id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\", \"expires_at\" : \"2000-01-23T04:56:07.000+00:00\", \"roles\" : [ \"roles\", \"roles\" ], \"issued_at\" : \"2000-01-23T04:56:07.000+00:00\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

@@ -5,7 +5,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.necpgame.worldservice.model.ActiveEventInstance;
+import com.necpgame.worldservice.model.RandomEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,56 +29,34 @@ import jakarta.annotation.Generated;
 public class GetActiveEvents200Response {
 
   @Valid
-  private List<@Valid ActiveEventInstance> activeEvents = new ArrayList<>();
+  private List<@Valid RandomEvent> events = new ArrayList<>();
 
-  private @Nullable Integer maxActiveEvents;
-
-  public GetActiveEvents200Response activeEvents(List<@Valid ActiveEventInstance> activeEvents) {
-    this.activeEvents = activeEvents;
+  public GetActiveEvents200Response events(List<@Valid RandomEvent> events) {
+    this.events = events;
     return this;
   }
 
-  public GetActiveEvents200Response addActiveEventsItem(ActiveEventInstance activeEventsItem) {
-    if (this.activeEvents == null) {
-      this.activeEvents = new ArrayList<>();
+  public GetActiveEvents200Response addEventsItem(RandomEvent eventsItem) {
+    if (this.events == null) {
+      this.events = new ArrayList<>();
     }
-    this.activeEvents.add(activeEventsItem);
+    this.events.add(eventsItem);
     return this;
   }
 
   /**
-   * Get activeEvents
-   * @return activeEvents
+   * Get events
+   * @return events
    */
   @Valid 
-  @Schema(name = "active_events", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("active_events")
-  public List<@Valid ActiveEventInstance> getActiveEvents() {
-    return activeEvents;
+  @Schema(name = "events", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("events")
+  public List<@Valid RandomEvent> getEvents() {
+    return events;
   }
 
-  public void setActiveEvents(List<@Valid ActiveEventInstance> activeEvents) {
-    this.activeEvents = activeEvents;
-  }
-
-  public GetActiveEvents200Response maxActiveEvents(@Nullable Integer maxActiveEvents) {
-    this.maxActiveEvents = maxActiveEvents;
-    return this;
-  }
-
-  /**
-   * Get maxActiveEvents
-   * @return maxActiveEvents
-   */
-  
-  @Schema(name = "max_active_events", example = "5", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("max_active_events")
-  public @Nullable Integer getMaxActiveEvents() {
-    return maxActiveEvents;
-  }
-
-  public void setMaxActiveEvents(@Nullable Integer maxActiveEvents) {
-    this.maxActiveEvents = maxActiveEvents;
+  public void setEvents(List<@Valid RandomEvent> events) {
+    this.events = events;
   }
 
   @Override
@@ -90,21 +68,19 @@ public class GetActiveEvents200Response {
       return false;
     }
     GetActiveEvents200Response getActiveEvents200Response = (GetActiveEvents200Response) o;
-    return Objects.equals(this.activeEvents, getActiveEvents200Response.activeEvents) &&
-        Objects.equals(this.maxActiveEvents, getActiveEvents200Response.maxActiveEvents);
+    return Objects.equals(this.events, getActiveEvents200Response.events);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(activeEvents, maxActiveEvents);
+    return Objects.hash(events);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class GetActiveEvents200Response {\n");
-    sb.append("    activeEvents: ").append(toIndentedString(activeEvents)).append("\n");
-    sb.append("    maxActiveEvents: ").append(toIndentedString(maxActiveEvents)).append("\n");
+    sb.append("    events: ").append(toIndentedString(events)).append("\n");
     sb.append("}");
     return sb.toString();
   }

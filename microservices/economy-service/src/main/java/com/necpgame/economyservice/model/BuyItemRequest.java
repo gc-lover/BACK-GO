@@ -5,7 +5,6 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import java.util.UUID;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -25,13 +24,15 @@ import jakarta.annotation.Generated;
 
 public class BuyItemRequest {
 
-  private UUID characterId;
+  private String characterId;
 
   private String vendorId;
 
   private String itemId;
 
   private Integer quantity;
+
+  private String currency = "eurodollar";
 
   public BuyItemRequest() {
     super();
@@ -40,14 +41,14 @@ public class BuyItemRequest {
   /**
    * Constructor with only required parameters
    */
-  public BuyItemRequest(UUID characterId, String vendorId, String itemId, Integer quantity) {
+  public BuyItemRequest(String characterId, String vendorId, String itemId, Integer quantity) {
     this.characterId = characterId;
     this.vendorId = vendorId;
     this.itemId = itemId;
     this.quantity = quantity;
   }
 
-  public BuyItemRequest characterId(UUID characterId) {
+  public BuyItemRequest characterId(String characterId) {
     this.characterId = characterId;
     return this;
   }
@@ -56,14 +57,14 @@ public class BuyItemRequest {
    * Get characterId
    * @return characterId
    */
-  @NotNull @Valid 
-  @Schema(name = "characterId", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("characterId")
-  public UUID getCharacterId() {
+  @NotNull 
+  @Schema(name = "character_id", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("character_id")
+  public String getCharacterId() {
     return characterId;
   }
 
-  public void setCharacterId(UUID characterId) {
+  public void setCharacterId(String characterId) {
     this.characterId = characterId;
   }
 
@@ -77,8 +78,8 @@ public class BuyItemRequest {
    * @return vendorId
    */
   @NotNull 
-  @Schema(name = "vendorId", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("vendorId")
+  @Schema(name = "vendor_id", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("vendor_id")
   public String getVendorId() {
     return vendorId;
   }
@@ -97,8 +98,8 @@ public class BuyItemRequest {
    * @return itemId
    */
   @NotNull 
-  @Schema(name = "itemId", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("itemId")
+  @Schema(name = "item_id", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("item_id")
   public String getItemId() {
     return itemId;
   }
@@ -128,6 +129,26 @@ public class BuyItemRequest {
     this.quantity = quantity;
   }
 
+  public BuyItemRequest currency(String currency) {
+    this.currency = currency;
+    return this;
+  }
+
+  /**
+   * Валюта оплаты
+   * @return currency
+   */
+  
+  @Schema(name = "currency", description = "Валюта оплаты", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("currency")
+  public String getCurrency() {
+    return currency;
+  }
+
+  public void setCurrency(String currency) {
+    this.currency = currency;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -140,12 +161,13 @@ public class BuyItemRequest {
     return Objects.equals(this.characterId, buyItemRequest.characterId) &&
         Objects.equals(this.vendorId, buyItemRequest.vendorId) &&
         Objects.equals(this.itemId, buyItemRequest.itemId) &&
-        Objects.equals(this.quantity, buyItemRequest.quantity);
+        Objects.equals(this.quantity, buyItemRequest.quantity) &&
+        Objects.equals(this.currency, buyItemRequest.currency);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(characterId, vendorId, itemId, quantity);
+    return Objects.hash(characterId, vendorId, itemId, quantity, currency);
   }
 
   @Override
@@ -156,6 +178,7 @@ public class BuyItemRequest {
     sb.append("    vendorId: ").append(toIndentedString(vendorId)).append("\n");
     sb.append("    itemId: ").append(toIndentedString(itemId)).append("\n");
     sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
+    sb.append("    currency: ").append(toIndentedString(currency)).append("\n");
     sb.append("}");
     return sb.toString();
   }

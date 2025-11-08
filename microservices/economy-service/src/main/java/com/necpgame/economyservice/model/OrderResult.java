@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  * OrderResult
  */
 
-
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 public class OrderResult {
 
   private @Nullable String orderId;

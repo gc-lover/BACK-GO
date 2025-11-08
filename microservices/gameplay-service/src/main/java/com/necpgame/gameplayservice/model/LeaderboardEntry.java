@@ -4,15 +4,7 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.necpgame.gameplayservice.model.LeaderboardEntryGuild;
-import java.math.BigDecimal;
-import java.time.OffsetDateTime;
-import java.util.Arrays;
-import java.util.UUID;
-import org.openapitools.jackson.nullable.JsonNullable;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
-import java.util.NoSuchElementException;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -30,24 +22,32 @@ import jakarta.annotation.Generated;
 
 public class LeaderboardEntry {
 
-  private @Nullable Integer rank;
+  private Integer rank;
 
-  private @Nullable UUID playerId;
+  private String playerId;
 
-  private @Nullable String playerName;
+  private Integer score;
 
-  private @Nullable BigDecimal score;
+  private @Nullable String companionId;
 
-  private @Nullable String scoreDisplay;
+  private @Nullable Integer ownedRareCount;
 
-  private JsonNullable<String> activeTitle = JsonNullable.<String>undefined();
+  private @Nullable Integer collectionsCompleted;
 
-  private JsonNullable<LeaderboardEntryGuild> guild = JsonNullable.<LeaderboardEntryGuild>undefined();
+  public LeaderboardEntry() {
+    super();
+  }
 
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private @Nullable OffsetDateTime updatedAt;
+  /**
+   * Constructor with only required parameters
+   */
+  public LeaderboardEntry(Integer rank, String playerId, Integer score) {
+    this.rank = rank;
+    this.playerId = playerId;
+    this.score = score;
+  }
 
-  public LeaderboardEntry rank(@Nullable Integer rank) {
+  public LeaderboardEntry rank(Integer rank) {
     this.rank = rank;
     return this;
   }
@@ -56,18 +56,18 @@ public class LeaderboardEntry {
    * Get rank
    * @return rank
    */
-  
-  @Schema(name = "rank", example = "1", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @NotNull 
+  @Schema(name = "rank", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("rank")
-  public @Nullable Integer getRank() {
+  public Integer getRank() {
     return rank;
   }
 
-  public void setRank(@Nullable Integer rank) {
+  public void setRank(Integer rank) {
     this.rank = rank;
   }
 
-  public LeaderboardEntry playerId(@Nullable UUID playerId) {
+  public LeaderboardEntry playerId(String playerId) {
     this.playerId = playerId;
     return this;
   }
@@ -76,135 +76,95 @@ public class LeaderboardEntry {
    * Get playerId
    * @return playerId
    */
-  @Valid 
-  @Schema(name = "player_id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("player_id")
-  public @Nullable UUID getPlayerId() {
+  @NotNull 
+  @Schema(name = "playerId", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("playerId")
+  public String getPlayerId() {
     return playerId;
   }
 
-  public void setPlayerId(@Nullable UUID playerId) {
+  public void setPlayerId(String playerId) {
     this.playerId = playerId;
   }
 
-  public LeaderboardEntry playerName(@Nullable String playerName) {
-    this.playerName = playerName;
-    return this;
-  }
-
-  /**
-   * Get playerName
-   * @return playerName
-   */
-  
-  @Schema(name = "player_name", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("player_name")
-  public @Nullable String getPlayerName() {
-    return playerName;
-  }
-
-  public void setPlayerName(@Nullable String playerName) {
-    this.playerName = playerName;
-  }
-
-  public LeaderboardEntry score(@Nullable BigDecimal score) {
+  public LeaderboardEntry score(Integer score) {
     this.score = score;
     return this;
   }
 
   /**
-   * Значение (level, wealth, rating, etc.)
+   * Get score
    * @return score
    */
-  @Valid 
-  @Schema(name = "score", example = "50", description = "Значение (level, wealth, rating, etc.)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @NotNull 
+  @Schema(name = "score", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("score")
-  public @Nullable BigDecimal getScore() {
+  public Integer getScore() {
     return score;
   }
 
-  public void setScore(@Nullable BigDecimal score) {
+  public void setScore(Integer score) {
     this.score = score;
   }
 
-  public LeaderboardEntry scoreDisplay(@Nullable String scoreDisplay) {
-    this.scoreDisplay = scoreDisplay;
+  public LeaderboardEntry companionId(@Nullable String companionId) {
+    this.companionId = companionId;
     return this;
   }
 
   /**
-   * Get scoreDisplay
-   * @return scoreDisplay
+   * Get companionId
+   * @return companionId
    */
   
-  @Schema(name = "score_display", example = "Level 50 (10,523,456 eddies)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("score_display")
-  public @Nullable String getScoreDisplay() {
-    return scoreDisplay;
+  @Schema(name = "companionId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("companionId")
+  public @Nullable String getCompanionId() {
+    return companionId;
   }
 
-  public void setScoreDisplay(@Nullable String scoreDisplay) {
-    this.scoreDisplay = scoreDisplay;
+  public void setCompanionId(@Nullable String companionId) {
+    this.companionId = companionId;
   }
 
-  public LeaderboardEntry activeTitle(String activeTitle) {
-    this.activeTitle = JsonNullable.of(activeTitle);
+  public LeaderboardEntry ownedRareCount(@Nullable Integer ownedRareCount) {
+    this.ownedRareCount = ownedRareCount;
     return this;
   }
 
   /**
-   * Get activeTitle
-   * @return activeTitle
+   * Get ownedRareCount
+   * @return ownedRareCount
    */
   
-  @Schema(name = "active_title", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("active_title")
-  public JsonNullable<String> getActiveTitle() {
-    return activeTitle;
+  @Schema(name = "ownedRareCount", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("ownedRareCount")
+  public @Nullable Integer getOwnedRareCount() {
+    return ownedRareCount;
   }
 
-  public void setActiveTitle(JsonNullable<String> activeTitle) {
-    this.activeTitle = activeTitle;
+  public void setOwnedRareCount(@Nullable Integer ownedRareCount) {
+    this.ownedRareCount = ownedRareCount;
   }
 
-  public LeaderboardEntry guild(LeaderboardEntryGuild guild) {
-    this.guild = JsonNullable.of(guild);
+  public LeaderboardEntry collectionsCompleted(@Nullable Integer collectionsCompleted) {
+    this.collectionsCompleted = collectionsCompleted;
     return this;
   }
 
   /**
-   * Get guild
-   * @return guild
+   * Get collectionsCompleted
+   * @return collectionsCompleted
    */
-  @Valid 
-  @Schema(name = "guild", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("guild")
-  public JsonNullable<LeaderboardEntryGuild> getGuild() {
-    return guild;
+  
+  @Schema(name = "collectionsCompleted", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("collectionsCompleted")
+  public @Nullable Integer getCollectionsCompleted() {
+    return collectionsCompleted;
   }
 
-  public void setGuild(JsonNullable<LeaderboardEntryGuild> guild) {
-    this.guild = guild;
-  }
-
-  public LeaderboardEntry updatedAt(@Nullable OffsetDateTime updatedAt) {
-    this.updatedAt = updatedAt;
-    return this;
-  }
-
-  /**
-   * Get updatedAt
-   * @return updatedAt
-   */
-  @Valid 
-  @Schema(name = "updated_at", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("updated_at")
-  public @Nullable OffsetDateTime getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public void setUpdatedAt(@Nullable OffsetDateTime updatedAt) {
-    this.updatedAt = updatedAt;
+  public void setCollectionsCompleted(@Nullable Integer collectionsCompleted) {
+    this.collectionsCompleted = collectionsCompleted;
   }
 
   @Override
@@ -218,28 +178,15 @@ public class LeaderboardEntry {
     LeaderboardEntry leaderboardEntry = (LeaderboardEntry) o;
     return Objects.equals(this.rank, leaderboardEntry.rank) &&
         Objects.equals(this.playerId, leaderboardEntry.playerId) &&
-        Objects.equals(this.playerName, leaderboardEntry.playerName) &&
         Objects.equals(this.score, leaderboardEntry.score) &&
-        Objects.equals(this.scoreDisplay, leaderboardEntry.scoreDisplay) &&
-        equalsNullable(this.activeTitle, leaderboardEntry.activeTitle) &&
-        equalsNullable(this.guild, leaderboardEntry.guild) &&
-        Objects.equals(this.updatedAt, leaderboardEntry.updatedAt);
-  }
-
-  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
-    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
+        Objects.equals(this.companionId, leaderboardEntry.companionId) &&
+        Objects.equals(this.ownedRareCount, leaderboardEntry.ownedRareCount) &&
+        Objects.equals(this.collectionsCompleted, leaderboardEntry.collectionsCompleted);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(rank, playerId, playerName, score, scoreDisplay, hashCodeNullable(activeTitle), hashCodeNullable(guild), updatedAt);
-  }
-
-  private static <T> int hashCodeNullable(JsonNullable<T> a) {
-    if (a == null) {
-      return 1;
-    }
-    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
+    return Objects.hash(rank, playerId, score, companionId, ownedRareCount, collectionsCompleted);
   }
 
   @Override
@@ -248,12 +195,10 @@ public class LeaderboardEntry {
     sb.append("class LeaderboardEntry {\n");
     sb.append("    rank: ").append(toIndentedString(rank)).append("\n");
     sb.append("    playerId: ").append(toIndentedString(playerId)).append("\n");
-    sb.append("    playerName: ").append(toIndentedString(playerName)).append("\n");
     sb.append("    score: ").append(toIndentedString(score)).append("\n");
-    sb.append("    scoreDisplay: ").append(toIndentedString(scoreDisplay)).append("\n");
-    sb.append("    activeTitle: ").append(toIndentedString(activeTitle)).append("\n");
-    sb.append("    guild: ").append(toIndentedString(guild)).append("\n");
-    sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
+    sb.append("    companionId: ").append(toIndentedString(companionId)).append("\n");
+    sb.append("    ownedRareCount: ").append(toIndentedString(ownedRareCount)).append("\n");
+    sb.append("    collectionsCompleted: ").append(toIndentedString(collectionsCompleted)).append("\n");
     sb.append("}");
     return sb.toString();
   }

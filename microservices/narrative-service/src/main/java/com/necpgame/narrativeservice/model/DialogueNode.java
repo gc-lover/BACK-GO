@@ -4,12 +4,13 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.necpgame.narrativeservice.model.DialogueNodeCinematic;
 import com.necpgame.narrativeservice.model.DialogueOption;
+import com.necpgame.narrativeservice.model.TutorialHint;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -28,39 +29,98 @@ import jakarta.annotation.Generated;
 
 public class DialogueNode {
 
-  private @Nullable String nodeId;
+  private String id;
 
-  private @Nullable String speaker;
+  private String speaker;
 
-  private @Nullable String text;
+  /**
+   * Gets or Sets nodeType
+   */
+  public enum NodeTypeEnum {
+    DIALOGUE("dialogue"),
+    
+    TUTORIAL("tutorial"),
+    
+    BRANCH("branch"),
+    
+    REWARD("reward");
+
+    private final String value;
+
+    NodeTypeEnum(String value) {
+      this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static NodeTypeEnum fromValue(String value) {
+      for (NodeTypeEnum b : NodeTypeEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+  }
+
+  private NodeTypeEnum nodeType;
+
+  private String textKey;
+
+  private @Nullable DialogueNodeCinematic cinematic;
 
   @Valid
   private List<@Valid DialogueOption> options = new ArrayList<>();
 
-  @Valid
-  private Map<String, Object> conditions = new HashMap<>();
+  private @Nullable String defaultNextNode;
 
-  public DialogueNode nodeId(@Nullable String nodeId) {
-    this.nodeId = nodeId;
+  @Valid
+  private List<@Valid TutorialHint> tutorials = new ArrayList<>();
+
+  public DialogueNode() {
+    super();
+  }
+
+  /**
+   * Constructor with only required parameters
+   */
+  public DialogueNode(String id, String speaker, NodeTypeEnum nodeType, String textKey) {
+    this.id = id;
+    this.speaker = speaker;
+    this.nodeType = nodeType;
+    this.textKey = textKey;
+  }
+
+  public DialogueNode id(String id) {
+    this.id = id;
     return this;
   }
 
   /**
-   * Get nodeId
-   * @return nodeId
+   * Get id
+   * @return id
    */
-  
-  @Schema(name = "node_id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("node_id")
-  public @Nullable String getNodeId() {
-    return nodeId;
+  @NotNull 
+  @Schema(name = "id", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("id")
+  public String getId() {
+    return id;
   }
 
-  public void setNodeId(@Nullable String nodeId) {
-    this.nodeId = nodeId;
+  public void setId(String id) {
+    this.id = id;
   }
 
-  public DialogueNode speaker(@Nullable String speaker) {
+  public DialogueNode speaker(String speaker) {
     this.speaker = speaker;
     return this;
   }
@@ -69,35 +129,75 @@ public class DialogueNode {
    * Get speaker
    * @return speaker
    */
-  
-  @Schema(name = "speaker", example = "Jackie Welles", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @NotNull 
+  @Schema(name = "speaker", example = "marco_fix_sanchez", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("speaker")
-  public @Nullable String getSpeaker() {
+  public String getSpeaker() {
     return speaker;
   }
 
-  public void setSpeaker(@Nullable String speaker) {
+  public void setSpeaker(String speaker) {
     this.speaker = speaker;
   }
 
-  public DialogueNode text(@Nullable String text) {
-    this.text = text;
+  public DialogueNode nodeType(NodeTypeEnum nodeType) {
+    this.nodeType = nodeType;
     return this;
   }
 
   /**
-   * Get text
-   * @return text
+   * Get nodeType
+   * @return nodeType
    */
-  
-  @Schema(name = "text", example = "Yo, V! Ready for your first gig?", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("text")
-  public @Nullable String getText() {
-    return text;
+  @NotNull 
+  @Schema(name = "nodeType", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("nodeType")
+  public NodeTypeEnum getNodeType() {
+    return nodeType;
   }
 
-  public void setText(@Nullable String text) {
-    this.text = text;
+  public void setNodeType(NodeTypeEnum nodeType) {
+    this.nodeType = nodeType;
+  }
+
+  public DialogueNode textKey(String textKey) {
+    this.textKey = textKey;
+    return this;
+  }
+
+  /**
+   * Get textKey
+   * @return textKey
+   */
+  @NotNull 
+  @Schema(name = "textKey", example = "dialogue.quest001.arrival.marco", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("textKey")
+  public String getTextKey() {
+    return textKey;
+  }
+
+  public void setTextKey(String textKey) {
+    this.textKey = textKey;
+  }
+
+  public DialogueNode cinematic(@Nullable DialogueNodeCinematic cinematic) {
+    this.cinematic = cinematic;
+    return this;
+  }
+
+  /**
+   * Get cinematic
+   * @return cinematic
+   */
+  @Valid 
+  @Schema(name = "cinematic", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("cinematic")
+  public @Nullable DialogueNodeCinematic getCinematic() {
+    return cinematic;
+  }
+
+  public void setCinematic(@Nullable DialogueNodeCinematic cinematic) {
+    this.cinematic = cinematic;
   }
 
   public DialogueNode options(List<@Valid DialogueOption> options) {
@@ -128,32 +228,52 @@ public class DialogueNode {
     this.options = options;
   }
 
-  public DialogueNode conditions(Map<String, Object> conditions) {
-    this.conditions = conditions;
-    return this;
-  }
-
-  public DialogueNode putConditionsItem(String key, Object conditionsItem) {
-    if (this.conditions == null) {
-      this.conditions = new HashMap<>();
-    }
-    this.conditions.put(key, conditionsItem);
+  public DialogueNode defaultNextNode(@Nullable String defaultNextNode) {
+    this.defaultNextNode = defaultNextNode;
     return this;
   }
 
   /**
-   * Условия показа (reputation, flags, items)
-   * @return conditions
+   * Get defaultNextNode
+   * @return defaultNextNode
    */
   
-  @Schema(name = "conditions", description = "Условия показа (reputation, flags, items)", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("conditions")
-  public Map<String, Object> getConditions() {
-    return conditions;
+  @Schema(name = "defaultNextNode", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("defaultNextNode")
+  public @Nullable String getDefaultNextNode() {
+    return defaultNextNode;
   }
 
-  public void setConditions(Map<String, Object> conditions) {
-    this.conditions = conditions;
+  public void setDefaultNextNode(@Nullable String defaultNextNode) {
+    this.defaultNextNode = defaultNextNode;
+  }
+
+  public DialogueNode tutorials(List<@Valid TutorialHint> tutorials) {
+    this.tutorials = tutorials;
+    return this;
+  }
+
+  public DialogueNode addTutorialsItem(TutorialHint tutorialsItem) {
+    if (this.tutorials == null) {
+      this.tutorials = new ArrayList<>();
+    }
+    this.tutorials.add(tutorialsItem);
+    return this;
+  }
+
+  /**
+   * Get tutorials
+   * @return tutorials
+   */
+  @Valid 
+  @Schema(name = "tutorials", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("tutorials")
+  public List<@Valid TutorialHint> getTutorials() {
+    return tutorials;
+  }
+
+  public void setTutorials(List<@Valid TutorialHint> tutorials) {
+    this.tutorials = tutorials;
   }
 
   @Override
@@ -165,27 +285,33 @@ public class DialogueNode {
       return false;
     }
     DialogueNode dialogueNode = (DialogueNode) o;
-    return Objects.equals(this.nodeId, dialogueNode.nodeId) &&
+    return Objects.equals(this.id, dialogueNode.id) &&
         Objects.equals(this.speaker, dialogueNode.speaker) &&
-        Objects.equals(this.text, dialogueNode.text) &&
+        Objects.equals(this.nodeType, dialogueNode.nodeType) &&
+        Objects.equals(this.textKey, dialogueNode.textKey) &&
+        Objects.equals(this.cinematic, dialogueNode.cinematic) &&
         Objects.equals(this.options, dialogueNode.options) &&
-        Objects.equals(this.conditions, dialogueNode.conditions);
+        Objects.equals(this.defaultNextNode, dialogueNode.defaultNextNode) &&
+        Objects.equals(this.tutorials, dialogueNode.tutorials);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(nodeId, speaker, text, options, conditions);
+    return Objects.hash(id, speaker, nodeType, textKey, cinematic, options, defaultNextNode, tutorials);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class DialogueNode {\n");
-    sb.append("    nodeId: ").append(toIndentedString(nodeId)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    speaker: ").append(toIndentedString(speaker)).append("\n");
-    sb.append("    text: ").append(toIndentedString(text)).append("\n");
+    sb.append("    nodeType: ").append(toIndentedString(nodeType)).append("\n");
+    sb.append("    textKey: ").append(toIndentedString(textKey)).append("\n");
+    sb.append("    cinematic: ").append(toIndentedString(cinematic)).append("\n");
     sb.append("    options: ").append(toIndentedString(options)).append("\n");
-    sb.append("    conditions: ").append(toIndentedString(conditions)).append("\n");
+    sb.append("    defaultNextNode: ").append(toIndentedString(defaultNextNode)).append("\n");
+    sb.append("    tutorials: ").append(toIndentedString(tutorials)).append("\n");
     sb.append("}");
     return sb.toString();
   }

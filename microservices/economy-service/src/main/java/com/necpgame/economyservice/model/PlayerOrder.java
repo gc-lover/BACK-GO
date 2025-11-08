@@ -23,7 +23,7 @@ import jakarta.annotation.Generated;
  * PlayerOrder
  */
 
-
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.17.0")
 public class PlayerOrder {
 
   private @Nullable String orderId;

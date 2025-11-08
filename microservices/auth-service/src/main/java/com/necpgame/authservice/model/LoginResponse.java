@@ -4,9 +4,10 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -25,84 +26,167 @@ import jakarta.annotation.Generated;
 
 public class LoginResponse {
 
-  private String token;
+  private @Nullable String accessToken;
 
-  private UUID accountId;
+  private @Nullable String refreshToken;
 
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private OffsetDateTime expiresAt;
+  private @Nullable String tokenType;
 
-  public LoginResponse() {
-    super();
-  }
+  private @Nullable Integer expiresIn;
 
-  /**
-   * Constructor with only required parameters
-   */
-  public LoginResponse(String token, UUID accountId, OffsetDateTime expiresAt) {
-    this.token = token;
-    this.accountId = accountId;
-    this.expiresAt = expiresAt;
-  }
+  private @Nullable UUID accountId;
 
-  public LoginResponse token(String token) {
-    this.token = token;
+  @Valid
+  private List<String> roles = new ArrayList<>();
+
+  private @Nullable Boolean twoFactorRequired;
+
+  public LoginResponse accessToken(@Nullable String accessToken) {
+    this.accessToken = accessToken;
     return this;
   }
 
   /**
-   * JWT токен для аутентификации
-   * @return token
+   * Get accessToken
+   * @return accessToken
    */
-  @NotNull 
-  @Schema(name = "token", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...", description = "JWT токен для аутентификации", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("token")
-  public String getToken() {
-    return token;
+  
+  @Schema(name = "access_token", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("access_token")
+  public @Nullable String getAccessToken() {
+    return accessToken;
   }
 
-  public void setToken(String token) {
-    this.token = token;
+  public void setAccessToken(@Nullable String accessToken) {
+    this.accessToken = accessToken;
   }
 
-  public LoginResponse accountId(UUID accountId) {
+  public LoginResponse refreshToken(@Nullable String refreshToken) {
+    this.refreshToken = refreshToken;
+    return this;
+  }
+
+  /**
+   * Get refreshToken
+   * @return refreshToken
+   */
+  
+  @Schema(name = "refresh_token", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("refresh_token")
+  public @Nullable String getRefreshToken() {
+    return refreshToken;
+  }
+
+  public void setRefreshToken(@Nullable String refreshToken) {
+    this.refreshToken = refreshToken;
+  }
+
+  public LoginResponse tokenType(@Nullable String tokenType) {
+    this.tokenType = tokenType;
+    return this;
+  }
+
+  /**
+   * Get tokenType
+   * @return tokenType
+   */
+  
+  @Schema(name = "token_type", example = "Bearer", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("token_type")
+  public @Nullable String getTokenType() {
+    return tokenType;
+  }
+
+  public void setTokenType(@Nullable String tokenType) {
+    this.tokenType = tokenType;
+  }
+
+  public LoginResponse expiresIn(@Nullable Integer expiresIn) {
+    this.expiresIn = expiresIn;
+    return this;
+  }
+
+  /**
+   * Время жизни access token в секундах
+   * @return expiresIn
+   */
+  
+  @Schema(name = "expires_in", description = "Время жизни access token в секундах", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("expires_in")
+  public @Nullable Integer getExpiresIn() {
+    return expiresIn;
+  }
+
+  public void setExpiresIn(@Nullable Integer expiresIn) {
+    this.expiresIn = expiresIn;
+  }
+
+  public LoginResponse accountId(@Nullable UUID accountId) {
     this.accountId = accountId;
     return this;
   }
 
   /**
-   * Идентификатор аккаунта
+   * Get accountId
    * @return accountId
    */
-  @NotNull @Valid 
-  @Schema(name = "account_id", example = "550e8400-e29b-41d4-a716-446655440000", description = "Идентификатор аккаунта", requiredMode = Schema.RequiredMode.REQUIRED)
+  @Valid 
+  @Schema(name = "account_id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("account_id")
-  public UUID getAccountId() {
+  public @Nullable UUID getAccountId() {
     return accountId;
   }
 
-  public void setAccountId(UUID accountId) {
+  public void setAccountId(@Nullable UUID accountId) {
     this.accountId = accountId;
   }
 
-  public LoginResponse expiresAt(OffsetDateTime expiresAt) {
-    this.expiresAt = expiresAt;
+  public LoginResponse roles(List<String> roles) {
+    this.roles = roles;
+    return this;
+  }
+
+  public LoginResponse addRolesItem(String rolesItem) {
+    if (this.roles == null) {
+      this.roles = new ArrayList<>();
+    }
+    this.roles.add(rolesItem);
     return this;
   }
 
   /**
-   * Дата истечения токена
-   * @return expiresAt
+   * Get roles
+   * @return roles
    */
-  @NotNull @Valid 
-  @Schema(name = "expires_at", example = "2025-01-27T20:00Z", description = "Дата истечения токена", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("expires_at")
-  public OffsetDateTime getExpiresAt() {
-    return expiresAt;
+  
+  @Schema(name = "roles", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("roles")
+  public List<String> getRoles() {
+    return roles;
   }
 
-  public void setExpiresAt(OffsetDateTime expiresAt) {
-    this.expiresAt = expiresAt;
+  public void setRoles(List<String> roles) {
+    this.roles = roles;
+  }
+
+  public LoginResponse twoFactorRequired(@Nullable Boolean twoFactorRequired) {
+    this.twoFactorRequired = twoFactorRequired;
+    return this;
+  }
+
+  /**
+   * true, если требуется подтверждение 2FA перед выдачей токенов
+   * @return twoFactorRequired
+   */
+  
+  @Schema(name = "two_factor_required", description = "true, если требуется подтверждение 2FA перед выдачей токенов", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("two_factor_required")
+  public @Nullable Boolean getTwoFactorRequired() {
+    return twoFactorRequired;
+  }
+
+  public void setTwoFactorRequired(@Nullable Boolean twoFactorRequired) {
+    this.twoFactorRequired = twoFactorRequired;
   }
 
   @Override
@@ -114,23 +198,31 @@ public class LoginResponse {
       return false;
     }
     LoginResponse loginResponse = (LoginResponse) o;
-    return Objects.equals(this.token, loginResponse.token) &&
+    return Objects.equals(this.accessToken, loginResponse.accessToken) &&
+        Objects.equals(this.refreshToken, loginResponse.refreshToken) &&
+        Objects.equals(this.tokenType, loginResponse.tokenType) &&
+        Objects.equals(this.expiresIn, loginResponse.expiresIn) &&
         Objects.equals(this.accountId, loginResponse.accountId) &&
-        Objects.equals(this.expiresAt, loginResponse.expiresAt);
+        Objects.equals(this.roles, loginResponse.roles) &&
+        Objects.equals(this.twoFactorRequired, loginResponse.twoFactorRequired);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(token, accountId, expiresAt);
+    return Objects.hash(accessToken, refreshToken, tokenType, expiresIn, accountId, roles, twoFactorRequired);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class LoginResponse {\n");
-    sb.append("    token: ").append(toIndentedString(token)).append("\n");
+    sb.append("    accessToken: ").append(toIndentedString(accessToken)).append("\n");
+    sb.append("    refreshToken: ").append(toIndentedString(refreshToken)).append("\n");
+    sb.append("    tokenType: ").append(toIndentedString(tokenType)).append("\n");
+    sb.append("    expiresIn: ").append(toIndentedString(expiresIn)).append("\n");
     sb.append("    accountId: ").append(toIndentedString(accountId)).append("\n");
-    sb.append("    expiresAt: ").append(toIndentedString(expiresAt)).append("\n");
+    sb.append("    roles: ").append(toIndentedString(roles)).append("\n");
+    sb.append("    twoFactorRequired: ").append(toIndentedString(twoFactorRequired)).append("\n");
     sb.append("}");
     return sb.toString();
   }
