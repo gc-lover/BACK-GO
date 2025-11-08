@@ -73,100 +73,76 @@ $Microservices = @{
     }
 }
 
-function Detect-MicroserviceFromPath {
-    param([string]$Path)
-    $normalized = $Path.Replace("\", "/").ToLowerInvariant()
-    switch -Wildcard ($normalized) {
-        "*/api/v1/auth/*" { return "auth-service" }
-        "*/api/v1/characters/*" { return "character-service" }
-        "*/api/v1/players/*" { return "character-service" }
-        "*/api/v1/gameplay/*" { return "gameplay-service" }
-        "*/api/v1/social/*" { return "social-service" }
-        "*/api/v1/economy/*" { return "economy-service" }
-        "*/api/v1/inventory/*" { return "economy-service" }
-        "*/api/v1/trade/*" { return "economy-service" }
-        "*/api/v1/world/*" { return "world-service" }
-        "*/api/v1/locations/*" { return "world-service" }
-        default { return "" }
-    }
-}
-
-function Get-LineIndent {
-    param([string]$Line)
-    return ([regex]::Match($Line, "^\s*")).Value.Length
-}
-
-function Parse-MicroserviceBlock {
-    param([string[]]$Lines)
-    $result = @{}
-    for ($i = 0; $i -lt $Lines.Length; $i++) {
-        if ($Lines[$i] -match "^\s*x-microservice\s*:\s*$") {
-            $baseIndent = Get-LineIndent -Line $Lines[$i]
-            for ($j = $i + 1; $j -lt $Lines.Length; $j++) {
-                $line = $Lines[$j]
-                if ($line.Trim().Length -eq 0) {
-                    continue
-                }
-                $indent = Get-LineIndent -Line $line
-                if ($indent -le $baseIndent) {
-                    break
-                }
-                if ($line -match "^\s*([A-Za-z0-9\-_]+)\s*:\s*(.+)$") {
-                    $key = $matches[1].Trim()
-                    $value = $matches[2].Trim()
-                    if ($value.StartsWith('"') -and $value.EndsWith('"')) {
-                        $value = $value.Trim('"')
-                    }
-                    $result[$key] = $value
-                }
-            }
-            break
-        }
-    }
-    return $result
-}
-
-function Read-MicroserviceMetadata {
+function Read-OpenApiContext {
     param([string]$FilePath)
+
+    if (-not (Test-Path $FilePath)) {
+        throw "OpenAPI файл не найден: $FilePath"
+    }
+
+    $rawContent = Get-Content -Path $FilePath -Raw
+    if ([string]::IsNullOrWhiteSpace($rawContent)) {
+        throw "OpenAPI файл пуст: $FilePath"
+    }
+
+    try {
+        $document = ConvertFrom-Yaml -Yaml $rawContent
+    } catch {
+        throw "Не удалось распарсить OpenAPI файл: $FilePath. Ошибка: $($_.Exception.Message)"
+    }
+
+    if ($null -eq $document) {
+        throw "OpenAPI файл не содержит валидных данных: $FilePath"
+    }
 
     $metadata = @{
         name = ""
         package = ""
-        autodetected = $false
     }
 
-    try {
-        $lines = Get-Content -Path $FilePath
-        $block = Parse-MicroserviceBlock -Lines $lines
-        if ($block.ContainsKey("name")) {
-            $metadata.name = $block["name"]
-        }
-        if ($block.ContainsKey("package")) {
-            $metadata.package = $block["package"]
-        }
-    } catch {
-        Write-Warning "Не удалось прочитать YAML: $FilePath. Ошибка: $($_.Exception.Message)"
+    $xMicroservice = $null
+    if ($null -ne $document.info -and $document.info.PSObject.Properties.Name -contains "x-microservice") {
+        $xMicroservice = $document.info."x-microservice"
     }
 
-    if ([string]::IsNullOrEmpty($metadata.name)) {
-        $detected = Detect-MicroserviceFromPath -Path $FilePath
-        if ([string]::IsNullOrEmpty($detected)) {
-            throw "Не удалось определить микросервис для файла: $FilePath. Добавьте info.x-microservice.name."
-        }
-        $metadata.name = $detected
-        $metadata.autodetected = $true
+    if ($null -eq $xMicroservice) {
+        throw "В файле $FilePath отсутствует info.x-microservice. Добавьте блок с обязательным полем name."
     }
 
-    if ([string]::IsNullOrEmpty($metadata.package)) {
-        if ($Microservices.ContainsKey($metadata.name)) {
-            $metadata.package = $Microservices[$metadata.name].package
-        } else {
-            $suffix = ($metadata.name -replace "-", "")
-            $metadata.package = "com.necpgame.$suffix"
+    if (-not ($xMicroservice.PSObject.Properties.Name -contains "name") -or [string]::IsNullOrWhiteSpace($xMicroservice.name)) {
+        throw "Поле info.x-microservice.name обязательно в файле $FilePath."
+    }
+    $metadata.name = [string]$xMicroservice.name
+
+    if ($xMicroservice.PSObject.Properties.Name -contains "package" -and -not [string]::IsNullOrWhiteSpace($xMicroservice.package)) {
+        $metadata.package = [string]$xMicroservice.package
+    }
+    if ([string]::IsNullOrWhiteSpace($metadata.package)) {
+        $suffix = ($metadata.name -replace "[^A-Za-z0-9]", "")
+        if ([string]::IsNullOrWhiteSpace($suffix)) {
+            $suffix = "microservice"
+        }
+        $metadata.package = "com.necpgame.$suffix"
+    }
+
+    $requiredServerUrl = "https://api.necp.game/v1"
+    $serverUrls = @()
+    if ($null -ne $document.servers) {
+        foreach ($server in @($document.servers)) {
+            if ($null -ne $server -and $server.PSObject.Properties.Name -contains "url" -and -not [string]::IsNullOrWhiteSpace($server.url)) {
+                $serverUrls += [string]$server.url
+            }
         }
     }
 
-    return $metadata
+    if (-not ($serverUrls -contains $requiredServerUrl)) {
+        throw "В файле $FilePath отсутствует production URL сервера '$requiredServerUrl' в разделе servers."
+    }
+
+    return @{
+        metadata = $metadata
+        document = $document
+    }
 }
 
 function Ensure-DirectoryExists {
@@ -290,9 +266,11 @@ if ($Validate) {
 Write-Host "Всего файлов для генерации: $($ApiFiles.Count)"
 
 $Tasks = foreach ($file in $ApiFiles) {
+    $context = Read-OpenApiContext -FilePath $file
     [ordered]@{
         FilePath = $file
-        Metadata = Read-MicroserviceMetadata -FilePath $file
+        Metadata = $context.metadata
+        Document = $context.document
     }
 }
 
@@ -308,9 +286,6 @@ foreach ($task in $Tasks) {
     Write-Host "`n═══════════════════════════════════════════════════════════════"
     Write-Host "Файл: $relative"
     Write-Host "Микросервис: $($metadata.name)"
-    if ($metadata.autodetected) {
-        Write-Host "⚠ Автоопределение микросервиса (добавьте info.x-microservice для точности)" -ForegroundColor Yellow
-    }
 
     $javaPackageRoot = $metadata.package
     $apiPackage = "$javaPackageRoot.api"
@@ -319,10 +294,25 @@ foreach ($task in $Tasks) {
     $invokerPackage = "$javaPackageRoot.invoker"
 
     if (-not $Microservices.ContainsKey($metadata.name)) {
-        Write-Host "⚠ Микросервис '$($metadata.name)' не найден в конфигурации!" -ForegroundColor Yellow
-        continue
+        $defaultSourceDir = Join-Path $ProjectRoot ("microservices/$($metadata.name)/src/main/java")
+        $Microservices[$metadata.name] = @{
+            package = $metadata.package
+            sourceDir = $defaultSourceDir
+        }
+    } else {
+        if (-not [string]::IsNullOrWhiteSpace($metadata.package) -and $metadata.package -ne $Microservices[$metadata.name].package) {
+            $Microservices[$metadata.name].package = $metadata.package
+        }
+        if ([string]::IsNullOrWhiteSpace($metadata.package)) {
+            $metadata.package = $Microservices[$metadata.name].package
+            $javaPackageRoot = $metadata.package
+            $apiPackage = "$javaPackageRoot.api"
+            $modelPackage = "$javaPackageRoot.model"
+            $servicePackage = "$javaPackageRoot.service"
+            $invokerPackage = "$javaPackageRoot.invoker"
+        }
     }
-    
+
     $destinationRoot = $Microservices[$metadata.name].sourceDir
 
     Ensure-DirectoryExists -PathValue $destinationRoot
