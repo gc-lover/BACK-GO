@@ -14,3 +14,4 @@ public interface LoreCodexProgressRepository extends JpaRepository<LoreCodexProg
     List<LoreCodexProgressEntity> findByCharacterId(UUID characterId);
 }
 
+

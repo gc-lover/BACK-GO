@@ -5,8 +5,8 @@
  */
 package com.necpgame.backjava.api;
 
-import com.necpgame.backjava.model.CreateCharacterRequest;
-import com.necpgame.backjava.model.DeleteCharacter200Response;
+import com.necpgame.backjava.model.CreatePlayerCharacterRequest;
+import com.necpgame.backjava.model.DeletePlayerCharacter200Response;
 import com.necpgame.backjava.model.Error;
 import com.necpgame.backjava.model.GetCharacters200Response;
 import org.springframework.lang.Nullable;
@@ -51,18 +51,18 @@ public interface PlayersApi {
         return Optional.empty();
     }
 
-    String PATH_CREATE_CHARACTER = "/players/characters/create";
+    String PATH_CREATE_PLAYER_CHARACTER = "/players/characters/create";
     /**
      * POST /players/characters/create : Создать персонажа
      * Создает нового персонажа. Требует свободный слот (3 базовых + 2 premium). 
      *
-     * @param createCharacterRequest  (required)
+     * @param createPlayerCharacterRequest  (required)
      * @return Персонаж создан (status code 201)
      *         or Неверный запрос. Параметры запроса некорректны или отсутствуют обязательные поля.  (status code 400)
      *         or Конфликт с текущим состоянием ресурса или ограничениями системы. Например, превышение лимитов или нарушение бизнес-правил.  (status code 409)
      */
     @Operation(
-        operationId = "createCharacter",
+        operationId = "createPlayerCharacter",
         summary = "Создать персонажа",
         description = "Создает нового персонажа. Требует свободный слот (3 базовых + 2 premium). ",
         tags = { "Characters" },
@@ -95,12 +95,12 @@ public interface PlayersApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = PlayersApi.PATH_CREATE_CHARACTER,
+        value = PlayersApi.PATH_CREATE_PLAYER_CHARACTER,
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<PlayerCharacter> createCharacter(
-        @Parameter(name = "CreateCharacterRequest", description = "", required = true) @Valid @RequestBody CreateCharacterRequest createCharacterRequest
+    default ResponseEntity<PlayerCharacter> createPlayerCharacter(
+        @Parameter(name = "CreatePlayerCharacterRequest", description = "", required = true) @Valid @RequestBody CreatePlayerCharacterRequest createPlayerCharacterRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -126,7 +126,7 @@ public interface PlayersApi {
     }
 
 
-    String PATH_DELETE_CHARACTER = "/players/characters/{character_id}";
+    String PATH_DELETE_PLAYER_CHARACTER = "/players/characters/{character_id}";
     /**
      * DELETE /players/characters/{character_id} : Удалить персонажа
      * Удаляет персонажа (soft delete). Grace period 30 дней - можно восстановить. 
@@ -135,13 +135,13 @@ public interface PlayersApi {
      * @return Персонаж удален (status code 200)
      */
     @Operation(
-        operationId = "deleteCharacter",
+        operationId = "deletePlayerCharacter",
         summary = "Удалить персонажа",
         description = "Удаляет персонажа (soft delete). Grace period 30 дней - можно восстановить. ",
         tags = { "Characters" },
         responses = {
             @ApiResponse(responseCode = "200", description = "Персонаж удален", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = DeleteCharacter200Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = DeletePlayerCharacter200Response.class))
             })
         },
         security = {
@@ -150,10 +150,10 @@ public interface PlayersApi {
     )
     @RequestMapping(
         method = RequestMethod.DELETE,
-        value = PlayersApi.PATH_DELETE_CHARACTER,
+        value = PlayersApi.PATH_DELETE_PLAYER_CHARACTER,
         produces = { "application/json" }
     )
-    default ResponseEntity<DeleteCharacter200Response> deleteCharacter(
+    default ResponseEntity<DeletePlayerCharacter200Response> deletePlayerCharacter(
         @NotNull @Parameter(name = "character_id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("character_id") String characterId
     ) {
         getRequest().ifPresent(request -> {

@@ -14,3 +14,4 @@ public interface LoreCodexEntryRepository extends JpaRepository<LoreCodexEntryEn
     List<LoreCodexEntryEntity> findByCategory(LoreCodexCategory category);
 }
 
+

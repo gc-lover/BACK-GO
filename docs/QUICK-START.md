@@ -1,4 +1,4 @@
-# Быстрый старт BACK-JAVA
+# Быстрый старт BACK-GO
 
 ## 🎯 Workflow: Контракты + Реализация
 
@@ -34,17 +34,20 @@ docker-compose ps
 ## Генерация контрактов из OpenAPI
 
 ```powershell
-# Генерация из одного файла
-.\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml
+# Генерация в микросервисы (рекомендуется)
+.\scripts\generate-openapi-microservices.ps1 -ApiDirectory ../API-SWAGGER/api/v1/ -Mode Microservices
 
-# Генерация из всей директории
-.\scripts\generate-openapi-layers.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
+# Генерация из одного файла
+.\scripts\generate-openapi-microservices.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml -Mode Microservices
+
+# Проверка перед генерацией
+.\scripts\validate-openapi.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
 ```
 
-**Результат:**
-- ✅ DTOs в `src/main/java/com/necpgame/backjava/model/`
-- ✅ API Interfaces в `src/main/java/com/necpgame/backjava/api/`
-- ✅ Service Interfaces в `src/main/java/com/necpgame/backjava/service/`
+**Результат (для микросервисов):**
+- ✅ DTOs в `microservices/<service>/src/main/java/com/necpgame/<service>/model/`
+- ✅ API Interfaces в `microservices/<service>/src/main/java/com/necpgame/<service>/api/`
+- ✅ Service Interfaces в `microservices/<service>/src/main/java/com/necpgame/<service>/service/`
 
 ## Создание реализации вручную
 

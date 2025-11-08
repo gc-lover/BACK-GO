@@ -23,3 +23,6 @@ public class VoiceProximityEmbeddable {
     private boolean spatialAudio;
 }
 
+
+
+

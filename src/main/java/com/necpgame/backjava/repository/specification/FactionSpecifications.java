@@ -17,3 +17,4 @@ public final class FactionSpecifications {
         return (root, query, builder) -> builder.equal(builder.lower(root.get("region")), region.toLowerCase());
     }
 }
+

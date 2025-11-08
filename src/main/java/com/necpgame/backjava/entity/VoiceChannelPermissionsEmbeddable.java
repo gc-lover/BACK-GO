@@ -20,3 +20,6 @@ public class VoiceChannelPermissionsEmbeddable {
     private boolean allowSpectators;
 }
 
+
+
+

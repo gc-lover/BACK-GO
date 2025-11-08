@@ -57,3 +57,4 @@ public class LoreCodexProgressEntity {
     private OffsetDateTime updatedAt;
 }
 
+

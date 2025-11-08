@@ -23,7 +23,7 @@ public interface PlayerCharacterMapper {
     @Mapping(target = "experience", source = "status.experience", qualifiedByName = "toBigDecimal")
     @Mapping(target = "createdAt", source = "character.createdAt")
     @Mapping(target = "lastLogin", source = "character.lastLogin")
-    @Mapping(target = "isDeleted", expression = "java(Boolean.FALSE)")
+    @Mapping(target = "isDeleted", source = "character.deleted")
     PlayerCharacter toSummary(CharacterEntity character, CharacterStatusEntity status, PlayerEntity player);
 
     @Named("toBigDecimal")

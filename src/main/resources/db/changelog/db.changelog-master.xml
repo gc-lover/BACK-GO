@@ -180,4 +180,7 @@
     <include file="db/changelog/changes/098-create-narrative-tools-tables.xml"/>
     <include file="db/changelog/changes/099-seed-narrative-tools-data.xml"/>
 
+    <!-- MVP Content -->
+    <include file="db/changelog/changes/100-create-mvp-content-tables.xml"/>
+
 </databaseChangeLog>

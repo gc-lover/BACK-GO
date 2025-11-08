@@ -13,3 +13,4 @@ public interface NarrativeNpcTemplateRepository extends
 }
 
 
+

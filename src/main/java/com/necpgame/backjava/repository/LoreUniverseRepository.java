@@ -10,3 +10,4 @@ public interface LoreUniverseRepository extends JpaRepository<LoreUniverseEntity
     Optional<LoreUniverseEntity> findTopByOrderByCreatedAtDesc();
 }
 
+

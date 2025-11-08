@@ -83,3 +83,4 @@ public class NarrativeNpcTemplateEntity implements NarrativeToolsWeightedEntity 
 }
 
 
+

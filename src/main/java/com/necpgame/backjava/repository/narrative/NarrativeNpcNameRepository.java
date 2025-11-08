@@ -24,3 +24,4 @@ public interface NarrativeNpcNameRepository extends JpaRepository<NarrativeNpcNa
 }
 
 
+

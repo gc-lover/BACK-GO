@@ -91,3 +91,4 @@ class CitiesServiceImplTest {
         assertTrue(response.getCities().isEmpty());
     }
 }
+

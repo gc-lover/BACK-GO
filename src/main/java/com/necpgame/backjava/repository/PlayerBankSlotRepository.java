@@ -21,3 +21,4 @@ public interface PlayerBankSlotRepository extends JpaRepository<PlayerBankSlotEn
     long countByPlayerIdAndItemIdIsNotNull(UUID playerId);
 }
 
+

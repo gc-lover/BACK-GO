@@ -1,7 +1,7 @@
 package com.necpgame.backjava.service;
 
-import com.necpgame.backjava.model.CreateCharacterRequest;
-import com.necpgame.backjava.model.DeleteCharacter200Response;
+import com.necpgame.backjava.model.CreatePlayerCharacterRequest;
+import com.necpgame.backjava.model.DeletePlayerCharacter200Response;
 import com.necpgame.backjava.model.Error;
 import com.necpgame.backjava.model.GetCharacters200Response;
 import org.springframework.lang.Nullable;
@@ -25,19 +25,19 @@ public interface PlayersService {
      * POST /players/characters/create : Создать персонажа
      * Создает нового персонажа. Требует свободный слот (3 базовых + 2 premium). 
      *
-     * @param createCharacterRequest  (required)
+     * @param createPlayerCharacterRequest  (required)
      * @return PlayerCharacter
      */
-    PlayerCharacter createCharacter(CreateCharacterRequest createCharacterRequest);
+    PlayerCharacter createPlayerCharacter(CreatePlayerCharacterRequest createPlayerCharacterRequest);
 
     /**
      * DELETE /players/characters/{character_id} : Удалить персонажа
      * Удаляет персонажа (soft delete). Grace period 30 дней - можно восстановить. 
      *
      * @param characterId  (required)
-     * @return DeleteCharacter200Response
+     * @return DeletePlayerCharacter200Response
      */
-    DeleteCharacter200Response deleteCharacter(String characterId);
+    DeletePlayerCharacter200Response deletePlayerCharacter(String characterId);
 
     /**
      * GET /players/characters/{character_id} : Получить детали персонажа

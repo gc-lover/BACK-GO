@@ -1,8 +1,8 @@
 package com.necpgame.backjava.controller;
 
 import com.necpgame.backjava.api.PlayersApi;
-import com.necpgame.backjava.model.CreateCharacterRequest;
-import com.necpgame.backjava.model.DeleteCharacter200Response;
+import com.necpgame.backjava.model.CreatePlayerCharacterRequest;
+import com.necpgame.backjava.model.DeletePlayerCharacter200Response;
 import com.necpgame.backjava.model.GetCharacters200Response;
 import com.necpgame.backjava.model.PlayerCharacter;
 import com.necpgame.backjava.model.PlayerCharacterDetails;
@@ -32,8 +32,8 @@ public class PlayersController implements PlayersApi {
     }
 
     @Override
-    public ResponseEntity<PlayerCharacter> createCharacter(CreateCharacterRequest createCharacterRequest) {
-        PlayerCharacter created = playersService.createCharacter(createCharacterRequest);
+    public ResponseEntity<PlayerCharacter> createPlayerCharacter(CreatePlayerCharacterRequest createPlayerCharacterRequest) {
+        PlayerCharacter created = playersService.createPlayerCharacter(createPlayerCharacterRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
@@ -43,8 +43,8 @@ public class PlayersController implements PlayersApi {
     }
 
     @Override
-    public ResponseEntity<DeleteCharacter200Response> deleteCharacter(String characterId) {
-        return ResponseEntity.ok(playersService.deleteCharacter(characterId));
+    public ResponseEntity<DeletePlayerCharacter200Response> deletePlayerCharacter(String characterId) {
+        return ResponseEntity.ok(playersService.deletePlayerCharacter(characterId));
     }
 
     @Override
@@ -57,4 +57,5 @@ public class PlayersController implements PlayersApi {
         return ResponseEntity.ok(playersService.switchCharacter(switchCharacterRequest));
     }
 }
+
 

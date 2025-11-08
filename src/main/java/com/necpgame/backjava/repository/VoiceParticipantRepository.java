@@ -16,3 +16,6 @@ public interface VoiceParticipantRepository extends JpaRepository<VoiceParticipa
     List<VoiceParticipantEntity> findByChannelId(UUID channelId);
 }
 
+
+
+

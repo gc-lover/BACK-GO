@@ -40,12 +40,12 @@
 ## Структура директорий бекенд кода
 
 ```
-BACK-JAVA/
+BACK-GO/microservices/<service>/
 ├── src/
 │   ├── main/
 │   │   ├── java/
-│   │   │   └── com/necpgame/backjava/
-│   │   │       ├── NecpgameBackendApplication.java
+│   │   │   └── com/necpgame/<service>/
+│   │   │       ├── <Service>Application.java
 │   │   │       │
 │   │   │       ├── controller/                    # REST Controllers (ВРУЧНУЮ)
 │   │   │       │   ├── AuthController.java        # implements AuthApi
@@ -138,7 +138,7 @@ BACK-JAVA/
 
 ### Примеры соответствия:
 
-| API-SWAGGER | BACK-JAVA (контракты) | BACK-JAVA (реализация) |
+| API-SWAGGER | BACK-GO (контракты) | BACK-GO (реализация) |
 |-------------|------------------------|-------------------------|
 | `api/v1/auth/` | `target/.../api/AuthApi.java` | `src/.../controller/AuthController.java` |
 | `api/v1/characters/` | `target/.../api/CharactersApi.java` | `src/.../controller/CharactersController.java` |

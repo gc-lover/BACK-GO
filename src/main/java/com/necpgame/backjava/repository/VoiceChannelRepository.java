@@ -19,3 +19,6 @@ public interface VoiceChannelRepository extends JpaRepository<VoiceChannelEntity
     Optional<VoiceChannelEntity> findByIdAndStatusNot(UUID id, VoiceChannelStatus status);
 }
 
+
+
+

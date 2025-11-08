@@ -12,3 +12,4 @@ public interface LoreCharacterCategoryRepository extends JpaRepository<LoreChara
     List<LoreCharacterCategoryEntity> findTop10ByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String name, String description);
 }
 
+

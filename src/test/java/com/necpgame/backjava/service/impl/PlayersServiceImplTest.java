@@ -23,9 +23,8 @@ import com.necpgame.backjava.entity.PlayerEntity;
 import com.necpgame.backjava.mapper.CharacterAppearanceMapperMS;
 import com.necpgame.backjava.mapper.PlayerCharacterMapper;
 import com.necpgame.backjava.mapper.PlayerProfileMapper;
-import com.necpgame.backjava.model.CreateCharacterRequest;
-import com.necpgame.backjava.model.CreateCharacterRequest.GenderEnum;
-import com.necpgame.backjava.model.CreateCharacterRequest.OriginEnum;
+import com.necpgame.backjava.model.CreatePlayerCharacterRequest;
+import com.necpgame.backjava.model.CreatePlayerCharacterRequestAppearance;
 import com.necpgame.backjava.model.GetCharacters200Response;
 import com.necpgame.backjava.model.PlayerCharacter;
 import com.necpgame.backjava.model.PlayerProfile;
@@ -37,7 +36,6 @@ import com.necpgame.backjava.repository.CharacterSlotRepository;
 import com.necpgame.backjava.repository.CharacterStatsRepository;
 import com.necpgame.backjava.repository.CharacterStatusRepository;
 import com.necpgame.backjava.repository.CityRepository;
-import com.necpgame.backjava.repository.FactionRepository;
 import com.necpgame.backjava.repository.PlayerRepository;
 import com.necpgame.backjava.repository.CharacterStatsSnapshotRepository;
 import com.necpgame.backjava.repository.CharacterLocationRepository;
@@ -49,6 +47,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -81,8 +81,6 @@ class PlayersServiceImplTest {
     @Mock
     private CityRepository cityRepository;
     @Mock
-    private FactionRepository factionRepository;
-    @Mock
     private GameSessionRepository gameSessionRepository;
     @Mock
     private CharacterAppearanceMapperMS characterAppearanceMapper;
@@ -112,7 +110,6 @@ class PlayersServiceImplTest {
             characterLocationRepository,
             characterClassRepository,
             cityRepository,
-            factionRepository,
             gameSessionRepository,
             characterAppearanceMapper,
             playerProfileMapper,
@@ -150,19 +147,21 @@ class PlayersServiceImplTest {
         List<CharacterSlotEntity> slots = defaultSlots();
         CharacterSlotEntity freeSlot = slots.get(0);
 
-        CreateCharacterRequest request = new CreateCharacterRequest();
+        CreatePlayerCharacterRequest request = new CreatePlayerCharacterRequest();
         request.setName("V");
-        request.setPropertyClass(CreateCharacterRequest.PropertyClassEnum.SOLO);
-        request.setGender(GenderEnum.MALE);
-        request.setOrigin(OriginEnum.NOMAD);
-        request.setCityId(UUID.randomUUID());
-        request.setAppearance(new com.necpgame.backjava.model.GameCharacterAppearance(180,
-            com.necpgame.backjava.model.GameCharacterAppearance.BodyTypeEnum.NORMAL,
-            "black", "brown", "light"));
+        request.setClassId("class_solo");
+        request.setOriginId("origin_nomad");
+        CreatePlayerCharacterRequestAppearance appearance = new CreatePlayerCharacterRequestAppearance();
+        appearance.setBodyType("normal");
+        appearance.setHairColor("black");
+        appearance.setSkinTone("light");
+        request.setAppearance(appearance);
+        player.getSettings().put("default_gender", "male");
+        player.getSettings().put("default_eye_color", "brown");
 
         CharacterAppearanceEntity appearanceEntity = new CharacterAppearanceEntity();
         CityEntity city = new CityEntity();
-        city.setId(request.getCityId());
+        city.setId(UUID.randomUUID());
         CharacterEntity persisted = new CharacterEntity();
         persisted.setId(UUID.randomUUID());
         persisted.setAccount(account);
@@ -176,8 +175,8 @@ class PlayersServiceImplTest {
         when(characterSlotRepository.findByIdPlayerIdOrderByIdSlotNumber(player.getId())).thenReturn(slots);
         when(characterRepository.existsByNameAndAccountId(request.getName(), account.getId())).thenReturn(false);
         when(characterClassRepository.findByClassCode(anyString())).thenReturn(Optional.of(new CharacterClassEntity()));
-        when(cityRepository.findById(request.getCityId())).thenReturn(Optional.of(city));
-        when(characterAppearanceMapper.toEntity(request.getAppearance())).thenReturn(appearanceEntity);
+        when(cityRepository.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(List.of(city)));
+        when(characterAppearanceMapper.toEntity(any(com.necpgame.backjava.model.GameCharacterAppearance.class))).thenReturn(appearanceEntity);
         when(characterRepository.save(any(CharacterEntity.class))).thenReturn(persisted);
         when(characterStatusRepository.findByCharacterId(persisted.getId())).thenReturn(Optional.of(status));
         when(characterStatsRepository.findByCharacterId(persisted.getId())).thenReturn(Optional.empty());
@@ -186,7 +185,7 @@ class PlayersServiceImplTest {
         when(characterLocationRepository.save(any(CharacterLocationEntity.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(playerCharacterMapper.toSummary(persisted, status, player)).thenReturn(summary);
 
-        PlayerCharacter result = playersService.createCharacter(request);
+        PlayerCharacter result = playersService.createPlayerCharacter(request);
 
         assertSame(summary, result);
         verify(characterRepository, times(1)).save(any(CharacterEntity.class));

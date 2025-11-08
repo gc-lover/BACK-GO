@@ -22,3 +22,4 @@ public interface LoreTimelineEventRepository extends JpaRepository<LoreTimelineE
     List<LoreTimelineEventEntity> findTop10ByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String name, String description);
 }
 
+

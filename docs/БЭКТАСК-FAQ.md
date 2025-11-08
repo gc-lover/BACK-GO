@@ -396,26 +396,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 **A:** Следуй иерархии API-SWAGGER:
 
 ```
-BACK-JAVA/src/main/java/com/necpgame/backjava/
-├── api/                                    # Сгенерированные интерфейсы (target/generated-sources/openapi)
-├── model/                                  # Сгенерированные модели (target/generated-sources/openapi)
-├── controllers/                            # Контроллеры
-│   └── gameplay/
-│       └── social/
-│           └── PersonalNpcController.java
-├── services/                               # Сервисы
-│   └── gameplay/
-│       └── social/
-│           └── PersonalNpcService.java
-├── repositories/                           # Репозитории
-│   └── gameplay/
-│       └── social/
-│           └── PersonalNpcRepository.java
-├── entities/                               # JPA Entities
-│   └── gameplay/
-│       └── social/
-│           └── PersonalNpcEntity.java
-└── config/                                 # Конфигурация
+BACK-GO/microservices/<service>/src/main/java/com/necpgame/<service>/
+├── api/                                    # Сгенерированные интерфейсы
+├── model/                                  # Сгенерированные модели
+├── service/                                # Сгенерированные интерфейсы сервисов
+├── controller/                             # Контроллеры (вручную)
+│   └── PersonalNpcController.java
+├── service/impl/                           # Реализации сервисов (вручную)
+│   └── PersonalNpcServiceImpl.java
+├── repository/                             # Репозитории (вручную)
+│   └── PersonalNpcRepository.java
+├── entity/                                 # JPA Entities (вручную)
+│   └── PersonalNpcEntity.java
+└── config/                                 # Конфигурация (вручную)
     └── SecurityConfig.java
 ```
 
@@ -429,7 +422,7 @@ BACK-JAVA/src/main/java/com/necpgame/backjava/
 
 **Запуск PostgreSQL контейнера:**
 ```bash
-# Запуск контейнера (из корня репозитория BACK-JAVA)
+# Запуск контейнера (из корня репозитория BACK-GO)
 docker-compose up -d
 
 # Проверка статуса
@@ -445,7 +438,7 @@ docker-compose down
 docker-compose down -v
 ```
 
-**Файл docker-compose.yml уже создан** в корне репозитория `BACK-JAVA/docker-compose.yml` и содержит:
+**Файл docker-compose.yml уже создан** в корне репозитория `BACK-GO/docker-compose.yml` и содержит:
 - PostgreSQL 15
 - Настроенные переменные окружения
 - Healthcheck для проверки готовности БД
