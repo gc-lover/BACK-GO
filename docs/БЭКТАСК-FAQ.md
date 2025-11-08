@@ -71,7 +71,7 @@
 1. **Раздели по методам HTTP:**
    ```java
    // PersonalNpcController.java (основной controller)
-   package com.necpgame.backjava.controllers;
+   package com.necpgame.authservice.controller;
    
    @RestController
    @RequiredArgsConstructor
@@ -101,7 +101,7 @@
 2. **Вынеси бизнес-логику в сервисы:**
    ```java
    // PersonalNpcService.java
-   package com.necpgame.backjava.services;
+   package com.necpgame.authservice.service;
    
    @Service
    @RequiredArgsConstructor
@@ -117,7 +117,7 @@
 3. **Вынеси работу с БД в репозитории:**
    ```java
    // PersonalNpcRepository.java
-   package com.necpgame.backjava.repositories;
+   package com.necpgame.authservice.repository;
    
    public interface PersonalNpcRepository extends JpaRepository<PersonalNpc, UUID> {
        // Spring Data JPA автоматически создает реализацию

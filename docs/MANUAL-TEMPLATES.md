@@ -14,10 +14,12 @@
 
 ## 1. Entity Template
 
-**Путь**: `src/main/java/entity/YourEntity.java`
+**Путь**: `microservices/{service-name}/src/main/java/com/necpgame/{service}/entity/YourEntity.java`
+
+**Пример для auth-service**: `microservices/auth-service/src/main/java/com/necpgame/authservice/entity/YourEntity.java`
 
 ```java
-package com.necpgame.backjava.entity;
+package com.necpgame.authservice.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -144,9 +146,9 @@ public class YourEntity {
 **Путь**: `src/main/java/repository/YourRepository.java`
 
 ```java
-package com.necpgame.backjava.repository;
+package com.necpgame.authservice.repository;
 
-import com.necpgame.backjava.entity.YourEntity;
+import com.necpgame.authservice.entity.YourEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -252,7 +254,7 @@ public interface YourRepository extends
     // Projection Queries (DTOs)
     // ==================================================================================
     
-    @Query("SELECT new com.necpgame.backjava.dto.YourEntitySummaryDto(y.id, y.field1, y.field2) " +
+    @Query("SELECT new com.necpgame.authservice.dto.YourEntitySummaryDto(y.id, y.field1, y.field2) " +
            "FROM YourEntity y " +
            "WHERE y.active = true")
     List<YourEntitySummaryDto> findAllActiveSummaries();
@@ -266,11 +268,11 @@ public interface YourRepository extends
 **Путь**: `src/main/java/controller/YourController.java`
 
 ```java
-package com.necpgame.backjava.controller;
+package com.necpgame.authservice.controller;
 
-import com.necpgame.backjava.api.YourApi;  // Сгенерированный контракт
-import com.necpgame.backjava.model.*;      // Сгенерированные DTOs
-import com.necpgame.backjava.service.YourService;
+import com.necpgame.authservice.api.YourApi;  // Сгенерированный контракт
+import com.necpgame.authservice.model.*;      // Сгенерированные DTOs
+import com.necpgame.authservice.service.YourService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -384,14 +386,14 @@ public class YourController implements YourApi {
 **Путь**: `src/main/java/service/impl/YourServiceImpl.java`
 
 ```java
-package com.necpgame.backjava.service.impl;
+package com.necpgame.authservice.service.impl;
 
-import com.necpgame.backjava.service.YourService;  // Сгенерированный контракт
-import com.necpgame.backjava.model.*;              // Сгенерированные DTOs
-import com.necpgame.backjava.entity.YourEntity;
-import com.necpgame.backjava.repository.YourRepository;
-import com.necpgame.backjava.exception.*;
-import com.necpgame.backjava.mapper.YourMapper;
+import com.necpgame.authservice.service.YourService;  // Сгенерированный контракт
+import com.necpgame.authservice.model.*;              // Сгенерированные DTOs
+import com.necpgame.authservice.entity.YourEntity;
+import com.necpgame.authservice.repository.YourRepository;
+import com.necpgame.authservice.exception.*;
+import com.necpgame.authservice.mapper.YourMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -582,7 +584,7 @@ public class YourServiceImpl implements YourService {
 **Путь**: `src/main/java/exception/YourCustomException.java`
 
 ```java
-package com.necpgame.backjava.exception;
+package com.necpgame.authservice.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -639,10 +641,10 @@ public class ForbiddenException extends RuntimeException {
 ### Основной Mapper
 
 ```java
-package com.necpgame.backjava.mapper;
+package com.necpgame.authservice.mapper;
 
-import com.necpgame.backjava.entity.YourEntity;
-import com.necpgame.backjava.model.*;  // Сгенерированные DTOs
+import com.necpgame.authservice.entity.YourEntity;
+import com.necpgame.authservice.model.*;  // Сгенерированные DTOs
 import org.mapstruct.*;
 import org.openapitools.jackson.nullable.JsonNullable;
 
@@ -684,7 +686,7 @@ public interface YourMapperMS {
 **Путь**: `src/main/java/mapper/JsonNullableMapper.java`
 
 ```java
-package com.necpgame.backjava.mapper;
+package com.necpgame.authservice.mapper;
 
 import org.mapstruct.Named;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -778,10 +780,10 @@ public class JsonNullableMapper {
 .\scripts\generate-openapi-microservices.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
 ```
 
-### 2. Создаём реализацию
+### 2. Создаём реализацию в целевом микросервисе
 ```bash
-# Структура директорий
-mkdir -p src/main/java/com/necpgame/backjava/{entity,repository,controller,service/impl,exception,mapper}
+# Структура директорий (пример для auth-service)
+mkdir -p microservices/auth-service/src/main/java/com/necpgame/authservice/{entity,repository,controller,service/impl,exception,mapper}
 
 # Копируем шаблоны и адаптируем под свой API
 ```
