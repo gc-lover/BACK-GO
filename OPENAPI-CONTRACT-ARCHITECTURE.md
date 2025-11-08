@@ -30,7 +30,7 @@ paths:
 
 **Сгенерированный интерфейс:**
 ```java
-// src/main/java/com/necpgame/backjava/api/FactionsApi.java
+// microservices/world-service/src/main/java/com/necpgame/worldservice/api/FactionsApi.java
 @Validated
 @Tag(name = "Reference Data", description = "the Reference Data API")
 public interface FactionsApi {
@@ -55,7 +55,7 @@ public interface FactionsApi {
 
 **Реализация:**
 ```java
-// src/main/java/com/necpgame/backjava/controller/FactionsController.java
+// microservices/world-service/src/main/java/com/necpgame/worldservice/controller/FactionsController.java
 @RestController
 @RequiredArgsConstructor
 public class FactionsController implements FactionsApi {
@@ -75,7 +75,7 @@ public class FactionsController implements FactionsApi {
 ## 🔄 Что генерируется автоматически
 
 ### 1. **API Interfaces** (со Spring MVC аннотациями)
-- **Путь**: `src/main/java/com/necpgame/backjava/api/`
+- **Путь**: `microservices/<service>/src/main/java/com/necpgame/<service>/api/`
 - **Примеры**: `AuthApi.java`, `CharactersApi.java`, `FactionsApi.java`
 - **Содержит**: 
   - `@RequestMapping` - маршруты endpoints
@@ -86,12 +86,12 @@ public class FactionsController implements FactionsApi {
   - OpenAPI документацию (`@Operation`, `@ApiResponse`)
 
 ### 2. **DTOs** (модели данных)
-- **Путь**: `src/main/java/com/necpgame/backjava/model/`
+- **Путь**: `microservices/<service>/src/main/java/com/necpgame/<service>/model/`
 - **Примеры**: `CreateCharacterRequest.java`, `GameCharacter.java`
 - **Содержит**: Jakarta Bean Validation аннотации
 
 ### 3. **Service Interfaces** (бизнес-логика контракты)
-- **Путь**: `src/main/java/com/necpgame/backjava/service/`
+- **Путь**: `microservices/<service>/src/main/java/com/necpgame/<service>/service/`
 - **Примеры**: `AuthService.java`, `CharactersService.java`
 - **Содержит**: Чистые Java интерфейсы без Spring аннотаций
 - **Генерируются через кастомный шаблон**: `templates/api.mustache`

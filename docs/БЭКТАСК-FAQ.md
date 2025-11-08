@@ -37,10 +37,10 @@
 
 **A:** Используй шаблоны из [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md):
 
-**1. Entities** - создай JPA сущности в `src/main/java/entity/`
-**2. Repositories** - создай Spring Data репозитории в `src/main/java/repository/`
-**3. Controllers** - создай REST контроллеры в `src/main/java/controller/`
-**4. ServiceImpl** - создай реализации сервисов в `src/main/java/service/impl/`
+**1. Entities** - создай JPA сущности в `microservices/<service>/src/main/java/com/necpgame/<service>/entity/`
+**2. Repositories** - создай Spring Data репозитории в `microservices/<service>/src/main/java/com/necpgame/<service>/repository/`
+**3. Controllers** - создай REST контроллеры в `microservices/<service>/src/main/java/com/necpgame/<service>/controller/`
+**4. ServiceImpl** - создай реализации сервисов в `microservices/<service>/src/main/java/com/necpgame/<service>/service/impl/`
 
 **Все шаблоны с примерами кода в:** [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md)
 
@@ -67,61 +67,56 @@
 
 ### Q: Что делать, если файл Controller превышает 400 строк?
 
-**A:** ОБЯЗАТЕЛЬНО разбей файл на несколько файлов:
+**A:** ОБЯЗАТЕЛЬНО разбей ответственность внутри микросервиса, сохраняя единый контроллер, который реализует OpenAPI интерфейс:
 
-1. **Раздели по методам HTTP:**
+1. **Введи обработчики (handler) для отдельных use-case:**
    ```java
-   // PersonalNpcController.java (основной controller)
-   package com.necpgame.authservice.controller;
-   
+   // microservices/social-service/src/main/java/com/necpgame/socialservice/controller/SocialController.java
    @RestController
    @RequiredArgsConstructor
-   public class PersonalNpcController implements PersonalNpcApi {
-       private final PersonalNpcService service;
-   }
+   public class SocialController implements SocialApi {
+       private final GetFeedsHandler getFeedsHandler;
+       private final PublishPostHandler publishPostHandler;
    
-   // PersonalNpcControllerGet.java (GET методы)
-   @RestController
-   public class PersonalNpcControllerGet extends PersonalNpcController {
-       @GetMapping("/api/v1/personal-npc")
-       public ResponseEntity<List<PersonalNpc>> getPersonalNPCs() {
-           // GET логика
+       @Override
+       public ResponseEntity<GetFeedsResponse> getFeeds(UUID playerId) {
+           return ResponseEntity.ok(getFeedsHandler.handle(playerId));
        }
-   }
    
-   // PersonalNpcControllerPost.java (POST методы)
-   @RestController
-   public class PersonalNpcControllerPost extends PersonalNpcController {
-       @PostMapping("/api/v1/personal-npc")
-       public ResponseEntity<PersonalNpc> createPersonalNPC(@RequestBody PersonalNpc npc) {
-           // POST логика
+       @Override
+       public ResponseEntity<PostResponse> publishPost(UUID playerId, PostRequest request) {
+           return ResponseEntity.ok(publishPostHandler.handle(playerId, request));
        }
    }
    ```
 
-2. **Вынеси бизнес-логику в сервисы:**
+2. **Каждый handler содержит отдельную бизнес-логику:**
    ```java
-   // PersonalNpcService.java
-   package com.necpgame.authservice.service;
+   // microservices/social-service/src/main/java/com/necpgame/socialservice/controller/handler/GetFeedsHandler.java
+   @Component
+   @RequiredArgsConstructor
+   public class GetFeedsHandler {
+       private final SocialFeedService socialFeedService;
    
+       public GetFeedsResponse handle(UUID playerId) {
+           return socialFeedService.fetchFeeds(playerId);
+       }
+   }
+   ```
+
+3. **Раздели сервисный слой, если он разрастается:**
+   ```java
+   // microservices/social-service/src/main/java/com/necpgame/socialservice/service/impl/SocialFeedServiceImpl.java
    @Service
    @RequiredArgsConstructor
-   public class PersonalNpcService {
-       private final PersonalNpcRepository repository;
-       
-       public List<PersonalNpc> getAllNPCs() {
-           // бизнес-логика
-       }
-   }
-   ```
-
-3. **Вынеси работу с БД в репозитории:**
-   ```java
-   // PersonalNpcRepository.java
-   package com.necpgame.authservice.repository;
+   public class SocialFeedServiceImpl implements SocialFeedService {
+       private final SocialFeedRepository socialFeedRepository;
+       private final SocialFeedMapper socialFeedMapper;
    
-   public interface PersonalNpcRepository extends JpaRepository<PersonalNpc, UUID> {
-       // Spring Data JPA автоматически создает реализацию
+       @Override
+       public GetFeedsResponse fetchFeeds(UUID playerId) {
+           // бизнес-логика + MapStruct
+       }
    }
    ```
 
@@ -210,9 +205,9 @@ public class PersonalNpcService {
 **A:** Создай Liquibase миграции вручную на основе Entity классов:
 
 **Процесс:**
-1. Создай Entity в `src/main/java/entity/`
+1. Создай Entity в `microservices/<service>/src/main/java/com/necpgame/<service>/entity/`
 2. Проанализируй поля, relationships, constraints
-3. Создай XML changelog в `src/main/resources/db/changelog/changes/`
+3. Создай XML changelog в `microservices/<service>/src/main/resources/db/changelog/changes/`
 
 **Пример Entity:**
 ```java
@@ -542,19 +537,20 @@ paths:
 .\scripts\validate-openapi.ps1 -ApiSpec ../API-SWAGGER/api/v1/users/users.yaml
 .\scripts\generate-openapi-microservices.ps1 -ApiDirectory ../API-SWAGGER/api/v1/users/
 ```
+> ⚠️ Убедись, что в спецификации задан `x-microservice`; без него скрипт не сможет определить целевой микросервис.
 
 **Шаг 3: Создать реализацию вручную**
 
 Используя [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md):
-- Entity: `src/main/java/entity/UserEntity.java`
-- Repository: `src/main/java/repository/UserRepository.java`
-- Controller: `src/main/java/controller/UsersController.java`
-- ServiceImpl: `src/main/java/service/impl/UsersServiceImpl.java`
-- Mapper: `src/main/java/mapper/UserMapper.java`
+- Entity: `microservices/<service>/src/main/java/com/necpgame/<service>/entity/UserEntity.java`
+- Repository: `microservices/<service>/src/main/java/com/necpgame/<service>/repository/UserRepository.java`
+- Controller: `microservices/<service>/src/main/java/com/necpgame/<service>/controller/UsersController.java`
+- ServiceImpl: `microservices/<service>/src/main/java/com/necpgame/<service>/service/impl/UsersServiceImpl.java`
+- Mapper: `microservices/<service>/src/main/java/com/necpgame/<service>/mapper/UserMapper.java`
 
 **Шаг 4: Создать Liquibase миграцию**
 ```xml
-<!-- src/main/resources/db/changelog/changes/005-create-users-table.xml -->
+<!-- microservices/<service>/src/main/resources/db/changelog/changes/005-create-users-table.xml -->
 <changeSet id="005-create-users-table" author="system">
     <createTable tableName="users">
         <column name="id" type="UUID">
@@ -624,7 +620,7 @@ mvn verify
 
 ```bash
 # Подсчет строк в файле (Windows)
-powershell -Command "(Get-Content src\main\java\com\necpgame\backjava\controllers\PersonalNpcController.java).Count"
+powershell -Command "(Get-Content microservices\social-service\src\main\java\com\necpgame\socialservice\controller\SocialController.java).Count"
 
 # Подсчет строк во всех Java файлах (Windows)
 powershell -Command "Get-ChildItem -Recurse -Filter *.java | ForEach-Object { (Get-Content $_.FullName).Count }"

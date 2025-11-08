@@ -43,7 +43,7 @@ jdbc:postgresql://localhost:5433/necpgame
 
 Миграции применяются автоматически при запуске Spring Boot приложения через Liquibase.
 
-Миграции находятся в `src/main/resources/db/changelog/`
+Миграции принадлежат каждому микросервису и расположены в `microservices/<service>/src/main/resources/db/changelog/`
 
 ### Подключение через psql
 

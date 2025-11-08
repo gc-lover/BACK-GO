@@ -2,6 +2,8 @@
 
 Полное руководство по развёртыванию NECPGAME Backend в Docker.
 
+> Production API endpoints: `https://api.necp.game/v1` (HTTP) и `wss://api.necp.game/v1` (WebSocket). Локальная разработка использует API Gateway на `http://localhost:8080`.
+
 ## 📋 Оглавление
 
 1. [Быстрый старт](#быстрый-старт)
@@ -15,7 +17,7 @@
 
 ## 🚀 Быстрый старт
 
-### Запуск всего стека (PostgreSQL + Backend):
+### Запуск всего стека (PostgreSQL + микросервисы + шлюз):
 
 ```bash
 # Windows PowerShell
@@ -26,6 +28,7 @@ docker-compose up -d
 cd BACK-GO
 docker-compose up -d
 ```
+> Результат: поднимаются `postgres`, `config-server`, `service-discovery`, `api-gateway`, а также все микросервисы (`auth-service`, `character-service`, `social-service`, `economy-service`, `world-service`).
 
 ### Запуск только PostgreSQL:
 
@@ -49,76 +52,68 @@ docker-compose up -d --build
 
 ### Multi-Stage Build
 
-Используем **multi-stage build** для оптимизации размера образа:
+Каждый микросервис собирается собственным multi-stage образом (Dockerfile находится в каталоге микросервиса):
 
-#### Stage 1: Builder (сборка)
+#### Stage 1: Builder (сборка микросервиса)
 - **Базовый образ**: `eclipse-temurin:21-jdk-alpine`
-- **Размер**: ~500MB (временный)
-- **Компоненты**: JDK 21, Maven, Node.js
-- **Действия**: 
-  - Загрузка зависимостей
-  - Генерация OpenAPI кода (если нужно)
-  - Компиляция Java кода
-  - Сборка JAR файла
+- **Что делаем**:
+  - Копируем `pom.xml` и `src` конкретного микросервиса
+  - Загружаем зависимости Maven
+  - Генерируем OpenAPI контракты (опционально)
+  - Собираем JAR текущего микросервиса (`<service>-1.0.0.jar`)
 
-#### Stage 2: Runtime (запуск)
+#### Stage 2: Runtime (запуск микросервиса)
 - **Базовый образ**: `eclipse-temurin:21-jre-alpine`
-- **Размер**: ~200MB (финальный)
-- **Компоненты**: только JRE 21
-- **Действия**: запуск приложения
+- **Содержимое**: только JRE 21 и JAR соответствующего микросервиса
+- **Запуск**: `java -jar app.jar` с профилем `docker`
 
 ### Преимущества подхода:
-- ✅ **Маленький размер** финального образа (~200MB вместо ~500MB)
-- ✅ **Безопасность** - в runtime образе нет инструментов сборки
-- ✅ **Быстрый деплой** - меньше данных для загрузки
-- ✅ **Кэширование** - Docker кэширует слои для ускорения пересборки
+- ✅ **Унификация** — каждая команда использует одинаковый шаблон Dockerfile
+- ✅ **Маленький размер образа** — финальный слой содержит только нужный микросервис
+- ✅ **Безопасность** — в runtime нет инструментов сборки
+- ✅ **Быстрый деплой** — изменился один сервис → перерабатывается только его образ
 
 ## 🔨 Сборка образа
 
 ### Автоматическая сборка через скрипт:
 
 ```powershell
-# Windows
-.\scripts\docker-build.ps1
-
-# С тегом
-.\scripts\docker-build.ps1 -Tag "v1.0.0"
-
-# Без кэша (полная пересборка)
-.\scripts\docker-build.ps1 -NoCache
+# Windows: укажи конкретный микросервис
+.\scripts\docker-build.ps1 -Service auth-service
+.\scripts\docker-build.ps1 -Service api-gateway -Tag "v1.0.0"
+.\scripts\docker-build.ps1 -Service social-service -NoCache
 ```
 
 ```bash
 # Linux/Mac
-./scripts/docker-build.sh
-
-# С тегом
-./scripts/docker-build.sh v1.0.0
-
-# Без кэша
-./scripts/docker-build.sh latest --no-cache
+./scripts/docker-build.sh auth-service
+./scripts/docker-build.sh api-gateway v1.0.0
+./scripts/docker-build.sh social-service latest --no-cache
 ```
 
 ### Ручная сборка:
 
 ```bash
-# Базовая сборка
-docker build -t necpgame-backend:latest .
+# Базовая сборка auth-service
+docker build -f microservices/auth-service/Dockerfile -t necpgame-auth-service:latest .
 
 # Без кэша
-docker build --no-cache -t necpgame-backend:latest .
+docker build --no-cache -f microservices/auth-service/Dockerfile -t necpgame-auth-service:latest .
 
 # С конкретным тегом
-docker build -t necpgame-backend:v1.0.0 .
+docker build -f microservices/auth-service/Dockerfile -t necpgame-auth-service:v1.0.0 .
 ```
 
 ## 🐳 Запуск через Docker Compose
 
 ### Файл `docker-compose.yml`
 
-Определяет 2 сервиса:
-1. **postgres** - PostgreSQL база данных
-2. **backend** - Java Spring Boot приложение
+Определяет несколько сервисов:
+1. **postgres** — PostgreSQL база данных
+2. **config-server** — Spring Cloud Config Server
+3. **service-discovery** — Eureka/Consul для регистрации микросервисов
+4. **api-gateway** — входная точка `https://api.necp.game/v1`
+5. **auth-service**, **character-service**, **social-service**, **economy-service**, **world-service** — бизнес-микросервисы
 
 ### Основные команды:
 
@@ -135,8 +130,8 @@ docker-compose down
 # Остановка с удалением volumes (ВНИМАНИЕ: удалятся данные БД!)
 docker-compose down -v
 
-# Перезапуск конкретного сервиса
-docker-compose restart backend
+# Перезапуск конкретного микросервиса
+docker-compose restart auth-service
 
 # Пересборка образов перед запуском
 docker-compose up -d --build
@@ -145,11 +140,12 @@ docker-compose up -d --build
 docker-compose ps
 
 # Просмотр логов
-docker-compose logs -f backend
+docker-compose logs -f auth-service
+docker-compose logs -f api-gateway
 docker-compose logs -f postgres
 
 # Выполнение команды в контейнере
-docker-compose exec backend sh
+docker-compose exec auth-service sh
 docker-compose exec postgres psql -U necpgame -d necpgame
 ```
 
@@ -159,8 +155,11 @@ docker-compose exec postgres psql -U necpgame -d necpgame
 # Проверка health check
 docker-compose ps
 
-# Backend health endpoint
+# API Gateway health endpoint
 curl http://localhost:8080/actuator/health
+
+# Auth-service health endpoint
+curl http://localhost:8081/actuator/health
 
 # PostgreSQL
 docker-compose exec postgres pg_isready -U necpgame
@@ -181,18 +180,19 @@ docker run -d \
   postgres:15
 ```
 
-### Запуск Backend:
+### Запуск микросервиса (пример: auth-service):
 
 ```bash
 docker run -d \
-  --name necpgame-backend \
-  -p 8080:8080 \
+  --name necpgame-auth-service \
+  -p 8081:8081 \
   -e SPRING_PROFILES_ACTIVE=docker \
   -e SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/necpgame \
   -e SPRING_DATASOURCE_USERNAME=necpgame \
   -e SPRING_DATASOURCE_PASSWORD=necpgame \
+  -e SERVER_PORT=8081 \
   --link necpgame-postgres:postgres \
-  necpgame-backend:latest
+  necpgame-auth-service:latest
 ```
 
 ## ⚙️ Конфигурация
@@ -243,7 +243,7 @@ volumes:
   - postgres_data:/var/lib/postgresql/data
 ```
 
-#### Backend Logs:
+#### Auth-service Logs:
 ```yaml
 volumes:
   - ./logs:/app/logs
@@ -258,21 +258,24 @@ volumes:
 docker-compose logs -f
 
 # Логи конкретного сервиса
-docker-compose logs -f backend
+docker-compose logs -f auth-service
 docker-compose logs -f postgres
 
 # Последние 100 строк
-docker-compose logs --tail=100 backend
+docker-compose logs --tail=100 auth-service
 
 # Логи с временными метками
-docker-compose logs -f -t backend
+docker-compose logs -f -t auth-service
 ```
 
 ### Health Checks:
 
 ```bash
-# Backend health endpoint
+# API Gateway health endpoint
 curl http://localhost:8080/actuator/health
+
+# Auth-service health endpoint
+curl http://localhost:8081/actuator/health
 
 # Полная информация (требуется авторизация)
 curl http://localhost:8080/actuator/health -u admin:admin123
@@ -291,14 +294,14 @@ curl http://localhost:8080/actuator/info
 docker stats
 
 # Конкретный контейнер
-docker stats necpgame-backend
+docker stats necpgame-auth-service
 ```
 
 ### Доступ внутрь контейнера:
 
 ```bash
-# Backend
-docker-compose exec backend sh
+# Auth-service
+docker-compose exec auth-service sh
 
 # PostgreSQL
 docker-compose exec postgres psql -U necpgame -d necpgame
@@ -310,7 +313,7 @@ docker-compose exec postgres psql -U necpgame -d necpgame
 
 1. **Проверить логи:**
 ```bash
-docker-compose logs backend
+docker-compose logs auth-service
 ```
 
 2. **Проверить health check:**
@@ -350,7 +353,7 @@ docker system prune -a
 
 2. **Пересобрать без кэша:**
 ```bash
-docker-compose build --no-cache backend
+docker-compose build --no-cache auth-service
 ```
 
 3. **Проверить доступность Maven Central:**
@@ -367,8 +370,8 @@ docker-compose exec postgres psql -U necpgame -d necpgame -c "SELECT * FROM data
 
 2. **Откатить последнюю миграцию (если нужно):**
 ```bash
-# Подключиться к контейнеру
-docker-compose exec backend sh
+# Подключиться к контейнеру микросервиса
+docker-compose exec auth-service sh
 
 # Выполнить rollback через Maven (если установлен)
 # или вручную через SQL
@@ -399,7 +402,7 @@ lsof -i :5433
 1. **Увеличить лимиты в docker-compose.yml:**
 ```yaml
 services:
-  backend:
+  auth-service:
     deploy:
       resources:
         limits:
@@ -438,16 +441,18 @@ ENTRYPOINT ["java", \
 - [ ] Настроить firewall правила
 - [ ] Использовать non-root пользователя (уже настроено в Dockerfile)
 - [ ] Регулярно обновлять базовые образы
-- [ ] Сканировать образы на уязвимости (`docker scan necpgame-backend`)
+- [ ] Сканировать образы на уязвимости (`docker scan necpgame-auth-service`)
 
 ## 📝 Notes
 
 - Логи приложения сохраняются в `./logs/application.log` (маппинг из контейнера)
 - PostgreSQL данные хранятся в Docker volume `postgres_data`
 - По умолчанию используется порт `5433` для PostgreSQL (чтобы не конфликтовать с локальной установкой)
-- Backend доступен на `http://localhost:8080`
+- API Gateway доступен на `http://localhost:8080`
+- Auth-service доступен напрямую на `http://localhost:8081`
 - Swagger UI доступен на `http://localhost:8080/swagger-ui.html`
-- Health check endpoint: `http://localhost:8080/actuator/health`
+- Health check endpoint (gateway): `http://localhost:8080/actuator/health`
+- Health check endpoint (auth-service): `http://localhost:8081/actuator/health`
 
 
 

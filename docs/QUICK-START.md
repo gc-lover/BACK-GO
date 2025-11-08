@@ -43,6 +43,7 @@ docker-compose ps
 # Генерация из одного файла
 .\scripts\generate-openapi-microservices.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml
 ```
+> ⚠️ Обязательное требование: каждая спецификация должна содержать `x-microservice` с точным именем микросервиса. Без этого поле скрипт не выполнит маршрутизацию контрактов.
 
 **Результат (для микросервисов):**
 - ✅ DTOs в `microservices/<service>/src/main/java/com/necpgame/<service>/model/`
@@ -53,21 +54,21 @@ docker-compose ps
 
 Используй шаблоны из [MANUAL-TEMPLATES.md](./docs/MANUAL-TEMPLATES.md):
 
-1. **Entity** - `src/main/java/entity/AccountEntity.java`
-2. **Repository** - `src/main/java/repository/AccountRepository.java`
-3. **Controller** - `src/main/java/controller/AuthController.java`
-4. **ServiceImpl** - `src/main/java/service/impl/AuthServiceImpl.java`
-5. **Mapper (MapStruct)** - `src/main/java/mapper/AccountMapperMS.java`
-6. **Liquibase миграция** - `src/main/resources/db/changelog/changes/001-create-accounts-table.xml`
+1. **Entity** - `microservices/<service>/src/main/java/com/necpgame/<service>/entity/AccountEntity.java`
+2. **Repository** - `microservices/<service>/src/main/java/com/necpgame/<service>/repository/AccountRepository.java`
+3. **Controller** - `microservices/<service>/src/main/java/com/necpgame/<service>/controller/AuthController.java`
+4. **ServiceImpl** - `microservices/<service>/src/main/java/com/necpgame/<service>/service/impl/AuthServiceImpl.java`
+5. **Mapper (MapStruct)** - `microservices/<service>/src/main/java/com/necpgame/<service>/mapper/AccountMapperMS.java`
+6. **Liquibase миграция** - `microservices/<service>/src/main/resources/db/changelog/changes/001-create-accounts-table.xml`
 
-## Запуск сервера
+## Запуск микросервисов
 
 ```bash
-# Через Maven
-mvn spring-boot:run
+# Запуск конкретного микросервиса (пример: auth-service)
+mvn -pl microservices/auth-service -am spring-boot:run
 
-# Или через JAR
-java -jar target/back-java-1.0.0.jar
+# Запуск API Gateway после старта микросервисов
+mvn -pl infrastructure/api-gateway -am spring-boot:run
 ```
 
 ## Компиляция проекта
@@ -83,20 +84,20 @@ mvn test
 ## Проверка работы
 
 ```bash
-# Запуск сервера
-mvn spring-boot:run
+# Пример: health-check auth-service
+curl http://localhost:8081/api/v1/health
 
-# Проверка health endpoint (в другом терминале)
+# Через API Gateway (после запуска gateway)
 curl http://localhost:8080/api/v1/health
 ```
 
 ## Доступные endpoints
 
 После создания реализации:
-- `POST /api/v1/auth/register` - Регистрация
-- `POST /api/v1/auth/login` - Авторизация
-- `GET /api/v1/characters` - Список персонажей
-- `GET /swagger-ui.html` - Swagger UI документация
+- `POST /api/v1/auth/register` (auth-service, порт 8081)
+- `POST /api/v1/auth/login` (auth-service, порт 8081)
+- `GET /api/v1/characters` (character-service, порт 8082)
+- `GET /swagger-ui.html` (через API Gateway на 8080)
 
 ## Остановка сервера
 
