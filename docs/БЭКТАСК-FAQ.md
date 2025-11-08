@@ -26,9 +26,10 @@
 - ✅ Service Interfaces - контракты бизнес-логики
 
 **Где находится:**
-- `target/generated-sources/openapi/model/` - DTOs
-- `target/generated-sources/openapi/api/` - API Interfaces
-- `target/generated-sources/services/` - Service Interfaces
+- `microservices/<service>/src/main/java/com/necpgame/<service>/model/` - DTOs
+- `microservices/<service>/src/main/java/com/necpgame/<service>/api/` - API Interfaces
+- `microservices/<service>/src/main/java/com/necpgame/<service>/service/` - Service Interfaces
+- ⚠️ Скрипт читает `x-microservice` из OpenAPI спецификации и размещает контракты только в обозначенном микросервисе
 
 ---
 

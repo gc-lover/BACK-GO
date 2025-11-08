@@ -11,17 +11,17 @@
 **OpenAPI спецификация = источник правды ТОЛЬКО для контрактов**
 
 ### ✅ Генерируется автоматически (контракты):
-- **DTOs** - модели данных (`target/generated-sources/openapi/model/`)
-- **API Interfaces** - контракты REST API (`target/generated-sources/openapi/api/`)
-- **Service Interfaces** - контракты бизнес-логики (`target/generated-sources/services/`)
+- **DTOs** - модели данных (`microservices/<service>/src/main/java/com/necpgame/<service>/model/`)
+- **API Interfaces** - REST контракты (`microservices/<service>/src/main/java/com/necpgame/<service>/api/`)
+- **Service Interfaces** - контракты бизнес-логики (`microservices/<service>/src/main/java/com/necpgame/<service>/service/`)
 
 ### ✍️ Создаётся вручную (реализация):
-- **Entities** - JPA сущности (`src/main/java/entity/`)
-- **Repositories** - Spring Data репозитории (`src/main/java/repository/`)
-- **Controllers** - REST контроллеры (`src/main/java/controller/`)
-- **ServiceImpl** - реализация бизнес-логики (`src/main/java/service/impl/`)
-- **Mappers (MapStruct)** - автоматическое маппинг Entity ↔ DTO (`src/main/java/mapper/`)
-- **Liquibase миграции** - XML/YAML changelog (`src/main/resources/db/changelog/`)
+- **Entities** - JPA сущности (`microservices/<service>/src/main/java/com/necpgame/<service>/entity/`)
+- **Repositories** - Spring Data репозитории (`microservices/<service>/src/main/java/com/necpgame/<service>/repository/`)
+- **Controllers** - REST контроллеры (`microservices/<service>/src/main/java/com/necpgame/<service>/controller/`)
+- **ServiceImpl** - реализация бизнес-логики (`microservices/<service>/src/main/java/com/necpgame/<service>/service/impl/`)
+- **Mappers (MapStruct)** - Entity ↔ DTO (`microservices/<service>/src/main/java/com/necpgame/<service>/mapper/`)
+- **Liquibase миграции** - XML/YAML changelog (`microservices/<service>/src/main/resources/db/changelog/`)
 
 ---
 
@@ -32,103 +32,48 @@
 3. **Именование:** Файлы - `PascalCase.java` для Java файлов, директории - `kebab-case` или `snake_case`
 4. **Ограничение размера:** МАКСИМУМ 400 строк на файл, если больше - разбить на несколько файлов
 5. **Разделение ответственности:** Разделение на Controllers, Services, Repositories, Entities
-6. **Контракты в `target/`:** Сгенерированные контракты только в `target/`, никогда не редактируем
-7. **Реализация в `src/main/java/`:** Вся реализация создаётся вручную и никогда не перегенерируется
+6. **Контракты в `microservices/<service>/src/main/java/`:** Сгенерированные файлы хранятся прямо в каталоге нужного микросервиса, не редактируются вручную
+7. **Реализация рядом с контрактами:** Вся реализация создаётся вручную внутри того же микросервиса и никогда не перегенерируется
 
 ---
 
 ## Структура директорий бекенд кода
 
 ```
-BACK-GO/microservices/<service>/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com/necpgame/<service>/
-│   │   │       ├── <Service>Application.java
-│   │   │       │
-│   │   │       ├── controller/                    # REST Controllers (ВРУЧНУЮ)
-│   │   │       │   ├── AuthController.java        # implements AuthApi
-│   │   │       │   ├── CharactersController.java   # implements CharactersApi
-│   │   │       │   └── ...
-│   │   │       │
-│   │   │       ├── service/
-│   │   │       │   └── impl/                       # Service Implementations (ВРУЧНУЮ)
-│   │   │       │       ├── AuthServiceImpl.java    # implements AuthService
-│   │   │       │       ├── CharactersServiceImpl.java
-│   │   │       │       └── ...
-│   │   │       │
-│   │   │       ├── repository/                     # Spring Data Repositories (ВРУЧНУЮ)
-│   │   │       │   ├── AccountRepository.java
-│   │   │       │   ├── CharacterRepository.java
-│   │   │       │   └── ...
-│   │   │       │
-│   │   │       ├── entity/                         # JPA Entities (ВРУЧНУЮ)
-│   │   │       │   ├── AccountEntity.java
-│   │   │       │   ├── CharacterEntity.java
-│   │   │       │   └── ...
-│   │   │       │
-│   │   │       ├── exception/                      # Custom Exceptions (ВРУЧНУЮ)
-│   │   │       │   ├── ApiException.java
-│   │   │       │   ├── AuthException.java
-│   │   │       │   ├── BusinessException.java
-│   │   │       │   ├── ValidationException.java
-│   │   │       │   ├── IntegrationException.java
-│   │   │       │   ├── ErrorCode.java              # Enum с кодами ошибок
-│   │   │       │   └── GlobalExceptionHandler.java
-│   │   │       │
-│   │   │       ├── mapper/                         # Entity ↔ DTO Mappers (MapStruct)
-│   │   │       │   ├── CharacterMapperMS.java      # с поддержкой JsonNullable
-│   │   │       │   ├── CharacterAppearanceMapperMS.java
-│   │   │       │   ├── JsonNullableMapper.java
-│   │   │       │   └── ...
-│   │   │       │
-│   │   │       └── config/                         # Конфигурация (ВРУЧНУЮ)
-│   │   │           ├── SecurityConfig.java
-│   │   │           ├── WebConfig.java
-│   │   │           └── DatabaseConfig.java
-│   │   │
-│   │   └── resources/
-│   │       ├── application.yml
-│   │       └── db/
-│   │           └── changelog/                     # Liquibase миграции (ВРУЧНУЮ)
-│   │               ├── db.changelog-master.xml
-│   │               └── changes/
-│   │                   ├── 001-create-accounts-table.xml
-│   │                   ├── 002-create-characters-table.xml
-│   │                   └── ...
-│   │
-│   └── test/
-│       └── java/
-│           └── com/necpgame/backjava/
-│               └── ...                             # Тесты
+BACK-GO/
+├── microservices/
+│   ├── auth-service/
+│   │   ├── src/
+│   │   │   ├── main/
+│   │   │   │   ├── java/com/necpgame/authservice/
+│   │   │   │   │   ├── AuthServiceApplication.java
+│   │   │   │   │   ├── api/              # Сгенерированные интерфейсы (OpenAPI)
+│   │   │   │   │   ├── model/            # Сгенерированные DTO
+│   │   │   │   │   ├── service/          # Сгенерированные сервисные контракты
+│   │   │   │   │   ├── controller/       # Реализация REST (вручную)
+│   │   │   │   │   ├── service/impl/     # Бизнес-логика (вручную)
+│   │   │   │   │   ├── repository/       # Spring Data (вручную)
+│   │   │   │   │   ├── entity/           # JPA сущности (вручную)
+│   │   │   │   │   ├── mapper/           # MapStruct (вручную)
+│   │   │   │   │   └── config/           # Конфигурация (вручную)
+│   │   │   │   └── resources/
+│   │   │   │       ├── application.yml
+│   │   │   │       └── db/changelog/     # Liquibase миграции
+│   │   │   └── test/java/com/necpgame/authservice/  # Тесты
+│   │   └── pom.xml
+│   ├── social-service/
+│   │   └── ... (аналогичная структура)
+│   └── <другие микросервисы>/
+│       └── ...
 │
-├── target/
-│   └── generated-sources/                          # КОНТРАКТЫ (автогенерация)
-│       ├── openapi/                                # DTOs + API Interfaces
-│       │   └── src/main/java/com/necpgame/backjava/
-│       │       ├── api/                            # API Interfaces
-│       │       │   ├── AuthApi.java
-│       │       │   ├── CharactersApi.java
-│       │       │   └── ...
-│       │       └── model/                          # DTOs
-│       │           ├── LoginRequest.java
-│       │           ├── LoginResponse.java
-│       │           ├── Account.java
-│       │           └── ...
-│       └── services/                               # Service Interfaces
-│           └── src/main/java/com/necpgame/backjava/service/
-│               ├── AuthService.java
-│               ├── CharactersService.java
-│               └── ...
+├── infrastructure/
+│   ├── api-gateway/           # Spring Cloud Gateway (роутинг)
+│   ├── config-server/         # Централизованная конфигурация
+│   └── service-discovery/     # Eureka/Consul для регистрации сервисов
 │
-├── scripts/
-│   ├── generate-openapi-microservices.ps1        # Скрипт генерации контрактов в микросервисы
-│   ├── validate-openapi.ps1                      # Валидация OpenAPI спецификаций
-│   ├── autocommit.ps1
-│   └── autocommit.sh
-│
-└── pom.xml                                        # Maven конфигурация
+├── scripts/                   # Скрипты генерации и вспомогательные утилиты
+├── templates/                 # Кастомные шаблоны OpenAPI Generator
+└── pom.xml                    # Управляющий Maven-модуль
 ```
 
 ---
@@ -141,15 +86,16 @@ BACK-GO/microservices/<service>/
 
 | API-SWAGGER | BACK-GO (контракты) | BACK-GO (реализация) |
 |-------------|------------------------|-------------------------|
-| `api/v1/auth/` | `target/.../api/AuthApi.java` | `src/.../controller/AuthController.java` |
-| `api/v1/characters/` | `target/.../api/CharactersApi.java` | `src/.../controller/CharactersController.java` |
-| `api/v1/gameplay/social/` | `target/.../api/SocialApi.java` | `src/.../controller/gameplay/SocialController.java` |
+| `api/v1/auth/` | `microservices/auth-service/src/main/java/com/necpgame/authservice/api/AuthApi.java` | `microservices/auth-service/src/main/java/com/necpgame/authservice/controller/AuthController.java` |
+| `api/v1/characters/` | `microservices/character-service/src/main/java/com/necpgame/characterservice/api/CharactersApi.java` | `microservices/character-service/src/main/java/com/necpgame/characterservice/controller/CharactersController.java` |
+| `api/v1/gameplay/social/` | `microservices/gameplay-service/src/main/java/com/necpgame/gameplayservice/api/SocialApi.java` | `microservices/gameplay-service/src/main/java/com/necpgame/gameplayservice/controller/SocialController.java` |
 
 **Принципы соответствия:**
 - Имена API Interfaces соответствуют путям в OpenAPI
 - Controllers реализуют соответствующие API Interfaces
 - ServiceImpl реализуют соответствующие Service Interfaces
 - Именование: файлы - `PascalCase.java`, директории - `kebab-case` или `snake_case`
+- **x-microservice обязателен:** в каждой OpenAPI спецификации указываем `x-microservice` с именем микросервиса (`auth-service`, `social-service` и т.д.), генератор использует это поле как единственный источник для размещения контрактов
 
 ---
 
@@ -157,10 +103,10 @@ BACK-GO/microservices/<service>/
 
 ### 1. Controllers (REST API слой)
 
-**Создаётся:** ВРУЧНУЮ в `src/main/java/controller/`
+**Создаётся:** ВРУЧНУЮ в `microservices/<service>/src/main/java/com/necpgame/<service>/controller/`
 
 **Ответственность:**
-- Реализует сгенерированные API Interfaces из `target/generated-sources/openapi/api/`
+- Реализует сгенерированные API Interfaces из `microservices/<service>/src/main/java/com/necpgame/<service>/api/`
 - Обработка HTTP запросов и ответов
 - Валидация входных данных (через Bean Validation)
 - Делегирование бизнес-логики Service слою
@@ -182,9 +128,9 @@ public class AuthController implements AuthApi {
 
 ### 2. Services (бизнес-логика)
 
-**Service Interfaces создаются:** АВТОМАТИЧЕСКИ в `target/generated-sources/services/`
+**Service Interfaces создаются:** АВТОМАТИЧЕСКИ в `microservices/<service>/src/main/java/com/necpgame/<service>/service/`
 
-**ServiceImpl создаётся:** ВРУЧНУЮ в `src/main/java/service/impl/`
+**ServiceImpl создаётся:** ВРУЧНУЮ в `microservices/<service>/src/main/java/com/necpgame/<service>/service/impl/`
 
 **Ответственность:**
 - Вся бизнес-логика приложения
@@ -211,7 +157,7 @@ public class AuthServiceImpl implements AuthService {
 
 ### 3. Repositories (доступ к данным)
 
-**Создаётся:** ВРУЧНУЮ в `src/main/java/repository/`
+**Создаётся:** ВРУЧНУЮ в `microservices/<service>/src/main/java/com/necpgame/<service>/repository/`
 
 **Ответственность:**
 - Работа с базой данных через Spring Data JPA
@@ -230,7 +176,7 @@ public interface AccountRepository extends JpaRepository<AccountEntity, UUID> {
 
 ### 4. Entities (доменная модель)
 
-**Создаётся:** ВРУЧНУЮ в `src/main/java/entity/`
+**Создаётся:** ВРУЧНУЮ в `microservices/<service>/src/main/java/com/necpgame/<service>/entity/`
 
 **Ответственность:**
 - JPA сущности для работы с БД
@@ -259,7 +205,7 @@ public class AccountEntity {
 
 ### 5. DTOs (контракты данных)
 
-**Создаётся:** АВТОМАТИЧЕСКИ в `target/generated-sources/openapi/model/`
+**Создаётся:** АВТОМАТИЧЕСКИ в `microservices/<service>/src/main/java/com/necpgame/<service>/model/`
 
 **Ответственность:**
 - Модели данных для REST API
@@ -289,107 +235,111 @@ public class LoginRequest {
 
 ### Если файл больше 400 строк:
 
-#### Вариант 1: Разделить Controllers по методам HTTP
+#### Вариант 1: Разделить обработчики внутри микросервиса
 
 ```
-controller/
-├── AuthController.java          # Главный контроллер
-├── AuthControllerGet.java       # GET методы
-├── AuthControllerPost.java      # POST методы
-└── AuthControllerDelete.java    # DELETE методы
+microservices/auth-service/src/main/java/com/necpgame/authservice/controller/
+├── AuthController.java              # Реализует AuthApi и делегирует обработчикам
+└── handler/
+    ├── LoginHandler.java            # Обработка login
+    ├── RegisterHandler.java         # Обработка register
+    └── TokenRefreshHandler.java     # Обработка refresh
 ```
 
 #### Вариант 2: Вынести логику в отдельные сервисы
 
 ```
-service/impl/
-├── AuthServiceImpl.java         # Основная логика
-├── AuthValidationService.java   # Валидация
-└── AuthTokenService.java        # Работа с токенами
+microservices/auth-service/src/main/java/com/necpgame/authservice/service/impl/
+├── AuthServiceImpl.java             # Основная логика
+├── AuthValidationService.java       # Валидация
+└── AuthTokenService.java            # Работа с токенами
 ```
 
 #### Вариант 3: Разделить Repository queries
 
 ```
-repository/
-├── AccountRepository.java       # Основные queries
-├── AccountSearchRepository.java # Поиск
-└── AccountStatsRepository.java  # Статистика
+microservices/auth-service/src/main/java/com/necpgame/authservice/repository/
+├── AccountRepository.java           # Основные queries
+├── AccountSearchRepository.java     # Поиск
+└── AccountStatsRepository.java      # Статистика
 ```
 
 ---
 
 ## Примеры структуры проекта
 
-### Пример 1: Простой API (Authentication)
+### Пример 1: Простой API (auth-service)
 
 ```
-BACK-JAVA/
-├── target/generated-sources/
-│   ├── openapi/
-│   │   ├── api/AuthApi.java
-│   │   └── model/
-│   │       ├── LoginRequest.java
-│   │       ├── LoginResponse.java
-│   │       └── RegisterRequest.java
-│   └── services/
-│       └── AuthService.java
-│
-└── src/main/java/
-    ├── controller/
-    │   └── AuthController.java      # implements AuthApi
-    ├── service/impl/
-    │   └── AuthServiceImpl.java     # implements AuthService
-    ├── repository/
-    │   └── AccountRepository.java
-    ├── entity/
-    │   └── AccountEntity.java
-    ├── mapper/
-    │   └── AccountMapper.java
-    └── exception/
-        └── UnauthorizedException.java
+microservices/auth-service/
+├── src/main/java/com/necpgame/authservice/
+│   ├── AuthServiceApplication.java
+│   ├── api/
+│   │   └── AuthApi.java
+│   ├── model/
+│   │   ├── LoginRequest.java
+│   │   └── LoginResponse.java
+│   ├── service/
+│   │   └── AuthService.java
+│   ├── controller/
+│   │   └── AuthController.java            # implements AuthApi
+│   ├── service/impl/
+│   │   └── AuthServiceImpl.java           # implements AuthService
+│   ├── repository/
+│   │   └── AccountRepository.java
+│   ├── entity/
+│   │   └── AccountEntity.java
+│   └── mapper/
+│       └── AccountMapper.java
+└── src/main/resources/db/changelog/
+    ├── db.changelog-master.xml
+    └── changes/
+        └── 001-create-accounts-table.xml
 ```
 
-### Пример 2: Сложный API с иерархией (Characters)
+### Пример 2: Сложный API с иерархией (character-service)
 
 ```
-BACK-JAVA/
-├── target/generated-sources/
-│   ├── openapi/
-│   │   ├── api/
-│   │   │   ├── CharactersApi.java
-│   │   │   ├── CharacterClassesApi.java
-│   │   │   └── CharacterOriginsApi.java
-│   │   └── model/
-│   │       ├── Character.java
-│   │       ├── CharacterClass.java
-│   │       └── CharacterOrigin.java
-│   └── services/
-│       ├── CharactersService.java
-│       ├── CharacterClassesService.java
-│       └── CharacterOriginsService.java
-│
-└── src/main/java/
-    ├── controller/
-    │   ├── CharactersController.java
-    │   ├── CharacterClassesController.java
-    │   └── CharacterOriginsController.java
-    ├── service/impl/
-    │   ├── CharactersServiceImpl.java
-    │   ├── CharacterClassesServiceImpl.java
-    │   └── CharacterOriginsServiceImpl.java
-    ├── repository/
-    │   ├── CharacterRepository.java
-    │   ├── CharacterClassRepository.java
-    │   └── CharacterOriginRepository.java
-    ├── entity/
-    │   ├── CharacterEntity.java
-    │   ├── CharacterClassEntity.java
-    │   └── CharacterOriginEntity.java
-    └── mapper/
-        ├── CharacterMapper.java
-        ├── CharacterClassMapper.java
-        └── CharacterOriginMapper.java
+microservices/character-service/
+├── src/main/java/com/necpgame/characterservice/
+│   ├── CharacterServiceApplication.java
+│   ├── api/
+│   │   ├── CharactersApi.java
+│   │   ├── CharacterClassesApi.java
+│   │   └── CharacterOriginsApi.java
+│   ├── model/
+│   │   ├── GameCharacter.java
+│   │   ├── GameCharacterClass.java
+│   │   └── GameCharacterOrigin.java
+│   ├── service/
+│   │   ├── CharactersService.java
+│   │   ├── CharacterClassesService.java
+│   │   └── CharacterOriginsService.java
+│   ├── controller/
+│   │   ├── CharactersController.java
+│   │   ├── CharacterClassesController.java
+│   │   └── CharacterOriginsController.java
+│   ├── service/impl/
+│   │   ├── CharactersServiceImpl.java
+│   │   ├── CharacterClassesServiceImpl.java
+│   │   └── CharacterOriginsServiceImpl.java
+│   ├── repository/
+│   │   ├── CharacterRepository.java
+│   │   ├── CharacterClassRepository.java
+│   │   └── CharacterOriginRepository.java
+│   ├── entity/
+│   │   ├── CharacterEntity.java
+│   │   ├── CharacterClassEntity.java
+│   │   └── CharacterOriginEntity.java
+│   └── mapper/
+│       ├── CharacterMapper.java
+│       ├── CharacterClassMapper.java
+│       └── CharacterOriginMapper.java
+└── src/main/resources/db/changelog/
+    └── changes/
+        ├── 002-create-character-classes-table.xml
+        ├── 003-create-character-origins-table.xml
+        └── 004-create-characters-table.xml
 ```
 
 ---
@@ -401,7 +351,7 @@ BACK-JAVA/
 1. ✅ **Использовать шаблоны** из [MANUAL-TEMPLATES.md](./MANUAL-TEMPLATES.md)
 2. ✅ **Соблюдать иерархию** - соответствие структуре API-SWAGGER
 3. ✅ **Генерировать контракты** через PowerShell скрипт
-4. ✅ **Создавать реализацию вручную** в `src/main/java/`
+4. ✅ **Создавать реализацию вручную** в `microservices/<service>/src/main/java/`
 5. ✅ **Проверять размер файлов** - не более 400 строк
 6. ✅ **Использовать Liquibase миграции** для управления БД
 7. ✅ **Использовать MapStruct** для маппинга Entity ↔ DTO
@@ -409,7 +359,7 @@ BACK-JAVA/
 
 ### ❌ DON'T (не делать):
 
-1. ❌ **Не редактировать сгенерированные контракты** в `target/`
+1. ❌ **Не редактировать сгенерированные контракты** в `microservices/<service>/src/main/java/com/necpgame/<service>/api`, `model`, `service`
 2. ❌ **Не генерировать Entities/Repositories/Controllers/ServiceImpl** автоматически
 3. ❌ **Не хардкодить данные** в коде - всё в БД
 4. ❌ **Не создавать файлы больше 400 строк**

@@ -1,6 +1,6 @@
 # Шаблоны для ручного создания классов
 
-> После генерации контрактов через OpenAPI Generator, используй эти шаблоны для создания реализации вручную в `src/main/java/`.
+> После генерации контрактов через OpenAPI Generator, используй эти шаблоны для создания реализации вручную внутри соответствующего микросервиса (`microservices/<service>/src/main/java/com/necpgame/<service>/`).
 
 ## 📋 Оглавление
 1. [Entity Template](#entity-template)
@@ -143,7 +143,7 @@ public class YourEntity {
 
 ## 2. Repository Template
 
-**Путь**: `src/main/java/repository/YourRepository.java`
+**Путь**: `microservices/{service-name}/src/main/java/com/necpgame/{service}/repository/YourRepository.java`
 
 ```java
 package com.necpgame.authservice.repository;
@@ -265,7 +265,7 @@ public interface YourRepository extends
 
 ## 3. Controller Template
 
-**Путь**: `src/main/java/controller/YourController.java`
+**Путь**: `microservices/{service-name}/src/main/java/com/necpgame/{service}/controller/YourController.java`
 
 ```java
 package com.necpgame.authservice.controller;
@@ -383,7 +383,7 @@ public class YourController implements YourApi {
 
 ## 4. ServiceImpl Template
 
-**Путь**: `src/main/java/service/impl/YourServiceImpl.java`
+**Путь**: `microservices/{service-name}/src/main/java/com/necpgame/{service}/service/impl/YourServiceImpl.java`
 
 ```java
 package com.necpgame.authservice.service.impl;
@@ -581,7 +581,7 @@ public class YourServiceImpl implements YourService {
 
 ## 5. Exception Templates
 
-**Путь**: `src/main/java/exception/YourCustomException.java`
+**Путь**: `microservices/{service-name}/src/main/java/com/necpgame/{service}/exception/YourCustomException.java`
 
 ```java
 package com.necpgame.authservice.exception;
@@ -634,7 +634,7 @@ public class ForbiddenException extends RuntimeException {
 
 ## 6. Mapper Template (MapStruct)
 
-**Путь**: `src/main/java/mapper/YourMapperMS.java`
+**Путь**: `microservices/{service-name}/src/main/java/com/necpgame/{service}/mapper/YourMapperMS.java`
 
 **⚠️ ВАЖНО:** Используем **MapStruct** для автоматической генерации маппинга. Не пишем маппинг вручную!
 
@@ -683,7 +683,7 @@ public interface YourMapperMS {
 
 ### JsonNullable Mapper (утилиты)
 
-**Путь**: `src/main/java/mapper/JsonNullableMapper.java`
+**Путь**: `microservices/{service-name}/src/main/java/com/necpgame/{service}/mapper/JsonNullableMapper.java`
 
 ```java
 package com.necpgame.authservice.mapper;
@@ -779,6 +779,7 @@ public class JsonNullableMapper {
 .\scripts\validate-openapi.ps1 -ApiSpec ../API-SWAGGER/api/v1/your-api.yaml
 .\scripts\generate-openapi-microservices.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
 ```
+> ⚠️ Перед генерацией убедись, что в спецификации указан `x-microservice` с точным именем микросервиса (`auth-service`, `social-service`, и т.д.) — скрипт использует это поле как единственный источник маршрутизации контрактов.
 
 ### 2. Создаём реализацию в целевом микросервисе
 ```bash
