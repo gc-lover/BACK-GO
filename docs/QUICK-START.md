@@ -34,14 +34,14 @@ docker-compose ps
 ## Генерация контрактов из OpenAPI
 
 ```powershell
-# Генерация в микросервисы (рекомендуется)
-.\scripts\generate-openapi-microservices.ps1 -ApiDirectory ../API-SWAGGER/api/v1/ -Mode Microservices
-
-# Генерация из одного файла
-.\scripts\generate-openapi-microservices.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml -Mode Microservices
-
 # Проверка перед генерацией
 .\scripts\validate-openapi.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
+
+# Генерация контрактов в микросервисы
+.\scripts\generate-openapi-microservices.ps1 -ApiDirectory ../API-SWAGGER/api/v1/
+
+# Генерация из одного файла
+.\scripts\generate-openapi-microservices.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml
 ```
 
 **Результат (для микросервисов):**
