@@ -133,22 +133,31 @@ public class FactionsServiceImpl implements FactionsService {
 ### Команда:
 ```powershell
 cd BACK-GO
-.\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml
+.\scripts\generate-openapi-microservices.ps1 -ApiDirectory ../API-SWAGGER/api/v1/ -Validate $true
 ```
+
+### Режимы генерации:
+- **Microservices** (по умолчанию): генерация в целевые микросервисы
+- **Hybrid**: поддержка переходного состояния
+- **Monolith** (legacy): генерация в монолит (устаревший режим)
 
 ### Что происходит:
 
-1. **API Interfaces + DTOs** (стандартный Spring генератор):
+1. **Определение целевого микросервиса:**
+   - Читается `x-microservice` из OpenAPI YAML
+   - Или определяется автоматически по пути API (`/api/v1/auth/*` → auth-service)
+
+2. **API Interfaces + DTOs** (стандартный Spring генератор):
    ```
    npx @openapitools/openapi-generator-cli generate
      -i ../API-SWAGGER/api/v1/auth/character-creation.yaml
      -g spring
      -p interfaceOnly=true,delegatePattern=false,useSpringBoot3=true
-     → src/main/java/com/necpgame/backjava/api/
-     → src/main/java/com/necpgame/backjava/model/
+     → microservices/auth-service/src/main/java/com/necpgame/authservice/api/
+     → microservices/auth-service/src/main/java/com/necpgame/authservice/model/
    ```
 
-2. **Service Interfaces** (кастомный шаблон):
+3. **Service Interfaces** (кастомный шаблон):
    ```
    npx @openapitools/openapi-generator-cli generate
      -i ../API-SWAGGER/api/v1/auth/character-creation.yaml
@@ -156,7 +165,7 @@ cd BACK-GO
      -t templates
      --api-name-suffix Service
      -p interfaceOnly=true
-     → src/main/java/com/necpgame/backjava/service/
+     → microservices/auth-service/src/main/java/com/necpgame/authservice/service/
    ```
 
 ## ✅ Преимущества
@@ -202,8 +211,13 @@ paths:
 ### 2. Генерируем контракты
 ```powershell
 cd BACK-GO
-.\scripts\generate-openapi-layers.ps1 -ApiSpec ../API-SWAGGER/api/v1/auth/character-creation.yaml
+.\scripts\generate-openapi-microservices.ps1 -ApiDirectory ../API-SWAGGER/api/v1/ -Validate $true
 ```
+
+**Скрипт автоматически:**
+- Определяет целевой микросервис из `x-microservice` или по пути API
+- Генерирует контракты в правильный микросервис
+- Валидирует OpenAPI перед генерацией (если указан флаг `-Validate`)
 
 ### 3. Компилятор показывает ошибки в контроллерах
 ```java
@@ -225,45 +239,46 @@ public ResponseEntity<...> getFactions(String origin) { // Добавили па
 - ✅ Controller обновлен
 - ✅ Документация актуальна
 
-## 📁 Структура файлов
+## 📁 Структура файлов (Микросервисная архитектура)
 
 ```
 BACK-GO/
 ├── API-SWAGGER/api/v1/           ← OpenAPI спецификации (ИСТОЧНИК ИСТИНЫ)
 │   └── auth/
-│       └── character-creation.yaml
+│       └── character-creation.yaml  # x-microservice: auth-service
 │
 ├── scripts/
-│   └── generate-openapi-layers.ps1  ← Скрипт генерации
+│   ├── generate-openapi-microservices.ps1  ← Новый скрипт генерации
+│   └── validate-openapi.ps1                ← Валидация OpenAPI
 │
 ├── templates/
 │   ├── api.mustache              ← Кастомный шаблон для Service интерфейсов
 │   └── STRUCTURE.md
 │
-└── src/main/java/com/necpgame/backjava/
-    ├── api/                      ← Сгенерированные API интерфейсы (со Spring MVC)
-    │   ├── AuthApi.java          ← @RequestMapping, @RequestParam, @Valid
-    │   ├── CharactersApi.java
-    │   └── FactionsApi.java
+└── microservices/
+    ├── auth-service/             ← Микросервис аутентификации (port 8081)
+    │   └── src/main/java/com/necpgame/authservice/
+    │       ├── api/              ← Сгенерированные API интерфейсы (со Spring MVC)
+    │       │   ├── AuthApi.java  ← @RequestMapping, @RequestParam, @Valid
+    │       │   └── CharactersApi.java
+    │       ├── model/            ← Сгенерированные DTOs
+    │       │   ├── CreateCharacterRequest.java
+    │       │   └── GameCharacter.java
+    │       ├── service/          ← Сгенерированные Service интерфейсы
+    │       │   └── AuthService.java
+    │       ├── controller/       ← ВРУЧНУЮ: Controllers (implements API)
+    │       │   └── AuthController.java
+    │       ├── service/impl/     ← ВРУЧНУЮ: ServiceImpl
+    │       │   └── AuthServiceImpl.java
+    │       ├── entity/           ← ВРУЧНУЮ: JPA Entities
+    │       ├── repository/       ← ВРУЧНУЮ: Spring Data Repositories
+    │       └── mapper/           ← ВРУЧНУЮ: MapStruct Mappers
     │
-    ├── model/                    ← Сгенерированные DTOs
-    │   ├── CreateCharacterRequest.java
-    │   └── GameCharacter.java
-    │
-    ├── service/                  ← Сгенерированные Service интерфейсы
-    │   ├── AuthService.java      ← Чистые Java интерфейсы
-    │   └── CharactersService.java
-    │
-    ├── controller/               ← ВРУЧНУЮ: Controllers (implements API)
-    │   ├── AuthController.java   ← implements AuthApi
-    │   └── FactionsController.java ← implements FactionsApi
-    │
-    ├── service/impl/             ← ВРУЧНУЮ: ServiceImpl
-    │   └── AuthServiceImpl.java  ← implements AuthService
-    │
-    ├── entity/                   ← ВРУЧНУЮ: JPA Entities
-    ├── repository/               ← ВРУЧНУЮ: Spring Data Repositories
-    └── mapper/                   ← ВРУЧНУЮ: MapStruct Mappers
+    ├── character-service/        ← Микросервис персонажей (port 8082)
+    ├── gameplay-service/         ← Микросервис геймплея (port 8083)
+    ├── social-service/           ← Микросервис социальных функций (port 8084)
+    ├── economy-service/          ← Микросервис экономики (port 8085)
+    └── world-service/            ← Микросервис мира (port 8086)
 ```
 
 ## 📝 Примеры
